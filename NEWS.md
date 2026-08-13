@@ -1,31 +1,5 @@
 # Rclade News
 
-## Rclade 2.0.0 (2026-08-13, Major Release)
-
-Clean-release major version. Removes all bundled third-party reference data
-to ensure clean redistribution, while preserving full software functionality.
-
-* **Removed bundled data**: the `data-external/` directory (external
-  literature-derived tree files) and all GTDB reference data files
-  (`inst/extdata/ar53_r232.tree`, `inst/extdata/gtdb_sample_labels.txt`,
-  `inst/extdata/download_gtdb_data.R`) are no longer included in the
-  package. The software still fully supports parsing GTDB-format taxonomy
-  labels as a built-in feature.
-* **Removed GTDB-dependent scripts and tests**: deleted
-  `scripts/extract_gtdb_node_taxonomy.R`,
-  `scripts/benchmark_bac120_subsample.R`,
-  `scripts/evaluate_parsing_real_data.R`,
-  `scripts/benchmark_real_session.R`, and the entire
-  `tests/testthat/external/` test suite (which required external GTDB
-  reference data).
-* **Updated documentation**: README, CITATION, THIRDPARTY, cran-comments,
-  CI workflow, and vignettes updated to remove references to bundled GTDB
-  data. GTDB remains listed as a supported taxonomy format.
-* **Updated benchmark scripts**: renamed format-specific helper functions
-  to format-neutral names; removed GTDB data-dependent benchmark sections.
-* **Version bump**: 1.0.0 → 2.0.0 to reflect the clean redistribution
-  scope change.
-
 ## License and attribution compliance (2026-08-04, unreleased)
 
 * **License corrections**: the deeptime license was incorrectly listed as
@@ -138,6 +112,11 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 * Cleaned junk files from the project code (`.DS_Store`, `tests/testthat/_problems/`, `tests/functional/output/`, empty directories).
 * Fixed path references, version wording, and bibliography citations in the manuscript.
 * Fixed geological timescale rendering under ggplot2 4.x, regenerated roxygen documentation, and synced dependency declarations and docs.
+
+## Clean redistribution (2026-08-13)
+
+* **Clean redistribution (2026-08-13)**: removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
+
 
 See the language-specific release notes for full historical details:
 

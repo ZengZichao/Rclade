@@ -1,16 +1,9 @@
-# Rclade 2.0.0（2026-08-13，重大版本）
-
-清洁发布的重大版本。移除所有内置的第三方参考数据以确保干净的再分发，同时保留完整的软件功能。
-
-* **移除内置数据**：不再包含 `data-external/` 目录（外部文献来源的树文件）和所有 GTDB 参考数据文件（`inst/extdata/ar53_r232.tree`、`inst/extdata/gtdb_sample_labels.txt`、`inst/extdata/download_gtdb_data.R`）。软件仍然完全支持解析 GTDB 格式的分类标签。
-* **移除依赖 GTDB 数据的脚本和测试**：删除了 `scripts/extract_gtdb_node_taxonomy.R`、`scripts/benchmark_bac120_subsample.R`、`scripts/evaluate_parsing_real_data.R`、`scripts/benchmark_real_session.R`，以及整个 `tests/testthat/external/` 测试套件（需要外部 GTDB 参考数据）。
-* **更新文档**：README、CITATION、THIRDPARTY、cran-comments、CI 工作流和 vignettes 已更新以移除对内置 GTDB 数据的引用。GTDB 仍作为支持的分类格式列出。
-* **更新基准测试脚本**：将格式特定的辅助函数重命名为格式中立的名称；移除了依赖 GTDB 数据的基准测试部分。
-* **版本号更新**：1.0.0 → 2.0.0，以体现清洁再分发范围的变化。
-
----
-
 # Rclade 1.0.0（2026-07-09，首个正式版本）
+
+## 清洁再分发 (2026-08-13)
+
+* **清洁再分发（2026-08-13）**：移除所有内置第三方参考数据（`data-external/` 目录与 `inst/extdata/` 下 GTDB 参考文件）及依赖 GTDB 的脚本与测试（`scripts/extract_gtdb_node_taxonomy.R`、`scripts/benchmark_bac120_subsample.R`、`scripts/evaluate_parsing_real_data.R`、`scripts/benchmark_real_session.R`、`tests/testthat/external/`）；更新 README、CITATION、THIRDPARTY、cran-comments、CI 工作流与 vignettes 以移除对内置 GTDB 数据的引用；将格式特定的基准测试辅助函数重命名为格式中立名称。
+
 
 ## 综述
 

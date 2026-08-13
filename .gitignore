@@ -41,3 +41,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# === WorkBuddy internal (not part of the package) ===
+.workbuddy/

@@ -1,4 +1,4 @@
-## CRAN submission comments for Rclade 2.0.0
+## CRAN submission comments for Rclade 1.0.0
 
 ### New submission
 
@@ -17,7 +17,7 @@ This is a new major version of Rclade. The key changes from 1.0.0 are:
 
 ### R CMD check results (local)
 
-`R CMD check --no-manual --as-cran Rclade_2.0.0.tar.gz` was run on
+`R CMD check --no-manual --as-cran Rclade_1.0.0.tar.gz` was run on
 macOS aarch64 (Apple M5) with R 4.5.3 in a micromamba-managed environment.
 
 There were no ERRORs.

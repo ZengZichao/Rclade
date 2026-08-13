@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 ```{r install, eval = FALSE}
 # Install from local source package
-install.packages("path/to/Rclade_2.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("path/to/Rclade_1.0.0.tar.gz", repos = NULL, type = "source")
 ```
 
 ## Basic Usage

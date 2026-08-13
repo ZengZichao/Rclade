@@ -8,7 +8,7 @@
 get_version_string <- function() {
   pkg_version <- tryCatch(
     as.character(utils::packageVersion("Rclade")),
-    error = function(e) "2.0.0"
+    error = function(e) "1.0.0"
   )
 
   # T07 / E-T1: use the shared get_git_hash() helper instead of the previous

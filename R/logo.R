@@ -29,7 +29,7 @@ rclade_logo <- function(show_version = TRUE, show_tagline = TRUE) {
   if (show_version) {
     pkg_version <- tryCatch(
       as.character(utils::packageVersion("Rclade")),
-      error = function(e) "2.0.0"
+      error = function(e) "1.0.0"
     )
     cat(sprintf("  Version %s | MIT License\n", pkg_version))
 

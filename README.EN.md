@@ -5,7 +5,7 @@
 <!-- badges: start -->
 [![R package](https://img.shields.io/badge/R-package-blue.svg)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)]()
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)]()
 <!-- badges: end -->
 
 > **Note:** Source code and issue tracking at https://github.com/zengzichao/Rclade.
@@ -48,7 +48,7 @@ In addition to this quick reference, Rclade ships a complete bilingual documenta
 
 ```r
 # Install from the local source tarball
-install.packages("path/to/Rclade_2.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("path/to/Rclade_1.0.0.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Using Conda
@@ -768,7 +768,7 @@ For a complete list of third-party dependencies and their licenses, see [inst/TH
 
 If you use Rclade in your research, please cite:
 
-> Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 2.0.0.
+> Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 1.0.0.
 
 Rclade builds on the ggtree and deeptime ecosystems. Please also cite these key dependencies:
 
