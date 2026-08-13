@@ -39,6 +39,11 @@ jobs:
           extra-packages: |
             any::testthat
             any::rcmdcheck
+            any::remotes
+
+      - name: Install package (required for self-test)
+        run: |
+          Rscript -e 'remotes::install_local(".", force = TRUE, quiet = TRUE)'
 
       - name: Run self-test
         run: |
@@ -85,14 +90,21 @@ jobs:
           extra-packages: |
             any::testthat
             any::rcmdcheck
-            ggplot2@3.5.0
-            deeptime@1.0.0
-            stringr@1.5.0
-            ape@5.0
+            any::remotes
+          # NOTE: We do NOT pin ggplot2/deeptime/stringr/ape here because
+          # Bioconductor packages (ggtree, tidytree) are installed at their
+          # current release versions and require newer transitive deps.
+          # Pinning those would create unsatisfiable dependency conflicts.
+          # Version bounds declared in DESCRIPTION are still checked by
+          # the standard R-CMD-check job above.
 
       - name: Report installed versions
         run: |
           Rscript -e 'ip <- installed.packages(); print(ip[c("ggplot2","deeptime","stringr","ape","ggtree","tidytree"), "Version"])'
+
+      - name: Install package
+        run: |
+          Rscript -e 'remotes::install_local(".", force = TRUE, quiet = TRUE)'
 
       - name: Run pure unit suite against minimum versions
         run: |
@@ -114,6 +126,11 @@ jobs:
         with:
           extra-packages: |
             any::covr
+            any::remotes
+
+      - name: Install package (required for coverage)
+        run: |
+          Rscript -e 'remotes::install_local(".", force = TRUE, quiet = TRUE)'
 
       - name: Run coverage
         run: |
