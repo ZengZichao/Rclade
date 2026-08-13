@@ -1,0 +1,99 @@
+---
+title: "Quick Start: From Tree File to Publication Figure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick Start: From Tree File to Publication Figure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 10,
+  fig.height = 7
+)
+```
+
+## Installation
+
+```{r install, eval = FALSE}
+# Install from local source package
+install.packages("path/to/Rclade_2.0.0.tar.gz", repos = NULL, type = "source")
+```
+
+## Basic Usage
+
+The simplest way to create a timetree visualization using the built-in example data:
+
+```{r basic}
+library(Rclade)
+
+# Load built-in example tree (50 tips, GTDB-style labels)
+data(example_tree)
+
+# Plot with phylum-level collapsing (no timescale for speed)
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE)
+print(p)
+```
+
+## Adding Titles
+
+Use `main_title` and `sub_title` to add centered titles:
+
+```{r titles}
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE,
+                   main_title = "GTDB Bacterial Tree",
+                   sub_title = "50 taxa | Phylum-level collapsing")
+print(p)
+```
+
+## Summarizing Results
+
+Use `summarize_timetree()` to inspect the collapse metadata:
+
+```{r summarize}
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE)
+summarize_timetree(p)
+```
+
+## Saving Output
+
+```{r save, eval = FALSE}
+# Save to PDF
+save_timetree(p, "output.pdf", width = 14, height = 10)
+
+# One-line pipeline
+plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
+```
+
+## Taxonomy Quality Check
+
+Before visualization, check how well your labels can be parsed:
+
+```{r quality}
+summarize_taxonomy_quality(example_tree$tip.label, format = "GTDB")
+```
+
+## References & Acknowledgments
+
+Rclade builds on the **ggtree** and **deeptime** R packages. If you use Rclade
+in published research, please cite Rclade along with these key dependencies:
+
+- Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). "ggtree: an R package for
+  visualization and annotation of phylogenetic trees with their covariates and
+  other associated data." *Methods in Ecology and Evolution*, 8(1), 28-36.
+  doi:10.1111/2041-210X.12628
+- Gearty W (2025). "deeptime: an R package that facilitates highly
+  customizable and reproducible visualizations of data over geological time
+  intervals." *Big Earth Data*. doi:10.1080/20964471.2025.2537516
+- Paradis E, Schliep K (2019). "ape 5.0: an environment for modern
+  phylogenetics and evolutionary analyses in R." *Bioinformatics*, 35(3),
+  526-528. doi:10.1093/bioinformatics/bty633

@@ -1,0 +1,4 @@
+"rank","n_tips","n_truth_available","n_parsed","n_correct","n_wrong","accuracy_parsed","accuracy_all"
+"phylum",250,250,250,250,0,1,1
+"class",250,250,250,250,0,1,1
+"order",250,0,0,0,0,NA,0

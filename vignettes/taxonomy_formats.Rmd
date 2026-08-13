@@ -1,0 +1,167 @@
+---
+title: "Supported Taxonomy Label Formats"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Supported Taxonomy Label Formats}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 10,
+  fig.height = 7
+)
+```
+
+## Overview
+
+Rclade automatically detects and parses four taxonomy label formats:
+
+| Format | Separator | Prefix | Example |
+|--------|-----------|--------|---------|
+| **GTDB** | `;` | `__` | `d__Bacteria;p__Proteobacteria` |
+| **Silva** | `;` | none | `Bacteria;Proteobacteria` |
+| **NCBI** | `;` | none | `cellular organisms;Bacteria` |
+| **Custom rank** | `_` + code | none | `species_d_Bacteria_p_Proteobacteria` |
+
+## Automatic Detection
+
+```{r auto}
+library(Rclade)
+
+# Load example data
+data(example_tree)
+
+# Auto-detection works in most cases
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "auto",
+                   add_timescale = FALSE)
+```
+
+Detection applies conservative "clear majority" rules: GTDB requires a
+`[dpcofgsk]__` prefix-match score >= 0.6 **and** a semicolon-delimiter
+majority; embedded requires a `_[dpcofgsk]_` match score >= 0.6; NCBI/Silva
+first require a semicolon majority and then compare prefix scores. Ambiguous
+labels fall back to `"unknown"`. Note that accession-prefixed embedded labels
+with double-underscore separators (e.g. `GCA_xxx_d__Archaea_p__Nanoarchaeota`)
+are correctly detected as *embedded* (not GTDB) and are parsed by all three
+delimiter modes; for label schemes with extra intermediate ranks (e.g. a
+`superphylum` field), use `taxonomy_format = "custom_regex"` with explicit
+per-rank patterns.
+
+## Quality Report
+
+Check how well your labels can be parsed before visualization:
+
+```{r quality}
+labels <- example_tree$tip.label
+summarize_taxonomy_quality(labels, format = "GTDB")
+```
+
+## Manual Format Specification
+
+If auto-detection fails, specify the format explicitly:
+
+```{r manual}
+# GTDB format
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE)
+print(p)
+```
+
+## NCBI Format Handling
+
+NCBI taxonomy uses position-based rank mapping. Note that this may produce
+systematic rank offsets in non-standard lineages (e.g., viruses where
+Riboviria is a realm, not a domain). For critical applications, consider
+using GTDB or Silva format, or providing custom_patterns.
+
+```{r ncbi, eval = FALSE}
+# NCBI format (requires NCBI-labeled tree)
+p <- plot_timetree(ncbi_tree, rank = "phylum",
+                   taxonomy_format = "NCBI",
+                   add_timescale = FALSE)
+```
+
+## Custom Regex Patterns
+
+For non-standard formats:
+
+```{r custom, eval = FALSE}
+p <- plot_timetree(tree, rank = "phylum",
+                   taxonomy_format = "custom_regex",
+                   custom_patterns = list(
+                     domain = "Domain:([^|]+)",
+                     phylum = "Phylum:([^|]+)"
+                   ))
+```
+
+## Embedded Format Parsing Strategies
+
+For embedded (Format A) labels, Rclade supports three delimiter matching strategies:
+
+| Mode | Description | Best for |
+|------|-------------|----------|
+| `reverse` (default) | Match ranks from right to left | Labels where taxon names contain underscores |
+| `greedy` | Match ranks from left to right using character-class boundaries | Simple labels with no underscores in names |
+| `segment` | Extract content between delimiters | Preserving underscores within values |
+
+```{r delimiter_mode, eval = FALSE}
+# Default reverse mode
+p <- plot_timetree(tree, rank = "phylum",
+                   taxonomy_format = "custom_rank",
+                   taxonomy_delimiter_mode = "reverse")
+
+# Segment mode for labels with underscores in taxon names
+p <- plot_timetree(tree, rank = "phylum",
+                   taxonomy_format = "custom_rank",
+                   taxonomy_delimiter_mode = "segment")
+```
+
+## Custom Taxonomy Levels
+
+You can extend or override the default rank codes and delimiters with `taxonomy_levels`. This is useful for non-standard ranks such as kingdom (`k`) or subspecies (`ss`).
+
+For embedded (Format A) labels, provide a list of rank codes and their prefixes:
+
+```{r custom_levels, eval = FALSE}
+p <- plot_timetree(tree, rank = "phylum",
+                   taxonomy_format = "custom_rank",
+                   taxonomy_levels = list(
+                     codes = c("k", "d", "p", "c", "o", "f", "g", "s", "ss"),
+                     names = c("_k_", "_d_", "_p_", "_c_",
+                               "_o_", "_f_", "_g_", "_s_", "_ss_")
+                   ))
+```
+
+The `codes` vector defines the short rank codes, and `names` defines the delimiters used in the labels. The same `taxonomy_levels` object is propagated through highlighting, monophyly checks, special identifier resolution, and external taxonomy file merging.
+
+## References & Acknowledgments
+
+Rclade supports taxonomy formats from several databases. If you use data from
+these sources in published research, please cite them appropriately:
+
+- **GTDB**: Parks DH, Chuvochina M, Chaumeil PA, Rinke C, Mussig AJ,
+  Hugenholtz P (2020). "A complete domain-to-species taxonomy for Bacteria
+  and Archaea." *Nature Biotechnology*, 38(9), 1079-1086.
+  doi:10.1038/s41587-020-0501-8
+- **SILVA**: Quast C, Pruesse E, Yilmaz P, Gerken J, Schweer T, Yarza P,
+  Peplies J, Glöckner FO (2013). "The SILVA ribosomal RNA gene database
+  project: improved data processing and web-based tools." *Nucleic Acids
+  Research*, 41(D1), D590-D596. doi:10.1093/nar/gks1219
+- **NCBI Taxonomy**: Sayers EW, et al. (2022). "Database resources of the
+  National Center for Biotechnology Information." *Nucleic Acids Research*,
+  50(D1), D20-D26. doi:10.1093/nar/gkab1112
+
+Rclade also builds on the **ggtree** and **deeptime** R packages:
+
+- Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). "ggtree: an R package for
+  visualization and annotation of phylogenetic trees." *Methods in Ecology and
+  Evolution*, 8(1), 28-36. doi:10.1111/2041-210X.12628
+- Gearty W (2025). "deeptime: an R package for visualizations of data over
+  geological time intervals." *Big Earth Data*.
+  doi:10.1080/20964471.2025.2537516

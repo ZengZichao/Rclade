@@ -1,0 +1,56 @@
+Package: Rclade
+Title: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization
+Version: 2.0.0
+Authors@R: person("Zeng", "Zichao", email = "zengzichao@sjtu.edu.cn",
+                  role = c("aut", "cre"))
+Author: Zeng Zichao [aut, cre]
+Maintainer: Zeng Zichao <zengzichao@sjtu.edu.cn>
+Description: Provides a single-function pipeline for automated collapsing and
+    visualization of large phylogenetic trees with geological timescales.
+    Automatically parses taxonomic labels from multiple formats (GTDB, Silva,
+    NCBI, embedded, custom), identifies Most Recent Common Ancestors (MRCAs), assigns
+    color-blind-safe palettes, executes batch collapsing with automatic
+    nesting-aware ordering, integrates 'deeptime' geoscales with adaptive time
+    breaks and unit switching, and manages smart legend layout. Supports
+    special ancestral node identifiers (LUCA, LACA, LBCA) for highlighting
+    key nodes in the tree of life. Provides external taxonomy file support
+    for trees with incomplete or missing taxonomic labels. Features real-time
+    logging with timestamps, step tracking, and multiple log levels. Includes
+    comprehensive input validation for tree and sequence file formats. Reduces
+    a 60-line manual workflow to a single function call while preserving full
+    compatibility with the 'ggtree'/'deeptime' ecosystem.
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.1.0)
+Imports:
+    ape (>= 5.0),
+    ggtree (>= 4.0.0),
+    deeptime (>= 1.0),
+    ggplot2 (>= 3.5.0),
+    rlang,
+    stringr (>= 1.5),
+    tidytree (>= 0.4),
+    viridisLite
+Suggests:
+    treeio (>= 1.0),
+    phangorn (>= 2.0),
+    RColorBrewer,
+    cowplot (>= 1.1),
+    patchwork (>= 1.1),
+    shiny (>= 1.7),
+    optparse (>= 1.7),
+    yaml,
+    vdiffr (>= 1.0),
+    testthat (>= 3.0),
+    knitr,
+    rmarkdown,
+    covr,
+    filelock,
+    withr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3
+URL: https://github.com/zengzichao/Rclade
+BugReports: https://github.com/zengzichao/Rclade/issues

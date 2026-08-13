@@ -1,0 +1,76 @@
+url: https://zengzichao.github.io/Rclade
+
+template:
+  bootstrap: 5
+  params:
+    bootswatch: flatly
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/zengzichao/Rclade
+      aria-label: GitHub
+
+articles:
+  - title: Getting started
+    navbar: ~
+    contents:
+      - quick_start
+      - taxonomy_formats
+      - publication_ready
+
+dev:
+  mode: auto
+
+reference:
+  - title: Core visualization
+    desc: Main plotting and pipeline functions
+    contents:
+      - plot_timetree
+      - rclade_options
+      - batch_plot
+      - save_timetree
+      - summarize_timetree
+      - theme_timetree
+  - title: Taxonomy parsing
+    desc: Format detection, label parsing and quality summary
+    contents:
+      - parse_taxonomy
+      - detect_taxonomy_format
+      - read_taxonomy_file
+      - summarize_taxonomy_quality
+      - summarize_taxonomy_quality_with_file
+  - title: Tree input, MRCA and collapsing
+    desc: Tree reading, monophyly checks and group resolution
+    contents:
+      - read_tree_auto
+      - get_supported_extensions
+      - check_monophyly
+      - check_special_monophyly
+  - title: Input validation
+    desc: Deep validation and robustness
+    contents:
+      - validate_sequence_deep
+      - validate_sequence_file
+      - validate_tree_sequence_match
+  - title: CLI and Shiny
+    desc: Command-line, web interface and self-test
+    contents:
+      - run_rclade_cli
+      - run_rclade_shiny
+      - run_rclade_selftest
+  - title: Logging
+    desc: Real-time logging control
+    contents:
+      - set_log_enabled
+      - set_log_file
+      - set_log_level
+  - title: Utilities
+    desc: Helper functions
+    contents:
+      - rclade_logo
+      - save_session_info

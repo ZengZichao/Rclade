@@ -1,0 +1,30 @@
+comment: false
+
+coverage:
+  status:
+    project:
+      default:
+        target: 85%    # minimum overall coverage (§12.1)
+        threshold: 1%  # allow 1% drop without failing
+      core:
+        target: 85%    # core modules must also meet 85%
+        flags:
+          - core
+    patch:
+      default:
+        target: 85%    # new code must also meet 85%
+
+# Core modules referenced by §12.1 (parsing, validation, monophyly, cross-validation)
+# are tracked under the "core" flag and gated by the core status check above.
+flags:
+  core:
+    paths:
+      - R/parse-taxonomy.R
+      - R/taxonomy-file.R
+      - R/validate-deep.R
+      - R/monophyly.R
+      - R/compute-mrca.R
+      - R/read-input.R
+
+github_checks:
+  annotations: true

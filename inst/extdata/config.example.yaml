@@ -1,0 +1,125 @@
+# Rclade configuration file template (§8.1)
+#
+# Usage:
+#   Rscript -e "Rclade::run_rclade_cli()" -- --config config.example.yaml
+#   Rscript -e "Rclade::run_rclade_cli()" -- --config config.example.yaml -f my_tree.tre
+#
+# Precedence (high to low):
+#   1. Explicit CLI flags  (--rank phylum overrides config)
+#   2. This config file     (applies to options left at their built-in default)
+#   3. Built-in defaults
+#
+# Note: optparse cannot distinguish "user passed the default value" from
+# "user did not pass the flag". If you explicitly pass a value equal to the
+# built-in default, the config value will still take effect. To force a
+# setting, pass it on the CLI.
+#
+# Keys use the long-flag name (e.g., `multi_tree_mode`, not `--multi_tree_mode`).
+# Boolean flags are YAML booleans (true/false). Numeric/character values are
+# YAML scalars. Commented lines show the built-in default.
+
+# ───────────────────────── Input / Output ─────────────────────────
+# Input tree file. Usually supplied on the CLI.
+# file: input.tre
+
+# Output file path.
+# out: timetree_plot.pdf
+
+# Output dimensions in inches.
+# width: 14
+# height: 10
+
+# ───────────────────────── Multi-tree ─────────────────────────
+# How to handle files containing multiple trees.
+# Options: error, ask, first, last, random, all, split
+# multi_tree_mode: error
+
+# Index of tree to use from multiPhylo (1-based). NULL = use multi_tree_mode.
+# tree_index: null
+
+# ───────────────────────── Collapsing ─────────────────────────
+# Taxonomic rank to collapse at.
+# Options: none, kingdom, domain, phylum, class, order, family, genus, species, subspecies
+#          or abbreviations: k, d, p, c, o, f, g, s, ss
+# rank: none
+
+# Specific clade name to collapse (e.g., "Cyanobacteriota"). Mutually exclusive with rank.
+# clade: null
+
+# strict: false          # Stop on non-monophyletic clades instead of warning.
+
+# Triangle visualization: max, min, mixed, none
+# triangle_mode: mixed
+
+# Space allocation: equal, proportional
+# space_mode: proportional
+
+# ───────────────────────── Layout ─────────────────────────
+# layout: rectangular    # rectangular | circular
+# angle: 360             # Fan angle for circular layout (10-360)
+# line_width: 1
+# ignore_branch_length: false
+
+# ───────────────────────── Time unit ─────────────────────────
+# unit: Ga               # Ga | Ma. NULL = auto-detect.
+
+# ───────────────────────── Taxonomy ─────────────────────────
+# taxonomy_format: auto  # auto | GTDB | Silva | NCBI | custom_rank | custom_regex
+# taxonomy_file: null    # Path to external taxonomy file.
+# taxonomy_file_sep: auto  # auto | tab | comma
+# taxonomy_file_header: false
+# taxonomy_source_priority: table  # embedded | table
+# taxonomy_table_sep: ";"
+# taxonomy_delimiter_mode: reverse # reverse | greedy | segment
+# taxonomy_levels: null  # e.g. "k:kingdom,ss:subspecies"
+
+# ───────────────────────── Colors ─────────────────────────
+# color_palette: viridis
+# color_mapping: null    # e.g. "Proteobacteria=#E41A1C,Firmicutes=#377EB8"
+
+# ───────────────────────── Labels ─────────────────────────
+# show_tip_labels: false
+# tip_label_size: 2
+# show_clade_label: false
+# no_clade_count: false
+# clade_label_offset: 50
+# clade_label_fontsize: 3
+
+# ───────────────────────── Annotations ─────────────────────────
+# show_support: false
+# support_threshold: 0.95
+# show_hpd: false
+# hpd_color: firebrick
+# strip_annotations: false  # Drop bootstrap/NHX annotations before rendering.
+
+# ───────────────────────── Timescale ─────────────────────────
+# no_timescale: false
+# timescale_levels: eras,eons  # Subset of: eons, eras, periods
+# geo_events: false
+
+# ───────────────────────── Highlight ─────────────────────────
+# highlight: null        # Comma-separated clade names. Special: LUCA, LACA, LBCA.
+# highlight_alpha: 0.2
+
+# ───────────────────────── Legend ─────────────────────────
+# legend_position: bottom  # bottom | right | left | top | none
+# legend_nrow: null
+# legend_ncol: null
+
+# ───────────────────────── Titles ─────────────────────────
+# main_title: null
+# sub_title: null
+
+# ───────────────────────── Logging ─────────────────────────
+# log_level: INFO       # DEBUG | INFO | WARNING | ERROR | CRITICAL
+# log_file: null        # Path to log file for dual output.
+
+# ───────────────────────── Validation ─────────────────────────
+# mol_type: auto        # auto | DNA | RNA | protein
+# skip_length_check: false
+# no_cross_check: false
+# sequence_file: null
+
+# ───────────────────────── Robustness ─────────────────────────
+# ignore_malformed: false  # Skip malformed inputs instead of terminating.
+# low_memory: false        # Trigger GC between pipeline steps.

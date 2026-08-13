@@ -1,0 +1,137 @@
+Rclade Third-Party Software and Data Notices
+==============================================
+
+This file lists all third-party software packages and data bundled with or
+referenced by Rclade, along with their licenses and citation information.
+
+Rclade itself is licensed under the MIT License (see LICENSE file).
+Rclade uses third-party packages via API calls only; no third-party source
+code has been copied into this project.
+
+------------------------------------------------------------------------
+R Package Dependencies (Imports)
+------------------------------------------------------------------------
+
+ape (>= 5.0)
+  License: GPL-2 | GPL-3
+  Citation: Paradis E, Schliep K (2019). "ape 5.0: an environment for
+    modern phylogenetics and evolutionary analyses in R." Bioinformatics,
+    35(3), 526-528. doi:10.1093/bioinformatics/bty633
+  URL: https://ape-package.ird.fr/
+
+ggtree (>= 4.0.0)
+  License: Artistic-2.0
+  Citation: Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). "ggtree: an R
+    package for visualization and annotation of phylogenetic trees with
+    their covariates and other associated data." Methods in Ecology and
+    Evolution, 8(1), 28-36. doi:10.1111/2041-210X.12628
+  URL: https://bioconductor.org/packages/ggtree/
+
+deeptime (>= 1.0)
+  License: GPL (>= 3)
+  Citation: Gearty W (2025). "deeptime: an R package that facilitates
+    highly customizable and reproducible visualizations of data over
+    geological time intervals." Big Earth Data.
+    doi:10.1080/20964471.2025.2537516
+  URL: https://williamgearty.com/deeptime/
+
+ggplot2 (>= 3.5.0)
+  License: MIT + file LICENSE
+  Citation: Wickham H (2016). ggplot2: Elegant Graphics for Data Analysis.
+    Springer-Verlag New York. ISBN 978-3-319-24277-4.
+  URL: https://ggplot2.tidyverse.org/
+
+rlang
+  License: MIT + file LICENSE
+  Citation: Henry L, Wickham H (2026). rlang: Functions for Base Types
+    and Core R and 'Tidyverse' Features. R package.
+  URL: https://rlang.r-lib.org/
+
+stringr (>= 1.5)
+  License: MIT + file LICENSE
+  Citation: Wickham H (2025). stringr: Simple, Consistent Wrappers for
+    Common String Operations. R package.
+  URL: https://stringr.tidyverse.org/
+
+tidytree (>= 0.4)
+  License: Artistic-2.0
+  Citation: Yu G (2022). Data Integration, Manipulation and Visualization
+    of Phylogenetic Trees (1st edition). Chapman and Hall/CRC.
+    doi:10.1201/9781003279242
+  URL: https://yulab-smu.top/contribution-tree-data/
+
+viridisLite
+  License: MIT + file LICENSE
+  Citation: Garnier S, Ross N, Rudis R, Camargo AP, Sciaini M, Scherer C
+    (2026). viridis(Lite) - Colorblind-Friendly Color Maps for R.
+  URL: https://sjmgarnier.github.io/viridis/
+
+------------------------------------------------------------------------
+R Package Dependencies (Suggests)
+------------------------------------------------------------------------
+
+treeio (>= 1.0)
+  License: Artistic-2.0
+  Citation: Xu S, Li L, Luo X, Chen M, Tang W, Zhan L, Dai Z, Lam TT,
+    Guan Y, Yu G (2022). "Ggtree: A serialized data object for
+    visualization of a phylogenetic tree and annotation data." iMeta,
+    1(4), e56. doi:10.1002/imt2.56
+  URL: https://bioconductor.org/packages/treeio/
+
+phangorn (>= 2.0)
+  License: GPL (>= 2)
+  Citation: Schliep KP (2011). "phangorn: phylogenetic analysis in R."
+    Bioinformatics, 27(4), 592-593. doi:10.1093/bioinformatics/btq706
+  URL: https://github.com/KlausVigo/phangorn
+
+RColorBrewer
+  License: Apache License 2.0
+  Citation: Neuwirth E (2022). RColorBrewer: ColorBrewer Palettes. R
+    package.
+  URL: https://CRAN.R-project.org/package=RColorBrewer
+
+cowplot (>= 1.1)
+  License: MIT + file LICENSE
+  URL: https://wilkelab.org/cowplot/
+
+patchwork (>= 1.1)
+  License: MIT + file LICENSE
+  URL: https://patchwork.data-imaginist.com/
+
+shiny (>= 1.7)
+  License: GPL-3
+  URL: https://shiny.posit.co/
+
+optparse (>= 1.7)
+  License: GPL (>= 2)
+  URL: https://CRAN.R-project.org/package=optparse
+
+------------------------------------------------------------------------
+Bundled Data
+------------------------------------------------------------------------
+
+1. ICS Geological Timescale Data
+   File: R/sysdata.rda (compiled from data-raw/make_geo_timescales.R)
+   Source: International Commission on Stratigraphy (ICS) International
+     Chronostratigraphic Chart, version 2023/02
+   URL: https://stratigraphy.org/chart
+   Reference: Gradstein FM, Ogg JG, Schmitz MD, Ogg GM (2020). The
+     Geologic Time Scale 2020. Elsevier.
+     doi:10.1016/C2020-1-02469-3
+   Note: Geological boundary ages are factual data. The color codes
+     follow the ICS standard color scheme. The ICS chart is available
+     for educational and research use; see
+     https://stratigraphy.org/chart for terms.
+
+------------------------------------------------------------------------
+Standards and Formats Referenced
+------------------------------------------------------------------------
+
+- Newick format: https://evolution.genetics.washington.edu/phylip/newicktree.html
+- NEXUS format: Maddison DR, Swofford DL, Maddison WP (1997).
+  "NEXUS: an extensible file format for systematic information."
+  Systematic Biology, 46(4), 590-621. doi:10.1093/sysbio/46.4.590
+- GTDB: https://gtdb.ecogenomic.org/
+- SILVA: https://www.arb-silva.de/
+- NCBI Taxonomy: https://www.ncbi.nlm.nih.gov/taxonomy
+- ISO 8601 date/time format: https://en.wikipedia.org/wiki/ISO_8601

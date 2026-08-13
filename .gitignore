@@ -1,0 +1,43 @@
+# === R / RStudio ===
+.Rproj.user/
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+.Ruserdata/
+.Renviron
+.Rtmp*/
+.Rproj.user
+
+# === R package build / check artifacts ===
+*.tar.gz
+*.Rcheck/
+*.Rcheck
+
+# === knitr / rmarkdown cache & intermediates ===
+*_cache/
+/cache/
+.Rproj.user/
+
+# === vignette build output (keep .Rmd sources) ===
+vignettes/*.html
+
+# === OAuth / secrets ===
+.httr-oauth
+
+# === pkgdown site output (if generated locally) ===
+docs/
+
+# === translation temp files ===
+*.pod
+
+# === OS / editor noise ===
+.DS_Store
+Thumbs.db
+*~
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp

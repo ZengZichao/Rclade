@@ -1,0 +1,43 @@
+citHeader("To cite Rclade in publications, use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization",
+  author   = person("Zichao", "Zeng", email = "zengzichao@sjtu.edu.cn",
+                     role = c("aut", "cre")),
+  year     = "2026",
+  note     = "R package version 2.0.0",
+  textVersion = "Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 2.0.0."
+)
+
+citHeader("Rclade builds on the ggtree and deeptime ecosystems. If you use Rclade",
+          "in published research, please also cite these key dependencies:")
+
+bibentry(
+  bibtype  = "Article",
+  title    = "ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data",
+  author   = personList(
+    person("Guangchuang", "Yu"),
+    person("David", "Smith"),
+    person("Huachen", "Zhu"),
+    person("Yi", "Guan"),
+    person("Tommy Tsan-Yuk", "Lam")
+  ),
+  year     = "2017",
+  journal  = "Methods in Ecology and Evolution",
+  volume   = "8",
+  number   = "1",
+  pages    = "28-36",
+  doi      = "10.1111/2041-210X.12628",
+  textVersion = "Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. Methods in Ecology and Evolution, 8(1), 28-36. doi:10.1111/2041-210X.12628"
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "deeptime: an R package that facilitates highly customizable and reproducible visualizations of data over geological time intervals",
+  author   = as.person("William Gearty"),
+  journal  = "Big Earth Data",
+  year     = "2025",
+  doi      = "10.1080/20964471.2025.2537516",
+  textVersion = "Gearty W (2025). deeptime: an R package that facilitates highly customizable and reproducible visualizations of data over geological time intervals. Big Earth Data. doi:10.1080/20964471.2025.2537516"
+)

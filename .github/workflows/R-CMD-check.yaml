@@ -1,0 +1,128 @@
+name: R-CMD-check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: ubuntu-latest, r: 'oldrel'}
+          - {os: ubuntu-latest, r: 'devel'}
+          - {os: macos-latest, r: 'release'}
+          - {os: windows-latest, r: 'release'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::testthat
+            any::rcmdcheck
+
+      - name: Run self-test
+        run: |
+          Rscript -e 'library(Rclade); exit_code <- run_rclade_selftest(); quit(status = exit_code)'
+
+      - name: Check
+        uses: r-lib/actions/check-r-package@v2
+
+      - name: Run pure unit suite (stage A, no external deps)
+        run: |
+          Rscript scripts/ci_pure_unit.R
+
+      - name: Run functional smoke tests
+        run: |
+          Rscript tests/functional/run-functional-smoke.R
+
+      - name: Run performance regression tests
+        run: |
+          Rscript -e 'library(testthat); test_file("tests/testthat/test-performance.R", reporter = "summary")'
+
+  # Declared-minimum-dependency smoke job: verifies the package loads and the
+  # pure unit suite passes against the oldest supported CRAN versions of the
+  # hard dependencies we can pin via CRAN archive.  Bioconductor packages
+  # (ggtree, tidytree, treeio) cannot be version-pinned through BiocManager,
+  # so they are exercised at the current release; the ggplot2/deeptime lower
+  # bounds declared in DESCRIPTION are the ones that most affect the custom
+  # Geom layer (coord$transform behaviour).
+  min-deps:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install dependencies with pinned CRAN minimums
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::testthat
+            any::rcmdcheck
+            ggplot2@3.5.0
+            deeptime@1.0.0
+            stringr@1.5.0
+            ape@5.0
+
+      - name: Report installed versions
+        run: |
+          Rscript -e 'ip <- installed.packages(); print(ip[c("ggplot2","deeptime","stringr","ape","ggtree","tidytree"), "Version"])'
+
+      - name: Run pure unit suite against minimum versions
+        run: |
+          Rscript scripts/ci_pure_unit.R
+
+  coverage:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::covr
+
+      - name: Run coverage
+        run: |
+          Rscript -e 'covr::package_coverage(type = c("tests", "examples"), quiet = FALSE)'
+
+      - name: Upload coverage to Codecov
+        if: github.event_name == 'push'
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true

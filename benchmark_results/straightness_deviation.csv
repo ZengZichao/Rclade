@@ -1,0 +1,5 @@
+"pipeline","clade","n_transformed_points","max_deviation_npc","mean_deviation_npc","max_deviation_mm"
+"ggtree_coord_munch","Group_A",74,0.0862405109716397,0.0506408437838804,9.48645620688037
+"rclade_vertex_only","Group_A",3,0,0,0
+"ggtree_coord_munch","Group_B",57,0.0502130863761721,0.0267485831013627,5.52343950137893
+"rclade_vertex_only","Group_B",3,0,0,0

@@ -1,0 +1,24 @@
+{
+  "title": "Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization",
+  "description": "An R package for production-ready automated taxonomic collapsing and visualization of phylogenetic trees with geological timescales. Integrates taxonomic-label parsing, MRCA-based branch collapsing, monophyly checking, geological timescale visualization, in-depth input validation, and workflow-embeddable engineering conventions into a single function call.",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Zeng, Zichao",
+      "email": "zengzichao@sjtu.edu.cn",
+      "affiliation": "Shanghai Jiao Tong University"
+    }
+  ],
+  "keywords": [
+    "phylogenetic tree",
+    "visualization",
+    "taxonomic collapsing",
+    "geological timescale",
+    "ggtree",
+    "R package",
+    "bioinformatics"
+  ],
+  "upload_type": "software",
+  "language": "eng",
+  "version": "2.0.0"
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Rclade command-line wrapper
+#
+# This script provides a POSIX-shell entry point for Rclade so that exit
+# codes are propagated correctly to the operating system. In particular,
+# when the user presses Ctrl+C (SIGINT) the wrapper exits with the standard
+# Unix exit code 130, even though non-interactive Rscript terminates with
+# code 1 on SIGINT.
+#
+# Usage:
+#   rclade -f tree.tre -r phylum -o output.pdf
+#   rclade --help
+#   rclade --version
+#
+# For programmatic use from an interactive R session, you can still call
+# Rclade::run_rclade_cli() directly.
+
+set -euo pipefail
+
+# On SIGINT, terminate the Rscript child and return the standard Unix code 130.
+trap 'kill ${RCLADE_PID:-} 2>/dev/null; exit 130' INT
+
+# Forward all arguments to Rclade::run_rclade_cli() and use q() to propagate
+# the function's return value as the OS exit code.
+Rscript \
+  -e 'args <- commandArgs(TRUE); args <- args[args != "--"]; q(status = Rclade::run_rclade_cli(args))' \
+  -- "$@" &
+RCLADE_PID=$!
+
+wait "$RCLADE_PID"
+RCLADE_EXIT=$?
+exit "$RCLADE_EXIT"

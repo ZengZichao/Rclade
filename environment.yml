@@ -1,0 +1,29 @@
+name: rclade
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  # --- Runtime dependencies (DESCRIPTION Imports) ---
+  - r-base>=4.1.0
+  - r-ape>=5.0
+  - r-ggtree>=4.0.0
+  - r-deeptime>=1.0
+  - r-ggplot2>=3.5.0
+  - r-rlang>=1.0
+  - r-stringr>=1.5
+  - r-tidytree>=0.4
+  - r-viridislite
+  - r-optparse>=1.7
+  # --- Optional / Suggests ---
+  - r-treeio>=1.0
+  - r-phangorn>=2.0
+  - r-rcolorbrewer
+  - r-shiny>=1.7
+  - r-filelock
+  - r-yaml
+  - r-svglite
+  - r-cowplot>=1.1
+  - r-patchwork>=1.1
+  # --- Development only (not needed at runtime) ---
+  # r-devtools  # uncomment if you need devtools for package development

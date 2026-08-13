@@ -1,0 +1,115 @@
+---
+title: "Publication-Ready Output"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Publication-Ready Output}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 10,
+  fig.height = 7
+)
+```
+
+## Color-Blind Friendly Palettes
+
+Rclade defaults to the `viridis` palette, which is:
+- Color-blind friendly
+- Grayscale friendly
+- Perceptually uniform
+
+```{r palette}
+library(Rclade)
+data(example_tree)
+
+# Default viridis palette
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE)
+print(p)
+```
+
+## Custom Color Mapping
+
+```{r custom_colors}
+# Custom color mapping for specific groups
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE,
+                   color_mapping = c("Proteobacteria" = "#E41A1C",
+                                     "Firmicutes" = "#377EB8"))
+print(p)
+```
+
+## Legend Placement
+
+```{r legend}
+# Inside the plot (default)
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE,
+                   legend_position = c(0.05, 0.85))
+
+# Standard positions
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE,
+                   legend_position = "right")
+```
+
+## Clade Labels
+
+```{r clade_labels}
+p <- plot_timetree(example_tree, rank = "phylum",
+                   taxonomy_format = "GTDB",
+                   add_timescale = FALSE,
+                   show_clade_label = TRUE)
+print(p)
+```
+
+## Taxonomy Quality Report
+
+Before finalizing your figure, verify label parsing quality:
+
+```{r quality}
+summarize_taxonomy_quality(example_tree$tip.label, format = "GTDB")
+```
+
+## Batch Processing
+
+Process multiple tree files at once:
+
+```{r batch, eval = FALSE}
+batch_plot(input_dir = "trees/",
+           output_dir = "figures/",
+           pattern = "*.tre",
+           rank = "phylum",
+           taxonomy_format = "GTDB")
+```
+
+## Reproducibility
+
+```{r reproducibility, eval = FALSE}
+save_session_info("session_info.txt")
+```
+
+## References & Acknowledgments
+
+Rclade builds on the **ggtree** and **deeptime** R packages. If you use Rclade
+in published research, please cite Rclade along with these key dependencies:
+
+- Yu G, Smith DK, Zhu H, Guan Y, Lam TT-Y (2017). "ggtree: an R package for
+  visualization and annotation of phylogenetic trees with their covariates and
+  other associated data." *Methods in Ecology and Evolution*, 8(1), 28-36.
+  doi:10.1111/2041-210X.12628
+- Gearty W (2025). "deeptime: an R package that facilitates highly
+  customizable and reproducible visualizations of data over geological time
+  intervals." *Big Earth Data*. doi:10.1080/20964471.2025.2537516
+
+The geological timescale data is based on the ICS International
+Chronostratigraphic Chart 2023/02 (https://stratigraphy.org/chart).

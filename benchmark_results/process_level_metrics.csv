@@ -1,0 +1,9 @@
+config,wall_s,max_rss_mb,cpu_pct
+synthetic_n200_rclade,3.67,506,
+synthetic_n200_ggtree,1.96,413,
+synthetic_n1000_rclade,4.25,518,
+synthetic_n1000_ggtree,3.69,417,
+synthetic_n5000_rclade,6.81,645,
+synthetic_n5000_ggtree,2.70,544,
+synthetic_n10000_rclade,12.78,663,
+synthetic_n10000_ggtree,5.09,590,
