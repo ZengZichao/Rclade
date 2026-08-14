@@ -27,7 +27,9 @@ jobs:
           extra-packages: |
             any::pkgdown
             any::remotes
+            any::svglite
             local::.
+          needs: website
 
       - name: Install package
         run: |

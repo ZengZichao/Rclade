@@ -39,6 +39,7 @@ jobs:
             any::testthat
             any::rcmdcheck
             any::remotes
+            any::svglite
 
       - name: Install package
         run: |

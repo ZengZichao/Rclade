@@ -15,6 +15,18 @@
 library(testthat)
 library(Rclade)
 
+# covr instrumentation inserts tracing probes into every function call,
+# slowing code by 10-50x with per-call overhead that is NOT uniform across
+# tree sizes. That makes every threshold/ratio assertion in this file
+# meaningless (observed: MRCA max/min ratio > 5 under covr while the same
+# suite passes clean R CMD check). Performance gates are the job of the
+# R-CMD-check workflow, so skip the whole file under coverage.
+skip_on_covr <- function() {
+  if (requireNamespace("covr", quietly = TRUE) && covr::in_covr()) {
+    skip("Performance tests are meaningless under covr instrumentation")
+  }
+}
+
 # Baseline thresholds (in seconds) - adjust based on CI environment
 BASELINE_THRESHOLDS <- list(
   small_tree_render = 5,    # ~100 tips
@@ -43,6 +55,7 @@ generate_test_tree <- function(n_tips, seed = 42) {
 
 test_that("Small tree rendering performance is within threshold", {
   skip_on_cran()
+  skip_on_covr()
   tree <- generate_test_tree(100)
   
   elapsed <- system.time({
@@ -56,6 +69,7 @@ test_that("Small tree rendering performance is within threshold", {
 
 test_that("Medium tree rendering performance is within threshold", {
   skip_on_cran()
+  skip_on_covr()
   tree <- generate_test_tree(500)
   
   elapsed <- system.time({
@@ -69,6 +83,7 @@ test_that("Medium tree rendering performance is within threshold", {
 
 test_that("Taxonomy parsing performance scales linearly", {
   skip_on_cran()
+  skip_on_covr()
   
   # Test with increasing sizes (250 minimum so system.time() reads are above
   # clock resolution; median of 3 to damp shared-runner jitter).
@@ -99,6 +114,7 @@ test_that("Taxonomy parsing performance scales linearly", {
 
 test_that("MRCA computation performance scales linearly", {
   skip_on_cran()
+  skip_on_covr()
 
   # Measurement strategy (see DESIGN INTENT above): system.time() has ~1-10 ms
   # resolution and shared CI runners jitter heavily, so a single elapsed read on
@@ -140,6 +156,7 @@ test_that("MRCA computation performance scales linearly", {
 
 test_that("Clade collapsing performance is within threshold", {
   skip_on_cran()
+  skip_on_covr()
   tree <- generate_test_tree(500)
   
   elapsed <- system.time({
@@ -153,6 +170,7 @@ test_that("Clade collapsing performance is within threshold", {
 
 test_that("Memory usage is reasonable for large trees", {
   skip_on_cran()
+  skip_on_covr()
 
   tree <- generate_test_tree(2000)
 
@@ -171,6 +189,7 @@ test_that("Memory usage is reasonable for large trees", {
 
 test_that("Batch processing performance scales with tree count", {
   skip_on_cran()
+  skip_on_covr()
   
   # Create a multiPhylo object with 3 trees
   trees <- lapply(1:3, function(i) generate_test_tree(100, seed = i))
