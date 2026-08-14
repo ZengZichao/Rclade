@@ -38,7 +38,7 @@ test_that("annotate_clade warns for out-of-range offset", {
     msgs <- capture_messages(
       Rclade:::annotate_clade(p, tree, mrca_map, colors, offset = -1)
     )
-    expect_true(grepl("clade_label_offset", msgs, fixed = TRUE))
+    expect_true(any(grepl("clade_label_offset", msgs, fixed = TRUE)))
   })
 })
 
@@ -60,7 +60,7 @@ test_that("annotate_clade warns for out-of-range fontsize", {
     msgs <- capture_messages(
       Rclade:::annotate_clade(p, tree, mrca_map, colors, fontsize = 0)
     )
-    expect_true(grepl("fontsize", msgs, fixed = TRUE))
+    expect_true(any(grepl("fontsize", msgs, fixed = TRUE)))
   })
 })
 

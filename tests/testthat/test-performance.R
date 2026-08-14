@@ -70,16 +70,24 @@ test_that("Medium tree rendering performance is within threshold", {
 test_that("Taxonomy parsing performance scales linearly", {
   skip_on_cran()
   
-  # Test with increasing sizes
-  sizes <- c(100, 500, 1000)
+  # Test with increasing sizes (250 minimum so system.time() reads are above
+  # clock resolution; median of 3 to damp shared-runner jitter).
+  sizes <- c(250, 500, 1000, 2000)
   times <- numeric(length(sizes))
+  n_reps <- 3L
   
   for (i in seq_along(sizes)) {
     tree <- generate_test_tree(sizes[i])
-    elapsed <- system.time({
-      parse_taxonomy_with_file(tree$tip.label, "phylum")
-    })["elapsed"]
-    times[i] <- elapsed
+    # Warm-up
+    invisible(parse_taxonomy_with_file(tree$tip.label, "phylum"))
+    reps <- numeric(n_reps)
+    for (r in seq_len(n_reps)) {
+      elapsed <- system.time({
+        parse_taxonomy_with_file(tree$tip.label, "phylum")
+      })["elapsed"]
+      reps[r] <- elapsed
+    }
+    times[i] <- stats::median(reps)
   }
   
   # Check that time per tip is roughly constant (within 5x factor)
@@ -91,26 +99,43 @@ test_that("Taxonomy parsing performance scales linearly", {
 
 test_that("MRCA computation performance scales linearly", {
   skip_on_cran()
-  
-  sizes <- c(100, 500, 1000)
+
+  # Measurement strategy (see DESIGN INTENT above): system.time() has ~1-10 ms
+  # resolution and shared CI runners jitter heavily, so a single elapsed read on
+  # a 100-tip tree (sub-ms work) is pure noise and routinely blows up the
+  # max/min ratio. We therefore (a) start at 250 tips so each measurement is
+  # comfortably above clock resolution, and (b) take the median of 3 runs to
+  # damp jitter instead of a single sample.
+  sizes <- c(250, 500, 1000, 2000)
   times <- numeric(length(sizes))
-  
+  n_reps <- 3L
+
   for (i in seq_along(sizes)) {
     tree <- generate_test_tree(sizes[i])
     taxa <- parse_taxonomy_with_file(tree$tip.label, "phylum")
     group_vec <- setNames(taxa$Group, taxa$label)
-    
-    elapsed <- system.time({
-      suppressWarnings(compute_mrca_map(tree, group_vec, check_monophyly = TRUE))
-    })["elapsed"]
-    times[i] <- elapsed
+
+    # Warm-up: first call pays JIT/namespace/lazy-load costs that are not
+    # representative of steady-state scaling.
+    invisible(suppressWarnings(
+      compute_mrca_map(tree, group_vec, check_monophyly = TRUE)
+    ))
+
+    reps <- numeric(n_reps)
+    for (r in seq_len(n_reps)) {
+      elapsed <- system.time(
+        suppressWarnings(compute_mrca_map(tree, group_vec, check_monophyly = TRUE))
+      )["elapsed"]
+      reps[r] <- elapsed
+    }
+    times[i] <- stats::median(reps)
   }
-  
+
   time_per_tip <- times / sizes
   # Handle sub-millisecond operations (times 0 → ratio NaN or Inf)
   ratio <- max(time_per_tip) / min(time_per_tip)
   expect_lt(if (is.nan(ratio) || is.infinite(ratio)) 0 else ratio, 5,
-            "MRCA computation does not scale linearly with tip count")
+            sprintf("MRCA computation does not scale linearly with tip count (max/min ratio = %.2f)", ratio))
 })
 
 test_that("Clade collapsing performance is within threshold", {

@@ -28,3 +28,4 @@
 ^\.Rmakevars-local$
 ^timetree_plot\.pdf$
 ^\.gitignore$
+^\.workbuddy$

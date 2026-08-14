@@ -25,6 +25,14 @@ tryCatch({
     }
   }
 
+  # ATTACH the package to the search path. test_dir() (unlike test_check())
+  # does NOT attach the package, so exported functions (plot_timetree,
+  # batch_plot, ...) and bundled datasets (data(example_tree)) would otherwise
+  # be invisible to test files that call them without the Rclade:: prefix —
+  # this was the cause of "could not find function" / "data set not found"
+  # failures on the devel and min-deps CI jobs. library() is idempotent.
+  suppressPackageStartupMessages(library("Rclade", character.only = TRUE))
+
   # tests/testthat/ excludes the external/ subdirectory by design.
   res <- test_dir("tests/testthat", reporter = "summary", stop_on_failure = TRUE)
   if (!is.null(res$error) && length(res$error) > 0L) {

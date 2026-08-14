@@ -113,7 +113,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 * Fixed path references, version wording, and bibliography citations in the manuscript.
 * Fixed geological timescale rendering under ggplot2 4.x, regenerated roxygen documentation, and synced dependency declarations and docs.
 
-## Clean redistribution (2026-08-13)
+## 1.0.0 Clean redistribution (2026-08-13)
 
 * **Clean redistribution (2026-08-13)**: removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
 

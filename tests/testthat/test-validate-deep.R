@@ -30,14 +30,14 @@ test_that("validate_newick_syntax warns about duplicate names", {
   # .logger_env$level state leaked from other tests. Scoped so it cannot leak.
   withr::with_options(list(rclade.log_level = "WARNING"), {
     msgs <- capture_messages(Rclade:::validate_newick_syntax("(A:1,A:1):1;", "test"))
-    expect_true(grepl("duplicate", msgs, fixed = TRUE))
+    expect_true(any(grepl("duplicate", msgs, fixed = TRUE)))
   })
 })
 
 test_that("validate_newick_syntax warns about missing semicolon", {
   withr::with_options(list(rclade.log_level = "WARNING"), {
     msgs <- capture_messages(Rclade:::validate_newick_syntax("(A:1,B:1):1", "test"))
-    expect_true(grepl("does not end with", msgs, fixed = TRUE))
+    expect_true(any(grepl("does not end with", msgs, fixed = TRUE)))
   })
 })
 
@@ -74,7 +74,7 @@ test_that("validate_tree_deep warns on duplicate tip labels", {
   # log_warning() -> message(); use capture_messages + grepl to assert.
   withr::with_options(list(rclade.log_level = "WARNING"), {
     msgs <- capture_messages(Rclade:::validate_tree_deep(tree, "test"))
-    expect_true(grepl("duplicate", msgs, fixed = TRUE))
+    expect_true(any(grepl("duplicate", msgs, fixed = TRUE)))
   })
 })
 
@@ -137,9 +137,11 @@ test_that("validate_sequence_deep detects invalid characters", {
   writeLines(c(">seq1", "ACGT123"), temp_file)
   # E-T3 regression: routed through log_warning() -> message(). Scoped so the
   # option cannot leak into later tests (fix A makes the logger honour it).
+  # any() guards against msgs having >1 element (e.g. an INFO line preceding
+  # the WARNING on some platforms) — grepl() is vectorised over msgs.
   withr::with_options(list(rclade.log_level = "WARNING"), {
     msgs <- capture_messages(validate_sequence_deep(temp_file))
-    expect_true(grepl("Invalid", msgs, fixed = TRUE))
+    expect_true(any(grepl("Invalid", msgs, fixed = TRUE)))
   })
   unlink(temp_file)
 })

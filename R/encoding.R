@@ -99,11 +99,23 @@ write_file_utf8 <- function(filepath, content, append = FALSE) {
   content <- gsub("\r\n", "\n", content)
   content <- gsub("\r", "\n", content)
 
-  # Write with UTF-8 encoding
-  con <- file(filepath, open = if (append) "a" else "w", encoding = "UTF-8")
-  on.exit(close(con), add = TRUE)
+  # Write in BINARY mode. A text-mode connection on Windows translates \n to
+  # \r\n at the OS level, which would re-introduce CR bytes even after the
+  # normalization above (the "write_file_utf8 normalizes line endings" test
+  # asserts the raw file contains no 0x0D). Binary mode keeps exactly what we
+  # hand to writeBin().
+  con <- file(filepath, open = if (append) "ab" else "wb")
+  on.exit(if (isOpen(con)) close(con), add = TRUE)
 
-  writeLines(content, con, sep = "\n")
+  # Mimic writeLines(content, con, sep = "\n"): each element is a line and
+  # every line ends with \n (trailing newline included). character(0) writes
+  # an empty file.
+  payload <- if (length(content) == 0) {
+    raw()
+  } else {
+    charToRaw(paste0(paste(content, collapse = "\n"), "\n"))
+  }
+  writeBin(payload, con)
   invisible(TRUE)
 }
 
