@@ -52,5 +52,5 @@ Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3
-URL: https://github.com/zengzichao/Rclade
+URL: https://github.com/zengzichao/Rclade, https://zengzichao.github.io/Rclade
 BugReports: https://github.com/zengzichao/Rclade/issues

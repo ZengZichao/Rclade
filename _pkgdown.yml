@@ -74,3 +74,8 @@ reference:
     contents:
       - rclade_logo
       - save_session_info
+  - title: Data
+    desc: Bundled example datasets
+    contents:
+      - example_tree
+      - polytomy_tree

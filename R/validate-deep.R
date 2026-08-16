@@ -113,6 +113,20 @@ validate_newick_syntax <- function(text, filepath = "<string>") {
 check_malicious_chars <- function(names, filepath = "<unknown>") {
   if (length(names) == 0) return(invisible(TRUE))
 
+  # Never print raw malicious characters (control chars / BiDi markers) in
+  # messages: they can corrupt terminal output and crash C-level formatting.
+  safe_names <- function(x) {
+    vapply(x, function(s) {
+      chars <- strsplit(s, "", useBytes = FALSE)[[1]]
+      paste(vapply(chars, function(ch) {
+        cp <- utf8ToInt(ch)[1]
+        if (is.na(cp) || cp < 0x20 || cp == 0x7F || cp > 0x7E) {
+          sprintf("<U+%04X>", cp)
+        } else ch
+      }, character(1)), collapse = "")
+    }, character(1))
+  }
+
   # Check for control characters using raw byte matching
   # Control chars: 0x00-0x08, 0x0B, 0x0C, 0x0E-0x1F, 0x7F
   has_control <- vapply(names, function(n) {
@@ -121,7 +135,7 @@ check_malicious_chars <- function(names, filepath = "<unknown>") {
   }, logical(1))
 
   if (any(has_control)) {
-    bad_names <- names[has_control]
+    bad_names <- safe_names(names[has_control])
     log_error("Control characters detected in node names in %s", filepath,
               .module = "validate-deep/check_name_safety")
     rlang::abort(paste0("[validate-deep/check_name_safety] Node names in ", filepath,
@@ -136,7 +150,7 @@ check_malicious_chars <- function(names, filepath = "<unknown>") {
   bidi_hits <- grepl(bidi_pattern, names, perl = TRUE)
 
   if (any(bidi_hits)) {
-    bad_names <- names[bidi_hits]
+    bad_names <- safe_names(names[bidi_hits])
     log_error("Unicode BiDi markers detected in node names in %s", filepath,
               .module = "validate-deep/check_name_safety")
     rlang::abort(paste0("[validate-deep/check_name_safety] Node names in ", filepath,
@@ -152,7 +166,7 @@ check_malicious_chars <- function(names, filepath = "<unknown>") {
   zwc_hits <- grepl(zwc_pattern, names, perl = TRUE)
 
   if (any(zwc_hits)) {
-    bad_names <- names[zwc_hits]
+    bad_names <- safe_names(names[zwc_hits])
     log_warning("Zero-width characters detected in node names in %s. Affected names: %s",
                 filepath, paste(head(bad_names, 3), collapse = ", "),
                 .module = "validate-deep/check_name_safety")

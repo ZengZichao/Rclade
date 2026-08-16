@@ -84,7 +84,9 @@ test_that("Medium tree rendering performance is within threshold", {
 test_that("Taxonomy parsing performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
-  
+  skip_if(Sys.getenv("GITHUB_ACTIONS") == "true",
+          "Timing-ratio tests are unreliable on shared CI runners")
+
   # Test with increasing sizes (250 minimum so system.time() reads are above
   # clock resolution; median of 3 to damp shared-runner jitter).
   sizes <- c(250, 500, 1000, 2000)
@@ -115,6 +117,8 @@ test_that("Taxonomy parsing performance scales linearly", {
 test_that("MRCA computation performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
+  skip_if(Sys.getenv("GITHUB_ACTIONS") == "true",
+          "Timing-ratio tests are unreliable on shared CI runners")
 
   # Measurement strategy (see DESIGN INTENT above): system.time() has ~1-10 ms
   # resolution and shared CI runners jitter heavily, so a single elapsed read on
