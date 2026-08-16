@@ -170,6 +170,28 @@ validate_tree_structure <- function(tree) {
   return(TRUE)
 }
 
+# ape's Newick parser overflows a fixed-size token buffer when a label
+# exceeds ~512 characters, aborting the whole R process with glibc
+# "stack smashing detected" on Linux (ape 5.8.1). Truncate overlong
+# labels before parsing so the pipeline degrades gracefully instead.
+.max_newick_label <- 500L
+
+truncate_long_newick_labels <- function(text, filepath = "<unknown>",
+                                        max_label = .max_newick_label) {
+  token_re <- "[^(),:;[:space:]\\[\\]]+"
+  token_matches <- gregexpr(token_re, text, perl = TRUE)
+  tokens <- regmatches(text, token_matches)[[1]]
+  long_idx <- which(nchar(tokens) > max_label)
+  if (length(long_idx) == 0) return(text)
+  log_warning(
+    "%d tree label(s) exceed %d characters and will be truncated to avoid a crash in ape's Newick parser (file: %s)",
+    length(long_idx), max_label, filepath,
+    .module = "read-input/truncate_long_labels")
+  tokens[long_idx] <- paste0(substr(tokens[long_idx], 1L, 400L), "_RCLADE_TRUNC")
+  regmatches(text, token_matches) <- list(tokens)
+  text
+}
+
 #' Read tree from file with automatic format detection
 #'
 #' Intended for use as a stable library API by external workflows
@@ -211,6 +233,7 @@ read_tree_auto <- function(filepath, tree_index = NULL, multi_tree_mode = "error
   if (format == "newick" || format == "unknown") {
     raw_text <- paste(read_file_utf8(filepath), collapse = "\n")
     validate_newick_syntax(raw_text, filepath)
+    raw_text <- truncate_long_newick_labels(raw_text, filepath)
     log_debug("Newick syntax validation passed")
   }
 

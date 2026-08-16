@@ -579,9 +579,14 @@ run("AD-004: 循环依赖", {
 })
 
 run("AD-007/008: 超长 / Unicode 标签", {
+  # ape 5.8.1 aborts the process on labels > ~512 chars on Linux, so overlong
+  # labels must go through Rclade's guarded reader, which truncates them.
   long_label <- paste0(rep("A", 10000), collapse = "")
-  txt <- paste0("(", long_label, ":1,B:1):1;")
-  tree <- ape::read.tree(text = txt)
+  f <- tempfile(fileext = ".nwk")
+  writeLines(paste0("(", long_label, ":1,B:1):1;"), f)
+  on.exit(unlink(f), add = TRUE)
+  tree <- read_tree_auto(f)
+  expect_true(all(nchar(tree$tip.label) <= 500))
   expect_s3_class(plot_timetree(tree, rank = "none", add_timescale = FALSE), "ggplot")
 })
 
