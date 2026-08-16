@@ -1,0 +1,106 @@
+# Package index
+
+## Core visualization
+
+Main plotting and pipeline functions
+
+- [`plot_timetree()`](https://zengzichao.github.io/Rclade/reference/plot_timetree.md)
+  : Plot a phylogenetic tree with geological timescale and taxonomic
+  collapsing
+
+- [`rclade_options()`](https://zengzichao.github.io/Rclade/reference/rclade_options.md)
+  :
+
+  Construct a validated options list for
+  [`plot_timetree()`](https://zengzichao.github.io/Rclade/reference/plot_timetree.md)
+
+- [`batch_plot()`](https://zengzichao.github.io/Rclade/reference/batch_plot.md)
+  : Batch plot timetrees from a directory of tree files
+
+- [`save_timetree()`](https://zengzichao.github.io/Rclade/reference/save_timetree.md)
+  : Save a timetree plot to file
+
+- [`summarize_timetree()`](https://zengzichao.github.io/Rclade/reference/summarize_timetree.md)
+  : Print a summary of a Rclade timetree plot
+
+- [`theme_timetree()`](https://zengzichao.github.io/Rclade/reference/theme_timetree.md)
+  : Publication-ready theme for timetree plots
+
+## Taxonomy parsing
+
+Format detection, label parsing and quality summary
+
+- [`parse_taxonomy()`](https://zengzichao.github.io/Rclade/reference/parse_taxonomy.md)
+  : Unified taxonomy parsing entry point
+- [`detect_taxonomy_format()`](https://zengzichao.github.io/Rclade/reference/detect_taxonomy_format.md)
+  : Detect taxonomy format from tip labels
+- [`read_taxonomy_file()`](https://zengzichao.github.io/Rclade/reference/read_taxonomy_file.md)
+  : Read taxonomy information from a table file
+- [`summarize_taxonomy_quality()`](https://zengzichao.github.io/Rclade/reference/summarize_taxonomy_quality.md)
+  : Report taxonomy label parsing quality
+- [`summarize_taxonomy_quality_with_file()`](https://zengzichao.github.io/Rclade/reference/summarize_taxonomy_quality_with_file.md)
+  : Summarize taxonomy quality with external file support
+
+## Tree input, MRCA and collapsing
+
+Tree reading, monophyly checks and group resolution
+
+- [`read_tree_auto()`](https://zengzichao.github.io/Rclade/reference/read_tree_auto.md)
+  : Read tree from file with automatic format detection
+- [`get_supported_extensions()`](https://zengzichao.github.io/Rclade/reference/get_supported_extensions.md)
+  : Get supported file extensions
+- [`check_monophyly()`](https://zengzichao.github.io/Rclade/reference/check_monophyly.md)
+  : Check if a taxonomic group is monophyletic
+- [`check_special_monophyly()`](https://zengzichao.github.io/Rclade/reference/check_special_monophyly.md)
+  : Check if a special identifier corresponds to a monophyletic group
+
+## Input validation
+
+Deep validation and robustness
+
+- [`validate_sequence_deep()`](https://zengzichao.github.io/Rclade/reference/validate_sequence_deep.md)
+  : Deep validation of sequence files
+- [`validate_sequence_file()`](https://zengzichao.github.io/Rclade/reference/validate_sequence_file.md)
+  : Validate sequence file format
+- [`validate_tree_sequence_match()`](https://zengzichao.github.io/Rclade/reference/validate_tree_sequence_match.md)
+  : Cross-validate tree tip labels against sequence IDs
+
+## CLI and Shiny
+
+Command-line, web interface and self-test
+
+- [`run_rclade_cli()`](https://zengzichao.github.io/Rclade/reference/run_rclade_cli.md)
+  : Run Rclade from the command line
+- [`run_rclade_shiny()`](https://zengzichao.github.io/Rclade/reference/run_rclade_shiny.md)
+  : Launch Rclade Shiny app
+- [`run_rclade_selftest()`](https://zengzichao.github.io/Rclade/reference/run_rclade_selftest.md)
+  : Run Rclade self-test
+
+## Logging
+
+Real-time logging control
+
+- [`set_log_enabled()`](https://zengzichao.github.io/Rclade/reference/set_log_enabled.md)
+  : Enable or disable logging
+- [`set_log_file()`](https://zengzichao.github.io/Rclade/reference/set_log_file.md)
+  : Set log file for dual output
+- [`set_log_level()`](https://zengzichao.github.io/Rclade/reference/set_log_level.md)
+  : Set log level
+
+## Utilities
+
+Helper functions
+
+- [`rclade_logo()`](https://zengzichao.github.io/Rclade/reference/rclade_logo.md)
+  : Display Rclade ASCII art logo
+- [`save_session_info()`](https://zengzichao.github.io/Rclade/reference/save_session_info.md)
+  : Save sessionInfo() for reproducibility
+
+## Data
+
+Bundled example datasets
+
+- [`example_tree`](https://zengzichao.github.io/Rclade/reference/example_tree.md)
+  : Example phylogenetic tree with GTDB-style labels
+- [`polytomy_tree`](https://zengzichao.github.io/Rclade/reference/polytomy_tree.md)
+  : Example phylogenetic tree with polytomies
