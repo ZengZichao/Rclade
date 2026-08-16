@@ -405,8 +405,14 @@ pt_step6_add_annotations <- function(
                            tree_start_position = tree_start_position)
     log_debug("Geological timescale added")
   } else if (!add_timescale && layout == "rectangular") {
-    if (!isTRUE(attr(p$data, "revts.done"))) {
+    # pt_step5 applies revts BEFORE collapse and marks attr(p, "revts.done").
+    # Do NOT revts again: when every tip is collapsed away, max(p$data$x) is
+    # the shallowest MRCA instead of 0, so a second revts shifts the whole
+    # tree horizontally while the fixed-coordinate triangle polygons stay
+    # behind, misaligning them (vertical stays correct).
+    if (!isTRUE(attr(p, "revts.done"))) {
       p <- ggtree::revts(p)
+      attr(p, "revts.done") <- TRUE
     }
     if (isTRUE(ignore_branch_length)) {
       p <- p + ggtree::theme_tree2()
