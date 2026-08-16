@@ -1,5 +1,31 @@
 # Rclade 1.0.0（2026-07-09，首个正式版本）
 
+## 健壮性与渲染修复（2026-08-16，未发布）
+
+- **折叠三角对齐修复**：当树中*所有*末端都被折叠时（如一次性折叠全部门），折叠三角形与所属分支在水平方向错位。原因是
+  `revts()`（时间轴反转）在折叠后被重复应用了一次——所有末端折叠掉之后
+  `max(x)` 不再是 0 而是最浅的
+  MRCA，第二次应用使整棵树平移，而坐标固定的三角形多边形未随之移动；垂直方向不受影响。现在
+  `revts()` 只应用一次，三角形顶点重新与 MRCA 对齐。
+- **超长标签防护**：超过 500 字符的 Newick 标签在解析前被截断为 400
+  字符 + `_RCLADE_TRUNC` 后缀（并给出警告）。原因：ape 5.8.1 的 Newick
+  解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃（glibc
+  “stack smashing detected”，退出码 134）。已在
+  [`read_tree_auto()`](https://zengzichao.github.io/Rclade/reference/read_tree_auto.md)
+  与
+  [`plot_timetree()`](https://zengzichao.github.io/Rclade/reference/plot_timetree.md)
+  文档及中英 README 中说明。
+- **对抗性输入报错信息**：节点名中检测到的控制字符与 Unicode BiDi
+  标记改以 `<U+XXXX>` 转义形式报告，不再原样输出，避免破坏终端显示。
+- **测试**：两个计时比值类性能测试改为校准式重复计时块（每个规模 \>= 约
+  100 ms），替代原先亚毫秒级的单次
+  [`system.time()`](https://rdrr.io/r/base/system.time.html)
+  读数（其比值纯属时钟量化噪声，在 macOS 与 CI 上均稳定报 8 倍）。
+- **CI/文档**：pkgdown
+  文档站恢复构建与部署（数据集条目入索引、DESCRIPTION 补站点
+  URL、授予写权限）；codecov 上传失败不再使 R-CMD-check 失败；中英 FAQ
+  中”52 个导出函数”的过时数字更正为 26。
+
 ## 清洁再分发 (2026-08-13)
 
 - **清洁再分发（2026-08-13）**：移除所有内置第三方参考数据（`data-external/`

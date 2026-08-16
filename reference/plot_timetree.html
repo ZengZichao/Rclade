@@ -505,6 +505,17 @@ Can be further customized with <code>+</code> layers.</p>
 <li><p>Plot finalization (legend, theme, title, save, metadata)</p></li>
 </ol></div>
     <div class="section level2">
+    <h2 id="label-length-guard">Label length guard<a class="anchor" aria-label="anchor" href="#label-length-guard"></a></h2>
+
+
+<p>When <code>tree</code> is a file path, Newick labels longer than 500 characters
+are truncated to 400 characters plus a <code>_RCLADE_TRUNC</code> suffix (with a
+warning) before parsing, because ape's Newick parser aborts the whole R
+process on labels longer than ~512 characters on Linux. Truncated labels
+may no longer match external taxonomy files or sequence IDs; shorten
+labels upstream if exact matching is required. See <code><a href="read_tree_auto.html">read_tree_auto()</a></code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="parameter-grouping">Parameter grouping<a class="anchor" aria-label="anchor" href="#parameter-grouping"></a></h2>
 
 

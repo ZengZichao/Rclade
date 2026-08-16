@@ -44,3 +44,12 @@ read_tree_auto(filepath, tree_index = NULL, multi_tree_mode = "error")
 ## Value
 
 phylo object (or multiPhylo if multi_tree_mode = "all" or "split")
+
+## Details
+
+Newick labels longer than 500 characters are automatically truncated to
+400 characters plus a `_RCLADE_TRUNC` suffix (with a warning), because
+ape's Newick parser aborts the whole R process on labels longer than
+~512 characters on Linux. Truncated labels may no longer match external
+taxonomy files or sequence IDs; shorten labels upstream if exact
+matching is required.

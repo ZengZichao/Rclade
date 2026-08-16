@@ -82,6 +82,15 @@ per-tree outputs with numeric suffixes (e.g. <code>output_1.pdf</code>)</p></li>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>phylo object (or multiPhylo if multi_tree_mode = "all" or "split")</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Newick labels longer than 500 characters are automatically truncated to
+400 characters plus a <code>_RCLADE_TRUNC</code> suffix (with a warning), because
+ape's Newick parser aborts the whole R process on labels longer than
+~512 characters on Linux. Truncated labels may no longer match external
+taxonomy files or sequence IDs; shorten labels upstream if exact matching
+is required.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

@@ -42,6 +42,19 @@
 <div id="rclade-1002026-07-09首个正式版本" class="section level1">
 
 <div class="section level2">
+<h2 id="健壮性与渲染修复2026-08-16未发布">健壮性与渲染修复（2026-08-16，未发布）<a class="anchor" aria-label="anchor" href="#%E5%81%A5%E5%A3%AE%E6%80%A7%E4%B8%8E%E6%B8%B2%E6%9F%93%E4%BF%AE%E5%A4%8D2026-08-16%E6%9C%AA%E5%8F%91%E5%B8%83"></a></h2>
+<ul><li>
+<strong>折叠三角对齐修复</strong>：当树中<em>所有</em>末端都被折叠时（如一次性折叠全部门），折叠三角形与所属分支在水平方向错位。原因是 <code>revts()</code>（时间轴反转）在折叠后被重复应用了一次——所有末端折叠掉之后 <code>max(x)</code> 不再是 0 而是最浅的 MRCA，第二次应用使整棵树平移，而坐标固定的三角形多边形未随之移动；垂直方向不受影响。现在 <code>revts()</code> 只应用一次，三角形顶点重新与 MRCA 对齐。</li>
+<li>
+<strong>超长标签防护</strong>：超过 500 字符的 Newick 标签在解析前被截断为 400 字符 + <code>_RCLADE_TRUNC</code> 后缀（并给出警告）。原因：ape 5.8.1 的 Newick 解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃（glibc “stack smashing detected”，退出码 134）。已在 <code><a href="reference/read_tree_auto.html">read_tree_auto()</a></code> 与 <code><a href="reference/plot_timetree.html">plot_timetree()</a></code> 文档及中英 README 中说明。</li>
+<li>
+<strong>对抗性输入报错信息</strong>：节点名中检测到的控制字符与 Unicode BiDi 标记改以 <code>&lt;U+XXXX&gt;</code> 转义形式报告，不再原样输出，避免破坏终端显示。</li>
+<li>
+<strong>测试</strong>：两个计时比值类性能测试改为校准式重复计时块（每个规模 &gt;= 约 100 ms），替代原先亚毫秒级的单次 <code><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time()</a></code> 读数（其比值纯属时钟量化噪声，在 macOS 与 CI 上均稳定报 8 倍）。</li>
+<li>
+<strong>CI/文档</strong>：pkgdown 文档站恢复构建与部署（数据集条目入索引、DESCRIPTION 补站点 URL、授予写权限）；codecov 上传失败不再使 R-CMD-check 失败；中英 FAQ 中”52 个导出函数”的过时数字更正为 26。</li>
+</ul></div>
+<div class="section level2">
 <h2 id="清洁再分发-2026-08-13">清洁再分发 (2026-08-13)<a class="anchor" aria-label="anchor" href="#%E6%B8%85%E6%B4%81%E5%86%8D%E5%88%86%E5%8F%91-2026-08-13"></a></h2>
 <ul><li>
 <strong>清洁再分发（2026-08-13）</strong>：移除所有内置第三方参考数据（<code>data-external/</code> 目录与 <code>inst/extdata/</code> 下 GTDB 参考文件）及依赖 GTDB 的脚本与测试（<code>scripts/extract_gtdb_node_taxonomy.R</code>、<code>scripts/benchmark_bac120_subsample.R</code>、<code>scripts/evaluate_parsing_real_data.R</code>、<code>scripts/benchmark_real_session.R</code>、<code>tests/testthat/external/</code>）；更新 README、CITATION、THIRDPARTY、cran-comments、CI 工作流与 vignettes 以移除对内置 GTDB 数据的引用；将格式特定的基准测试辅助函数重命名为格式中立名称。</li>

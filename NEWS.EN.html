@@ -42,6 +42,19 @@
 <div id="rclade-100-2026-07-09-first-stable-release" class="section level1">
 
 <div class="section level2">
+<h2 id="robustness-and-rendering-fixes-2026-08-16-unreleased">Robustness and rendering fixes (2026-08-16, unreleased)<a class="anchor" aria-label="anchor" href="#robustness-and-rendering-fixes-2026-08-16-unreleased"></a></h2>
+<ul><li>
+<strong>Collapse-triangle alignment</strong>: collapse triangles were horizontally offset from their clades when <em>every</em> tip was collapsed (e.g. all phyla at once). <code>revts()</code> was applied a second time after collapse; with all tips collapsed away, <code>max(x)</code> is the shallowest MRCA instead of 0, shifting the whole tree while the fixed-coordinate triangle polygons stayed behind. Vertical positions were unaffected. <code>revts()</code> is now applied exactly once; triangle apexes align with their MRCA again.</li>
+<li>
+<strong>Long-label guard</strong>: Newick labels longer than 500 characters are truncated to 400 characters + <code>_RCLADE_TRUNC</code> (with a warning) before parsing, because ape 5.8.1’s Newick parser aborts the whole R process (glibc “stack smashing detected”, exit 134) on labels longer than ~512 characters on Linux. Documented in <code><a href="reference/read_tree_auto.html">read_tree_auto()</a></code> and <code><a href="reference/plot_timetree.html">plot_timetree()</a></code>; notes added to README (EN/CN).</li>
+<li>
+<strong>Adversarial-input messages</strong>: control characters and Unicode BiDi markers in node names are reported as <code>&lt;U+XXXX&gt;</code> escapes instead of raw characters, so error messages cannot corrupt terminal output.</li>
+<li>
+<strong>Tests</strong>: timing-ratio performance tests now measure calibrated blocks of repeats (&gt;= ~100 ms per size) instead of single sub-millisecond <code><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time()</a></code> reads (constant 8x noise failure).</li>
+<li>
+<strong>CI/docs</strong>: pkgdown site now builds and deploys (dataset topics indexed, site URL in DESCRIPTION, write permission granted); codecov upload failures no longer fail R-CMD-check; FAQ “52 exported functions” corrected to 26.</li>
+</ul></div>
+<div class="section level2">
 <h2 id="clean-redistribution-2026-08-13">Clean redistribution (2026-08-13)<a class="anchor" aria-label="anchor" href="#clean-redistribution-2026-08-13"></a></h2>
 <ul><li>
 <strong>Clean redistribution (2026-08-13)</strong>: removed all bundled third-party reference data (<code>data-external/</code> and GTDB reference files under <code>inst/extdata/</code>) and GTDB-dependent scripts/tests (<code>scripts/extract_gtdb_node_taxonomy.R</code>, <code>scripts/benchmark_bac120_subsample.R</code>, <code>scripts/evaluate_parsing_real_data.R</code>, <code>scripts/benchmark_real_session.R</code>, <code>tests/testthat/external/</code>); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.</li>

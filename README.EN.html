@@ -49,6 +49,7 @@
 <p>Rclade provides a single-function pipeline for automated collapsing and visualization of large phylogenetic trees with geological timescales. It is designed for <strong>deep-time phylogenomics</strong> and <strong>microbial evolution studies</strong>, enabling researchers to visualize taxonomic relationships across geological time scales (Ga/Ma) with automatic clade collapsing based on GTDB, Silva, or NCBI taxonomy.</p>
 <div class="section level2">
 <h2 id="full-documentation">Full Documentation<a class="anchor" aria-label="anchor" href="#full-documentation"></a></h2>
+<p>An online pkgdown site (function reference, articles, news) is built from the <code>main</code> branch at <a href="https://zengzichao.github.io/Rclade" class="uri">https://zengzichao.github.io/Rclade</a>.</p>
 <p>In addition to this quick reference, Rclade ships a complete bilingual documentation set (per-function reference, tutorials, cookbook, and FAQ) in <code>inst/docs/</code>:</p>
 <ul><li>中文文档总览：<a href="inst/docs/cn/index.html">inst/docs/cn/index.md</a>
 </li>
@@ -1051,6 +1052,8 @@
 <li>
 <strong>Tip labels</strong>: Must be unique (ERROR if duplicates found)</li>
 <li>
+<strong>Label length</strong>: Newick labels longer than 500 characters are truncated to 400 characters + <code>_RCLADE_TRUNC</code> (with a warning) before parsing, because ape’s parser aborts the whole R process on labels longer than ~512 characters on Linux. Shorten labels upstream if they must match external files exactly</li>
+<li>
 <strong>Coordinate system</strong>: Phylogenetic trees use branch-length coordinates (time in Ma/Ga), not sequence coordinates</li>
 <li>
 <strong>Standard compliance</strong>: Newick format per <a href="https://evolution.genetics.washington.edu/phylip/newicktree.html" class="external-link">Newick standard</a>, Nexus per <a href="https://doi.org/10.1093/sysbio/46.4.590" class="external-link">NEXUS standard</a>
@@ -1212,7 +1215,10 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <td>Make tip labels unique</td>
 </tr><tr><td><code>ERROR: Control characters detected</code></td>
 <td>Malicious characters in labels</td>
-<td>Clean labels of control/BiDi chars</td>
+<td>Clean labels of control/BiDi chars (affected names are shown as <code>&lt;U+XXXX&gt;</code> escapes)</td>
+</tr><tr><td><code>WARNING: ... label(s) exceed 500 characters ... truncated</code></td>
+<td>ape’s Newick parser crashes on labels &gt; ~512 chars</td>
+<td>Rclade truncated them to 400 chars + <code>_RCLADE_TRUNC</code>; shorten labels upstream if exact matching is needed</td>
 </tr><tr><td><code>Circular dependency detected</code></td>
 <td>Taxonomy has cycles (e.g., d__A;p__B and d__B;p__A)</td>
 <td>Fix taxonomy file</td>

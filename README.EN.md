@@ -22,6 +22,9 @@ based on GTDB, Silva, or NCBI taxonomy.
 
 ## Full Documentation
 
+An online pkgdown site (function reference, articles, news) is built
+from the `main` branch at <https://zengzichao.github.io/Rclade>.
+
 In addition to this quick reference, Rclade ships a complete bilingual
 documentation set (per-function reference, tutorials, cookbook, and FAQ)
 in `inst/docs/`:
@@ -649,6 +652,11 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 - **Edge lengths**: Must be non-negative (CRITICAL error if negative
   values detected)
 - **Tip labels**: Must be unique (ERROR if duplicates found)
+- **Label length**: Newick labels longer than 500 characters are
+  truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before
+  parsing, because ape’s parser aborts the whole R process on labels
+  longer than ~512 characters on Linux. Shorten labels upstream if they
+  must match external files exactly
 - **Coordinate system**: Phylogenetic trees use branch-length
   coordinates (time in Ma/Ga), not sequence coordinates
 - **Standard compliance**: Newick format per [Newick
@@ -743,7 +751,8 @@ missing)
 | `CRITICAL: Empty file` | 0-byte input file | Check if file was properly transferred |
 | `CRITICAL: Negative branch lengths` | Tree has negative edges | Remove or fix negative branches |
 | `ERROR: Duplicate tip labels` | Same label appears twice | Make tip labels unique |
-| `ERROR: Control characters detected` | Malicious characters in labels | Clean labels of control/BiDi chars |
+| `ERROR: Control characters detected` | Malicious characters in labels | Clean labels of control/BiDi chars (affected names are shown as `<U+XXXX>` escapes) |
+| `WARNING: ... label(s) exceed 500 characters ... truncated` | ape’s Newick parser crashes on labels \> ~512 chars | Rclade truncated them to 400 chars + `_RCLADE_TRUNC`; shorten labels upstream if exact matching is needed |
 | `Circular dependency detected` | Taxonomy has cycles (e.g., d\_\_A;p\_\_B and d\_\_B;p\_\_A) | Fix taxonomy file |
 | `Clade 'X' not found` | Clade name not in taxonomy | Check spelling and format |
 | `Group 'X' is NOT monophyletic` | Group scattered in tree | Use `--clade` with `--strict`, or use `--rank` |

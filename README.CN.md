@@ -19,6 +19,9 @@ GTDB、Silva 或 NCBI 分类系统自动折叠分支。
 
 ## 详细文档
 
+在线 pkgdown 文档站（函数参考、文章、更新日志）由 `main`
+分支自动构建：<https://zengzichao.github.io/Rclade>。
+
 除本页快速参考外，Rclade
 还随包发布了一套完整的中英双语使用文档（含各函数参考、教程、示例集锦与常见问题），位于
 `inst/docs/`：
@@ -622,6 +625,10 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
   惯例
 - **分支长度**：必须为非负值（负值将触发 CRITICAL 错误）
 - **末端标签**：必须唯一（重复将触发 ERROR）
+- **标签长度**：超过 500 字符的 Newick 标签在解析前会被截断为 400 字符 +
+  `_RCLADE_TRUNC` 后缀（并给出警告），因为 ape 的解析器在 Linux
+  上遇到超过约 512 字符的标签会使整个 R
+  进程崩溃；若标签需与外部文件精确匹配，请提前缩短标签
 - **坐标系**：系统发育树使用分支长度坐标（时间，单位 Ma/Ga），非序列坐标
 - **标准合规**：Newick 格式遵循 [Newick
   标准](https://evolution.genetics.washington.edu/phylip/newicktree.html)，Nexus
@@ -709,7 +716,8 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `CRITICAL: Empty file` | 输入文件为 0 字节 | 检查文件是否正确传输 |
 | `CRITICAL: Negative branch lengths` | 树有负分支长度 | 移除或修复负分支 |
 | `ERROR: Duplicate tip labels` | 同一标签出现两次 | 使末端标签唯一 |
-| `ERROR: Control characters detected` | 标签中有恶意字符 | 清理控制字符/BiDi 字符 |
+| `ERROR: Control characters detected` | 标签中有恶意字符 | 清理控制字符/BiDi 字符（涉及的标签以 `<U+XXXX>` 转义形式显示） |
+| `WARNING: ... 个标签超过 500 字符 ... 截断` | ape 的 Newick 解析器遇到超过约 512 字符的标签会崩溃 | Rclade 已将其截断为 400 字符 + `_RCLADE_TRUNC`；若需精确匹配请提前缩短标签 |
 | `Circular dependency detected` | 分类学有循环（如 d\_\_A;p\_\_B 和 d\_\_B;p\_\_A） | 修复分类学文件 |
 | `Clade 'X' not found` | 类群名不在分类学中 | 检查拼写和格式 |
 | `Group 'X' is NOT monophyletic` | 类群分散在树中 | 使用 `--clade --strict` 或 `--rank` |
