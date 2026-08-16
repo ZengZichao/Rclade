@@ -1,5 +1,13 @@
 # Rclade 1.0.0 (2026-07-09, First Stable Release)
 
+## Robustness and rendering fixes (2026-08-16, unreleased)
+
+* **Collapse-triangle alignment**: collapse triangles were horizontally offset from their clades when *every* tip was collapsed (e.g. all phyla at once). `revts()` was applied a second time after collapse; with all tips collapsed away, `max(x)` is the shallowest MRCA instead of 0, shifting the whole tree while the fixed-coordinate triangle polygons stayed behind. Vertical positions were unaffected. `revts()` is now applied exactly once; triangle apexes align with their MRCA again.
+* **Long-label guard**: Newick labels longer than 500 characters are truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before parsing, because ape 5.8.1's Newick parser aborts the whole R process (glibc "stack smashing detected", exit 134) on labels longer than ~512 characters on Linux. Documented in `read_tree_auto()` and `plot_timetree()`; notes added to README (EN/CN).
+* **Adversarial-input messages**: control characters and Unicode BiDi markers in node names are reported as `<U+XXXX>` escapes instead of raw characters, so error messages cannot corrupt terminal output.
+* **Tests**: timing-ratio performance tests now measure calibrated blocks of repeats (>= ~100 ms per size) instead of single sub-millisecond `system.time()` reads (constant 8x noise failure).
+* **CI/docs**: pkgdown site now builds and deploys (dataset topics indexed, site URL in DESCRIPTION, write permission granted); codecov upload failures no longer fail R-CMD-check; FAQ "52 exported functions" corrected to 26.
+
 ## Clean redistribution (2026-08-13)
 
 * **Clean redistribution (2026-08-13)**: removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.

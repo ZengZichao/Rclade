@@ -1,5 +1,35 @@
 # Rclade News
 
+## Robustness and rendering fixes (2026-08-16, unreleased)
+
+* **Collapse-triangle alignment**: collapse triangles were horizontally
+  offset from their clades when *every* tip in the tree was collapsed
+  (e.g. collapsing all phyla at once). The cause was `revts()` (time-axis
+  reversal) being applied a second time after collapse — with all tips
+  collapsed away, `max(x)` is the shallowest MRCA instead of 0, so the
+  second application shifted the whole tree while the fixed-coordinate
+  triangle polygons stayed behind. Vertical positions were unaffected.
+  `revts()` is now applied exactly once; triangle apexes align with their
+  MRCA again.
+* **Long-label guard**: Newick labels longer than 500 characters are now
+  truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before
+  parsing, because ape 5.8.1's Newick parser aborts the whole R process
+  (glibc "stack smashing detected", exit 134) on labels longer than ~512
+  characters on Linux. Documented in `read_tree_auto()` and
+  `plot_timetree()`; truncate-aware notes added to README (EN/CN).
+* **Adversarial-input messages**: control characters and Unicode BiDi
+  markers detected in node names are now reported as `<U+XXXX>` escapes
+  instead of raw characters, so error messages can no longer corrupt
+  terminal output (and no longer trip C-level formatting).
+* **Tests**: the two timing-ratio performance tests now measure calibrated
+  blocks of repeats (>= ~100 ms per size) instead of single sub-millisecond
+  `system.time()` reads, which made the max/min ratio pure clock-quantization
+  noise (constant 8x failure on macOS and CI alike).
+* **CI/docs**: pkgdown site now builds and deploys (dataset topics indexed,
+  site URL added to DESCRIPTION, write permission granted); codecov upload
+  failures no longer fail R-CMD-check (no token configured); the bilingual
+  FAQ claim of "52 exported functions" corrected to 26.
+
 ## License and attribution compliance (2026-08-04, unreleased)
 
 * **License corrections**: the deeptime license was incorrectly listed as

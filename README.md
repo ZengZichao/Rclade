@@ -9,6 +9,7 @@ visualization of large phylogenetic trees with geological timescales.
 
 - [English README](README.EN.md)
 - [中文 README](README.CN.md)
+- Online documentation (pkgdown): https://zengzichao.github.io/Rclade
 
 The GitHub repository is at https://github.com/zengzichao/Rclade.
 Report issues at https://github.com/zengzichao/Rclade/issues.
