@@ -141,6 +141,6 @@ jobs:
         if: github.event_name == 'push'
         uses: codecov/codecov-action@v4
         with:
-          fail_ci_if_error: true
+          fail_ci_if_error: false  # no CODECOV_TOKEN configured; codecov rejects tokenless uploads
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
