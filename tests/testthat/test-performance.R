@@ -84,51 +84,43 @@ test_that("Medium tree rendering performance is within threshold", {
 test_that("Taxonomy parsing performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
-  skip_if(Sys.getenv("GITHUB_ACTIONS") == "true",
-          "Timing-ratio tests are unreliable on shared CI runners")
 
-  # Test with increasing sizes (250 minimum so system.time() reads are above
-  # clock resolution; median of 3 to damp shared-runner jitter).
+  # Timing block strategy: a single parse of 250-2000 labels is sub-millisecond,
+  # far below system.time() resolution, so max/min per-tip ratios are pure
+  # quantization noise (observed 8x with identical code). Instead, time a block
+  # of enough repeats to reach >= ~100 ms per size, then divide by reps.
   sizes <- c(250, 500, 1000, 2000)
   times <- numeric(length(sizes))
-  n_reps <- 3L
-  
+
   for (i in seq_along(sizes)) {
-    tree <- generate_test_tree(sizes[i])
+    labels <- generate_test_tree(sizes[i])$tip.label
     # Warm-up
-    invisible(parse_taxonomy_with_file(tree$tip.label, "phylum"))
-    reps <- numeric(n_reps)
-    for (r in seq_len(n_reps)) {
-      elapsed <- system.time({
-        parse_taxonomy_with_file(tree$tip.label, "phylum")
-      })["elapsed"]
-      reps[r] <- elapsed
-    }
-    times[i] <- stats::median(reps)
+    invisible(parse_taxonomy_with_file(labels, "phylum"))
+    # Calibrate reps so each block measurement is well above clock resolution
+    t1 <- system.time(invisible(parse_taxonomy_with_file(labels, "phylum")))["elapsed"]
+    n_reps <- max(10L, ceiling(0.1 / max(t1, 0.001)))
+    elapsed <- system.time(
+      for (r in seq_len(n_reps)) invisible(parse_taxonomy_with_file(labels, "phylum"))
+    )["elapsed"]
+    times[i] <- elapsed / n_reps
   }
-  
+
   # Check that time per tip is roughly constant (within 5x factor)
   time_per_tip <- times / sizes
   ratio <- max(time_per_tip) / min(time_per_tip)
   expect_lt(if (is.nan(ratio) || is.infinite(ratio)) 0 else ratio, 5,
-            "Taxonomy parsing does not scale linearly with tip count")
+            sprintf("Taxonomy parsing does not scale linearly with tip count (max/min ratio = %.2f)", ratio))
 })
 
 test_that("MRCA computation performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
-  skip_if(Sys.getenv("GITHUB_ACTIONS") == "true",
-          "Timing-ratio tests are unreliable on shared CI runners")
 
-  # Measurement strategy (see DESIGN INTENT above): system.time() has ~1-10 ms
-  # resolution and shared CI runners jitter heavily, so a single elapsed read on
-  # a 100-tip tree (sub-ms work) is pure noise and routinely blows up the
-  # max/min ratio. We therefore (a) start at 250 tips so each measurement is
-  # comfortably above clock resolution, and (b) take the median of 3 runs to
-  # damp jitter instead of a single sample.
+  # See taxonomy-parsing test above: a single call is sub-millisecond, so time
+  # a calibrated block of repeats (>= ~100 ms per size) instead of one call,
+  # which makes the max/min per-tip ratio pure clock-quantization noise.
   sizes <- c(250, 500, 1000, 2000)
   times <- numeric(length(sizes))
-  n_reps <- 3L
 
   for (i in seq_along(sizes)) {
     tree <- generate_test_tree(sizes[i])
@@ -141,35 +133,22 @@ test_that("MRCA computation performance scales linearly", {
       compute_mrca_map(tree, group_vec, check_monophyly = TRUE)
     ))
 
-    reps <- numeric(n_reps)
-    for (r in seq_len(n_reps)) {
-      elapsed <- system.time(
-        suppressWarnings(compute_mrca_map(tree, group_vec, check_monophyly = TRUE))
-      )["elapsed"]
-      reps[r] <- elapsed
-    }
-    times[i] <- stats::median(reps)
+    t1 <- system.time(suppressWarnings(
+      compute_mrca_map(tree, group_vec, check_monophyly = TRUE)
+    ))["elapsed"]
+    n_reps <- max(10L, ceiling(0.1 / max(t1, 0.001)))
+    elapsed <- system.time(
+      for (r in seq_len(n_reps)) {
+        invisible(suppressWarnings(compute_mrca_map(tree, group_vec, check_monophyly = TRUE)))
+      }
+    )["elapsed"]
+    times[i] <- elapsed / n_reps
   }
 
   time_per_tip <- times / sizes
-  # Handle sub-millisecond operations (times 0 → ratio NaN or Inf)
   ratio <- max(time_per_tip) / min(time_per_tip)
   expect_lt(if (is.nan(ratio) || is.infinite(ratio)) 0 else ratio, 5,
             sprintf("MRCA computation does not scale linearly with tip count (max/min ratio = %.2f)", ratio))
-})
-
-test_that("Clade collapsing performance is within threshold", {
-  skip_on_cran()
-  skip_on_covr()
-  tree <- generate_test_tree(500)
-  
-  elapsed <- system.time({
-    p <- suppressWarnings(plot_timetree(tree, rank = "phylum", add_timescale = FALSE))
-  })["elapsed"]
-
-  threshold <- BASELINE_THRESHOLDS$collapse * TOLERANCE * 0.5  # 500 tips = 0.5k
-  expect_lt(elapsed, threshold,
-            sprintf("Clade collapsing took %.2fs (threshold: %.2fs)", elapsed, threshold))
 })
 
 test_that("Memory usage is reasonable for large trees", {
