@@ -44,11 +44,8 @@ jobs:
             tail -5 /tmp/snip.out
           }
 
-          run_snippet "ape-version" 'cat(as.character(packageVersion("ape")), as.character(getRversion()), "\n")'
-          run_snippet "len-1000" 'tree <- ape::read.tree(text=paste0("(", paste0(rep("A",1000), collapse=""), ":1,B:1):1;")); cat("len-1000 ok\n")'
-          run_snippet "len-2000" 'tree <- ape::read.tree(text=paste0("(", paste0(rep("A",2000), collapse=""), ":1,B:1):1;")); cat("len-2000 ok\n")'
-          run_snippet "len-4000" 'tree <- ape::read.tree(text=paste0("(", paste0(rep("A",4000), collapse=""), ":1,B:1):1;")); cat("len-4000 ok\n")'
-          run_snippet "len-8000" 'tree <- ape::read.tree(text=paste0("(", paste0(rep("A",8000), collapse=""), ":1,B:1):1;")); cat("len-8000 ok\n")'
-          run_snippet "len-10000" 'tree <- ape::read.tree(text=paste0("(", paste0(rep("A",10000), collapse=""), ":1,B:1):1;")); cat("len-10000 ok\n")'
-          run_snippet "read-tree-file" 'long_label <- paste0(rep("A", 10000), collapse=""); f <- tempfile(fileext=".nwk"); writeLines(paste0("(", long_label, ":1,B:1):1;"), f); tree <- ape::read.tree(f); cat("file ok\n")'
+          for L in 100 200 300 400 500 600 800; do
+            run_snippet "len-$L" "tree <- ape::read.tree(text=paste0('(', paste0(rep('A',$L), collapse=''), ':1,B:1):1;')); cat('len-$L ok\n')"
+          done
+          Rscript -e 'cat("ape", as.character(packageVersion("ape")), "R", as.character(getRversion()), "\n")'
         shell: bash
