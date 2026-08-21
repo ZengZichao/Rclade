@@ -1,5 +1,17 @@
 # Rclade News
 
+## Rclade 1.0.1 (2026-08-21)
+
+* **Evaluation data**: adds the `evaluation/` directory with real-data
+  parsing-accuracy results (`parsing_accuracy_real_data.csv`; complete GTDB
+  R232 ar53 taxonomy table, 10,122 labels x 7 ranks: 100% non-NA rate and
+  100% exact-match agreement) and a reproducible verification script
+  (`verify_gtdb_parsing_accuracy.R`), supporting the parsing-accuracy
+  evaluation reported in the accompanying manuscript.
+* No changes to package code. `evaluation/` is excluded from R builds via
+  `.Rbuildignore`; DESCRIPTION and `.zenodo.json` versions bumped for
+  archival.
+
 ## Robustness and rendering fixes (2026-08-16, unreleased)
 
 * **Collapse-triangle alignment**: collapse triangles were horizontally

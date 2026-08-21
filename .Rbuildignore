@@ -29,3 +29,5 @@
 ^timetree_plot\.pdf$
 ^\.gitignore$
 ^\.workbuddy$
+
+^evaluation$
