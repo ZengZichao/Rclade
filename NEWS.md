@@ -159,5 +159,5 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 
 See the language-specific release notes for full historical details:
 
-- [English](NEWS.EN.md)
-- [中文](NEWS.CN.md)
+- [English](https://github.com/zengzichao/Rclade/blob/main/NEWS.EN.md)
+- [中文](https://github.com/zengzichao/Rclade/blob/main/NEWS.CN.md)

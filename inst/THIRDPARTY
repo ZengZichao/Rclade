@@ -114,14 +114,14 @@ Bundled Data
    File: R/sysdata.rda (compiled from data-raw/make_geo_timescales.R)
    Source: International Commission on Stratigraphy (ICS) International
      Chronostratigraphic Chart, version 2023/02
-   URL: https://stratigraphy.org/chart
+   URL: https://stratigraphy.org/chart/
    Reference: Gradstein FM, Ogg JG, Schmitz MD, Ogg GM (2020). The
      Geologic Time Scale 2020. Elsevier.
      doi:10.1016/C2020-1-02469-3
    Note: Geological boundary ages are factual data. The color codes
      follow the ICS standard color scheme. The ICS chart is available
      for educational and research use; see
-     https://stratigraphy.org/chart for terms.
+     https://stratigraphy.org/chart/ for terms.
 
 ------------------------------------------------------------------------
 Standards and Formats Referenced

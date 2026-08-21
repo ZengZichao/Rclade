@@ -7,8 +7,8 @@ Version: 1.0.0
 Rclade provides a single-function pipeline for automated collapsing and
 visualization of large phylogenetic trees with geological timescales.
 
-- [English README](README.EN.md)
-- [中文 README](README.CN.md)
+- [English README](https://github.com/zengzichao/Rclade/blob/main/README.EN.md)
+- [中文 README](https://github.com/zengzichao/Rclade/blob/main/README.CN.md)
 - Online documentation (pkgdown): https://zengzichao.github.io/Rclade
 
 The GitHub repository is at https://github.com/zengzichao/Rclade.

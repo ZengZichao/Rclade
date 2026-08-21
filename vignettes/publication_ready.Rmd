@@ -112,4 +112,4 @@ in published research, please cite Rclade along with these key dependencies:
   intervals." *Big Earth Data*. doi:10.1080/20964471.2025.2537516
 
 The geological timescale data is based on the ICS International
-Chronostratigraphic Chart 2023/02 (https://stratigraphy.org/chart).
+Chronostratigraphic Chart 2023/02 (https://stratigraphy.org/chart/).

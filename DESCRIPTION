@@ -7,12 +7,12 @@ Author: Zeng Zichao [aut, cre]
 Maintainer: Zeng Zichao <zengzichao@sjtu.edu.cn>
 Description: Provides a single-function pipeline for automated collapsing and
     visualization of large phylogenetic trees with geological timescales.
-    Automatically parses taxonomic labels from multiple formats (GTDB, Silva,
-    NCBI, embedded, custom), identifies Most Recent Common Ancestors (MRCAs), assigns
+    Automatically parses taxonomic labels from multiple formats ('GTDB', 'Silva',
+    'NCBI', embedded, custom), identifies Most Recent Common Ancestors ('MRCAs'), assigns
     color-blind-safe palettes, executes batch collapsing with automatic
-    nesting-aware ordering, integrates 'deeptime' geoscales with adaptive time
+    nesting-aware ordering, integrates 'deeptime' 'geoscales' with adaptive time
     breaks and unit switching, and manages smart legend layout. Supports
-    special ancestral node identifiers (LUCA, LACA, LBCA) for highlighting
+    special ancestral node identifiers ('LUCA', 'LACA', 'LBCA') for highlighting
     key nodes in the tree of life. Provides external taxonomy file support
     for trees with incomplete or missing taxonomic labels. Features real-time
     logging with timestamps, step tracking, and multiple log levels. Includes
