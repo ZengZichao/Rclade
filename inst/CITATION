@@ -16,7 +16,7 @@ citHeader("Rclade builds on the ggtree and deeptime ecosystems. If you use Rclad
 bibentry(
   bibtype  = "Article",
   title    = "ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data",
-  author   = personList(
+  author   = c(
     person("Guangchuang", "Yu"),
     person("David", "Smith"),
     person("Huachen", "Zhu"),
