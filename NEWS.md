@@ -12,7 +12,7 @@
   `.Rbuildignore`; DESCRIPTION and `.zenodo.json` versions bumped for
   archival.
 
-## Robustness and rendering fixes (2026-08-16, unreleased)
+## Robustness and rendering fixes (2026-08-16, Rclade 1.0.1)
 
 * **Collapse-triangle alignment**: collapse triangles were horizontally
   offset from their clades when *every* tip in the tree was collapsed
@@ -51,7 +51,7 @@
   coordinate is present, preventing the coordinate from overwriting the
   polar / deeptime geo coordinate systems (T05).
 
-## License and attribution compliance (2026-08-04, unreleased)
+## License and attribution compliance (2026-08-04, Rclade 1.0.1)
 
 * **License corrections**: the deeptime license was incorrectly listed as
   "MIT" in the logo, CLI help, and README files; it is actually GPL (>= 3).
@@ -73,7 +73,7 @@
 * **Copyright headers**: all R source files now carry a copyright and license
   notice at the top of each file.
 
-## Manuscript-review hardening (2026-08-03, unreleased)
+## Manuscript-review hardening (2026-08-03, Rclade 1.0.1)
 
 Addresses the editor/reviewer pass over the 1.0.0 manuscript (real-data
 parsing evaluation, unified benchmark protocol):
@@ -96,7 +96,7 @@ parsing evaluation, unified benchmark protocol):
   at every scale; fixes a fragile `regexpr()` construct in
   `baseline_manual_workflow.R`.
 
-## Remediation round 2 (2026-08-01, unreleased)
+## Remediation round 2 (2026-08-01, Rclade 1.0.1)
 
 Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
 
@@ -118,7 +118,7 @@ Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
   README (CN/EN) adds lockfile reproducibility guidance; `tests/functional/`
   test IDs and comments fully translated to English.
 
-## Post-review hardening (2026-07-30, unreleased)
+## Post-review hardening (2026-07-30, Rclade 1.0.1)
 
 A structured editor-style review of the 1.0.0 manuscript and codebase was
 fully addressed (see `主编审阅报告_Rclade_v1.0.0.md` in the project workspace).
