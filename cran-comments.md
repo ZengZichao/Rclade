@@ -26,7 +26,12 @@ There were no WARNINGs.
 
 There was 1 NOTE:
 
-* **New submission**: expected for a new version.
+* **unable to verify current time**: the local check environment could not
+  verify against a time server; not expected on CRAN servers.
+
+In addition, the GitHub Actions workflow (`R-CMD-check.yaml`) runs
+`R CMD check` on ubuntu-latest (R release/oldrel/devel), macos-latest
+(R release) and windows-latest (R release); all pass.
 
 ### Test results
 
