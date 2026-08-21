@@ -26,8 +26,11 @@ vignettes/*.html
 # === OAuth / secrets ===
 .httr-oauth
 
-# === pkgdown site output (if generated locally) ===
-docs/
+# === pkgdown site output (root-level only; NOT inst/docs) ===
+/docs/
+
+# === functional test output ===
+tests/functional/output/
 
 # === translation temp files ===
 *.pod
