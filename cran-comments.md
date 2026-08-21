@@ -20,18 +20,25 @@ This is a new major version of Rclade. The key changes from 1.0.0 are:
 `R CMD check --no-manual --as-cran Rclade_1.0.0.tar.gz` was run on
 macOS aarch64 (Apple M5) with R 4.5.3 in a micromamba-managed environment.
 
-There were no ERRORs.
-
-There were no WARNINGs.
-
-There was 1 NOTE:
-
-* **unable to verify current time**: the local check environment could not
-  verify against a time server; not expected on CRAN servers.
+There were no ERRORs, WARNINGs or NOTEs.
 
 In addition, the GitHub Actions workflow (`R-CMD-check.yaml`) runs
 `R CMD check` on ubuntu-latest (R release/oldrel/devel), macos-latest
 (R release) and windows-latest (R release); all pass.
+
+### Resubmission
+
+This is a resubmission addressing the incoming-check notes of the
+first submission:
+
+- Proper nouns in DESCRIPTION (GTDB, LACA, LBCA, LUCA, MRCAs,
+  geoscales) are now single-quoted.
+- The pkgdown URL now uses a trailing slash
+  (https://zengzichao.github.io/Rclade/); GitHub Pages has been
+  enabled, so the URL resolves (previously 404).
+- The stratigraphy.org/chart URL now uses a trailing slash
+  (avoids a 301 redirect).
+- README.md / NEWS.md links to the EN/CN files are now absolute URLs.
 
 ### Test results
 
