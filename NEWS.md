@@ -29,6 +29,15 @@
   site URL added to DESCRIPTION, write permission granted); codecov upload
   failures no longer fail R-CMD-check (no token configured); the bilingual
   FAQ claim of "52 exported functions" corrected to 26.
+* **`theme_timetree()` now returns a list**: the return value changed from a
+  single ggplot2 theme object to `list(theme, coord)` where `coord` carries
+  `clip = "off"` (breaking change for direct callers: use `p + th$theme`,
+  then `add_clip_off(p, layout)` for clipping control). The rendering
+  pipeline no longer adds the returned coord unconditionally —
+  `add_clip_off()` applies `coord_polar(...)` (circular) or
+  `coord_cartesian(clip = "off")` (rectangular) only when no timescale
+  coordinate is present, preventing the coordinate from overwriting the
+  polar / deeptime geo coordinate systems (T05).
 
 ## License and attribution compliance (2026-08-04, unreleased)
 
