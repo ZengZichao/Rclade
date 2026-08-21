@@ -1,23 +1,21 @@
-## CRAN submission comments for Rclade 1.0.0
+## CRAN submission comments for Rclade 1.0.1
 
-### New submission
+### Update from 1.0.0
 
-This is a new major version of Rclade. The key changes from 1.0.0 are:
+This is a minor update of Rclade. The key changes from 1.0.0 are:
 
-- Removed all bundled third-party reference data (GTDB reference tree and
-  associated files) from the package. The software still supports parsing
-  GTDB-format taxonomy labels as a built-in feature, but no longer ships
-  GTDB data files.
-- Removed the `data-external/` directory (external literature-derived tree
-  files) and all references to it.
-- Removed the GTDB-gated external test suite (`tests/testthat/external/`)
-  and the GTDB data download script.
-- Renamed internal helper functions and benchmark scripts that referenced
-  GTDB data to use format-neutral names.
+- Adds an `evaluation/` directory (excluded from R builds via
+  `.Rbuildignore`) containing real-data parsing-accuracy results
+  (`parsing_accuracy_real_data.csv`; complete GTDB R232 ar53 taxonomy
+  table, 10,122 labels x 7 ranks: 100% non-NA rate and 100% exact-match
+  agreement) and a reproducible verification script
+  (`verify_gtdb_parsing_accuracy.R`), supporting the parsing-accuracy
+  evaluation reported in the accompanying manuscript.
+- No changes to package code, exports, or behaviour.
 
 ### R CMD check results (local)
 
-`R CMD check --no-manual --as-cran Rclade_1.0.0.tar.gz` was run on
+`R CMD check --no-manual --as-cran Rclade_1.0.1.tar.gz` was run on
 macOS aarch64 (Apple M5) with R 4.5.3 in a micromamba-managed environment.
 
 There were no ERRORs, WARNINGs or NOTEs.
@@ -26,21 +24,7 @@ In addition, the GitHub Actions workflow (`R-CMD-check.yaml`) runs
 `R CMD check` on ubuntu-latest (R release/oldrel/devel), macos-latest
 (R release) and windows-latest (R release); all pass.
 
-### Resubmission
-
-This is a resubmission addressing the incoming-check notes of the
-first submission:
-
-- Proper nouns in DESCRIPTION (GTDB, LACA, LBCA, LUCA, MRCAs,
-  geoscales) are now single-quoted.
-- The pkgdown URL now uses a trailing slash
-  (https://zengzichao.github.io/Rclade/); GitHub Pages has been
-  enabled, so the URL resolves (previously 404).
-- The stratigraphy.org/chart URL now uses a trailing slash
-  (avoids a 301 redirect).
-- README.md / NEWS.md links to the EN/CN files are now absolute URLs.
-
-### Test results
+### Test results (unchanged from 1.0.0; `evaluation/` adds no tests)
 
 - `R CMD check` tests (testthat, canonical summary reporter):
   **451 pass / 0 fail / 7 skip (458 total)**.
