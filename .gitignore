@@ -47,3 +47,8 @@ Thumbs.db
 
 # === WorkBuddy internal (not part of the package) ===
 .workbuddy/
+
+# === benchmark rerun backups & plotting byproducts ===
+benchmark_results.bak-*/
+evaluation.bak-*/
+Rplots.pdf

@@ -1,5 +1,22 @@
 # Rclade News
 
+## Rclade 1.0.2 (2026-08-22)
+
+* **Refreshed benchmark results**: all benchmarks were re-run against the
+  v1.0.1 code base (which includes the 2026-08-16 Newick bracket-balance
+  vectorization and parsing-pipeline fixes). In-session rendering at
+  10,000 tips improved from ~1.4 s to ~0.9 s (median); real-data timing on
+  the GTDB ar53 tree (10,122 tips, 25 phyla) is now reported:
+  4.3 s in-session (median of 3) and 5.6 s process-level including R
+  startup. Deterministic accuracy checks are unchanged (100% GTDB/example
+  parsing accuracy; zero straight-edge deviation).
+* **Reproducibility scripts**: adds `scripts/benchmark_real_timing.R`
+  (real-data in-session timing, manuscript Table 4 source) and
+  `scripts/make_ncbi_rank_shift_example.R` (deterministic regeneration of
+  `ncbi_rank_shift_example.csv`, byte-identical to the committed file).
+* No changes to package code relative to 1.0.1; DESCRIPTION and
+  `.zenodo.json` versions bumped for archival.
+
 ## Rclade 1.0.1 (2026-08-21)
 
 * **Evaluation data**: adds the `evaluation/` directory with real-data

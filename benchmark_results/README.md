@@ -23,7 +23,12 @@ Reproduce with `scripts/benchmark_synthetic.R`.
 
 Process-level wall-clock time and peak RSS memory measured with
 `/usr/bin/time -l` (single run per configuration), including R startup and
-package loading, for the synthetic series.
+package loading, for the **synthetic** series (n = 200/1000/5000/10000 ×
+{rclade, ggtree}). Columns: `config, wall_s, max_rss_mb, cpu_pct`.
+This file is the source of the **overhead factor** (process / in-session) at
+synthetic scales. It is NOT the process-level number cited in manuscript
+Table 4 for the real ar53 tree — that is measured separately (see
+`ar53_process_level.txt` below).
 Reproduce with `scripts/run_process_level.sh` (which drives
 `scripts/benchmark_synthetic_once.R`).
 
@@ -32,11 +37,31 @@ Reproduce with `scripts/run_process_level.sh` (which drives
 Split-stage timing at n = 1,000 (3 replicates, proc.time protocol): format
 detection/parsing, MRCA + monophyly, collapse/render, full Rclade pipeline,
 and the ggtree baseline. Reproduce with `scripts/benchmark_split_cost.R`.
+(The same script also writes `benchmark_improved_repeats.csv` — Rclade vs
+ggtree at n = 200/1000 with 5 replicates — which is produced by the rerun but
+not part of the manuscript tables.)
 
 ### ncbi_rank_shift_example.csv
 
-Quantified positional rank shift of the NCBI parser on a 9-token virus-style
-lineage (parsed columns shift by 1–2 true ranks).
+Quantified positional rank shift of the NCBI parser on an 8-token virus-style
+lineage (leading "Viruses" skip-prefix stripped; the remaining 7 tokens map
+positionally, and parsed columns shift by 1–2 true ranks). This file is **fully
+reproducible**: regenerate it deterministically with
+`scripts/make_ncbi_rank_shift_example.R` (output is byte-identical to this
+file — verified by `diff`).
+
+### ar53_benchmark.csv  (rerun output)
+
+In-session timing of the real ar53 tree at the target rank, produced by
+`scripts/benchmark_real_timing.R` (Table 4 source). Columns:
+`rank, n_tips, n_groups, in_session_median_s, in_session_min_s,
+in_session_max_s, iterations`.
+
+### ar53_process_level.txt  (rerun output)
+
+Process-level wall-clock and peak RSS for the **real ar53 tree**, captured by
+`/usr/bin/time -l` wrapping `scripts/benchmark_real_once.R` (Table 4
+process-level cell). Distinct from the synthetic `process_level_metrics.csv`.
 
 ### straightness_deviation.csv
 

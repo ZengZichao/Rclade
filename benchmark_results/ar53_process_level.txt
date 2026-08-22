@@ -1,0 +1,266 @@
+
+============================================================
+           Rclade: Phylogenetic Tree Visualization         
+============================================================
+
+2026-08-22T15:43:41.912+08:00 | INFO     | Starting plot_timetree pipeline
+2026-08-22T15:43:41.912+08:00 | INFO     | Tree input               : ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:43:41.912+08:00 | INFO     | Rank                     : phylum
+2026-08-22T15:43:41.912+08:00 | INFO     | Layout                   : rectangular
+2026-08-22T15:43:41.912+08:00 | INFO     | Unit                     : auto
+2026-08-22T15:43:41.912+08:00 | INFO     | Reading tree file: ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:43:42.046+08:00 | INFO     | Tree loaded successfully: 10122 tips, 10121 internal nodes
+2026-08-22T15:43:42.046+08:00 | INFO     | Step 1/7: Input validation and reading
+
+  --------------------------------------------------
+  >> Input Validation
+  --------------------------------------------------
+2026-08-22T15:43:42.047+08:00 | INFO     | Tips                     : 10122
+2026-08-22T15:43:42.047+08:00 | INFO     | Internal nodes           : 10121
+2026-08-22T15:43:42.047+08:00 | INFO     | Edge lengths range       : 0.0000 to 1.6391
+2026-08-22T15:43:42.047+08:00 | INFO     | Input validation passed
+2026-08-22T15:43:42.047+08:00 | WARNING  | [plot-timetree-pipeline/validate_input] | Large tree detected: 10122 tips. This may require significant memory and time.
+2026-08-22T15:43:42.047+08:00 | INFO     | Consider using --low_memory mode for trees with >10000 tips.
+2026-08-22T15:43:42.047+08:00 | INFO     | Timer 'input_reading': 1 ms
+2026-08-22T15:43:42.115+08:00 | INFO     | Step 2/7: Taxonomy parsing
+2026-08-22T15:43:42.115+08:00 | INFO     | Using rank-based taxonomy: phylum
+2026-08-22T15:43:43.998+08:00 | INFO     | Detected format          : GTDB
+2026-08-22T15:43:43.999+08:00 | INFO     | Groups found             : 25
+2026-08-22T15:43:43.999+08:00 | INFO     | Timer 'taxonomy_parsing': 1.88 s
+2026-08-22T15:43:44.074+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+2026-08-22T15:43:44.074+08:00 | INFO     | Checking monophyly and computing MRCA for each group...
+2026-08-22T15:43:44.107+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Huberarchaeota' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:43:44.341+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JACRDV01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:43:44.435+08:00 | INFO     | Valid groups for collapse: 23 out of 25 total groups
+2026-08-22T15:43:44.436+08:00 | INFO     | Single-species groups: 2
+2026-08-22T15:43:44.436+08:00 | INFO     | Valid MRCA nodes         : 23
+2026-08-22T15:43:44.436+08:00 | INFO     | Timer 'mrca_computation': 362 ms
+2026-08-22T15:43:44.721+08:00 | INFO     | Step 4/7: Color generation
+2026-08-22T15:43:44.722+08:00 | INFO     | Color palette            : Set1
+2026-08-22T15:43:44.722+08:00 | INFO     | Step 5/7: Tree rendering
+2026-08-22T15:43:45.884+08:00 | INFO     | Collapsing 23 clades...
+2026-08-22T15:43:46.400+08:00 | INFO     | Clade collapse complete
+2026-08-22T15:43:46.400+08:00 | INFO     | Timer 'tree_rendering': 1.68 s
+2026-08-22T15:43:46.491+08:00 | INFO     | Step 6/7: Timescale integration
+
+============================================================
+                      Pipeline Complete                    
+============================================================
+
+2026-08-22T15:43:46.514+08:00 | INFO     |   Tips              : 10122
+2026-08-22T15:43:46.514+08:00 | INFO     |   Groups            : 25
+2026-08-22T15:43:46.514+08:00 | INFO     |   Groups collapsed  : 23
+2026-08-22T15:43:46.515+08:00 | INFO     |   Taxonomy format   : GTDB
+2026-08-22T15:43:46.515+08:00 | INFO     |   Layout            : rectangular
+2026-08-22T15:43:46.515+08:00 | INFO     |   Timescale         : disabled
+2026-08-22T15:43:46.515+08:00 | INFO     | plot_timetree completed successfully
+        5.58 real         5.25 user         0.31 sys
+           644726784  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               45688  page reclaims
+                  20  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   6  voluntary context switches
+                2089  involuntary context switches
+        110822012494  instructions retired
+         24192203022  cycles elapsed
+           339313696  peak memory footprint
+===== rank=class =====
+
+============================================================
+           Rclade: Phylogenetic Tree Visualization         
+============================================================
+
+2026-08-22T15:52:31.218+08:00 | INFO     | Starting plot_timetree pipeline
+2026-08-22T15:52:31.218+08:00 | INFO     | Tree input               : ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:52:31.219+08:00 | INFO     | Rank                     : class
+2026-08-22T15:52:31.219+08:00 | INFO     | Layout                   : rectangular
+2026-08-22T15:52:31.219+08:00 | INFO     | Unit                     : auto
+2026-08-22T15:52:31.219+08:00 | INFO     | Reading tree file: ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:52:31.371+08:00 | INFO     | Tree loaded successfully: 10122 tips, 10121 internal nodes
+2026-08-22T15:52:31.372+08:00 | INFO     | Step 1/7: Input validation and reading
+
+  --------------------------------------------------
+  >> Input Validation
+  --------------------------------------------------
+2026-08-22T15:52:31.372+08:00 | INFO     | Tips                     : 10122
+2026-08-22T15:52:31.372+08:00 | INFO     | Internal nodes           : 10121
+2026-08-22T15:52:31.372+08:00 | INFO     | Edge lengths range       : 0.0000 to 1.6391
+2026-08-22T15:52:31.373+08:00 | INFO     | Input validation passed
+2026-08-22T15:52:31.373+08:00 | WARNING  | [plot-timetree-pipeline/validate_input] | Large tree detected: 10122 tips. This may require significant memory and time.
+2026-08-22T15:52:31.373+08:00 | INFO     | Consider using --low_memory mode for trees with >10000 tips.
+2026-08-22T15:52:31.373+08:00 | INFO     | Timer 'input_reading': 1 ms
+2026-08-22T15:52:31.433+08:00 | INFO     | Step 2/7: Taxonomy parsing
+2026-08-22T15:52:31.433+08:00 | INFO     | Using rank-based taxonomy: class
+2026-08-22T15:52:33.382+08:00 | INFO     | Detected format          : GTDB
+2026-08-22T15:52:33.382+08:00 | INFO     | Groups found             : 71
+2026-08-22T15:52:33.383+08:00 | INFO     | Timer 'taxonomy_parsing': 1.95 s
+2026-08-22T15:52:33.454+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+2026-08-22T15:52:33.454+08:00 | INFO     | Checking monophyly and computing MRCA for each group...
+2026-08-22T15:52:33.455+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZWFW01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:33.504+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Huberarchaeia' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:33.677+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'B88-G9' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:33.797+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JACRDV01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:33.843+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Asgardarchaeia' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:34.044+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'DRAE01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:34.086+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAYNNH01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:34.086+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'QMWL01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:34.308+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAQUQK01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:34.444+08:00 | INFO     | Valid groups for collapse: 62 out of 71 total groups
+2026-08-22T15:52:34.445+08:00 | INFO     | Single-species groups: 9
+2026-08-22T15:52:34.445+08:00 | INFO     | Valid MRCA nodes         : 62
+2026-08-22T15:52:34.445+08:00 | INFO     | Timer 'mrca_computation': 990 ms
+2026-08-22T15:52:34.730+08:00 | INFO     | Step 4/7: Color generation
+2026-08-22T15:52:34.731+08:00 | INFO     | Color palette            : Set1
+2026-08-22T15:52:34.731+08:00 | INFO     | Step 5/7: Tree rendering
+2026-08-22T15:52:35.969+08:00 | INFO     | Collapsing 62 clades...
+2026-08-22T15:52:36.698+08:00 | INFO     | Clade collapse complete
+2026-08-22T15:52:36.698+08:00 | INFO     | Timer 'tree_rendering': 1.97 s
+2026-08-22T15:52:36.788+08:00 | INFO     | Step 6/7: Timescale integration
+
+============================================================
+                      Pipeline Complete                    
+============================================================
+
+2026-08-22T15:52:36.814+08:00 | INFO     |   Tips              : 10122
+2026-08-22T15:52:36.814+08:00 | INFO     |   Groups            : 71
+2026-08-22T15:52:36.814+08:00 | INFO     |   Groups collapsed  : 62
+2026-08-22T15:52:36.815+08:00 | INFO     |   Taxonomy format   : GTDB
+2026-08-22T15:52:36.815+08:00 | INFO     |   Layout            : rectangular
+2026-08-22T15:52:36.815+08:00 | INFO     |   Timescale         : disabled
+2026-08-22T15:52:36.815+08:00 | INFO     | plot_timetree completed successfully
+        6.81 real         6.41 user         0.36 sys
+           643301376  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               47304  page reclaims
+                  20  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  12  voluntary context switches
+                3011  involuntary context switches
+        126811508314  instructions retired
+         29491083626  cycles elapsed
+           368133176  peak memory footprint
+===== rank=order =====
+
+============================================================
+           Rclade: Phylogenetic Tree Visualization         
+============================================================
+
+2026-08-22T15:52:38.035+08:00 | INFO     | Starting plot_timetree pipeline
+2026-08-22T15:52:38.035+08:00 | INFO     | Tree input               : ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:52:38.035+08:00 | INFO     | Rank                     : order
+2026-08-22T15:52:38.035+08:00 | INFO     | Layout                   : rectangular
+2026-08-22T15:52:38.035+08:00 | INFO     | Unit                     : auto
+2026-08-22T15:52:38.035+08:00 | INFO     | Reading tree file: ../Rclade-参考文件/参考文件-物种树/ar53_r232.tree
+2026-08-22T15:52:38.168+08:00 | INFO     | Tree loaded successfully: 10122 tips, 10121 internal nodes
+2026-08-22T15:52:38.168+08:00 | INFO     | Step 1/7: Input validation and reading
+
+  --------------------------------------------------
+  >> Input Validation
+  --------------------------------------------------
+2026-08-22T15:52:38.169+08:00 | INFO     | Tips                     : 10122
+2026-08-22T15:52:38.169+08:00 | INFO     | Internal nodes           : 10121
+2026-08-22T15:52:38.169+08:00 | INFO     | Edge lengths range       : 0.0000 to 1.6391
+2026-08-22T15:52:38.169+08:00 | INFO     | Input validation passed
+2026-08-22T15:52:38.169+08:00 | WARNING  | [plot-timetree-pipeline/validate_input] | Large tree detected: 10122 tips. This may require significant memory and time.
+2026-08-22T15:52:38.169+08:00 | INFO     | Consider using --low_memory mode for trees with >10000 tips.
+2026-08-22T15:52:38.169+08:00 | INFO     | Timer 'input_reading': 1 ms
+2026-08-22T15:52:38.236+08:00 | INFO     | Step 2/7: Taxonomy parsing
+2026-08-22T15:52:38.237+08:00 | INFO     | Using rank-based taxonomy: order
+2026-08-22T15:52:40.124+08:00 | INFO     | Detected format          : GTDB
+2026-08-22T15:52:40.124+08:00 | INFO     | Groups found             : 179
+2026-08-22T15:52:40.124+08:00 | INFO     | Timer 'taxonomy_parsing': 1.89 s
+2026-08-22T15:52:40.199+08:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+2026-08-22T15:52:40.199+08:00 | INFO     | Checking monophyly and computing MRCA for each group...
+2026-08-22T15:52:40.200+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZWFW01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.286+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Huberarchaeales' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.318+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZXUR01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.350+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAYQNF01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.416+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'DAOWOJ01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.449+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAQUSD01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.449+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZVOT01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.551+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Jingweiarchaeales' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.619+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZGMV01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:40.776+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAGGVJ01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.036+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'B88-G9' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.051+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAYQAE01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.096+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'DSM-2088' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.110+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JACRDV01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.172+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Asgardarchaeales' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.203+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'Sifarchaeales' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.566+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'DRAE01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.596+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAPDIZ01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.596+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAYZOK01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.638+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JBHIEI01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.681+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAYNNH01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.681+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'QMWL01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.709+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'PSMU01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.750+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAANXF01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:41.890+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAUWIL01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.026+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'UBA186' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.042+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAQUQK01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.042+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'UBA9212' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.057+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'GCA-002838935' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.117+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JBBABA01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.197+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZUZU01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.197+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZSUE01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.228+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JANQNL01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.244+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAHFTX01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.277+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'B31-G17' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.369+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'JAUWGG01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.399+08:00 | WARNING  | [compute-mrca/compute_mrca_map] | Group 'CAZPOY01' has only 1 species, skipping collapse. It will still be labeled if show_clade_label = TRUE.
+2026-08-22T15:52:42.462+08:00 | INFO     | Valid groups for collapse: 142 out of 179 total groups
+2026-08-22T15:52:42.462+08:00 | INFO     | Single-species groups: 37
+2026-08-22T15:52:42.463+08:00 | INFO     | Valid MRCA nodes         : 142
+2026-08-22T15:52:42.463+08:00 | INFO     | Timer 'mrca_computation': 2.26 s
+2026-08-22T15:52:42.778+08:00 | INFO     | Step 4/7: Color generation
+2026-08-22T15:52:42.779+08:00 | INFO     | Color palette            : Set1
+2026-08-22T15:52:42.779+08:00 | INFO     | Step 5/7: Tree rendering
+2026-08-22T15:52:44.074+08:00 | INFO     | Collapsing 142 clades...
+2026-08-22T15:52:45.208+08:00 | INFO     | Clade collapse complete
+2026-08-22T15:52:45.208+08:00 | INFO     | Timer 'tree_rendering': 2.43 s
+2026-08-22T15:52:45.300+08:00 | INFO     | Step 6/7: Timescale integration
+
+============================================================
+                      Pipeline Complete                    
+============================================================
+
+2026-08-22T15:52:45.326+08:00 | INFO     |   Tips              : 10122
+2026-08-22T15:52:45.326+08:00 | INFO     |   Groups            : 179
+2026-08-22T15:52:45.326+08:00 | INFO     |   Groups collapsed  : 142
+2026-08-22T15:52:45.326+08:00 | INFO     |   Taxonomy format   : GTDB
+2026-08-22T15:52:45.326+08:00 | INFO     |   Layout            : rectangular
+2026-08-22T15:52:45.326+08:00 | INFO     |   Timescale         : disabled
+2026-08-22T15:52:45.326+08:00 | INFO     | plot_timetree completed successfully
+        9.29 real         8.79 user         0.47 sys
+           698073088  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               49459  page reclaims
+                  20  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   6  voluntary context switches
+                4036  involuntary context switches
+        169831230523  instructions retired
+         40186951559  cycles elapsed
+           340558928  peak memory footprint
