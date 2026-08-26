@@ -166,13 +166,15 @@ plot_timetree(
 
 - unit:
 
-  Time unit of input tree edge lengths. `"Ga"` (giga-annum) or `"Ma"`
-  (mega-annum). If `"Ga"`, edge lengths are automatically converted to
-  Ma (multiplied by 1000). If `NULL` (default), the tree's native units
-  are left untouched; when `add_timescale = TRUE` the pipeline assumes
-  Ma and issues a unit-sanity warning if the median branch length looks
-  inconsistent (there is no automatic unit detection — specify the unit
-  explicitly for a correct time axis). Default: `NULL`.
+  Time unit of input tree edge lengths: `"Ga"` (giga-annum) or `"Ma"`
+  (mega-annum). **Required whenever `add_timescale = TRUE`**: the
+  pipeline aborts if `unit` is `NULL`, because Rclade does not infer
+  branch-length units and does not verify that the input tree is a
+  time-calibrated chronogram. If `"Ga"`, edge lengths are converted to
+  Ma (multiplied by 1000). `NULL` (default) leaves the tree's native
+  units untouched and is only valid with `add_timescale = FALSE`. Rclade
+  displays the user-supplied time calibration only; it never estimates
+  divergence times. Default: `NULL`.
 
 - taxonomy_format:
 

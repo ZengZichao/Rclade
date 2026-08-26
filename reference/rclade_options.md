@@ -55,7 +55,9 @@ rclade_options(
 
 - unit:
 
-  Character or NULL. "Ma", "Ga", or NULL (auto / native units).
+  Character or NULL. "Ma", "Ga", or NULL. Required when add_timescale =
+  TRUE (the pipeline aborts for NULL); NULL leaves native units
+  untouched and is only valid with add_timescale = FALSE.
 
 - legend_position:
 

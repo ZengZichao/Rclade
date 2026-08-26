@@ -1,3 +1,23 @@
+# Rclade 1.1.0（2026-08-26，修订版本）
+
+落实 2026-08-24
+独立投稿前审阅报告的全部代码级修复，含一项用户可见的行为变更。完整条目见
+NEWS.md，摘要：
+
+- **破坏性变更**：`add_timescale = TRUE` 时 `unit`
+  必须显式指定（移除了静默默认 Ga 并将枝长 ×1000
+  的行为）；非有限枝长报错；根到末端距离离散度过大时发出可审计警告。
+- **分组状态计数**：`rclade_info` /
+  [`summarize_timetree()`](https://zengzichao.github.io/Rclade/reference/summarize_timetree.md)
+  报告解析/折叠/单例/跳过的组数与组名，修复”Collapsed
+  groups”误标为解析总组数的问题。
+- **准确率评估修复**：改为按位置对齐并加基数断言（修复 50 末端膨胀为 250
+  行的 merge 缺陷）。
+- **脚本可移植**：`run_process_level.sh` 从 PATH 解析 `Rscript`（可用
+  `RSCRIPT=` 覆盖）。
+- **CI 如实描述**：`deps-smoke` 不验证 DESCRIPTION
+  版本下限；覆盖率为监控指标而非强制质量门。
+
 # Rclade 1.0.0（2026-07-09，首个正式版本）
 
 ## 健壮性与渲染修复（2026-08-16，未发布）
@@ -258,7 +278,9 @@
 - **§12.1 CI 覆盖率阈值**：新增 `codecov.yml`，整体覆盖率和 patch
   覆盖率目标均为 85%，core
   模块（parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input）单独标记；CI
-  工作流 `fail_ci_if_error` 改为 `true`。
+  工作流 `fail_ci_if_error` 保持为 `false`（未配置
+  CODECOV_TOKEN），覆盖率上传失败不会使工作流失败，覆盖率是监控指标而非强制质量门（v1.1.0
+  据实更正，审稿意见问题 7）。
 - **§15 错误信息 \[MODULE/FUNCTION\] 格式**：logger 的
   [`log_message()`](https://zengzichao.github.io/Rclade/reference/log_message.md)
   及所有公开日志函数（`log_info`/`log_warning`/`log_error`/`log_debug`/`log_critical`）新增可选

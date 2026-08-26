@@ -1,3 +1,22 @@
+# Rclade 1.1.0 (2026-08-26, Revision Release)
+
+Fixes required by the pre-submission independent review (2026-08-24).
+Contains one user-visible behavior change. See NEWS.md for the full
+bilingual entry; summary:
+
+- BREAKING: `unit` is now required when `add_timescale = TRUE` (the
+  silent `Ga` default that multiplied edge lengths by 1000 is removed);
+  non-finite edge lengths abort; root-to-tip dispersion warns.
+- Group-status accounting: `rclade_info` /
+  [`summarize_timetree()`](https://zengzichao.github.io/Rclade/reference/summarize_timetree.md)
+  report parsed / collapsed / singleton / skipped group counts and
+  names.
+- Accuracy evaluation scripts align positionally with cardinality
+  assertions (fixes the 50-tip -\> 250-row merge inflation).
+- `run_process_level.sh` is portable (`RSCRIPT=` override).
+- CI described honestly: `deps-smoke` does not verify DESCRIPTION lower
+  bounds; coverage is a monitoring metric, not an enforced gate.
+
 # Rclade 1.0.0 (2026-07-09, First Stable Release)
 
 ## Robustness and rendering fixes (2026-08-16, unreleased)
@@ -305,7 +324,10 @@ backfilled the following missing capabilities:
 - **§12.1 CI coverage threshold**: Added `codecov.yml` with 85% target
   for both overall and patch coverage; core modules
   (parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input)
-  flagged separately. CI workflow `fail_ci_if_error` set to `true`.
+  flagged separately. CI workflow keeps `fail_ci_if_error` at `false`
+  (no CODECOV_TOKEN configured), so coverage upload failures do not fail
+  the workflow and coverage is a monitoring metric, not an enforced
+  quality gate (corrected in v1.1.0, reviewer issue 7).
 - **§15 Error message \[MODULE/FUNCTION\] format**: logger’s
   [`log_message()`](https://zengzichao.github.io/Rclade/reference/log_message.md)
   and all public log functions

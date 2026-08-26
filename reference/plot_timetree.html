@@ -11,7 +11,7 @@ geological timescale integration, and smart legend layout."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -210,13 +210,16 @@ Default: <code>c("eras", "eons")</code>.</p></dd>
 
 
 <dt id="arg-unit">unit<a class="anchor" aria-label="anchor" href="#arg-unit"></a></dt>
-<dd><p>Time unit of input tree edge lengths. <code>"Ga"</code> (giga-annum) or
-<code>"Ma"</code> (mega-annum). If <code>"Ga"</code>, edge lengths are automatically
-converted to Ma (multiplied by 1000). If <code>NULL</code> (default), the tree's
-native units are left untouched; when <code>add_timescale = TRUE</code> the
-pipeline assumes Ma and issues a unit-sanity warning if the median branch
-length looks inconsistent (there is no automatic unit detection — specify
-the unit explicitly for a correct time axis). Default: <code>NULL</code>.</p></dd>
+<dd><p>Time unit of input tree edge lengths: <code>"Ga"</code> (giga-annum)
+or <code>"Ma"</code> (mega-annum). <strong>Required whenever
+<code>add_timescale = TRUE</code></strong>: the pipeline aborts if <code>unit</code> is
+<code>NULL</code>, because Rclade does not infer branch-length units and does
+not verify that the input tree is a time-calibrated chronogram. If
+<code>"Ga"</code>, edge lengths are converted to Ma (multiplied by 1000).
+<code>NULL</code> (default) leaves the tree's native units untouched and is
+only valid with <code>add_timescale = FALSE</code>. Rclade displays the
+user-supplied time calibration only; it never estimates divergence
+times. Default: <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-taxonomy-format">taxonomy_format<a class="anchor" aria-label="anchor" href="#arg-taxonomy-format"></a></dt>
