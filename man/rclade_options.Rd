@@ -34,7 +34,9 @@ rclade_options(
 
 \item{timescale_mode}{Character. "radial", "linear", "none".}
 
-\item{unit}{Character or NULL. "Ma", "Ga", or NULL (auto / native units).}
+\item{unit}{Character or NULL. "Ma", "Ga", or NULL. Required when
+add_timescale = TRUE (the pipeline aborts for NULL); NULL leaves native
+units untouched and is only valid with add_timescale = FALSE.}
 
 \item{legend_position}{Character. Legend placement (e.g. "bottom", "right", "none").}
 

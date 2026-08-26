@@ -1,3 +1,13 @@
+# Rclade 1.1.0（2026-08-26，修订版本）
+
+落实 2026-08-24 独立投稿前审阅报告的全部代码级修复，含一项用户可见的行为变更。完整条目见 NEWS.md，摘要：
+
+* **破坏性变更**：`add_timescale = TRUE` 时 `unit` 必须显式指定（移除了静默默认 Ga 并将枝长 ×1000 的行为）；非有限枝长报错；根到末端距离离散度过大时发出可审计警告。
+* **分组状态计数**：`rclade_info` / `summarize_timetree()` 报告解析/折叠/单例/跳过的组数与组名，修复"Collapsed groups"误标为解析总组数的问题。
+* **准确率评估修复**：改为按位置对齐并加基数断言（修复 50 末端膨胀为 250 行的 merge 缺陷）。
+* **脚本可移植**：`run_process_level.sh` 从 PATH 解析 `Rscript`（可用 `RSCRIPT=` 覆盖）。
+* **CI 如实描述**：`deps-smoke` 不验证 DESCRIPTION 版本下限；覆盖率为监控指标而非强制质量门。
+
 # Rclade 1.0.0（2026-07-09，首个正式版本）
 
 ## 健壮性与渲染修复（2026-08-16，未发布）
@@ -103,7 +113,7 @@
 * **§8.2 库模式 API**：导出 `parse_taxonomy()` 和 `read_tree_auto()` 作为稳定库模式 API，供 Snakemake/Nextflow 等外部工作流直接调用，无需通过 `plot_timetree()` 入口。
 * **§9.1.1 注释剥离**：新增 `--strip_annotations` 选项及 `strip_tree_annotations()` 辅助函数，可在渲染前剥离 bootstrap/NHX 节点注释以减小输出体积。批处理与单树路径均已接入。
 * **§10.1 临时文件权限**：`managed_tempfile()` 创建后立即 `Sys.chmod(mode = "0600")`，`managed_tempdir()` 创建后立即 `Sys.chmod(mode = "0700")`，满足 HPC 共享环境下的安全要求。
-* **§12.1 CI 覆盖率阈值**：新增 `codecov.yml`，整体覆盖率和 patch 覆盖率目标均为 85%，core 模块（parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input）单独标记；CI 工作流 `fail_ci_if_error` 改为 `true`。
+* **§12.1 CI 覆盖率阈值**：新增 `codecov.yml`，整体覆盖率和 patch 覆盖率目标均为 85%，core 模块（parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input）单独标记；CI 工作流 `fail_ci_if_error` 保持为 `false`（未配置 CODECOV_TOKEN），覆盖率上传失败不会使工作流失败，覆盖率是监控指标而非强制质量门（v1.1.0 据实更正，审稿意见问题 7）。
 * **§15 错误信息 [MODULE/FUNCTION] 格式**：logger 的 `log_message()` 及所有公开日志函数（`log_info`/`log_warning`/`log_error`/`log_debug`/`log_critical`）新增可选 `.module` 参数，传入后在日志中插入 `[MODULE/FUNCTION]` 标签。关键 `stop()` 和 `log_warning`/`log_error` 调用已打上来源标签（如 `[validate-deep/check_name_safety]`、`[compute-mrca/compute_mrca_map]` 等）。
 * **文档同步**：README.CN.md / README.EN.md / man/*.Rd 全部同步更新新增功能说明。
 

@@ -80,8 +80,30 @@ summarize_timetree <- function(p) {
 
   msg <- "=== Rclade Timetree Summary ===\n"
   msg <- paste0(msg, "Input tips: ", info$n_tips, "\n")
-  msg <- paste0(msg, "Collapsed groups: ", info$n_groups, "\n")
-  msg <- paste0(msg, "Actual tips after collapse: ", info$actual_ntips, "\n")
+  # v1.1.0 (reviewer issues 2/8): report the group-status breakdown. The old
+  # single "Collapsed groups: n_groups" line mislabeled parsed candidates as
+  # collapsed clades; the fields below distinguish every status class.
+  if (!is.null(info$groups_collapsed)) {
+    msg <- paste0(msg, "Groups parsed (total): ", info$groups_total, "\n")
+    msg <- paste0(msg, "Groups collapsed: ", info$groups_collapsed, "\n")
+    msg <- paste0(msg, "Singleton groups (1 tip, not collapsed): ",
+                  info$groups_singleton, "\n")
+    msg <- paste0(msg, "Skipped non-monophyletic groups: ",
+                  info$groups_skipped_non_monophyletic, "\n")
+    msg <- paste0(msg, "Skipped groups (root/zero-tip): ",
+                  info$groups_skipped_other, "\n")
+    if (length(info$skipped_non_monophyletic) > 0) {
+      msg <- paste0(msg, "  non-monophyletic: ",
+                    paste(info$skipped_non_monophyletic, collapse = ", "), "\n")
+    }
+    if (length(info$skipped_other) > 0) {
+      msg <- paste0(msg, "  root/zero-tip: ",
+                    paste(info$skipped_other, collapse = ", "), "\n")
+    }
+  } else {
+    msg <- paste0(msg, "Collapsed groups: ", info$n_groups, "\n")
+  }
+  msg <- paste0(msg, "Displayed leaves after collapse: ", info$actual_ntips, "\n")
   msg <- paste0(msg, "Taxonomy format: ", info$taxonomy_format, "\n")
   msg <- paste0(msg, "Collapse rank: ", info$rank, "\n")
   msg <- paste0(msg, "Palette: ", info$palette, "\n")

@@ -458,6 +458,10 @@ validate_inputs <- function(tree, rank, unit, layout, triangle_mode, space_mode,
     rlang::abort("Tree object lacks edge lengths (edge.length). Cannot build timetree.",
                  class = "Rclade_validate_error")
   }
+  if (any(!is.finite(tree$edge.length))) {
+    rlang::abort("Tree contains non-finite edge lengths (NA/NaN/Inf). Cannot build timetree.",
+                 class = "Rclade_validate_error")
+  }
   if (any(tree$edge.length < 0)) {
     log_critical("Negative branch lengths detected: min = %.6f",
                  min(tree$edge.length))
@@ -487,12 +491,23 @@ validate_inputs <- function(tree, rank, unit, layout, triangle_mode, space_mode,
                 ggplot2_version, .module = "read-input/validate_inputs")
   }
 
-  # Handle unit parameter
+  # Handle unit parameter.
+  #
+  # FAIL-SAFE CONTRACT (v1.1.0, reviewer issue 1): Rclade never infers
+  # divergence times or branch-length units.  When a geological timescale is
+  # requested, the unit MUST be supplied explicitly; previously unit = NULL
+  # silently defaulted to 'Ga' (multiplying edge lengths by 1000), which
+  # could label a non-time-calibrated tree with a plausible-looking but
+  # wrong geological axis.  We now abort instead.
   if (is.null(unit)) {
     if (add_timescale) {
-      log_warning("unit is NULL but add_timescale = TRUE. Defaulting to 'Ga' for timescale display. Please specify unit explicitly for accurate time axis.",
-                  .module = "read-input/validate_inputs")
-      unit <- "Ga"
+      rlang::abort(paste0(
+        "'unit' must be specified explicitly when add_timescale = TRUE. ",
+        "Rclade does not infer branch-length units or verify that the input ",
+        "tree is time-calibrated. Pass unit = 'Ma' or unit = 'Ga' for a ",
+        "time-calibrated tree whose units are known, or set ",
+        "add_timescale = FALSE for trees without time-calibrated branch lengths."),
+        class = "Rclade_validate_error")
     }
   }
 
@@ -508,6 +523,26 @@ validate_inputs <- function(tree, rank, unit, layout, triangle_mode, space_mode,
     if (unit == "Ma" && median_bl > 1000) {
       log_warning("Median branch length is %s Ma (%s Ga). Please verify the unit is correct. If the tree is in Ga, set unit = 'Ga'.",
                   median_bl, round(median_bl / 1000, 2), .module = "read-input/validate_inputs")
+    }
+
+    # Auditable chronogram sanity warning (v1.1.0): for a strictly
+    # contemporaneous ultrametric tree all root-to-tip distances are equal.
+    # Large dispersion suggests the tree may be non-ultrametric (e.g.
+    # substitution distances) or heterochronous; Rclade does not resolve
+    # this ambiguity and surfaces it for the user to audit.
+    rtt <- ape::dist.nodes(tree)[ape::Ntip(tree) + 1, seq_len(ape::Ntip(tree))]
+    if (all(is.finite(rtt)) && length(rtt) >= 2) {
+      rtt_cv <- stats::sd(rtt) / mean(rtt)
+      if (rtt_cv > 0.1) {
+        log_warning(paste0(
+          "Root-to-tip distances vary substantially (CV = ",
+          sprintf("%.3f", rtt_cv),
+          "). The tree may not be ultrametric/time-calibrated, or tips may ",
+          "be heterochronous. Rclade does not infer or verify time ",
+          "calibration; please confirm the tree is a chronogram before ",
+          "interpreting the geological timescale."),
+          .module = "read-input/validate_inputs")
+      }
     }
   }
 

@@ -19,6 +19,9 @@ out <- data.frame(rank = ranks, n_labels = nrow(tax),
 for (i in seq_along(ranks)) {
   rk <- ranks[i]
   p <- parse_taxonomy(tax$taxonomy, rank = rk, format = "GTDB")
+  # Cardinality assertion (v1.1.0, reviewer issue 5): exactly one prediction
+  # per input label; comparisons below are positional.
+  stopifnot(nrow(p) == nrow(tax))
   v <- p$Group
   pre <- substr(rk, 1, 1)
   truth <- if (rk == "domain") {

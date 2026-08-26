@@ -22,7 +22,9 @@
 #'   "embedded", "custom_regex".
 #' @param add_timescale Logical. Whether to add a geological timescale.
 #' @param timescale_mode Character. "radial", "linear", "none".
-#' @param unit Character or NULL. "Ma", "Ga", or NULL (auto / native units).
+#' @param unit Character or NULL. "Ma", "Ga", or NULL. Required when
+#'   add_timescale = TRUE (the pipeline aborts for NULL); NULL leaves native
+#'   units untouched and is only valid with add_timescale = FALSE.
 #' @param legend_position Character. Legend placement (e.g. "bottom", "right", "none").
 #' @param line_width Numeric. Branch line width.
 #' @param show_tip_labels Logical. Whether to display tip labels.

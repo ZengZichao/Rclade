@@ -21,6 +21,7 @@ compute_mrca_map <- function(tree, group_vec, check_monophyly = TRUE, strict = F
   root_node <- ape::Ntip(tree) + 1
   skipped_groups <- character(0)
   non_monophyletic_groups <- character(0)
+  zero_tip_groups <- character(0)
 
   # T11 / M-A3: gv_aligned (group_vec aligned to tree$tip.label order) is the
   # same for every group, so compute it ONCE before the loop instead of
@@ -33,6 +34,7 @@ compute_mrca_map <- function(tree, group_vec, check_monophyly = TRUE, strict = F
       # T11 / M-A2: a group with 0 aligned tips should not abort the whole
       # pipeline.  Warn and skip it (matches the single-group-fail -> skip
       # contract used elsewhere), rather than calling stop().
+      zero_tip_groups <- c(zero_tip_groups, grp)
       log_warning("Group '%s' has 0 tips in the tree; skipping collapse.",
                   grp, .module = "compute-mrca/compute_mrca_map")
       next
@@ -129,7 +131,14 @@ compute_mrca_map <- function(tree, group_vec, check_monophyly = TRUE, strict = F
   # E-T4: record skipped groups on the return object so batch callers can
   # inspect what was skipped without parsing log output (Snakemake/Nextflow
   # friendly — never aborts the whole batch on a single bad group).
-  attr(mrca_map, "skipped") <- unique(c(skipped_groups, non_monophyletic_groups))
+  #
+  # v1.1.0 (reviewer issues 2/8): expose the skip reasons SEPARATELY so
+  # results tables can report parsed/eligible/collapsed/singleton/skipped
+  # counts instead of the previously misleading single "collapsed" total.
+  attr(mrca_map, "non_monophyletic") <- non_monophyletic_groups
+  attr(mrca_map, "skipped_root") <- skipped_groups
+  attr(mrca_map, "skipped_zero_tip") <- zero_tip_groups
+  attr(mrca_map, "skipped") <- unique(c(skipped_groups, non_monophyletic_groups, zero_tip_groups))
   return(mrca_map)
 }
 

@@ -9,6 +9,8 @@
 ^codecov\.yml$
 ^environment\.yml$
 ^benchmark_results$
+^benchmark_results\.bak-.*$
+^evaluation\.bak-.*$
 ^scripts$
 ^data-raw$
 ^CONTRIBUTING\.md$

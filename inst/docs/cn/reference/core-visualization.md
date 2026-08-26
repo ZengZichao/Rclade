@@ -101,7 +101,7 @@ plot_timetree(
 | `tip_label_size` | 末端标签字体大小。 |
 | `add_timescale` | 是否在 x 轴添加地质时间轴。 |
 | `timescale_levels` | 要显示的时间尺度层级：eras / eons / periods。 |
-| `unit` | 输入树枝长的时间单位：Ga 或 Ma。`"Ga"` 时枝长自动转换为 Ma（×1000）。`NULL`（默认）保持树原生单位不变；`add_timescale = TRUE` 时流水线按 Ma 处理，并在中位枝长疑似不一致时发出单位合理性警告（无自动单位检测——请显式指定单位以获得正确时间轴）。 |
+| `unit` | 输入树枝长的时间单位：Ga 或 Ma。**当 `add_timescale = TRUE` 时必须显式指定**：若 `unit` 为 `NULL`，流水线会中止，因为 Rclade 不推断枝长单位，也不验证输入树是否为时间校准的 chronogram。`"Ga"` 时枝长自动转换为 Ma（×1000）。`NULL`（默认）保持树原生单位不变，仅在与 `add_timescale = FALSE` 配合时有效。Rclade 仅显示用户提供的时间校准，不推断分化时间。 |
 | `taxonomy_format` | 分类标签格式：auto / GTDB / Silva / NCBI / custom_rank / custom_regex。 |
 | `custom_patterns` | custom_regex 格式所需的具名正则列表。 |
 | `taxonomy_file` | 外部分类学文件路径（两列：末端标签与 GTDB 格式分类串）。 |

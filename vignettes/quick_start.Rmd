@@ -71,7 +71,9 @@ summarize_timetree(p)
 save_timetree(p, "output.pdf", width = 14, height = 10)
 
 # One-line pipeline
-plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
+# Note: the geological timescale requires an explicit branch-length unit
+# (Rclade does not infer units); pass unit = "Ma" or unit = "Ga".
+plot_timetree(example_tree, rank = "phylum", unit = "Ga", output = "output.pdf")
 ```
 
 ## Taxonomy Quality Check

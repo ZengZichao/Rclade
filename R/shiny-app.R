@@ -252,7 +252,7 @@ run_rclade_shiny <- function() {
           shiny::tabPanel("Timescale",
             shiny::br(),
             shiny::checkboxInput("add_timescale", "Add Timescale", TRUE),
-            shiny::selectInput("unit", "Time Unit",
+            shiny::selectInput("unit", "Time Unit (required for timescale)",
               choices = c("auto","Ga","Ma"), selected = "auto"),
             shiny::selectInput("timescale_mode", "Timescale Mode",
               choices = c("radial","linear"), selected = "radial"),
@@ -365,8 +365,10 @@ run_rclade_shiny <- function() {
           tip_label_size = input$tip_label_size,
           add_timescale = input$add_timescale,
           timescale_levels = strsplit(input$timescale_levels, ",")[[1]],
-          # "auto" maps to NULL = leave the tree's native units untouched
-          # (aligned with the R API and CLI defaults; "Ga" converts x1000).
+          # "auto" maps to NULL = leave the tree's native units untouched.
+          # Since v1.1.0 this combination aborts when add_timescale = TRUE
+          # (fail-safe unit contract, reviewer issue 1); the error message
+          # guides the user to select Ga/Ma or disable the timescale.
           unit         = if (identical(input$unit, "auto")) NULL else input$unit,
           timescale_mode = input$timescale_mode,
           timescale_position = input$timescale_position,

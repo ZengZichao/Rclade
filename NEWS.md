@@ -1,5 +1,44 @@
 # Rclade News
 
+## Rclade 1.1.0 (2026-08-26)
+
+Revision release implementing the fixes required by the pre-submission
+independent review ("Rclade-审稿意见", 2026-08-24). Contains one
+user-visible behavior change.
+
+* **BREAKING / fail-safe unit contract (issue 1)**: `plot_timetree()` now
+  aborts with an informative error when `add_timescale = TRUE` and
+  `unit` is `NULL`. Previously the pipeline silently defaulted to `"Ga"`
+  (multiplying edge lengths by 1000), which could label a
+  non-time-calibrated tree with a plausible-looking but wrong geological
+  axis. Rclade does not infer branch-length units and does not verify
+  chronogram status; pass `unit = "Ma"` / `unit = "Ga"` explicitly, or
+  set `add_timescale = FALSE`. The CLI reports the same condition as a
+  parameter error (exit code 2). Added: non-finite edge-length check
+  (error) and an auditable root-to-tip dispersion warning for
+  non-ultrametric/heterochronous inputs.
+* **Group-status accounting (issues 2/8)**: `rclade_info` and
+  `summarize_timetree()` now report `groups_total`, `groups_collapsed`,
+  `groups_singleton`, `groups_skipped_non_monophyletic`, and
+  `groups_skipped_other` (with group names), fixing the previous
+  "Collapsed groups" label that reported parsed candidates instead of
+  clades actually collapsed. Non-monophyletic groups are skipped with a
+  warning by default ("warn and skip"); `strict = TRUE` terminates at the
+  first such group.
+* **Accuracy evaluation fix (issue 5)**: the built-in example accuracy
+  script now aligns predictions with ground truth positionally and
+  asserts cardinality; the previous label-based merge inflated 50 tips to
+  250 rows.
+* **Portable benchmark scripts (issue 6)**: `run_process_level.sh`
+  resolves `Rscript` from `PATH` (override with `RSCRIPT=`) instead of a
+  machine-specific absolute path.
+* **Honest CI description (issue 7)**: the former `min-deps` job is
+  renamed `deps-smoke` and documented as a current-release dependency
+  resolution check (DESCRIPTION lower bounds are NOT verified by CI);
+  coverage upload remains best-effort (`fail_ci_if_error: false`) and is
+  documented as a monitoring metric, not an enforced quality gate. The
+  NEWS entry for v1.0.1 §12.1 was corrected accordingly.
+
 ## Rclade 1.0.2 (2026-08-22)
 
 * **Refreshed benchmark results**: all benchmarks were re-run against the

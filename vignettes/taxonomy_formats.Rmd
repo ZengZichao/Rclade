@@ -93,6 +93,7 @@ For non-standard formats:
 
 ```{r custom, eval = FALSE}
 p <- plot_timetree(tree, rank = "phylum",
+                   add_timescale = FALSE,
                    taxonomy_format = "custom_regex",
                    custom_patterns = list(
                      domain = "Domain:([^|]+)",
@@ -113,11 +114,13 @@ For embedded (Format A) labels, Rclade supports three delimiter matching strateg
 ```{r delimiter_mode, eval = FALSE}
 # Default reverse mode
 p <- plot_timetree(tree, rank = "phylum",
+                   add_timescale = FALSE,
                    taxonomy_format = "custom_rank",
                    taxonomy_delimiter_mode = "reverse")
 
 # Segment mode for labels with underscores in taxon names
 p <- plot_timetree(tree, rank = "phylum",
+                   add_timescale = FALSE,
                    taxonomy_format = "custom_rank",
                    taxonomy_delimiter_mode = "segment")
 ```
@@ -130,6 +133,7 @@ For embedded (Format A) labels, provide a list of rank codes and their prefixes:
 
 ```{r custom_levels, eval = FALSE}
 p <- plot_timetree(tree, rank = "phylum",
+                   add_timescale = FALSE,
                    taxonomy_format = "custom_rank",
                    taxonomy_levels = list(
                      codes = c("k", "d", "p", "c", "o", "f", "g", "s", "ss"),

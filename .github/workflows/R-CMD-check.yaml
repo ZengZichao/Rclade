@@ -65,14 +65,16 @@ jobs:
         run: |
           Rscript -e 'library(testthat); test_file("tests/testthat/test-performance.R", reporter = "summary")'
 
-  # Declared-minimum-dependency smoke job: verifies the package loads and the
-  # pure unit suite passes against the oldest supported CRAN versions of the
-  # hard dependencies we can pin via CRAN archive.  Bioconductor packages
-  # (ggtree, tidytree, treeio) cannot be version-pinned through BiocManager,
-  # so they are exercised at the current release; the ggplot2/deeptime lower
-  # bounds declared in DESCRIPTION are the ones that most affect the custom
-  # Geom layer (coord$transform behaviour).
-  min-deps:
+  # Dependency-resolution smoke job (v1.1.0, reviewer issue 7): verifies the
+  # package installs and the pure unit suite passes with the dependency set
+  # resolved from CURRENT releases.  This job does NOT verify the version
+  # lower bounds declared in DESCRIPTION: Bioconductor packages (ggtree,
+  # tidytree, treeio) cannot be version-pinned through BiocManager, and
+  # pinning ggplot2/deeptime at their declared lower bounds creates
+  # unsatisfiable transitive conflicts with current Bioconductor releases.
+  # Manuscript claims must therefore describe CI verification as
+  # "current-release" rather than "lower-bound".
+  deps-smoke:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -85,7 +87,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install dependencies with pinned CRAN minimums
+      - name: Install dependencies (current resolvable set)
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
@@ -96,8 +98,8 @@ jobs:
           # Bioconductor packages (ggtree, tidytree) are installed at their
           # current release versions and require newer transitive deps.
           # Pinning those would create unsatisfiable dependency conflicts.
-          # Version bounds declared in DESCRIPTION are still checked by
-          # the standard R-CMD-check job above.
+          # Consequently the DESCRIPTION lower bounds are NOT exercised by
+          # this job; they are only enforced at install time.
 
       - name: Report installed versions
         run: |
@@ -107,7 +109,7 @@ jobs:
         run: |
           Rscript -e 'remotes::install_local(".", force = TRUE, quiet = TRUE)'
 
-      - name: Run pure unit suite against minimum versions
+      - name: Run pure unit suite against resolved versions
         run: |
           Rscript scripts/ci_pure_unit.R
 
@@ -135,12 +137,18 @@ jobs:
 
       - name: Run coverage
         run: |
+          # Coverage is computed for monitoring only (v1.1.0, reviewer issue 7):
+          # the 85% targets in codecov.yml are informational and are NOT
+          # enforced as a required check by this workflow.
           Rscript -e 'covr::package_coverage(type = c("tests", "examples"), quiet = FALSE)'
 
       - name: Upload coverage to Codecov
         if: github.event_name == 'push'
         uses: codecov/codecov-action@v4
         with:
-          fail_ci_if_error: false  # no CODECOV_TOKEN configured; codecov rejects tokenless uploads
+          # Best-effort upload: no CODECOV_TOKEN is configured, so tokenless
+          # uploads may be rejected by Codecov. An upload failure must NOT
+          # fail the workflow; consequently coverage is not a CI quality gate.
+          fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true

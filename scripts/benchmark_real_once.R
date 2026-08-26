@@ -9,6 +9,9 @@ tree_file <- args[1]
 tax_file <- args[2]
 rank <- args[3]
 
+# v1.1.0 unified protocol (reviewer issue 3): default configuration
+# (low_memory = FALSE); full render forced so process-level wall time
+# matches the in-session measurement boundary.
 p <- plot_timetree(
   tree = tree_file,
   rank = rank,
@@ -17,7 +20,6 @@ p <- plot_timetree(
   taxonomy_file_header = FALSE,
   add_timescale = FALSE,
   show_tip_labels = FALSE,
-  low_memory = TRUE,
   legend_position = "none",
   color_palette = "Set1"
 )
@@ -26,6 +28,10 @@ info <- attr(p, "rclade_info")
 # Force rendering
 invisible(ggplot2::ggplotGrob(p))
 
-cat(sprintf("METRICS tips=%d groups=%d actual=%d format=%s rank=%s\n",
-            info$n_tips, info$n_groups, info$actual_ntips,
-            info$taxonomy_format, info$rank))
+cat(sprintf(paste0("METRICS tips=%d groups=%d total=%d collapsed=%d ",
+                   "singleton=%d skipped_nm=%d skipped_other=%d actual=%d ",
+                   "format=%s rank=%s\n"),
+            info$n_tips, info$n_groups, info$groups_total,
+            info$groups_collapsed, info$groups_singleton,
+            info$groups_skipped_non_monophyletic, info$groups_skipped_other,
+            info$actual_ntips, info$taxonomy_format, info$rank))

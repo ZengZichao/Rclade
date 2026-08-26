@@ -1,0 +1,2 @@
+"rank","n_tips","n_groups","groups_total","groups_collapsed","groups_singleton","groups_skipped_non_monophyletic","groups_skipped_other","in_session_median_s","in_session_min_s","in_session_max_s","iterations"
+"phylum",10122,25,25,23,2,0,0,4.24205753798014,4.07237108398112,4.28401050099637,5

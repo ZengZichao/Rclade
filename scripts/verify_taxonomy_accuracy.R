@@ -33,31 +33,43 @@ ground_truth <- data.frame(
 cat("Labels with order-level taxonomy:", sum(!is.na(ground_truth$order_true)), "/", n_tips, "\n\n")
 
 # ------------------------------------------------------------------
-# Run Rclade parsing at each rank and compare
+# Run Rclade parsing at each rank and compare.
+#
+# v1.1.0 (reviewer issue 5): predictions and ground truth are aligned by
+# POSITION (one row per input tip), never merged on the taxonomy string.
+# example_tree contains repeated, non-unique labels; the previous
+# label-based merge() produced a Cartesian expansion (50 tips -> 250
+# rows), corrupting the reported sample size.  Cardinality and alignment
+# assertions guard against any regression of this defect.
 # ------------------------------------------------------------------
 verify_rank <- function(rank_name, rank_level) {
   col_true <- paste0(rank_level, "_true")
   cat("=== Rank:", rank_name, "(", rank_level, ") ===\n")
-  
+
   parsed <- Rclade::parse_taxonomy(labels, rank = rank_level, format = "auto")
-  
-  # Merge ground truth with parsed results
-  merged <- merge(
-    ground_truth[, c("label", col_true)],
-    parsed[, c("label", "Group")],
-    by = "label",
-    all = TRUE
-  )
-  
-  # Cases where Rclade parsed a group (non-NA) and we have ground truth
-  valid <- !is.na(merged[[col_true]]) & !is.na(merged$Group)
-  n_total <- nrow(merged)
+
+  # Cardinality assertion: exactly one prediction row per input tip.
+  if (nrow(parsed) != n_tips) {
+    stop(sprintf("Cardinality mismatch: parse_taxonomy() returned %d rows for %d tips.",
+                 nrow(parsed), n_tips), call. = FALSE)
+  }
+  # Alignment assertion: predictions must follow input order.
+  if (!identical(as.character(parsed$label), as.character(labels))) {
+    stop("parse_taxonomy() output is not aligned with input order; ",
+         "positional comparison is invalid.", call. = FALSE)
+  }
+
+  truth <- ground_truth[[col_true]]
+  pred  <- parsed$Group
+
+  valid <- !is.na(truth) & !is.na(pred)
+  n_total <- n_tips
   n_valid <- sum(valid)
-  n_correct <- sum(merged[[col_true]] == merged$Group, na.rm = TRUE)
-  n_missing_truth <- sum(is.na(merged[[col_true]]))
-  n_missing_parsed <- sum(is.na(merged$Group))
-  n_wrong <- sum(valid & merged[[col_true]] != merged$Group)
-  
+  n_correct <- sum(truth == pred, na.rm = TRUE)
+  n_missing_truth <- sum(is.na(truth))
+  n_missing_parsed <- sum(is.na(pred))
+  n_wrong <- sum(valid & truth != pred)
+
   cat("  Total tips:           ", n_total, "\n")
   cat("  Ground truth present:  ", n_total - n_missing_truth, "\n")
   cat("  Rclade parsed:         ", n_total - n_missing_parsed, "\n")
@@ -65,18 +77,18 @@ verify_rank <- function(rank_name, rank_level) {
   cat("  Wrong:                 ", n_wrong, "\n")
   cat("  Accuracy (of parsed):  ", sprintf("%.1f%%", 100 * n_correct / (n_total - n_missing_parsed)), "\n")
   cat("  Accuracy (of all):     ", sprintf("%.1f%%", 100 * n_correct / n_total), "\n")
-  
+
   if (n_wrong > 0) {
     cat("\n  Mismatches:\n")
-    wrong_cases <- merged[valid & merged[[col_true]] != merged$Group, ]
-    for (i in seq_len(nrow(wrong_cases))) {
+    wrong_idx <- which(valid & truth != pred)
+    for (i in wrong_idx) {
       cat(sprintf("    Tip %s: true=%s, parsed=%s\n",
-                  wrong_cases$label[i], wrong_cases[[col_true]][i], wrong_cases$Group[i]))
+                  labels[i], truth[i], pred[i]))
     }
   }
-  
+
   cat("\n")
-  
+
   data.frame(
     rank = rank_name,
     n_tips = n_total,

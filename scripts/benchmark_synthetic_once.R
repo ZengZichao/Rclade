@@ -55,9 +55,12 @@ tree[["tip.label"]] <- paste0(tree[["tip.label"]], ";d__Bacteria;p__", group_vec
                               ";c__Class;o__Order;f__Family;g__Genus;s__Species")
 
 if (method == "rclade") {
+  # v1.1.0 unified protocol (reviewer issue 3): default configuration
+  # (low_memory = FALSE) so process-level numbers are comparable with the
+  # in-session benchmark and with the unmodified baseline.
   p <- plot_timetree(tree, rank = "phylum", unit = "Ma",
                      add_timescale = TRUE, show_tip_labels = FALSE,
-                     low_memory = TRUE, color_palette = "Set1",
+                     color_palette = "Set1",
                      legend_position = "none")
 } else {
   df <- data.frame(label = tree[["tip.label"]], Group = unname(group_vec), stringsAsFactors = FALSE)

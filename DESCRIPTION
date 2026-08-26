@@ -1,6 +1,6 @@
 Package: Rclade
 Title: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization
-Version: 1.0.2
+Version: 1.1.0
 Authors@R: person("Zeng", "Zichao", email = "zengzichao@sjtu.edu.cn",
                   role = c("aut", "cre"))
 Author: Zeng Zichao [aut, cre]

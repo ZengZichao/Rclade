@@ -105,13 +105,16 @@
 #' @param timescale_levels Character vector of timescale levels to display.
 #'   Options: \code{"eras"}, \code{"eons"}, \code{"periods"}.
 #'   Default: \code{c("eras", "eons")}.
-#' @param unit Time unit of input tree edge lengths. \code{"Ga"} (giga-annum) or
-#'   \code{"Ma"} (mega-annum). If \code{"Ga"}, edge lengths are automatically
-#'   converted to Ma (multiplied by 1000). If \code{NULL} (default), the tree's
-#'   native units are left untouched; when \code{add_timescale = TRUE} the
-#'   pipeline assumes Ma and issues a unit-sanity warning if the median branch
-#'   length looks inconsistent (there is no automatic unit detection — specify
-#'   the unit explicitly for a correct time axis). Default: \code{NULL}.
+#' @param unit Time unit of input tree edge lengths: \code{"Ga"} (giga-annum)
+#'   or \code{"Ma"} (mega-annum). \strong{Required whenever
+#'   \code{add_timescale = TRUE}}: the pipeline aborts if \code{unit} is
+#'   \code{NULL}, because Rclade does not infer branch-length units and does
+#'   not verify that the input tree is a time-calibrated chronogram. If
+#'   \code{"Ga"}, edge lengths are converted to Ma (multiplied by 1000).
+#'   \code{NULL} (default) leaves the tree's native units untouched and is
+#'   only valid with \code{add_timescale = FALSE}. Rclade displays the
+#'   user-supplied time calibration only; it never estimates divergence
+#'   times. Default: \code{NULL}.
 #' @param taxonomy_format Taxonomy label format. \code{"auto"} enables automatic
 #'   detection via prefix-matching heuristic. Manual options: \code{"GTDB"},
 #'   \code{"Silva"}, \code{"NCBI"}, \code{"custom_rank"}, \code{"custom_regex"}.

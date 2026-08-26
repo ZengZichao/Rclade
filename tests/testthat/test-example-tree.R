@@ -58,7 +58,7 @@ test_that("example_tree summarize_timetree output", {
                      taxonomy_format = "GTDB",
                      add_timescale = FALSE)
   expect_output(summarize_timetree(p), "Rclade Timetree Summary")
-  expect_output(summarize_timetree(p), "Collapsed groups")
+  expect_output(summarize_timetree(p), "Groups collapsed")
 })
 
 test_that("example_tree taxonomy quality report", {

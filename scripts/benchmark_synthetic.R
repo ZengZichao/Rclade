@@ -94,9 +94,15 @@ baseline_ggtree <- function(tree, group_vec, palette = "Set1") {
 }
 
 rclade_call <- function(tree) {
+  # v1.1.0 unified protocol (reviewer issue 3): default low_memory = FALSE
+  # so Rclade is measured under its default configuration, matching the
+  # baseline which performs no explicit garbage collection.  The explicit
+  # unit is required by the fail-safe contract; rcoal() branch lengths are
+  # coalescent units, so synthetic trees serve only as computational
+  # workloads and are NOT evidence of geological-time correctness.
   plot_timetree(tree, rank = "phylum", unit = "Ma",
                 add_timescale = TRUE, show_tip_labels = FALSE,
-                low_memory = TRUE, color_palette = "Set1",
+                color_palette = "Set1",
                 legend_position = "none")
 }
 
@@ -111,14 +117,26 @@ bench_render <- function(expr, reps) {
   )
 }
 
-run_one <- function(n, reps = 3L) {
+run_one <- function(n, reps = 5L) {
   message("\n=== n = ", n, " ===")
   tree <- ape::rcoal(n)
   group_vec <- partition_tree(tree, k = max(2L, floor(sqrt(n))))
   tree[["tip.label"]] <- make_taxonomy_labels(tree, group_vec)
 
-  rc <- bench_render(rclade_call(tree), reps = reps)
-  gg <- bench_render(baseline_ggtree(tree, group_vec, palette = "Set1"), reps = reps)
+  # v1.1.0 unified protocol (reviewer issue 3): one discarded warm-up run
+  # per method, then randomized method order to avoid systematic
+  # warm-up/session-drift bias between the two pipelines.
+  invisible(suppressWarnings(ggplot2::ggplotGrob(rclade_call(tree))))
+  invisible(suppressWarnings(ggplot2::ggplotGrob(baseline_ggtree(tree, group_vec, palette = "Set1"))))
+
+  rclade_first <- sample(c(TRUE, FALSE), 1L)
+  if (rclade_first) {
+    rc <- bench_render(rclade_call(tree), reps = reps)
+    gg <- bench_render(baseline_ggtree(tree, group_vec, palette = "Set1"), reps = reps)
+  } else {
+    gg <- bench_render(baseline_ggtree(tree, group_vec, palette = "Set1"), reps = reps)
+    rc <- bench_render(rclade_call(tree), reps = reps)
+  }
 
   rc_times <- as.numeric(rc$time[[1]])
   gg_times <- as.numeric(gg$time[[1]])
@@ -143,13 +161,15 @@ run_one <- function(n, reps = 3L) {
 # Run
 # ------------------------------------------------------------------
 
-# Unified measurement protocol (2026-08 revision, reviewer M2):
-# in-session bench::mark medians with >= 3 replicates at every scale
-# (5 replicates for n < 5,000; 3 replicates for n >= 5,000).
+# Unified measurement protocol (v1.1.0 revision, reviewer issue 3):
+# in-session bench::mark medians, 5 replicates at EVERY scale, identical
+# forcing point (ggplotGrob per iteration), discarded warm-up runs, and
+# randomized method order.  Both pipelines use the default configuration
+# (low_memory = FALSE; rectangular layout; mixed triangle mode).
+set.seed(20260826)
 sizes <- c(200L, 500L, 1000L, 2000L, 5000L, 10000L)
 results <- lapply(sizes, function(n) {
-  reps <- if (n >= 5000L) 3L else 5L
-  run_one(n, reps = reps)
+  run_one(n, reps = 5L)
 })
 
 df <- do.call(rbind, lapply(results, as.data.frame))

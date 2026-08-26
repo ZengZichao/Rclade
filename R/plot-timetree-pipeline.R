@@ -543,9 +543,30 @@ pt_step7_finalize_plot <- function(
   }
 
   # Attach metadata
+  #
+  # v1.1.0 (reviewer issues 2/8): report the full group-status breakdown so
+  # results tables can distinguish parsed candidates from groups actually
+  # collapsed. `n_groups` is retained for backward compatibility but counts
+  # collapsed-plus-singleton groups only; `groups_total` additionally
+  # includes every skipped candidate group.
+  skipped_non_monophyletic <- attr(mrca_map, "non_monophyletic")
+  if (is.null(skipped_non_monophyletic)) skipped_non_monophyletic <- character(0)
+  skipped_root <- attr(mrca_map, "skipped_root")
+  if (is.null(skipped_root)) skipped_root <- character(0)
+  skipped_zero_tip <- attr(mrca_map, "skipped_zero_tip")
+  if (is.null(skipped_zero_tip)) skipped_zero_tip <- character(0)
+  singleton_names <- names(attr(mrca_map, "singleton_map"))
   attr(p, "rclade_info") <- list(
     n_tips = ape::Ntip(tree),
     n_groups = length(all_group_names),
+    groups_total = length(all_group_names) +
+      length(skipped_non_monophyletic) + length(skipped_root) + length(skipped_zero_tip),
+    groups_collapsed = length(mrca_map),
+    groups_singleton = length(singleton_names),
+    groups_skipped_non_monophyletic = length(skipped_non_monophyletic),
+    groups_skipped_other = length(skipped_root) + length(skipped_zero_tip),
+    skipped_non_monophyletic = skipped_non_monophyletic,
+    skipped_other = c(skipped_root, skipped_zero_tip),
     actual_ntips = if (!is.null(actual_ntips)) actual_ntips else ape::Ntip(tree),
     taxonomy_format = detected_format,
     rank = rank,
@@ -726,11 +747,21 @@ pt_single_tree <- function(
   )
 
   # Log completion
+  # v1.1.0 (reviewer issues 2/8): the completion log reports every group
+  # status class so automated pipelines can audit partial collapses without
+  # parsing intermediate warnings.
+  nm_skipped <- attr(mrca_map, "non_monophyletic")
+  other_skipped <- unique(c(attr(mrca_map, "skipped_root"),
+                            attr(mrca_map, "skipped_zero_tip")))
   log_section("Pipeline Complete")
   log_stats(list(
     "Tips" = ape::Ntip(tree),
-    "Groups" = length(all_group_names),
+    "Groups parsed" = length(all_group_names) +
+      length(nm_skipped) + length(other_skipped),
     "Groups collapsed" = length(mrca_map),
+    "Singleton groups" = length(attr(mrca_map, "singleton_map")),
+    "Skipped (non-monophyletic)" = length(nm_skipped),
+    "Skipped (root/zero-tip)" = length(other_skipped),
     "Taxonomy format" = detected_format,
     "Layout" = layout,
     "Timescale" = if (add_timescale) "enabled" else "disabled"

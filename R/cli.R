@@ -58,8 +58,11 @@ build_plot_timetree_params <- function(opt, color_palette, color_mapping = NULL,
     space_mode = opt$space_mode,
     layout = opt$layout,
     angle = opt$angle,
-    # T08 / M-E3: "--unit auto" means "auto-detect", which maps to NULL so that
-    # convert_unit() leaves the tree's native units untouched.
+    # T08 / M-E3: "--unit auto" means "no explicit unit", which maps to NULL
+    # so that convert_unit() leaves the tree's native units untouched. Since
+    # v1.1.0 this is only valid with --no_timescale; the pipeline aborts when
+    # a geological timescale is requested without an explicit unit (fail-safe
+    # contract, reviewer issue 1; checked in validate_cli_params).
     unit = if (identical(opt$unit, "auto")) NULL else opt$unit,
     line_width = opt$line_width,
     ignore_branch_length = opt$ignore_branch_length,
@@ -228,6 +231,18 @@ validate_cli_params <- function(opt) {
   if (!opt$unit %in% valid_units) {
     errors <- c(errors, sprintf("Invalid unit: '%s'. Valid: %s",
                                  opt$unit, paste(valid_units, collapse = ", ")))
+  }
+
+  # Fail-safe unit contract (v1.1.0, reviewer issue 1): a geological
+  # timescale requires an explicit unit. Rclade never infers branch-length
+  # units. Report this as a parameter error (exit code 2) rather than a
+  # runtime failure.
+  if (identical(opt$unit, "auto") && !isTRUE(opt$no_timescale)) {
+    errors <- c(errors, paste0(
+      "--unit must be 'Ma' or 'Ga' when the geological timescale is ",
+      "enabled (default). Rclade does not infer branch-length units. ",
+      "Pass --unit Ma / --unit Ga for a time-calibrated tree, or add ",
+      "--no_timescale for trees without time-calibrated branch lengths."))
   }
 
   # Validate color_rank (same vocabulary as rank) — T08 / H6
@@ -514,7 +529,7 @@ run_rclade_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
                 help = "Tree layout: rectangular, circular (fan). [default: %default]",
                 metavar = "LAYOUT"),
     optparse::make_option(c("-u", "--unit"), type = "character", default = "auto",
-                help = "Time unit of edge lengths: auto (leave tree units untouched; same as the R API default), Ga (giga-annum; edge lengths are multiplied by 1000), Ma (mega-annum). [default: %default]",
+                help = "Time unit of edge lengths: Ga (giga-annum; edge lengths are multiplied by 1000) or Ma (mega-annum). Required when the geological timescale is enabled. 'auto' leaves tree units untouched and is only valid together with --no_timescale (Rclade does not infer units). [default: %default]",
                 metavar = "UNIT"),
     optparse::make_option(c("--angle"), type = "numeric", default = 360,
                 help = "Fan angle for circular layout (10-360 degrees). [default: %default]",

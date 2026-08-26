@@ -132,12 +132,12 @@ run("P-015: circular layout", expect_s3_class(plot_timetree(example_tree, rank =
 run("P-016: circular layout + angle", expect_s3_class(plot_timetree(example_tree, rank = "phylum", layout = "circular", angle = 180, add_timescale = FALSE), "ggplot"))
 run("P-018: invalid layout errors", expect_error(plot_timetree(example_tree, rank = "phylum", layout = "radial", add_timescale = FALSE)))
 run("P-019/020: timescale and layout combinations", {
-  expect_s3_class(plot_timetree(example_tree, rank = "phylum", layout = "circular", add_timescale = TRUE), "ggplot")
-  expect_s3_class(plot_timetree(example_tree, rank = "phylum", layout = "rectangular", add_timescale = TRUE), "ggplot")
+  expect_s3_class(plot_timetree(example_tree, rank = "phylum", layout = "circular", add_timescale = TRUE, unit = "Ga"), "ggplot")
+  expect_s3_class(plot_timetree(example_tree, rank = "phylum", layout = "rectangular", add_timescale = TRUE, unit = "Ga"), "ggplot")
 })
 
 run("P-021/022: 时间轴开关", {
-  expect_s3_class(plot_timetree(example_tree, rank = "phylum", add_timescale = TRUE), "ggplot")
+  expect_s3_class(plot_timetree(example_tree, rank = "phylum", add_timescale = TRUE, unit = "Ga"), "ggplot")
   expect_s3_class(plot_timetree(example_tree, rank = "phylum", add_timescale = FALSE), "ggplot")
 })
 
@@ -178,10 +178,10 @@ run("P-070~072: 跨等级 clade 搜索", {
 })
 
 run("P-080~083: 地质事件标注", {
-  p1 <- plot_timetree(example_tree, rank = "phylum", geo_events = TRUE, add_timescale = TRUE)
+  p1 <- plot_timetree(example_tree, rank = "phylum", geo_events = TRUE, add_timescale = TRUE, unit = "Ga")
   expect_s3_class(p1, "ggplot")
   custom <- data.frame(name = "Test", age_min = 1000, age_max = 800, color = "red", stringsAsFactors = FALSE)
-  p2 <- plot_timetree(example_tree, rank = "phylum", geo_events = custom, add_timescale = TRUE)
+  p2 <- plot_timetree(example_tree, rank = "phylum", geo_events = custom, add_timescale = TRUE, unit = "Ga")
   expect_s3_class(p2, "ggplot")
 })
 
@@ -265,7 +265,7 @@ run("P-130: low_memory 模式", {
 
 run("P-131/132: ignore_malformed 模式", {
   tree <- ape::read.tree(text = "((A:1,B:1):1,(C:1,D:1):1):1;")
-  expect_error(plot_timetree(tree, clade = "NonExistent", ignore_malformed = FALSE))
+  expect_error(plot_timetree(tree, clade = "NonExistent", ignore_malformed = FALSE, add_timescale = FALSE))
   expect_s3_class(plot_timetree(tree, ignore_malformed = TRUE, add_timescale = FALSE), "ggplot")
 
   # 批量模式：一个正常树 + 一个畸形树，ignore_malformed = TRUE 应跳过畸形树
@@ -551,7 +551,7 @@ run("TS-001~005: 时间轴", {
 })
 
 run("GE-001~008: 地质事件", {
-  expect_s3_class(plot_timetree(example_tree, rank = "phylum", geo_events = TRUE, add_timescale = TRUE), "ggplot")
+  expect_s3_class(plot_timetree(example_tree, rank = "phylum", geo_events = TRUE, add_timescale = TRUE, unit = "Ga"), "ggplot")
 })
 
 run("LG-001~007: 图例", {

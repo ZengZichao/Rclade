@@ -1,3 +1,20 @@
+# Rclade 1.1.0 (2026-08-26, Revision Release)
+
+Fixes required by the pre-submission independent review (2026-08-24).
+Contains one user-visible behavior change. See NEWS.md for the full
+bilingual entry; summary:
+
+* BREAKING: `unit` is now required when `add_timescale = TRUE` (the
+  silent `Ga` default that multiplied edge lengths by 1000 is removed);
+  non-finite edge lengths abort; root-to-tip dispersion warns.
+* Group-status accounting: `rclade_info` / `summarize_timetree()` report
+  parsed / collapsed / singleton / skipped group counts and names.
+* Accuracy evaluation scripts align positionally with cardinality
+  assertions (fixes the 50-tip -> 250-row merge inflation).
+* `run_process_level.sh` is portable (`RSCRIPT=` override).
+* CI described honestly: `deps-smoke` does not verify DESCRIPTION lower
+  bounds; coverage is a monitoring metric, not an enforced gate.
+
 # Rclade 1.0.0 (2026-07-09, First Stable Release)
 
 ## Robustness and rendering fixes (2026-08-16, unreleased)
@@ -103,7 +120,7 @@ Aligned with the "Development Requirements - General" spec document; backfilled 
 * **§8.2 Library-mode API**: Exported `parse_taxonomy()` and `read_tree_auto()` as stable library-mode APIs for external workflows (Snakemake/Nextflow) to call directly without going through `plot_timetree()`.
 * **§9.1.1 Annotation stripping**: Added `--strip_annotations` option and `strip_tree_annotations()` helper to drop bootstrap/NHX node annotations before rendering, reducing output size. Both batch and single-tree paths are wired up.
 * **§10.1 Temp-file permissions**: `managed_tempfile()` now `Sys.chmod(mode = "0600")` immediately after creation; `managed_tempdir()` now `Sys.chmod(mode = "0700")`, meeting HPC shared-environment security requirements.
-* **§12.1 CI coverage threshold**: Added `codecov.yml` with 85% target for both overall and patch coverage; core modules (parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input) flagged separately. CI workflow `fail_ci_if_error` set to `true`.
+* **§12.1 CI coverage threshold**: Added `codecov.yml` with 85% target for both overall and patch coverage; core modules (parse-taxonomy/taxonomy-file/validate-deep/monophyly/compute-mrca/read-input) flagged separately. CI workflow keeps `fail_ci_if_error` at `false` (no CODECOV_TOKEN configured), so coverage upload failures do not fail the workflow and coverage is a monitoring metric, not an enforced quality gate (corrected in v1.1.0, reviewer issue 7).
 * **§15 Error message [MODULE/FUNCTION] format**: logger's `log_message()` and all public log functions (`log_info`/`log_warning`/`log_error`/`log_debug`/`log_critical`) gained an optional `.module` argument that inserts a `[MODULE/FUNCTION]` tag. Key `stop()` and `log_warning`/`log_error` calls now carry source tags (e.g., `[validate-deep/check_name_safety]`, `[compute-mrca/compute_mrca_map]`).
 * **Documentation sync**: README.CN.md / README.EN.md / man/*.Rd all updated to document the new features.
 
