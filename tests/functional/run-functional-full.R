@@ -639,11 +639,15 @@ run("C-040~068: CLI 功能选项", {
 
   tmp <- tempfile(fileext = ".pdf")
   on.exit(unlink(tmp), add = TRUE)
-  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp)), 0L)
+  # v1.1.0 fail-safe unit contract: default timescale requires an explicit
+  # unit, so these completion tests exercise the no-timescale path.
+  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp,
+                                "--no_timescale")), 0L)
 
   tmp2 <- tempfile(fileext = ".png")
   on.exit(unlink(tmp2), add = TRUE)
-  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-l", "circular", "-o", tmp2)), 0L)
+  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-l", "circular",
+                                "-o", tmp2, "--no_timescale")), 0L)
 })
 
 run("C-069: 交叉验证失败返回退出码 3", {
@@ -660,7 +664,8 @@ run("C-069: 交叉验证失败返回退出码 3", {
     ">SEQ2", "TGCATGCA"
   ), seq_file)
 
-  expect_equal(run_rclade_cli(c("-f", tree_file, "--sequence_file", seq_file, "-r", "none")), 3L)
+  expect_equal(run_rclade_cli(c("-f", tree_file, "--sequence_file", seq_file,
+                                "-r", "none", "--no_timescale")), 3L)
 })
 
 # ==============================================================================
@@ -678,7 +683,7 @@ run("W-001/002: rclade 包装脚本", {
 
   tmp <- tempfile(fileext = ".pdf")
   on.exit(unlink(tmp), add = TRUE)
-  cmd <- sprintf("%s -f %s -r none -o %s --force > /dev/null 2>&1",
+  cmd <- sprintf("%s -f %s -r none -o %s --no_timescale --force > /dev/null 2>&1",
                  shQuote(wrapper), shQuote(tree_file), shQuote(tmp))
   expect_equal(system(cmd), 0L)
   expect_true(file.exists(tmp))

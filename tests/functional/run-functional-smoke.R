@@ -325,9 +325,28 @@ run("C-070: CLI normal completion exit code", {
 
   tmp <- tempfile(fileext = ".pdf")
   on.exit(unlink(tmp), add = TRUE)
-  result <- run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp))
+  # v1.1.0 fail-safe unit contract: the default timescale requires an
+  # explicit unit, so the no-timescale path is exercised here.
+  result <- run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp,
+                             "--no_timescale"))
   expect_equal(result, 0L)
   expect_true(file.exists(tmp))
+})
+
+run("C-071: CLI fail-safe unit contract (v1.1.0)", {
+  tree <- make_unique_tree(10)
+  tree_file <- tempfile(fileext = ".tre")
+  on.exit(unlink(tree_file), add = TRUE)
+  ape::write.tree(tree, tree_file)
+
+  tmp <- tempfile(fileext = ".pdf")
+  on.exit(unlink(tmp), add = TRUE)
+  # Timescale enabled (default) without an explicit unit must fail as a
+  # parameter error (exit code 2): Rclade does not infer branch-length units.
+  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp)), 2L)
+  # An explicit unit completes successfully.
+  expect_equal(run_rclade_cli(c("-f", tree_file, "-r", "none", "-o", tmp,
+                                "-u", "Ma", "--force")), 0L)
 })
 
 # ==============================================================================

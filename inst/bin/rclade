@@ -17,12 +17,23 @@
 
 set -euo pipefail
 
+# Resolve the Rscript interpreter (v1.1.0 portability): prefer R_HOME
+# (exported by R to child processes), then PATH. Fail with a clear
+# parameter-error code if neither works.
+RSCRIPT_BIN="Rscript"
+if [ -n "${R_HOME:-}" ] && [ -x "${R_HOME}/bin/Rscript" ]; then
+  RSCRIPT_BIN="${R_HOME}/bin/Rscript"
+elif ! command -v Rscript >/dev/null 2>&1; then
+  echo "rclade: error: Rscript not found on PATH and R_HOME is not set" >&2
+  exit 2
+fi
+
 # On SIGINT, terminate the Rscript child and return the standard Unix code 130.
 trap 'kill ${RCLADE_PID:-} 2>/dev/null; exit 130' INT
 
 # Forward all arguments to Rclade::run_rclade_cli() and use q() to propagate
 # the function's return value as the OS exit code.
-Rscript \
+"$RSCRIPT_BIN" \
   -e 'args <- commandArgs(TRUE); args <- args[args != "--"]; q(status = Rclade::run_rclade_cli(args))' \
   -- "$@" &
 RCLADE_PID=$!
