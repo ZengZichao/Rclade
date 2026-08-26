@@ -3,8 +3,9 @@
 This document maps every quantitative result reported in the manuscript to
 its exact inputs, scripts, and outputs, per the pre-submission review
 (reviewer issues 6/7). All paths are relative to the archived snapshot
-(tag `v1.1.0`; the commit SHA of the snapshot is recorded in the Zenodo
-metadata and in `DESCRIPTION`).
+(tag `v1.1.0`, commit `69dde83`; archived at Zenodo, version-specific DOI
+[10.5281/zenodo.22106523](https://doi.org/10.5281/zenodo.22106523),
+all versions: [10.5281/zenodo.22043060](https://doi.org/10.5281/zenodo.22043060)).
 
 ## 1. Computational environment
 
