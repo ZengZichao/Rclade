@@ -58,7 +58,7 @@
 <div class="page-header"><h1 id="rclade">Rclade<a class="anchor" aria-label="anchor" href="#rclade"></a>
 </h1></div>
 <p><strong>Automated Deep-Time Phylogenetic Tree Collapsing and Visualization</strong></p>
-<p>Version: 1.1.0</p>
+<p>Version: 1.1.1</p>
 <p>Rclade provides a single-function pipeline for automated collapsing and visualization of large phylogenetic trees with geological timescales.</p>
 <ul>
 <li><a href="https://github.com/zengzichao/Rclade/blob/main/README.EN.md" class="external-link">English README</a></li>
@@ -72,10 +72,10 @@
 </h2>
 <p>From the fixed GitHub release tag (requires the <code>remotes</code> package):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.0"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.1"</span><span class="op">)</span></span></code></pre></div>
 <p>Or from a downloaded release tarball (GitHub Releases / Zenodo archive):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.0.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.1.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -85,6 +85,11 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_tree</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h2>
+<p>Zeng Z (2026). Rclade: automated taxonomic collapsing and geological-timescale annotation of time-calibrated phylogenetic trees in R. bioRxiv. <a href="doi:10.64898/2026.08.27.747462" class="uri">doi:10.64898/2026.08.27.747462</a></p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>

@@ -7,7 +7,7 @@
 package](https://img.shields.io/badge/R-%E5%8C%85-blue.svg)](https://www.r-project.org/)
 [![License:
 MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.0-green.svg)](https://zengzichao.github.io/Rclade/)
+[![Version](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.1-green.svg)](https://zengzichao.github.io/Rclade/)
 
 > **说明：** GitHub 仓库位于
 > [https://github.com/zengzichao/Rclade，问题反馈请提交至](https://github.com/zengzichao/Rclade%EF%BC%8C%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%E8%AF%B7%E6%8F%90%E4%BA%A4%E8%87%B3)
@@ -66,10 +66,10 @@ GTDB、Silva 或 NCBI 分类系统自动折叠分支。
 ``` r
 
 # 从 GitHub 固定版本标签安装（需 remotes 包）
-remotes::install_github("zengzichao/Rclade@v1.1.0")
+remotes::install_github("zengzichao/Rclade@v1.1.1")
 
 # 或从下载的发布包安装（GitHub Releases / Zenodo）
-install.packages("Rclade_1.1.0.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.1.tar.gz", repos = NULL, type = "source")
 ```
 
 ### 使用 Conda
@@ -818,8 +818,9 @@ UI）、optparse（CLI）、yaml（`--config` 配置文件支持）
 
 如果您在研究中使用了 Rclade，请引用：
 
-> Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree
-> Collapsing and Visualization. R package version 1.1.0.
+> Zeng Z (2026). Rclade: automated taxonomic collapsing and
+> geological-timescale annotation of time-calibrated phylogenetic trees
+> in R. bioRxiv. <doi:10.64898/2026.08.27.747462>
 
 Rclade 基于 ggtree 和 deeptime 生态系统构建，请同时引用以下关键依赖：
 

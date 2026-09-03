@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/zengzichao/Rclade/blob/v1.1.1/inst/CITATION)
+[`inst/CITATION`](https://github.com/zengzichao/Rclade/blob/main/inst/CITATION)
 
 Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing
 and Visualization. R package version 1.1.1.
