@@ -5,7 +5,7 @@
 <!-- badges: start -->
 [![R package](https://img.shields.io/badge/R-包-blue.svg)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/许可证-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/版本-1.1.0-green.svg)]()
+[![Version](https://img.shields.io/badge/版本-1.1.1-green.svg)]()
 <!-- badges: end -->
 
 > **说明：** GitHub 仓库位于 https://github.com/zengzichao/Rclade，问题反馈请提交至 https://github.com/zengzichao/Rclade/issues。
@@ -49,10 +49,10 @@ Rclade 提供单函数调用的系统发育树自动折叠与地质时间轴可�
 
 ```r
 # 从 GitHub 固定版本标签安装（需 remotes 包）
-remotes::install_github("zengzichao/Rclade@v1.1.0")
+remotes::install_github("zengzichao/Rclade@v1.1.1")
 
 # 或从下载的发布包安装（GitHub Releases / Zenodo）
-install.packages("Rclade_1.1.0.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.1.tar.gz", repos = NULL, type = "source")
 ```
 
 ### 使用 Conda
@@ -769,7 +769,7 @@ Rclade --check
 
 如果您在研究中使用了 Rclade，请引用：
 
-> Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 1.1.0.
+> Zeng Z (2026). Rclade: automated taxonomic collapsing and geological-timescale annotation of time-calibrated phylogenetic trees in R. bioRxiv. doi:10.64898/2026.08.27.747462
 
 Rclade 基于 ggtree 和 deeptime 生态系统构建，请同时引用以下关键依赖：
 

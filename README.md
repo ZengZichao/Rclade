@@ -2,7 +2,7 @@
 
 **Automated Deep-Time Phylogenetic Tree Collapsing and Visualization**
 
-Version: 1.1.0
+Version: 1.1.1
 
 Rclade provides a single-function pipeline for automated collapsing and
 visualization of large phylogenetic trees with geological timescales.
@@ -19,13 +19,13 @@ Report issues at https://github.com/zengzichao/Rclade/issues.
 From the fixed GitHub release tag (requires the `remotes` package):
 
 ```r
-remotes::install_github("zengzichao/Rclade@v1.1.0")
+remotes::install_github("zengzichao/Rclade@v1.1.1")
 ```
 
 Or from a downloaded release tarball (GitHub Releases / Zenodo archive):
 
 ```r
-install.packages("Rclade_1.1.0.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.1.tar.gz", repos = NULL, type = "source")
 ```
 
 ## Quick start
@@ -36,6 +36,10 @@ data(example_tree)
 p <- plot_timetree(example_tree, rank = "phylum", add_timescale = FALSE)
 print(p)
 ```
+
+## Reference
+
+Zeng Z (2026). Rclade: automated taxonomic collapsing and geological-timescale annotation of time-calibrated phylogenetic trees in R. bioRxiv. doi:10.64898/2026.08.27.747462
 
 ## License
 
