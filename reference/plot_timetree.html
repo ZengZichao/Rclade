@@ -11,7 +11,7 @@ geological timescale integration, and smart legend layout."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -549,28 +549,62 @@ phylogenetics and evolutionary analyses in R." <em>Bioinformatics</em>,
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># From a file with phylum-level collapsing</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">plot_timetree</span><span class="op">(</span><span class="st">"my_tree.tre"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># From a phylo object with GTDB labels</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Quick start with the bundled example tree (no timescale)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_tree</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">plot_timetree</span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>,</span></span>
 <span class="r-in"><span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span>, add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># With external taxonomy file</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">plot_timetree</span><span class="op">(</span><span class="st">"my_tree.tre"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>,</span></span>
-<span class="r-in"><span>                   taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.tsv"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Handle multi-tree file: use first tree</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">plot_timetree</span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Handle multi-tree file: analyze all trees</span></span></span>
-<span class="r-in"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu">plot_timetree</span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Save directly</span></span></span>
-<span class="r-in"><span><span class="fu">plot_timetree</span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, output <span class="op">=</span> <span class="st">"output.pdf"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ============================================================</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>            Rclade: Phylogenetic Tree Visualization         </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ============================================================</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.513+00:00 | INFO     | Starting plot_timetree pipeline</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.514+00:00 | INFO     | Tree input               : phylo object</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.515+00:00 | INFO     | Rank                     : phylum</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.515+00:00 | INFO     | Layout                   : rectangular</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.515+00:00 | INFO     | Unit                     : auto</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.516+00:00 | INFO     | Step 1/7: Input validation and reading</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   --------------------------------------------------</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   &gt;&gt; Input Validation</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   --------------------------------------------------</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.518+00:00 | INFO     | Tips                     : 50</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.518+00:00 | INFO     | Internal nodes           : 49</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.519+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.520+00:00 | INFO     | Input validation passed</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.520+00:00 | INFO     | Timer 'input_reading': 4 ms</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.521+00:00 | INFO     | Step 2/7: Taxonomy parsing</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.521+00:00 | INFO     | Using rank-based taxonomy: phylum</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.529+00:00 | INFO     | Detected format          : GTDB</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.530+00:00 | INFO     | Groups found             : 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.530+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.531+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.531+00:00 | INFO     | Checking monophyly and computing MRCA for each group...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.534+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.534+00:00 | INFO     | Valid MRCA nodes         : 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:46.535+00:00 | INFO     | Timer 'mrca_computation': 4 ms</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.452+00:00 | INFO     | Step 4/7: Color generation</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.460+00:00 | INFO     | Color palette            : viridis</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.461+00:00 | INFO     | Step 5/7: Tree rendering</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> # Invaild edge matrix for <span style="color: #0000BB;">&lt;phylo&gt;</span>. A <span style="color: #0000BB;">&lt;tbl_df&gt;</span> is returned.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> # Invaild edge matrix for <span style="color: #0000BB;">&lt;phylo&gt;</span>. A <span style="color: #0000BB;">&lt;tbl_df&gt;</span> is returned.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.674+00:00 | INFO     | Collapsing 5 clades...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.702+00:00 | INFO     | Clade collapse complete</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.703+00:00 | INFO     | Timer 'tree_rendering': 242 ms</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.703+00:00 | INFO     | Step 6/7: Timescale integration</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ============================================================</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>                       Pipeline Complete                    </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ============================================================</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.784+00:00 | INFO     |   Tips                        : 50</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.785+00:00 | INFO     |   Groups parsed               : 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.785+00:00 | INFO     |   Groups collapsed            : 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.786+00:00 | INFO     |   Singleton groups            : 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.786+00:00 | INFO     |   Skipped (non-monophyletic)  : 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.786+00:00 | INFO     |   Skipped (root/zero-tip)     : 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.787+00:00 | INFO     |   Taxonomy format             : GTDB</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.787+00:00 | INFO     |   Layout                      : rectangular</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.787+00:00 | INFO     |   Timescale                   : disabled</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2026-09-03T07:12:47.788+00:00 | INFO     | plot_timetree completed successfully</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

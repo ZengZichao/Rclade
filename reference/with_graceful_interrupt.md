@@ -23,16 +23,3 @@ with_graceful_interrupt(expr, total = 0)
 ## Value
 
 Result of expr, or NULL if interrupted.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-result <- with_graceful_interrupt({
-  for (i in 1:100) {
-    Sys.sleep(0.1)
-  }
-  "done"
-})
-} # }
-```

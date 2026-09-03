@@ -47,11 +47,3 @@ validate_tree_sequence_match(
 ## Value
 
 List with match status and differences.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-result <- validate_tree_sequence_match("tree.nwk", "sequences.fasta")
-} # }
-```

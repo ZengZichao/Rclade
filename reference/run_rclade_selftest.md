@@ -17,11 +17,3 @@ run_rclade_selftest()
 ## Value
 
 Integer. Exit code (0 = all passed, 1 = failures).
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-run_rclade_selftest()
-} # }
-```

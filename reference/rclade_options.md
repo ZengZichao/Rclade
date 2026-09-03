@@ -104,10 +104,4 @@ signature, internal forwarding lists, and documentation.
 # Create a reusable options object
 opts <- rclade_options(rank = "phylum", layout = "circular",
                        color_palette = "plasma", add_timescale = TRUE)
-
-# Use with plot_timetree (explicit args override opts)
-if (FALSE) { # \dontrun{
-plot_timetree(tree, opts = opts)
-plot_timetree(tree, opts = opts, layout = "rectangular")  # overrides layout
-} # }
 ```

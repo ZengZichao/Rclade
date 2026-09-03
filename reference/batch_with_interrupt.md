@@ -27,14 +27,3 @@ batch_with_interrupt(items, fun, label_fun = NULL)
 ## Value
 
 List of results (NULL for items not processed due to interrupt).
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-trees <- list(tree1, tree2, tree3)
-results <- batch_with_interrupt(trees, function(t, i) {
-  plot_timetree(t, rank = "phylum")
-})
-} # }
-```

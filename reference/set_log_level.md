@@ -13,3 +13,8 @@ set_log_level(level)
 - level:
 
   Character. One of "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
+
+## Value
+
+No return value, called for side effects (sets the package-level log
+threshold).

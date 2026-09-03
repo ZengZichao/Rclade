@@ -33,12 +33,3 @@ validate_taxonomy_no_cycles(taxa_df, filepath = "<taxonomy>")
 
 Invisibly returns TRUE if no cycles. Aborts on detection (class
 `Rclade_validate_error`).
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-taxa <- read_taxonomy_file("taxonomy.tsv")
-validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
-} # }
-```

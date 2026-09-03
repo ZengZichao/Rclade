@@ -76,11 +76,11 @@ A list with components:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 data(example_tree)
 result <- check_special_monophyly(example_tree, "LBCA")
+#> LBCA IS monophyletic (50 tips, MRCA node 51).
 if (result$is_monophyletic) {
-  cat("LBCA is monophyletic!\n")
+  message("LBCA is monophyletic!")
 }
-} # }
+#> LBCA is monophyletic!
 ```

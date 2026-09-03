@@ -89,16 +89,3 @@ A list with components:
 - tip_labels:
 
   Character vector. Labels of descendant tips.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-data(example_tree)
-root <- resolve_special_identifier(example_tree, "ROOT")
-luca <- resolve_special_identifier(example_tree, "LUCA")
-if (!is.null(luca$node)) {
-  cat("LUCA found at node", luca$node, "\n")
-}
-} # }
-```

@@ -45,15 +45,3 @@ This is an `optparse` limitation, not a bug, and is **intentional but
 surprising**. To make an option immune to config, pass a non-default
 value, or avoid relying on config for options you care about. Unknown
 config keys are warned and ignored.
-
-## Examples
-
-``` r
-# Correct usage in an Rscript entry point:
-if (FALSE) { # \dontrun{
-  q(status = Rclade::run_rclade_cli(commandArgs(trailingOnly = TRUE)))
-} # }
-
-# The Dockerfile ENTRYPOINT uses the same pattern:
-# Rscript -e 'q(status = Rclade::run_rclade_cli(commandArgs(TRUE)))'
-```

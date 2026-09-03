@@ -76,15 +76,3 @@ Missing ranks are `NA`.
 Supports tab-delimited or comma-delimited files. Missing ranks are
 indicated by empty values after the rank prefix (e.g., `s__` for missing
 species).
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-# Read a tab-delimited taxonomy file
-taxa <- read_taxonomy_file("taxonomy.tsv")
-
-# Read a comma-delimited file with header
-taxa <- read_taxonomy_file("taxonomy.csv", sep = ",", header = TRUE)
-} # }
-```

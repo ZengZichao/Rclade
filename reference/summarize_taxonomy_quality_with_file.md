@@ -69,13 +69,3 @@ summarize_taxonomy_quality_with_file(
 ## Value
 
 Invisibly returns a list with parsing statistics.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-# Report quality with external file
-summarize_taxonomy_quality_with_file(labels, format = "auto",
-                                      taxonomy_file = "taxonomy.tsv")
-} # }
-```

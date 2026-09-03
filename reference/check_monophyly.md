@@ -102,16 +102,16 @@ consistent about what a group name refers to.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 data(example_tree)
 
 # Check if phylum P1 is monophyletic
 result <- check_monophyly(example_tree, "P1",
-                           rank = "phylum", format = "GTDB")
+                          rank = "phylum", format = "GTDB")
+#> Group 'P1' IS monophyletic (10 tips, MRCA node 54).
 if (result$is_monophyletic) {
-  cat("P1 is monophyletic!\n")
+  message("P1 is monophyletic!")
 } else {
-  cat("P1 is NOT monophyletic.\n")
+  message("P1 is NOT monophyletic.")
 }
-} # }
+#> P1 is monophyletic!
 ```

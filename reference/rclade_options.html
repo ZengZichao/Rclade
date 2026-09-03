@@ -13,7 +13,7 @@ plot_timetree() always take precedence over values in opts."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,12 +149,6 @@ internal forwarding lists, and documentation.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a reusable options object</span></span></span>
 <span class="r-in"><span><span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu">rclade_options</span><span class="op">(</span>rank <span class="op">=</span> <span class="st">"phylum"</span>, layout <span class="op">=</span> <span class="st">"circular"</span>,</span></span>
 <span class="r-in"><span>                       color_palette <span class="op">=</span> <span class="st">"plasma"</span>, add_timescale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Use with plot_timetree (explicit args override opts)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, opts <span class="op">=</span> <span class="va">opts</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, opts <span class="op">=</span> <span class="va">opts</span>, layout <span class="op">=</span> <span class="st">"rectangular"</span><span class="op">)</span>  <span class="co"># overrides layout</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

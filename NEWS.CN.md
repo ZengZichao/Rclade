@@ -1,3 +1,23 @@
+# Rclade 1.1.1（2026-09-03，CRAN 重新提交）
+
+CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
+
+- 在 DESCRIPTION 文件中添加了方法学参考文献（含 DOI）。
+- 为 5 个 Rd 文件添加了 `\value` 标签（`print.rclade_options`、
+  `run_rclade_shiny`、`set_log_enabled`、`set_log_file`、`set_log_level`）。
+- 删除了未导出函数（`@keywords internal`）Rd 文件中的示例。
+- 删除了导出函数示例中的所有 `\dontrun{}` 包装。引用外部文件的
+  示例代码被完全移除；使用内置 `data(example_tree)` 的示例现在
+  可直接运行。
+- 将
+  [`save_session_info()`](https://zengzichao.github.io/Rclade/reference/save_session_info.md)
+  和
+  [`summarize_multi_trees()`](https://zengzichao.github.io/Rclade/reference/summarize_multi_trees.md)
+  中的 [`cat()`](https://rdrr.io/r/base/cat.html) 替换为
+  [`message()`](https://rdrr.io/r/base/message.html)，使输出可通过
+  [`suppressMessages()`](https://rdrr.io/r/base/message.html) 抑制。
+- 通过转换示例格式解决了 `try-error in functionTree()` 问题。
+
 # Rclade 1.1.0（2026-08-26，修订版本）
 
 落实 2026-08-24

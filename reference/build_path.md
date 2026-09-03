@@ -18,11 +18,3 @@ build_path(...)
 ## Value
 
 Character. Constructed path.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-build_path("data", "output", "tree.pdf")
-} # }
-```

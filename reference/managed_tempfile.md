@@ -25,13 +25,3 @@ managed_tempfile(pattern = "rclade_", fileext = ".tmp", tmpdir = tempdir())
 ## Value
 
 List with path and cleanup function.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
-writeLines("(A:1,B:1);", tmp$path)
-# File is automatically cleaned up when function exits
-} # }
-```

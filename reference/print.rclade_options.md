@@ -18,3 +18,8 @@ print(x, ...)
 - ...:
 
   Ignored.
+
+## Value
+
+Returns the input object `x` invisibly, after printing its key-value
+pairs to the console.

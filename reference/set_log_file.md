@@ -13,3 +13,8 @@ set_log_file(filepath)
 - filepath:
 
   Character. Path to log file. NULL to disable.
+
+## Value
+
+No return value, called for side effects (opens or closes a log file
+connection for dual console + file logging).

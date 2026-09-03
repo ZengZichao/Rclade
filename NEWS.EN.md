@@ -1,3 +1,23 @@
+# Rclade 1.1.1 (2026-09-03, CRAN Resubmission)
+
+CRAN resubmission addressing all reviewer issues from the 1.0.0 review.
+
+- Added methodological references (DOIs) to the DESCRIPTION file.
+- Added `\value` tags to 5 Rd files (`print.rclade_options`,
+  `run_rclade_shiny`, `set_log_enabled`, `set_log_file`,
+  `set_log_level`).
+- Removed examples from unexported (`@keywords internal`) Rd files.
+- Removed `\dontrun{}` wrappers from exported examples. Where examples
+  referenced external files, the code was removed; where they used
+  bundled `data(example_tree)`, they are now executable.
+- Replaced [`cat()`](https://rdrr.io/r/base/cat.html) with
+  [`message()`](https://rdrr.io/r/base/message.html) in
+  [`save_session_info()`](https://zengzichao.github.io/Rclade/reference/save_session_info.md)
+  and
+  [`summarize_multi_trees()`](https://zengzichao.github.io/Rclade/reference/summarize_multi_trees.md)
+  for suppressible console output.
+- Resolved `try-error in functionTree()` by converting examples.
+
 # Rclade 1.1.0 (2026-08-26, Revision Release)
 
 Fixes required by the pre-submission independent review (2026-08-24).

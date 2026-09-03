@@ -31,11 +31,3 @@ validate_sequence_deep(
 ## Value
 
 List with validation results.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-result <- validate_sequence_deep("sequences.fasta", expected_alphabet = "DNA")
-} # }
-```

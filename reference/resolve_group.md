@@ -82,17 +82,3 @@ A list with components:
 - outsiders:
 
   Character vector. Tips in MRCA not belonging to group.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-data(example_tree)
-
-# Regular group
-result1 <- resolve_group(example_tree, "P1", rank = "phylum")
-
-# Special identifier
-result2 <- resolve_group(example_tree, "LUCA")
-} # }
-```

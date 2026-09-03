@@ -17,11 +17,3 @@ validate_sequence_file(filepath)
 ## Value
 
 Character. Detected format: "fasta", "fastq", "unknown".
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-format <- validate_sequence_file("sequences.fasta")
-} # }
-```

@@ -9,6 +9,10 @@ package.
 run_rclade_shiny()
 ```
 
+## Value
+
+No return value, called for side effects (launches a Shiny web app).
+
 ## Concurrency
 
 The logger, step-progress, and interrupt subsystems use package-level
