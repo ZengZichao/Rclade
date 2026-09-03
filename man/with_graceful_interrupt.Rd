@@ -19,14 +19,4 @@ Wraps an expression so that SIGINT (Ctrl+C) is caught gracefully:
 progress is reported, resources are cleaned up, and the function
 returns NULL instead of throwing an error.
 }
-\examples{
-\dontrun{
-result <- with_graceful_interrupt({
-  for (i in 1:100) {
-    Sys.sleep(0.1)
-  }
-  "done"
-})
-}
-}
 \keyword{internal}

@@ -1,5 +1,33 @@
 # Rclade News
 
+## Rclade 1.1.1 (2026-09-03)
+
+CRAN resubmission. All issues raised by the CRAN reviewer (Leonore
+Hochhauser) for the 1.0.0 submission have been addressed:
+
+* **DESCRIPTION references**: Added methodological references to the
+  Description field (Yu et al. 2017, Gearty 2025, Paradis & Schliep 2019)
+  with DOIs in the required format.
+* **Missing \value tags**: Added `\value` sections to
+  `print.rclade_options.Rd`, `run_rclade_shiny.Rd`, `set_log_enabled.Rd`,
+  `set_log_file.Rd`, and `set_log_level.Rd`.
+* **Examples for unexported functions**: Removed `\examples` sections
+  from all `@keywords internal` Rd files (`batch_with_interrupt`,
+  `build_path`, `managed_tempfile`, `resolve_group`,
+  `resolve_special_identifier`, `validate_taxonomy_no_cycles`,
+  `with_graceful_interrupt`).
+* **\dontrun → \donttest**: Removed all `\dontrun{}` wrappers from
+  exported function examples. Where examples referenced external
+  files (not available on CRAN), the example code was removed
+  entirely. Where examples used bundled `data(example_tree)`, they
+  are now executable without wrappers.
+* **Console output**: Replaced `cat()` with `message()` in
+  `save_session_info()` and `summarize_multi_trees()` so output can be
+  suppressed via `suppressMessages()`.
+* **try-error in functionTree()**: Resolved by converting `\dontrun{}`
+  examples to `\donttest{}` (the error originated from example
+  evaluation on CRAN servers).
+
 ## Rclade 1.1.0 (2026-08-26)
 
 Revision release implementing the fixes required by the pre-submission

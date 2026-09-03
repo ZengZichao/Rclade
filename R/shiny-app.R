@@ -7,6 +7,7 @@
 #'
 #' Provides an interactive web interface for Rclade. Requires the shiny package.
 #'
+#' @return No return value, called for side effects (launches a Shiny web app).
 #' @section Concurrency:
 #' The logger, step-progress, and interrupt subsystems use package-level global
 #' environments (\code{.logger_env}, \code{.interrupt_env}).  Within a single R

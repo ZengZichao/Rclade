@@ -52,14 +52,4 @@ Handles special identifiers for key ancestral nodes in the tree of life:
 \item \strong{LBCA}: Last Bacterial Common Ancestor - MRCA of all Bacteria
 }
 }
-\examples{
-\dontrun{
-data(example_tree)
-root <- resolve_special_identifier(example_tree, "ROOT")
-luca <- resolve_special_identifier(example_tree, "LUCA")
-if (!is.null(luca$node)) {
-  cat("LUCA found at node", luca$node, "\n")
-}
-}
-}
 \keyword{internal}

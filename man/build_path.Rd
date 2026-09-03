@@ -16,9 +16,4 @@ Character. Constructed path.
 Wrapper around file.path() to ensure consistent path construction.
 Never use paste() or sprintf() for path construction.
 }
-\examples{
-\dontrun{
-build_path("data", "output", "tree.pdf")
-}
-}
 \keyword{internal}

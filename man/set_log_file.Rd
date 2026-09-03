@@ -9,6 +9,10 @@ set_log_file(filepath)
 \arguments{
 \item{filepath}{Character. Path to log file. NULL to disable.}
 }
+\value{
+No return value, called for side effects (opens or closes a log file
+connection for dual console + file logging).
+}
 \description{
 Set log file for dual output
 }

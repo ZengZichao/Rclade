@@ -129,8 +129,8 @@ summarize_timetree <- function(p) {
 #' @export
 save_session_info <- function(file = "session_info.txt") {
   info <- utils::sessionInfo()
-  cat("=== R Session Info ===\n", file = file)
+  writeLines("=== R Session Info ===", con = file)
   utils::capture.output(info, file = file, append = TRUE)
-  log_info("Session info saved to: %s", file)
+  message("Session info saved to: ", file)
   invisible(info)
 }

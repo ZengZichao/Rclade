@@ -611,10 +611,6 @@ validate_inputs <- function(tree, rank, unit, layout, triangle_mode, space_mode,
 #' @param filepath Character. Path to sequence file.
 #' @return Character. Detected format: "fasta", "fastq", "unknown".
 #' @export
-#' @examples
-#' \dontrun{
-#' format <- validate_sequence_file("sequences.fasta")
-#' }
 validate_sequence_file <- function(filepath) {
   validate_file_exists(filepath, "Sequence")
 

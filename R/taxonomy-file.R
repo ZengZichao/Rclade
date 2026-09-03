@@ -34,14 +34,6 @@
 #'   }
 #'   Missing ranks are \code{NA}.
 #' @export
-#' @examples
-#' \dontrun{
-#' # Read a tab-delimited taxonomy file
-#' taxa <- read_taxonomy_file("taxonomy.tsv")
-#'
-#' # Read a comma-delimited file with header
-#' taxa <- read_taxonomy_file("taxonomy.csv", sep = ",", header = TRUE)
-#' }
 read_taxonomy_file <- function(file, sep = "auto", header = FALSE, table_sep = ";") {
   if (!file.exists(file)) {
     stop("Taxonomy file not found: '", file, "'", call. = FALSE)
@@ -248,12 +240,6 @@ parse_taxonomy_with_file <- function(labels, rank, format = "auto",
 #'   Default: \code{NULL}.
 #' @return Invisibly returns a list with parsing statistics.
 #' @export
-#' @examples
-#' \dontrun{
-#' # Report quality with external file
-#' summarize_taxonomy_quality_with_file(labels, format = "auto",
-#'                                       taxonomy_file = "taxonomy.tsv")
-#' }
 summarize_taxonomy_quality_with_file <- function(labels, format = "auto",
                                                   custom_patterns = NULL,
                                                   taxonomy_file = NULL,

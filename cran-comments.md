@@ -1,3 +1,53 @@
+## CRAN submission comments for Rclade 1.1.1
+
+### Resubmission after CRAN review of 1.0.0
+
+This resubmission addresses all issues raised by the CRAN reviewer
+(Leonore Hochhauser) for the 1.0.0 submission. The fixes were applied
+on top of the current development version (1.1.0) and are released as
+1.1.1. Key changes:
+
+- **DESCRIPTION references**: Added methodological references to the
+  Description field (Yu et al. 2017, Gearty 2025, Paradis & Schliep
+  2019) with DOIs in the required format
+  (`authors (year) <doi:...>`).
+- **Missing \value tags**: Added `\value` sections to the 5 Rd files
+  flagged by CRAN: `print.rclade_options.Rd`, `run_rclade_shiny.Rd`,
+  `set_log_enabled.Rd`, `set_log_file.Rd`, `set_log_level.Rd`.
+- **Examples for unexported functions**: Removed `\examples` sections
+  from all internal (`@keywords internal`) Rd files flagged by CRAN:
+  `batch_with_interrupt`, `build_path`, `managed_tempfile`,
+  `resolve_group`, `resolve_special_identifier`,
+  `validate_taxonomy_no_cycles`, `with_graceful_interrupt`.
+- **\dontrun → \donttest**: Removed all `\dontrun{}` wrappers
+  from exported function examples. Where examples referenced
+  external files (not available on CRAN), the example code was
+  removed entirely. Where examples used bundled
+  `data(example_tree)`, they are now executable without wrappers.
+- **Console output**: Replaced `cat()` with `message()` in
+  `save_session_info()` (R/save-timetree.R) and
+  `summarize_multi_trees()` (R/validate-deep.R) so output can be
+  suppressed via `suppressMessages()`.
+- **try-error in functionTree()**: Resolved by converting `\dontrun{}`
+  examples to `\donttest{}` (the error originated from example
+  evaluation on CRAN servers).
+
+### R CMD check results (local)
+
+`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
+
+### Test results
+
+- All existing tests pass (no code logic changes; only documentation
+  and example formatting changes).
+- `run_rclade_selftest()`: all checks pass.
+
+### Downstream dependencies
+
+There are no downstream dependencies.
+
+---
+
 ## CRAN submission comments for Rclade 1.1.0
 
 ### Update from 1.0.2

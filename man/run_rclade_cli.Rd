@@ -42,13 +42,3 @@ or avoid relying on config for options you care about.  Unknown config keys are
 warned and ignored.
 }
 
-\examples{
-# Correct usage in an Rscript entry point:
-\dontrun{
-  q(status = Rclade::run_rclade_cli(commandArgs(trailingOnly = TRUE)))
-}
-
-# The Dockerfile ENTRYPOINT uses the same pattern:
-# Rscript -e 'q(status = Rclade::run_rclade_cli(commandArgs(TRUE)))'
-
-}

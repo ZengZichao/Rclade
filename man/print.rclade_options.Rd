@@ -11,6 +11,10 @@
 
 \item{...}{Ignored.}
 }
+\value{
+Returns the input object \code{x} invisibly, after printing its
+key-value pairs to the console.
+}
 \description{
 Print method for rclade_options
 }

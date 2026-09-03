@@ -41,12 +41,6 @@
 #' opts <- rclade_options(rank = "phylum", layout = "circular",
 #'                        color_palette = "plasma", add_timescale = TRUE)
 #'
-#' # Use with plot_timetree (explicit args override opts)
-#' \dontrun{
-#' plot_timetree(tree, opts = opts)
-#' plot_timetree(tree, opts = opts, layout = "rectangular")  # overrides layout
-#' }
-#'
 #' @export
 rclade_options <- function(
     rank = "none",
@@ -105,8 +99,11 @@ rclade_options <- function(
 }
 
 #' Print method for rclade_options
+#'
 #' @param x A \code{rclade_options} object.
 #' @param ... Ignored.
+#' @return Returns the input object \code{x} invisibly, after printing its
+#'   key-value pairs to the console.
 #' @keywords internal
 #' @export
 print.rclade_options <- function(x, ...) {

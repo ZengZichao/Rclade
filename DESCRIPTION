@@ -1,6 +1,6 @@
 Package: Rclade
 Title: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: person("Zeng", "Zichao", email = "zengzichao@sjtu.edu.cn",
                   role = c("aut", "cre"))
 Author: Zeng Zichao [aut, cre]
@@ -19,6 +19,10 @@ Description: Provides a single-function pipeline for automated collapsing and
     comprehensive input validation for tree and sequence file formats. Reduces
     a 60-line manual workflow to a single function call while preserving full
     compatibility with the 'ggtree'/'deeptime' ecosystem.
+    The visualization pipeline builds on ggtree (Yu et al. 2017,
+    <doi:10.1111/2041-210X.12628>), deeptime (Gearty 2025,
+    <doi:10.1080/20964471.2025.2537516>), and ape (Paradis and Schliep
+    2019, <doi:10.1093/bioinformatics/bty633>).
 License: MIT + file LICENSE
 Depends:
     R (>= 4.1.0)

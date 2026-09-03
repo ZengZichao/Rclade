@@ -43,12 +43,3 @@ Reads taxonomy information from a two-column table file where:
 Supports tab-delimited or comma-delimited files. Missing ranks are indicated
 by empty values after the rank prefix (e.g., \code{s__} for missing species).
 }
-\examples{
-\dontrun{
-# Read a tab-delimited taxonomy file
-taxa <- read_taxonomy_file("taxonomy.tsv")
-
-# Read a comma-delimited file with header
-taxa <- read_taxonomy_file("taxonomy.csv", sep = ",", header = TRUE)
-}
-}

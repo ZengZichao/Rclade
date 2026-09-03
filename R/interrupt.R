@@ -109,15 +109,6 @@ cleanup_on_interrupt <- function() {
 #' @param total Integer. Total items for progress tracking (batch mode).
 #' @return Result of expr, or NULL if interrupted.
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' result <- with_graceful_interrupt({
-#'   for (i in 1:100) {
-#'     Sys.sleep(0.1)
-#'   }
-#'   "done"
-#' })
-#' }
 with_graceful_interrupt <- function(expr, total = 0) {
   init_progress_tracking(total)
   # Ensure active state is reset on any exit path (normal, error, interrupt)
@@ -159,13 +150,6 @@ with_graceful_interrupt <- function(expr, total = 0) {
 #' @param label_fun Optional function to generate label for each item.
 #' @return List of results (NULL for items not processed due to interrupt).
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' trees <- list(tree1, tree2, tree3)
-#' results <- batch_with_interrupt(trees, function(t, i) {
-#'   plot_timetree(t, rank = "phylum")
-#' })
-#' }
 batch_with_interrupt <- function(items, fun, label_fun = NULL) {
   n <- length(items)
   results <- vector("list", n)

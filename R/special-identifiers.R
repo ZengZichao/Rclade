@@ -83,15 +83,6 @@ resolve_target_domains <- function(identifier, all_domains) {
 #'     \item{tip_labels}{Character vector. Labels of descendant tips.}
 #'   }
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' data(example_tree)
-#' root <- resolve_special_identifier(example_tree, "ROOT")
-#' luca <- resolve_special_identifier(example_tree, "LUCA")
-#' if (!is.null(luca$node)) {
-#'   cat("LUCA found at node", luca$node, "\n")
-#' }
-#' }
 resolve_special_identifier <- function(tree, identifier, format = "auto",
                                         quiet = FALSE,
                                         delimiter_mode = "reverse",
@@ -209,12 +200,10 @@ resolve_special_identifier <- function(tree, identifier, format = "auto",
 #'   }
 #' @export
 #' @examples
-#' \dontrun{
 #' data(example_tree)
 #' result <- check_special_monophyly(example_tree, "LBCA")
 #' if (result$is_monophyletic) {
-#'   cat("LBCA is monophyletic!\n")
-#' }
+#'   message("LBCA is monophyletic!")
 #' }
 check_special_monophyly <- function(tree, identifier, format = "auto",
                                      quiet = FALSE,
@@ -324,16 +313,6 @@ check_special_monophyly <- function(tree, identifier, format = "auto",
 #'     \item{outsiders}{Character vector. Tips in MRCA not belonging to group.}
 #'   }
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' data(example_tree)
-#'
-#' # Regular group
-#' result1 <- resolve_group(example_tree, "P1", rank = "phylum")
-#'
-#' # Special identifier
-#' result2 <- resolve_group(example_tree, "LUCA")
-#' }
 resolve_group <- function(tree, group, rank = "domain", format = "auto",
                            quiet = FALSE,
                            delimiter_mode = "reverse",

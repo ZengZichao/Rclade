@@ -420,15 +420,6 @@ validate_cli_params <- function(opt) {
 #'   system}; simply calling \code{run_rclade_cli()} without forwarding the
 #'   return value will always exit with code 0 regardless of errors.
 #'
-#' @examples
-#' # Correct usage in an Rscript entry point:
-#' \dontrun{
-#'   q(status = Rclade::run_rclade_cli(commandArgs(trailingOnly = TRUE)))
-#' }
-#'
-#' # The Dockerfile ENTRYPOINT uses the same pattern:
-#' # Rscript -e 'q(status = Rclade::run_rclade_cli(commandArgs(TRUE)))'
-#'
 #' @export
 run_rclade_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
   if (!requireNamespace("optparse", quietly = TRUE)) {

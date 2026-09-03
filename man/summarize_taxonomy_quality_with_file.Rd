@@ -48,10 +48,3 @@ Invisibly returns a list with parsing statistics.
 Extended version of \code{summarize_taxonomy_quality()} that can use an
 external taxonomy file.
 }
-\examples{
-\dontrun{
-# Report quality with external file
-summarize_taxonomy_quality_with_file(labels, format = "auto",
-                                      taxonomy_file = "taxonomy.tsv")
-}
-}

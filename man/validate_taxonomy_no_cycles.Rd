@@ -27,10 +27,4 @@ A circular dependency means a value appears as both a high-rank and a
 low-rank member forming a loop (e.g. Row 1: \code{d__A;p__B},
 Row 2: \code{d__B;p__A}).
 }
-\examples{
-\dontrun{
-taxa <- read_taxonomy_file("taxonomy.tsv")
-validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
-}
-}
 \keyword{internal}

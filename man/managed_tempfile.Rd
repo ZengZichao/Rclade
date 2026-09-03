@@ -19,11 +19,4 @@ List with path and cleanup function.
 \description{
 Creates a temporary file and registers cleanup via on.exit().
 }
-\examples{
-\dontrun{
-tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
-writeLines("(A:1,B:1);", tmp$path)
-# File is automatically cleaned up when function exits
-}
-}
 \keyword{internal}

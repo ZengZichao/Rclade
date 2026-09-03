@@ -35,8 +35,3 @@ List with match status and differences.
 \description{
 Checks that all tree tips have corresponding sequences and vice versa.
 }
-\examples{
-\dontrun{
-result <- validate_tree_sequence_match("tree.nwk", "sequences.fasta")
-}
-}

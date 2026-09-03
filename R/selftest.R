@@ -12,10 +12,6 @@
 #'
 #' @return Integer. Exit code (0 = all passed, 1 = failures).
 #' @export
-#' @examples
-#' \dontrun{
-#' run_rclade_selftest()
-#' }
 run_rclade_selftest <- function() {
   results <- list()
   all_passed <- TRUE

@@ -63,6 +63,8 @@ NULL
 #' Set log level
 #'
 #' @param level Character. One of "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".
+#' @return No return value, called for side effects (sets the package-level
+#'   log threshold).
 #' @export
 set_log_level <- function(level) {
   valid_levels <- c("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
@@ -78,6 +80,8 @@ set_log_level <- function(level) {
 #' Enable or disable logging
 #'
 #' @param enabled Logical.
+#' @return No return value, called for side effects (toggles the package-level
+#'   logging enabled flag).
 #' @export
 set_log_enabled <- function(enabled) {
   .logger_env$enabled <- isTRUE(enabled)
@@ -115,6 +119,8 @@ format_timestamp <- function() {
 #' Set log file for dual output
 #'
 #' @param filepath Character. Path to log file. NULL to disable.
+#' @return No return value, called for side effects (opens or closes a log file
+#'   connection for dual console + file logging).
 #' @export
 set_log_file <- function(filepath) {
   # Close existing connection

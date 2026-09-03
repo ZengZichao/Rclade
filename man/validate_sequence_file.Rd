@@ -15,8 +15,3 @@ Character. Detected format: "fasta", "fastq", "unknown".
 \description{
 Validate sequence file format
 }
-\examples{
-\dontrun{
-format <- validate_sequence_file("sequences.fasta")
-}
-}

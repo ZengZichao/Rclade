@@ -310,8 +310,8 @@ summarize_multi_trees <- function(trees, filepath) {
                                  sprintf("\n  ... and %d more trees", n_trees - 20))
   }
 
-  cat("Tree summary for:", filepath, "\n")
-  cat(paste(summary_lines[1:min(n_trees, 20)], collapse = "\n"), "\n")
+  message("Tree summary for: ", filepath, "\n")
+  message(paste(summary_lines[1:min(n_trees, 20)], collapse = "\n"), "\n")
 
   invisible(NULL)
 }
@@ -327,10 +327,6 @@ summarize_multi_trees <- function(trees, filepath) {
 #' @param check_alignment Logical. If TRUE, check all sequences have equal length.
 #' @return List with validation results.
 #' @export
-#' @examples
-#' \dontrun{
-#' result <- validate_sequence_deep("sequences.fasta", expected_alphabet = "DNA")
-#' }
 validate_sequence_deep <- function(filepath, expected_alphabet = NULL,
                                     check_alignment = FALSE) {
   validate_file_exists(filepath, "Sequence")
@@ -684,11 +680,6 @@ validate_file_not_empty <- function(filepath, file_type = "input") {
 #' @return Invisibly returns TRUE if no cycles. Aborts on detection
 #'   (class \code{Rclade_validate_error}).
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' taxa <- read_taxonomy_file("taxonomy.tsv")
-#' validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
-#' }
 validate_taxonomy_no_cycles <- function(taxa_df, filepath = "<taxonomy>") {
   # Full adjacency check across ALL rank levels (coarsest -> finest). Any
   # cyclical relationship between two adjacent ranks is reported. Internally
@@ -783,10 +774,6 @@ find_rank_cycles <- function(taxa_df, rank_high, rank_low) {
 #'   \code{tree} is a path. Default: \code{"error"}.
 #' @return List with match status and differences.
 #' @export
-#' @examples
-#' \dontrun{
-#' result <- validate_tree_sequence_match("tree.nwk", "sequences.fasta")
-#' }
 validate_tree_sequence_match <- function(tree, sequence_file, quiet = FALSE,
                                           mol_type = NULL,
                                           skip_length_check = FALSE,

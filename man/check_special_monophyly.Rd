@@ -45,11 +45,9 @@ contains only tips from those domains (i.e., is monophyletic with respect to
 the target domains).
 }
 \examples{
-\dontrun{
 data(example_tree)
 result <- check_special_monophyly(example_tree, "LBCA")
 if (result$is_monophyletic) {
-  cat("LBCA is monophyletic!\n")
-}
+  message("LBCA is monophyletic!")
 }
 }

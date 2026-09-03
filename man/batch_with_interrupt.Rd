@@ -21,12 +21,4 @@ Processes a list of items with progress tracking and graceful
 interrupt handling. If interrupted, reports how many items were
 completed before stopping.
 }
-\examples{
-\dontrun{
-trees <- list(tree1, tree2, tree3)
-results <- batch_with_interrupt(trees, function(t, i) {
-  plot_timetree(t, rank = "phylum")
-})
-}
-}
 \keyword{internal}

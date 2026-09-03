@@ -6,6 +6,9 @@
 \usage{
 run_rclade_shiny()
 }
+\value{
+No return value, called for side effects (launches a Shiny web app).
+}
 \description{
 Provides an interactive web interface for Rclade. Requires the shiny package.
 }

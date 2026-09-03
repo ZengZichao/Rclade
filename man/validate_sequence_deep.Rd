@@ -25,8 +25,3 @@ List with validation results.
 Validates FASTA/FASTQ files: format detection, duplicate IDs,
 alphabet detection, and alignment length consistency.
 }
-\examples{
-\dontrun{
-result <- validate_sequence_deep("sequences.fasta", expected_alphabet = "DNA")
-}
-}

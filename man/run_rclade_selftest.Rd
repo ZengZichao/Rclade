@@ -17,8 +17,3 @@ Performs comprehensive self-check:
 \item Monophyly logic validation
 }
 }
-\examples{
-\dontrun{
-run_rclade_selftest()
-}
-}

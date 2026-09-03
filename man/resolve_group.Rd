@@ -50,15 +50,4 @@ A list with components:
 Unified function that handles both regular group names and special identifiers
 (LUCA, LACA, LBCA).
 }
-\examples{
-\dontrun{
-data(example_tree)
-
-# Regular group
-result1 <- resolve_group(example_tree, "P1", rank = "phylum")
-
-# Special identifier
-result2 <- resolve_group(example_tree, "LUCA")
-}
-}
 \keyword{internal}

@@ -9,6 +9,10 @@ set_log_level(level)
 \arguments{
 \item{level}{Character. One of "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL".}
 }
+\value{
+No return value, called for side effects (sets the package-level
+log threshold).
+}
 \description{
 Set log level
 }

@@ -9,6 +9,10 @@ set_log_enabled(enabled)
 \arguments{
 \item{enabled}{Logical.}
 }
+\value{
+No return value, called for side effects (toggles the package-level
+logging enabled flag).
+}
 \description{
 Enable or disable logging
 }

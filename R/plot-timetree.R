@@ -241,28 +241,10 @@
 #'   metadata (tip count, group count, taxonomy format, etc.).
 #'   Can be further customized with \code{+} layers.
 #' @examples
-#' \dontrun{
-#' # From a file with phylum-level collapsing
-#' p <- plot_timetree("my_tree.tre", rank = "phylum", unit = "Ma")
-#'
-#' # From a phylo object with GTDB labels
+#' # Quick start with the bundled example tree (no timescale)
 #' data(example_tree)
 #' p <- plot_timetree(example_tree, rank = "phylum",
 #'                    taxonomy_format = "GTDB", add_timescale = FALSE)
-#'
-#' # With external taxonomy file
-#' p <- plot_timetree("my_tree.tre", rank = "phylum",
-#'                    taxonomy_file = "taxonomy.tsv")
-#'
-#' # Handle multi-tree file: use first tree
-#' p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "first")
-#'
-#' # Handle multi-tree file: analyze all trees
-#' plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "all")
-#'
-#' # Save directly
-#' plot_timetree(tree, rank = "phylum", output = "output.pdf")
-#' }
 #' @importFrom ggtree %<+%
 #' @importFrom stats setNames
 #' @references

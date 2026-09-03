@@ -129,10 +129,6 @@ write_file_utf8 <- function(filepath, content, append = FALSE) {
 #' @param ... Path components.
 #' @return Character. Constructed path.
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' build_path("data", "output", "tree.pdf")
-#' }
 build_path <- function(...) {
   file.path(...)
 }
@@ -161,12 +157,6 @@ ensure_dir <- function(dirpath) {
 #' @param tmpdir Character. Temporary directory. Default: tempdir().
 #' @return List with path and cleanup function.
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
-#' writeLines("(A:1,B:1);", tmp$path)
-#' # File is automatically cleaned up when function exits
-#' }
 managed_tempfile <- function(pattern = "rclade_", fileext = ".tmp", tmpdir = tempdir()) {
   ensure_dir(tmpdir)
   filepath <- tempfile(pattern = pattern, fileext = fileext, tmpdir = tmpdir)
