@@ -1,3 +1,18 @@
+# Rclade 1.1.2 (2026-09-04, CRAN Resubmission)
+
+CRAN resubmission. Fixes the two NOTEs reported by the win-builder
+incoming pre-test for 1.1.1:
+
+* **Non-standard top-level files**: `LICENSE.md`, `MANIFEST.tsv`, and
+  `REPRODUCIBILITY.md` are now excluded from the built tarball via
+  `.Rbuildignore` (development/reproducibility artefacts, not for
+  distribution; the standard `LICENSE` file remains).
+* **Possibly misspelled words in DESCRIPTION**: the flagged words are
+  R package names and author surnames from cited references, not
+  misspellings. Documented in `cran-comments.md`.
+
+No changes to package code, exports, or behaviour relative to 1.1.1.
+
 # Rclade 1.1.1 (2026-09-03, CRAN Resubmission)
 
 CRAN resubmission addressing all reviewer issues from the 1.0.0 review.

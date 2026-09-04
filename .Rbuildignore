@@ -33,3 +33,7 @@
 ^\.workbuddy$
 
 ^evaluation$
+
+^LICENSE\.md$
+^MANIFEST\.tsv$
+^REPRODUCIBILITY\.md$

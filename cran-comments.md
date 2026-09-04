@@ -1,4 +1,25 @@
-## CRAN submission comments for Rclade 1.1.1
+## CRAN submission comments for Rclade 1.1.2
+
+### CRAN incoming feasibility NOTES (win-builder pre-test)
+
+The win-builder pre-test (`incoming_pretest`) for 1.1.1 reported 2 NOTEs
+on both Debian and Windows flavors. Both have been resolved:
+
+1. **Possibly misspelled words in DESCRIPTION** — The flagged words
+   (`ggtree`, `deeptime`, `Yu`, `et`, `al`, `Gearty`, `Paradis`,
+   `Schliep`) are all R package names (`ggtree`, `deeptime`) and author
+   surnames from the methodological references cited in the Description
+   field (Yu et al. 2017, Gearty 2025, Paradis & Schliep 2019). They are
+   not misspellings. This NOTE is expected for a new submission that
+   includes bibliographic references in the Description field.
+
+2. **Non-standard files/directories found at top level** — The files
+   `LICENSE.md`, `MANIFEST.tsv`, and `REPRODUCIBILITY.md` were present
+   at the package top level. They are development/reproducibility
+   artefacts not intended for distribution. They have been added to
+   `.Rbuildignore` so they are excluded from the built tarball. (The
+   standard `LICENSE` file required by `License: MIT + file LICENSE`
+   remains at top level and is unaffected.)
 
 ### Resubmission after CRAN review of 1.0.0
 

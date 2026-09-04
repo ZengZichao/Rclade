@@ -1,3 +1,12 @@
+# Rclade 1.1.2（2026-09-04，CRAN 重新提交）
+
+CRAN 重新提交。修复了 win-builder incoming pre-test 针对 1.1.1 报告的两个 NOTE：
+
+* **顶层非标准文件**：`LICENSE.md`、`MANIFEST.tsv`、`REPRODUCIBILITY.md` 已通过 `.Rbuildignore` 排除（它们是开发/可复现性辅助文件，不用于分发；标准 `LICENSE` 文件保留不变）。
+* **DESCRIPTION 拼写检查**：被标记的词（`ggtree`、`deeptime`、`Yu`、`et`、`al`、`Gearty`、`Paradis`、`Schliep`）均为 R 包名和参考文献作者姓氏，并非拼写错误。已在 `cran-comments.md` 中说明。
+
+相对 1.1.1 无包代码、导出或行为变更。
+
 # Rclade 1.1.1（2026-09-03，CRAN 重新提交）
 
 CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。

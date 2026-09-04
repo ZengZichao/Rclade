@@ -6,8 +6,8 @@ bibentry(
   author   = person("Zichao", "Zeng", email = "zengzichao@sjtu.edu.cn",
                      role = c("aut", "cre")),
   year     = "2026",
-  note     = "R package version 1.1.1",
-  textVersion = "Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 1.1.1."
+  note     = "R package version 1.1.2",
+  textVersion = "Zeng Z (2026). Rclade: Automated Deep-Time Phylogenetic Tree Collapsing and Visualization. R package version 1.1.2."
 )
 
 citHeader("Rclade builds on the ggtree and deeptime ecosystems. If you use Rclade",
