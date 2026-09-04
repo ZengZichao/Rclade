@@ -7,7 +7,7 @@
 package](https://img.shields.io/badge/R-package-blue.svg)](https://www.r-project.org/)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.1.1-green.svg)](https://zengzichao.github.io/Rclade/)
+[![Version](https://img.shields.io/badge/version-1.1.2-green.svg)](https://zengzichao.github.io/Rclade/)
 
 > **Note:** Source code and issue tracking at
 > <https://github.com/zengzichao/Rclade>. Install from the source
@@ -83,10 +83,10 @@ in `inst/docs/`:
 ``` r
 
 # Install the fixed release tag from GitHub (requires the remotes package)
-remotes::install_github("zengzichao/Rclade@v1.1.1")
+remotes::install_github("zengzichao/Rclade@v1.1.2")
 
 # Or install from a downloaded release tarball (GitHub Releases / Zenodo)
-install.packages("Rclade_1.1.1.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.2.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Using Conda
