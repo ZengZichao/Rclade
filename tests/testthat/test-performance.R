@@ -84,6 +84,7 @@ test_that("Medium tree rendering performance is within threshold", {
 test_that("Taxonomy parsing performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
+  skip_on_os("windows")  # Windows clock resolution makes sub-ms ratios unreliable
 
   # Timing block strategy: a single parse of 250-2000 labels is sub-millisecond,
   # far below system.time() resolution, so max/min per-tip ratios are pure
@@ -118,6 +119,7 @@ test_that("Taxonomy parsing performance scales linearly", {
 test_that("MRCA computation performance scales linearly", {
   skip_on_cran()
   skip_on_covr()
+  skip_on_os("windows")  # Windows clock resolution makes sub-ms ratios unreliable
 
   # See taxonomy-parsing test above: a single call is sub-millisecond, so time
   # a calibrated block of repeats (>= ~100 ms per size) instead of one call,
