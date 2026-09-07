@@ -61,7 +61,7 @@
 # ignore_branch_length: false
 
 # ───────────────────────── Time unit ─────────────────────────
-# unit: Ga               # Ga | Ma. NULL = auto-detect.
+# unit: Ma               # Ma | Ga. Required when add_timescale is true (Rclade never infers units).
 
 # ───────────────────────── Taxonomy ─────────────────────────
 # taxonomy_format: auto  # auto | GTDB | Silva | NCBI | custom_rank | custom_regex

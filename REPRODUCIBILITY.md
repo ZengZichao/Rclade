@@ -7,6 +7,16 @@ its exact inputs, scripts, and outputs, per the pre-submission review
 [10.5281/zenodo.22106523](https://doi.org/10.5281/zenodo.22106523),
 all versions: [10.5281/zenodo.22043060](https://doi.org/10.5281/zenodo.22043060)).
 
+> **Version note (added 2026-09-05; updated 2026-09-07).** Releases 1.1.1,
+> 1.1.2, and 1.1.3 contain documentation and packaging changes only
+> (verified by tarball diff: zero functional R-code changes relative to
+> v1.1.0). All inputs, scripts, results, and checksums in this guide
+> therefore apply unchanged to v1.1.3 and later documentation-only
+> releases. Known follow-up for the next functional release: align the
+> `deeptime` citation metadata in `inst/CITATION` and `DESCRIPTION` with
+> the manuscript reference (Big Earth Data 2026;10(1):1-17; online 2025)
+> — deferred deliberately.
+
 ## 1. Computational environment
 
 - Recorded **after loading Rclade and every benchmark dependency** in

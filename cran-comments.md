@@ -1,4 +1,37 @@
-## CRAN submission comments for Rclade 1.1.2
+## CRAN submission comments for Rclade 1.1.3
+
+### Resubmission after CRAN review (Uwe Ligges)
+
+This resubmission addresses the issue raised by the CRAN reviewer
+(Uwe Ligges) for the 1.1.2 submission. The reviewer requested that
+software names in the Description field be single-quoted (e.g.,
+'ggtree'). Version bumped to 1.1.3; no code, tests, or vignettes were
+changed; only the DESCRIPTION file was modified (`.Rbuildignore` was
+also updated to exclude a development-only `.mimosa/` directory that
+was flagged in a local `R CMD check`).
+
+- **Single-quoted software names in Description**: The software names
+  `ggtree`, `deeptime`, and `ape` in the bibliographic reference
+  paragraph of the Description field were not enclosed in single
+  quotes. They have been changed to `'ggtree'`, `'deeptime'`, and
+  `'ape'`. All other software names in the Description field (e.g.,
+  `'GTDB'`, `'Silva'`, `'NCBI'`, `'deeptime'`, `'geoscales'`,
+  `'ggtree'/'deeptime'`) were already single-quoted and remain
+  unchanged. The Title field contains no software names.
+
+### R CMD check results (local)
+
+`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
+
+There were 0 ERRORs and 0 WARNINGs. The 3 NOTEs are:
+
+1. **CRAN incoming feasibility** — "New submission" NOTE, expected for
+   a first-time CRAN submission.
+2. **unable to verify current time** — local network restriction; this
+   NOTE does not occur on CRAN servers.
+3. **`.DS_Store` in check directory** — a macOS Finder artefact
+   created during the check run; the tarball contains no `.DS_Store`
+   files (verified via `tar tzf`).
 
 ### CRAN incoming feasibility NOTES (win-builder pre-test)
 

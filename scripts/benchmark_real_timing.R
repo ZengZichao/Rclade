@@ -76,6 +76,9 @@ res <- data.frame(
   groups_singleton = info$groups_singleton,
   groups_skipped_non_monophyletic = info$groups_skipped_non_monophyletic,
   groups_skipped_other = info$groups_skipped_other,
+  # Displayed leaves after collapse (collapsed pseudo-leaves + visible true
+  # tips), recorded so the Table 4 column is directly auditable from the CSV.
+  displayed_leaves = info$actual_ntips,
   in_session_median_s = as.numeric(bm$median),
   in_session_min_s    = min(times),
   in_session_max_s    = max(times),
@@ -85,9 +88,10 @@ res <- data.frame(
 
 write.csv(res, out_csv, row.names = FALSE)
 cat(sprintf(paste0("in_session_median_s=%.3f min=%.3f max=%.3f rank=%s tips=%d ",
-                   "total=%d collapsed=%d singleton=%d skipped_nm=%d skipped_other=%d\n"),
+                   "total=%d collapsed=%d singleton=%d skipped_nm=%d skipped_other=%d ",
+                   "displayed_leaves=%d\n"),
             res$in_session_median_s, res$in_session_min_s, res$in_session_max_s,
             rank, res$n_tips, res$groups_total, res$groups_collapsed,
             res$groups_singleton, res$groups_skipped_non_monophyletic,
-            res$groups_skipped_other))
+            res$groups_skipped_other, res$displayed_leaves))
 cat("Saved ->", out_csv, "\n")

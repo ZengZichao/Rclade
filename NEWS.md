@@ -1,5 +1,19 @@
 # Rclade News
 
+## Rclade 1.1.3 (2026-09-07)
+
+CRAN resubmission. Fixes the issue raised by the CRAN reviewer
+(Uwe Ligges) for 1.1.2:
+
+* **Single-quoted software names in Description**: The software names
+  `ggtree`, `deeptime`, and `ape` in the bibliographic reference
+  paragraph of the Description field were not enclosed in single
+  quotes. They have been changed to `'ggtree'`, `'deeptime'`, and
+  `'ape'`. The `.mimosa/` development directory is now also excluded
+  via `.Rbuildignore`.
+
+No changes to package code, exports, or behaviour relative to 1.1.2.
+
 ## Rclade 1.1.2 (2026-09-04)
 
 CRAN resubmission. Fixes the two NOTEs reported by the win-builder

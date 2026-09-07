@@ -37,3 +37,5 @@
 ^LICENSE\.md$
 ^MANIFEST\.tsv$
 ^REPRODUCIBILITY\.md$
+^\.\.Rcheck$
+^\.mimosa$
