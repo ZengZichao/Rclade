@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,12 +35,15 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Rclade Reproducibility Guide (v1.1.0)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/v1.1.2/REPRODUCIBILITY.md" class="external-link"><code>REPRODUCIBILITY.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/main/REPRODUCIBILITY.md" class="external-link"><code>REPRODUCIBILITY.md</code></a></small>
     </div>
 
 <div id="rclade-reproducibility-guide-v110" class="section level1">
 
 <p>This document maps every quantitative result reported in the manuscript to its exact inputs, scripts, and outputs, per the pre-submission review (reviewer issues 6/7). All paths are relative to the archived snapshot (tag <code>v1.1.0</code>, commit <code>69dde83</code>; archived at Zenodo, version-specific DOI <a href="https://doi.org/10.5281/zenodo.22106523" class="external-link">10.5281/zenodo.22106523</a>, all versions: <a href="https://doi.org/10.5281/zenodo.22043060" class="external-link">10.5281/zenodo.22043060</a>).</p>
+<blockquote>
+<p><strong>Version note (added 2026-09-05; updated 2026-09-07).</strong> Releases 1.1.1, 1.1.2, and 1.1.3 contain documentation and packaging changes only (verified by tarball diff: zero functional R-code changes relative to v1.1.0). All inputs, scripts, results, and checksums in this guide therefore apply unchanged to v1.1.3 and later documentation-only releases. Known follow-up for the next functional release: align the <code>deeptime</code> citation metadata in <code>inst/CITATION</code> and <code>DESCRIPTION</code> with the manuscript reference (Big Earth Data 2026;10(1):1-17; online 2025) — deferred deliberately.</p>
+</blockquote>
 <div class="section level2">
 <h2 id="id_1-computational-environment">1. Computational environment<a class="anchor" aria-label="anchor" href="#id_1-computational-environment"></a></h2>
 <ul><li>Recorded <strong>after loading Rclade and every benchmark dependency</strong> in <code>benchmark_results/sessionInfo.txt</code> (fixes the previous base-only record).</li>

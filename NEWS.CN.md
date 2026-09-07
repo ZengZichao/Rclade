@@ -1,3 +1,14 @@
+# Rclade 1.1.3（2026-09-07，CRAN 重新提交）
+
+CRAN 重新提交。修复了 CRAN 审阅人（Uwe Ligges）针对 1.1.2 提出的问题：
+
+- **Description 中软件名称加单引号**：Description 参考文献段落中的
+  `ggtree`、`deeptime`、`ape` 未用单引号括起来，现已改为 `'ggtree'`、
+  `'deeptime'`、`'ape'`。同时通过 `.Rbuildignore` 排除了 `.mimosa/`
+  开发目录。
+
+相对 1.1.2 无包代码、导出或行为变更。
+
 # Rclade 1.1.2（2026-09-04，CRAN 重新提交）
 
 CRAN 重新提交。修复了 win-builder incoming pre-test 针对 1.1.1
