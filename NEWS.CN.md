@@ -1,3 +1,18 @@
+# Rclade 1.1.4（2026-09-08，CRAN 重新提交）
+
+CRAN 重新提交。修复了 CRAN incoming pre-test 针对 1.1.3 报告的 2 个
+WARNING 和 1 个 NOTE：
+
+- **预构建 vignette**：包在 DESCRIPTION 中声明了
+  `VignetteBuilder: knitr`，但 `inst/doc` 目录不存在，未附带预构建的
+  vignette HTML 文件。现已将三个 vignette 预构建为 HTML 文件并连同
+  `.Rmd` 源文件一并放入 `inst/doc/` 目录。
+- **DESCRIPTION
+  拼写检查**：被标记的词（`Gearty`、`Paradis`、`Schliep`、`Yu`、`et`、`al`）均为参考文献中的作者姓氏和拉丁缩写”et
+  al.”，并非拼写错误。已在 `cran-comments.md` 中说明。
+
+相对 1.1.3 无包代码、导出或行为变更。
+
 # Rclade 1.1.3（2026-09-07，CRAN 重新提交）
 
 CRAN 重新提交。修复了 CRAN 审阅人（Uwe Ligges）针对 1.1.2 提出的问题：

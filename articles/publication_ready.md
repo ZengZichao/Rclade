@@ -18,54 +18,54 @@ p <- plot_timetree(example_tree, rank = "phylum",
 #> ============================================================
 #>            Rclade: Phylogenetic Tree Visualization
 #> ============================================================
-#> 2026-09-07T09:18:57.789+00:00 | INFO     | Starting plot_timetree pipeline
-#> 2026-09-07T09:18:57.790+00:00 | INFO     | Tree input               : phylo object
-#> 2026-09-07T09:18:57.790+00:00 | INFO     | Rank                     : phylum
-#> 2026-09-07T09:18:57.791+00:00 | INFO     | Layout                   : rectangular
-#> 2026-09-07T09:18:57.791+00:00 | INFO     | Unit                     : auto
-#> 2026-09-07T09:18:57.792+00:00 | INFO     | Step 1/7: Input validation and reading
+#> 2026-09-08T07:09:25.780+00:00 | INFO     | Starting plot_timetree pipeline
+#> 2026-09-08T07:09:25.781+00:00 | INFO     | Tree input               : phylo object
+#> 2026-09-08T07:09:25.782+00:00 | INFO     | Rank                     : phylum
+#> 2026-09-08T07:09:25.782+00:00 | INFO     | Layout                   : rectangular
+#> 2026-09-08T07:09:25.783+00:00 | INFO     | Unit                     : auto
+#> 2026-09-08T07:09:25.784+00:00 | INFO     | Step 1/7: Input validation and reading
 #> 
 #>   --------------------------------------------------
 #>   >> Input Validation
 #>   --------------------------------------------------
-#> 2026-09-07T09:18:57.794+00:00 | INFO     | Tips                     : 50
-#> 2026-09-07T09:18:57.795+00:00 | INFO     | Internal nodes           : 49
-#> 2026-09-07T09:18:57.795+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
-#> 2026-09-07T09:18:57.796+00:00 | INFO     | Input validation passed
-#> 2026-09-07T09:18:57.805+00:00 | INFO     | Timer 'input_reading': 12 ms
-#> 2026-09-07T09:18:57.805+00:00 | INFO     | Step 2/7: Taxonomy parsing
-#> 2026-09-07T09:18:57.806+00:00 | INFO     | Using rank-based taxonomy: phylum
-#> 2026-09-07T09:18:57.814+00:00 | INFO     | Detected format          : GTDB
-#> 2026-09-07T09:18:57.815+00:00 | INFO     | Groups found             : 5
-#> 2026-09-07T09:18:57.815+00:00 | INFO     | Timer 'taxonomy_parsing': 10 ms
-#> 2026-09-07T09:18:57.816+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
-#> 2026-09-07T09:18:57.816+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
-#> 2026-09-07T09:18:57.820+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
-#> 2026-09-07T09:18:57.820+00:00 | INFO     | Valid MRCA nodes         : 5
-#> 2026-09-07T09:18:57.821+00:00 | INFO     | Timer 'mrca_computation': 5 ms
-#> 2026-09-07T09:18:58.654+00:00 | INFO     | Step 4/7: Color generation
-#> 2026-09-07T09:18:58.662+00:00 | INFO     | Color palette            : viridis
-#> 2026-09-07T09:18:58.663+00:00 | INFO     | Step 5/7: Tree rendering
+#> 2026-09-08T07:09:25.786+00:00 | INFO     | Tips                     : 50
+#> 2026-09-08T07:09:25.786+00:00 | INFO     | Internal nodes           : 49
+#> 2026-09-08T07:09:25.787+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
+#> 2026-09-08T07:09:25.788+00:00 | INFO     | Input validation passed
+#> 2026-09-08T07:09:25.796+00:00 | INFO     | Timer 'input_reading': 12 ms
+#> 2026-09-08T07:09:25.797+00:00 | INFO     | Step 2/7: Taxonomy parsing
+#> 2026-09-08T07:09:25.797+00:00 | INFO     | Using rank-based taxonomy: phylum
+#> 2026-09-08T07:09:25.806+00:00 | INFO     | Detected format          : GTDB
+#> 2026-09-08T07:09:25.806+00:00 | INFO     | Groups found             : 5
+#> 2026-09-08T07:09:25.807+00:00 | INFO     | Timer 'taxonomy_parsing': 10 ms
+#> 2026-09-08T07:09:25.807+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+#> 2026-09-08T07:09:25.807+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
+#> 2026-09-08T07:09:25.811+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
+#> 2026-09-08T07:09:25.812+00:00 | INFO     | Valid MRCA nodes         : 5
+#> 2026-09-08T07:09:25.812+00:00 | INFO     | Timer 'mrca_computation': 5 ms
+#> 2026-09-08T07:09:26.648+00:00 | INFO     | Step 4/7: Color generation
+#> 2026-09-08T07:09:26.656+00:00 | INFO     | Color palette            : viridis
+#> 2026-09-08T07:09:26.656+00:00 | INFO     | Step 5/7: Tree rendering
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-#> 2026-09-07T09:18:58.890+00:00 | INFO     | Collapsing 5 clades...
-#> 2026-09-07T09:18:58.921+00:00 | INFO     | Clade collapse complete
-#> 2026-09-07T09:18:58.922+00:00 | INFO     | Timer 'tree_rendering': 258 ms
-#> 2026-09-07T09:18:58.922+00:00 | INFO     | Step 6/7: Timescale integration
+#> 2026-09-08T07:09:26.884+00:00 | INFO     | Collapsing 5 clades...
+#> 2026-09-08T07:09:26.914+00:00 | INFO     | Clade collapse complete
+#> 2026-09-08T07:09:26.915+00:00 | INFO     | Timer 'tree_rendering': 258 ms
+#> 2026-09-08T07:09:26.915+00:00 | INFO     | Step 6/7: Timescale integration
 #> 
 #> ============================================================
 #>                       Pipeline Complete
 #> ============================================================
-#> 2026-09-07T09:18:59.027+00:00 | INFO     |   Tips                        : 50
-#> 2026-09-07T09:18:59.028+00:00 | INFO     |   Groups parsed               : 5
-#> 2026-09-07T09:18:59.028+00:00 | INFO     |   Groups collapsed            : 5
-#> 2026-09-07T09:18:59.029+00:00 | INFO     |   Singleton groups            : 0
-#> 2026-09-07T09:18:59.029+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
-#> 2026-09-07T09:18:59.030+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
-#> 2026-09-07T09:18:59.030+00:00 | INFO     |   Taxonomy format             : GTDB
-#> 2026-09-07T09:18:59.030+00:00 | INFO     |   Layout                      : rectangular
-#> 2026-09-07T09:18:59.031+00:00 | INFO     |   Timescale                   : disabled
-#> 2026-09-07T09:18:59.031+00:00 | INFO     | plot_timetree completed successfully
+#> 2026-09-08T07:09:27.019+00:00 | INFO     |   Tips                        : 50
+#> 2026-09-08T07:09:27.020+00:00 | INFO     |   Groups parsed               : 5
+#> 2026-09-08T07:09:27.020+00:00 | INFO     |   Groups collapsed            : 5
+#> 2026-09-08T07:09:27.020+00:00 | INFO     |   Singleton groups            : 0
+#> 2026-09-08T07:09:27.021+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
+#> 2026-09-08T07:09:27.021+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
+#> 2026-09-08T07:09:27.022+00:00 | INFO     |   Taxonomy format             : GTDB
+#> 2026-09-08T07:09:27.022+00:00 | INFO     |   Layout                      : rectangular
+#> 2026-09-08T07:09:27.022+00:00 | INFO     |   Timescale                   : disabled
+#> 2026-09-08T07:09:27.023+00:00 | INFO     | plot_timetree completed successfully
 print(p)
 ```
 
@@ -85,54 +85,54 @@ p <- plot_timetree(example_tree, rank = "phylum",
 #> ============================================================
 #>            Rclade: Phylogenetic Tree Visualization
 #> ============================================================
-#> 2026-09-07T09:18:59.642+00:00 | INFO     | Starting plot_timetree pipeline
-#> 2026-09-07T09:18:59.643+00:00 | INFO     | Tree input               : phylo object
-#> 2026-09-07T09:18:59.643+00:00 | INFO     | Rank                     : phylum
-#> 2026-09-07T09:18:59.643+00:00 | INFO     | Layout                   : rectangular
-#> 2026-09-07T09:18:59.644+00:00 | INFO     | Unit                     : auto
-#> 2026-09-07T09:18:59.644+00:00 | INFO     | Step 1/7: Input validation and reading
+#> 2026-09-08T07:09:27.675+00:00 | INFO     | Starting plot_timetree pipeline
+#> 2026-09-08T07:09:27.676+00:00 | INFO     | Tree input               : phylo object
+#> 2026-09-08T07:09:27.676+00:00 | INFO     | Rank                     : phylum
+#> 2026-09-08T07:09:27.677+00:00 | INFO     | Layout                   : rectangular
+#> 2026-09-08T07:09:27.677+00:00 | INFO     | Unit                     : auto
+#> 2026-09-08T07:09:27.678+00:00 | INFO     | Step 1/7: Input validation and reading
 #> 
 #>   --------------------------------------------------
 #>   >> Input Validation
 #>   --------------------------------------------------
-#> 2026-09-07T09:18:59.645+00:00 | INFO     | Tips                     : 50
-#> 2026-09-07T09:18:59.646+00:00 | INFO     | Internal nodes           : 49
-#> 2026-09-07T09:18:59.646+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
-#> 2026-09-07T09:18:59.647+00:00 | INFO     | Input validation passed
-#> 2026-09-07T09:18:59.648+00:00 | INFO     | Timer 'input_reading': 3 ms
-#> 2026-09-07T09:18:59.648+00:00 | INFO     | Step 2/7: Taxonomy parsing
-#> 2026-09-07T09:18:59.648+00:00 | INFO     | Using rank-based taxonomy: phylum
-#> 2026-09-07T09:18:59.656+00:00 | INFO     | Detected format          : GTDB
-#> 2026-09-07T09:18:59.657+00:00 | INFO     | Groups found             : 5
-#> 2026-09-07T09:18:59.657+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
-#> 2026-09-07T09:18:59.657+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
-#> 2026-09-07T09:18:59.658+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
-#> 2026-09-07T09:18:59.660+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
-#> 2026-09-07T09:18:59.661+00:00 | INFO     | Valid MRCA nodes         : 5
-#> 2026-09-07T09:18:59.661+00:00 | INFO     | Timer 'mrca_computation': 3 ms
-#> 2026-09-07T09:18:59.662+00:00 | INFO     | Step 4/7: Color generation
-#> 2026-09-07T09:18:59.663+00:00 | INFO     | Color palette            : viridis
-#> 2026-09-07T09:18:59.664+00:00 | INFO     | Step 5/7: Tree rendering
+#> 2026-09-08T07:09:27.679+00:00 | INFO     | Tips                     : 50
+#> 2026-09-08T07:09:27.679+00:00 | INFO     | Internal nodes           : 49
+#> 2026-09-08T07:09:27.679+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
+#> 2026-09-08T07:09:27.680+00:00 | INFO     | Input validation passed
+#> 2026-09-08T07:09:27.681+00:00 | INFO     | Timer 'input_reading': 3 ms
+#> 2026-09-08T07:09:27.681+00:00 | INFO     | Step 2/7: Taxonomy parsing
+#> 2026-09-08T07:09:27.682+00:00 | INFO     | Using rank-based taxonomy: phylum
+#> 2026-09-08T07:09:27.690+00:00 | INFO     | Detected format          : GTDB
+#> 2026-09-08T07:09:27.690+00:00 | INFO     | Groups found             : 5
+#> 2026-09-08T07:09:27.691+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
+#> 2026-09-08T07:09:27.691+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+#> 2026-09-08T07:09:27.691+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
+#> 2026-09-08T07:09:27.694+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
+#> 2026-09-08T07:09:27.695+00:00 | INFO     | Valid MRCA nodes         : 5
+#> 2026-09-08T07:09:27.695+00:00 | INFO     | Timer 'mrca_computation': 4 ms
+#> 2026-09-08T07:09:27.696+00:00 | INFO     | Step 4/7: Color generation
+#> 2026-09-08T07:09:27.697+00:00 | INFO     | Color palette            : viridis
+#> 2026-09-08T07:09:27.698+00:00 | INFO     | Step 5/7: Tree rendering
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-#> 2026-09-07T09:18:59.787+00:00 | INFO     | Collapsing 5 clades...
-#> 2026-09-07T09:18:59.818+00:00 | INFO     | Clade collapse complete
-#> 2026-09-07T09:18:59.819+00:00 | INFO     | Timer 'tree_rendering': 154 ms
-#> 2026-09-07T09:18:59.819+00:00 | INFO     | Step 6/7: Timescale integration
+#> 2026-09-08T07:09:27.821+00:00 | INFO     | Collapsing 5 clades...
+#> 2026-09-08T07:09:27.851+00:00 | INFO     | Clade collapse complete
+#> 2026-09-08T07:09:27.852+00:00 | INFO     | Timer 'tree_rendering': 154 ms
+#> 2026-09-08T07:09:27.852+00:00 | INFO     | Step 6/7: Timescale integration
 #> 
 #> ============================================================
 #>                       Pipeline Complete
 #> ============================================================
-#> 2026-09-07T09:18:59.904+00:00 | INFO     |   Tips                        : 50
-#> 2026-09-07T09:18:59.905+00:00 | INFO     |   Groups parsed               : 5
-#> 2026-09-07T09:18:59.905+00:00 | INFO     |   Groups collapsed            : 5
-#> 2026-09-07T09:18:59.905+00:00 | INFO     |   Singleton groups            : 0
-#> 2026-09-07T09:18:59.906+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
-#> 2026-09-07T09:18:59.906+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
-#> 2026-09-07T09:18:59.907+00:00 | INFO     |   Taxonomy format             : GTDB
-#> 2026-09-07T09:18:59.907+00:00 | INFO     |   Layout                      : rectangular
-#> 2026-09-07T09:18:59.907+00:00 | INFO     |   Timescale                   : disabled
-#> 2026-09-07T09:18:59.908+00:00 | INFO     | plot_timetree completed successfully
+#> 2026-09-08T07:09:27.936+00:00 | INFO     |   Tips                        : 50
+#> 2026-09-08T07:09:27.937+00:00 | INFO     |   Groups parsed               : 5
+#> 2026-09-08T07:09:27.937+00:00 | INFO     |   Groups collapsed            : 5
+#> 2026-09-08T07:09:27.938+00:00 | INFO     |   Singleton groups            : 0
+#> 2026-09-08T07:09:27.938+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
+#> 2026-09-08T07:09:27.939+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
+#> 2026-09-08T07:09:27.939+00:00 | INFO     |   Taxonomy format             : GTDB
+#> 2026-09-08T07:09:27.939+00:00 | INFO     |   Layout                      : rectangular
+#> 2026-09-08T07:09:27.940+00:00 | INFO     |   Timescale                   : disabled
+#> 2026-09-08T07:09:27.940+00:00 | INFO     | plot_timetree completed successfully
 print(p)
 ```
 
@@ -151,54 +151,54 @@ p <- plot_timetree(example_tree, rank = "phylum",
 #> ============================================================
 #>            Rclade: Phylogenetic Tree Visualization
 #> ============================================================
-#> 2026-09-07T09:19:00.583+00:00 | INFO     | Starting plot_timetree pipeline
-#> 2026-09-07T09:19:00.583+00:00 | INFO     | Tree input               : phylo object
-#> 2026-09-07T09:19:00.583+00:00 | INFO     | Rank                     : phylum
-#> 2026-09-07T09:19:00.584+00:00 | INFO     | Layout                   : rectangular
-#> 2026-09-07T09:19:00.584+00:00 | INFO     | Unit                     : auto
-#> 2026-09-07T09:19:00.585+00:00 | INFO     | Step 1/7: Input validation and reading
+#> 2026-09-08T07:09:28.624+00:00 | INFO     | Starting plot_timetree pipeline
+#> 2026-09-08T07:09:28.625+00:00 | INFO     | Tree input               : phylo object
+#> 2026-09-08T07:09:28.625+00:00 | INFO     | Rank                     : phylum
+#> 2026-09-08T07:09:28.626+00:00 | INFO     | Layout                   : rectangular
+#> 2026-09-08T07:09:28.626+00:00 | INFO     | Unit                     : auto
+#> 2026-09-08T07:09:28.627+00:00 | INFO     | Step 1/7: Input validation and reading
 #> 
 #>   --------------------------------------------------
 #>   >> Input Validation
 #>   --------------------------------------------------
-#> 2026-09-07T09:19:00.586+00:00 | INFO     | Tips                     : 50
-#> 2026-09-07T09:19:00.586+00:00 | INFO     | Internal nodes           : 49
-#> 2026-09-07T09:19:00.586+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
-#> 2026-09-07T09:19:00.587+00:00 | INFO     | Input validation passed
-#> 2026-09-07T09:19:00.588+00:00 | INFO     | Timer 'input_reading': 3 ms
-#> 2026-09-07T09:19:00.588+00:00 | INFO     | Step 2/7: Taxonomy parsing
-#> 2026-09-07T09:19:00.589+00:00 | INFO     | Using rank-based taxonomy: phylum
-#> 2026-09-07T09:19:00.597+00:00 | INFO     | Detected format          : GTDB
-#> 2026-09-07T09:19:00.597+00:00 | INFO     | Groups found             : 5
-#> 2026-09-07T09:19:00.597+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
-#> 2026-09-07T09:19:00.598+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
-#> 2026-09-07T09:19:00.598+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
-#> 2026-09-07T09:19:00.606+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
-#> 2026-09-07T09:19:00.606+00:00 | INFO     | Valid MRCA nodes         : 5
-#> 2026-09-07T09:19:00.607+00:00 | INFO     | Timer 'mrca_computation': 9 ms
-#> 2026-09-07T09:19:00.608+00:00 | INFO     | Step 4/7: Color generation
-#> 2026-09-07T09:19:00.609+00:00 | INFO     | Color palette            : viridis
-#> 2026-09-07T09:19:00.610+00:00 | INFO     | Step 5/7: Tree rendering
+#> 2026-09-08T07:09:28.628+00:00 | INFO     | Tips                     : 50
+#> 2026-09-08T07:09:28.628+00:00 | INFO     | Internal nodes           : 49
+#> 2026-09-08T07:09:28.629+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
+#> 2026-09-08T07:09:28.630+00:00 | INFO     | Input validation passed
+#> 2026-09-08T07:09:28.630+00:00 | INFO     | Timer 'input_reading': 3 ms
+#> 2026-09-08T07:09:28.630+00:00 | INFO     | Step 2/7: Taxonomy parsing
+#> 2026-09-08T07:09:28.631+00:00 | INFO     | Using rank-based taxonomy: phylum
+#> 2026-09-08T07:09:28.639+00:00 | INFO     | Detected format          : GTDB
+#> 2026-09-08T07:09:28.640+00:00 | INFO     | Groups found             : 5
+#> 2026-09-08T07:09:28.640+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
+#> 2026-09-08T07:09:28.640+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+#> 2026-09-08T07:09:28.641+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
+#> 2026-09-08T07:09:28.650+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
+#> 2026-09-08T07:09:28.650+00:00 | INFO     | Valid MRCA nodes         : 5
+#> 2026-09-08T07:09:28.651+00:00 | INFO     | Timer 'mrca_computation': 10 ms
+#> 2026-09-08T07:09:28.652+00:00 | INFO     | Step 4/7: Color generation
+#> 2026-09-08T07:09:28.653+00:00 | INFO     | Color palette            : viridis
+#> 2026-09-08T07:09:28.653+00:00 | INFO     | Step 5/7: Tree rendering
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-#> 2026-09-07T09:19:00.727+00:00 | INFO     | Collapsing 5 clades...
-#> 2026-09-07T09:19:00.757+00:00 | INFO     | Clade collapse complete
-#> 2026-09-07T09:19:00.758+00:00 | INFO     | Timer 'tree_rendering': 148 ms
-#> 2026-09-07T09:19:00.758+00:00 | INFO     | Step 6/7: Timescale integration
+#> 2026-09-08T07:09:28.772+00:00 | INFO     | Collapsing 5 clades...
+#> 2026-09-08T07:09:28.802+00:00 | INFO     | Clade collapse complete
+#> 2026-09-08T07:09:28.802+00:00 | INFO     | Timer 'tree_rendering': 148 ms
+#> 2026-09-08T07:09:28.803+00:00 | INFO     | Step 6/7: Timescale integration
 #> 
 #> ============================================================
 #>                       Pipeline Complete
 #> ============================================================
-#> 2026-09-07T09:19:00.849+00:00 | INFO     |   Tips                        : 50
-#> 2026-09-07T09:19:00.850+00:00 | INFO     |   Groups parsed               : 5
-#> 2026-09-07T09:19:00.850+00:00 | INFO     |   Groups collapsed            : 5
-#> 2026-09-07T09:19:00.851+00:00 | INFO     |   Singleton groups            : 0
-#> 2026-09-07T09:19:00.851+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
-#> 2026-09-07T09:19:00.851+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
-#> 2026-09-07T09:19:00.852+00:00 | INFO     |   Taxonomy format             : GTDB
-#> 2026-09-07T09:19:00.852+00:00 | INFO     |   Layout                      : rectangular
-#> 2026-09-07T09:19:00.853+00:00 | INFO     |   Timescale                   : disabled
-#> 2026-09-07T09:19:00.853+00:00 | INFO     | plot_timetree completed successfully
+#> 2026-09-08T07:09:28.894+00:00 | INFO     |   Tips                        : 50
+#> 2026-09-08T07:09:28.895+00:00 | INFO     |   Groups parsed               : 5
+#> 2026-09-08T07:09:28.895+00:00 | INFO     |   Groups collapsed            : 5
+#> 2026-09-08T07:09:28.895+00:00 | INFO     |   Singleton groups            : 0
+#> 2026-09-08T07:09:28.896+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
+#> 2026-09-08T07:09:28.896+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
+#> 2026-09-08T07:09:28.897+00:00 | INFO     |   Taxonomy format             : GTDB
+#> 2026-09-08T07:09:28.897+00:00 | INFO     |   Layout                      : rectangular
+#> 2026-09-08T07:09:28.897+00:00 | INFO     |   Timescale                   : disabled
+#> 2026-09-08T07:09:28.898+00:00 | INFO     | plot_timetree completed successfully
 
 # Standard positions
 p <- plot_timetree(example_tree, rank = "phylum",
@@ -209,54 +209,54 @@ p <- plot_timetree(example_tree, rank = "phylum",
 #> ============================================================
 #>            Rclade: Phylogenetic Tree Visualization
 #> ============================================================
-#> 2026-09-07T09:19:00.855+00:00 | INFO     | Starting plot_timetree pipeline
-#> 2026-09-07T09:19:00.855+00:00 | INFO     | Tree input               : phylo object
-#> 2026-09-07T09:19:00.855+00:00 | INFO     | Rank                     : phylum
-#> 2026-09-07T09:19:00.856+00:00 | INFO     | Layout                   : rectangular
-#> 2026-09-07T09:19:00.856+00:00 | INFO     | Unit                     : auto
-#> 2026-09-07T09:19:00.857+00:00 | INFO     | Step 1/7: Input validation and reading
+#> 2026-09-08T07:09:28.899+00:00 | INFO     | Starting plot_timetree pipeline
+#> 2026-09-08T07:09:28.900+00:00 | INFO     | Tree input               : phylo object
+#> 2026-09-08T07:09:28.900+00:00 | INFO     | Rank                     : phylum
+#> 2026-09-08T07:09:28.901+00:00 | INFO     | Layout                   : rectangular
+#> 2026-09-08T07:09:28.901+00:00 | INFO     | Unit                     : auto
+#> 2026-09-08T07:09:28.901+00:00 | INFO     | Step 1/7: Input validation and reading
 #> 
 #>   --------------------------------------------------
 #>   >> Input Validation
 #>   --------------------------------------------------
-#> 2026-09-07T09:19:00.858+00:00 | INFO     | Tips                     : 50
-#> 2026-09-07T09:19:00.858+00:00 | INFO     | Internal nodes           : 49
-#> 2026-09-07T09:19:00.859+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
-#> 2026-09-07T09:19:00.859+00:00 | INFO     | Input validation passed
-#> 2026-09-07T09:19:00.860+00:00 | INFO     | Timer 'input_reading': 3 ms
-#> 2026-09-07T09:19:00.860+00:00 | INFO     | Step 2/7: Taxonomy parsing
-#> 2026-09-07T09:19:00.861+00:00 | INFO     | Using rank-based taxonomy: phylum
-#> 2026-09-07T09:19:00.869+00:00 | INFO     | Detected format          : GTDB
-#> 2026-09-07T09:19:00.869+00:00 | INFO     | Groups found             : 5
-#> 2026-09-07T09:19:00.870+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
-#> 2026-09-07T09:19:00.870+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
-#> 2026-09-07T09:19:00.871+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
-#> 2026-09-07T09:19:00.873+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
-#> 2026-09-07T09:19:00.874+00:00 | INFO     | Valid MRCA nodes         : 5
-#> 2026-09-07T09:19:00.874+00:00 | INFO     | Timer 'mrca_computation': 4 ms
-#> 2026-09-07T09:19:00.875+00:00 | INFO     | Step 4/7: Color generation
-#> 2026-09-07T09:19:00.876+00:00 | INFO     | Color palette            : viridis
-#> 2026-09-07T09:19:00.877+00:00 | INFO     | Step 5/7: Tree rendering
+#> 2026-09-08T07:09:28.902+00:00 | INFO     | Tips                     : 50
+#> 2026-09-08T07:09:28.903+00:00 | INFO     | Internal nodes           : 49
+#> 2026-09-08T07:09:28.903+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
+#> 2026-09-08T07:09:28.904+00:00 | INFO     | Input validation passed
+#> 2026-09-08T07:09:28.905+00:00 | INFO     | Timer 'input_reading': 3 ms
+#> 2026-09-08T07:09:28.905+00:00 | INFO     | Step 2/7: Taxonomy parsing
+#> 2026-09-08T07:09:28.905+00:00 | INFO     | Using rank-based taxonomy: phylum
+#> 2026-09-08T07:09:28.914+00:00 | INFO     | Detected format          : GTDB
+#> 2026-09-08T07:09:28.914+00:00 | INFO     | Groups found             : 5
+#> 2026-09-08T07:09:28.915+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
+#> 2026-09-08T07:09:28.915+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+#> 2026-09-08T07:09:28.916+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
+#> 2026-09-08T07:09:28.918+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
+#> 2026-09-08T07:09:28.919+00:00 | INFO     | Valid MRCA nodes         : 5
+#> 2026-09-08T07:09:28.919+00:00 | INFO     | Timer 'mrca_computation': 4 ms
+#> 2026-09-08T07:09:28.920+00:00 | INFO     | Step 4/7: Color generation
+#> 2026-09-08T07:09:28.921+00:00 | INFO     | Color palette            : viridis
+#> 2026-09-08T07:09:28.922+00:00 | INFO     | Step 5/7: Tree rendering
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-#> 2026-09-07T09:19:01.002+00:00 | INFO     | Collapsing 5 clades...
-#> 2026-09-07T09:19:01.034+00:00 | INFO     | Clade collapse complete
-#> 2026-09-07T09:19:01.034+00:00 | INFO     | Timer 'tree_rendering': 157 ms
-#> 2026-09-07T09:19:01.035+00:00 | INFO     | Step 6/7: Timescale integration
+#> 2026-09-08T07:09:29.046+00:00 | INFO     | Collapsing 5 clades...
+#> 2026-09-08T07:09:29.075+00:00 | INFO     | Clade collapse complete
+#> 2026-09-08T07:09:29.075+00:00 | INFO     | Timer 'tree_rendering': 153 ms
+#> 2026-09-08T07:09:29.076+00:00 | INFO     | Step 6/7: Timescale integration
 #> 
 #> ============================================================
 #>                       Pipeline Complete
 #> ============================================================
-#> 2026-09-07T09:19:01.123+00:00 | INFO     |   Tips                        : 50
-#> 2026-09-07T09:19:01.123+00:00 | INFO     |   Groups parsed               : 5
-#> 2026-09-07T09:19:01.123+00:00 | INFO     |   Groups collapsed            : 5
-#> 2026-09-07T09:19:01.124+00:00 | INFO     |   Singleton groups            : 0
-#> 2026-09-07T09:19:01.124+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
-#> 2026-09-07T09:19:01.125+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
-#> 2026-09-07T09:19:01.125+00:00 | INFO     |   Taxonomy format             : GTDB
-#> 2026-09-07T09:19:01.125+00:00 | INFO     |   Layout                      : rectangular
-#> 2026-09-07T09:19:01.126+00:00 | INFO     |   Timescale                   : disabled
-#> 2026-09-07T09:19:01.126+00:00 | INFO     | plot_timetree completed successfully
+#> 2026-09-08T07:09:29.159+00:00 | INFO     |   Tips                        : 50
+#> 2026-09-08T07:09:29.159+00:00 | INFO     |   Groups parsed               : 5
+#> 2026-09-08T07:09:29.160+00:00 | INFO     |   Groups collapsed            : 5
+#> 2026-09-08T07:09:29.160+00:00 | INFO     |   Singleton groups            : 0
+#> 2026-09-08T07:09:29.161+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
+#> 2026-09-08T07:09:29.161+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
+#> 2026-09-08T07:09:29.161+00:00 | INFO     |   Taxonomy format             : GTDB
+#> 2026-09-08T07:09:29.162+00:00 | INFO     |   Layout                      : rectangular
+#> 2026-09-08T07:09:29.162+00:00 | INFO     |   Timescale                   : disabled
+#> 2026-09-08T07:09:29.162+00:00 | INFO     | plot_timetree completed successfully
 ```
 
 ## Clade Labels
@@ -271,54 +271,54 @@ p <- plot_timetree(example_tree, rank = "phylum",
 #> ============================================================
 #>            Rclade: Phylogenetic Tree Visualization
 #> ============================================================
-#> 2026-09-07T09:19:01.278+00:00 | INFO     | Starting plot_timetree pipeline
-#> 2026-09-07T09:19:01.279+00:00 | INFO     | Tree input               : phylo object
-#> 2026-09-07T09:19:01.279+00:00 | INFO     | Rank                     : phylum
-#> 2026-09-07T09:19:01.279+00:00 | INFO     | Layout                   : rectangular
-#> 2026-09-07T09:19:01.280+00:00 | INFO     | Unit                     : auto
-#> 2026-09-07T09:19:01.280+00:00 | INFO     | Step 1/7: Input validation and reading
+#> 2026-09-08T07:09:29.310+00:00 | INFO     | Starting plot_timetree pipeline
+#> 2026-09-08T07:09:29.311+00:00 | INFO     | Tree input               : phylo object
+#> 2026-09-08T07:09:29.311+00:00 | INFO     | Rank                     : phylum
+#> 2026-09-08T07:09:29.312+00:00 | INFO     | Layout                   : rectangular
+#> 2026-09-08T07:09:29.312+00:00 | INFO     | Unit                     : auto
+#> 2026-09-08T07:09:29.312+00:00 | INFO     | Step 1/7: Input validation and reading
 #> 
 #>   --------------------------------------------------
 #>   >> Input Validation
 #>   --------------------------------------------------
-#> 2026-09-07T09:19:01.281+00:00 | INFO     | Tips                     : 50
-#> 2026-09-07T09:19:01.282+00:00 | INFO     | Internal nodes           : 49
-#> 2026-09-07T09:19:01.282+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
-#> 2026-09-07T09:19:01.283+00:00 | INFO     | Input validation passed
-#> 2026-09-07T09:19:01.284+00:00 | INFO     | Timer 'input_reading': 3 ms
-#> 2026-09-07T09:19:01.284+00:00 | INFO     | Step 2/7: Taxonomy parsing
-#> 2026-09-07T09:19:01.284+00:00 | INFO     | Using rank-based taxonomy: phylum
-#> 2026-09-07T09:19:01.292+00:00 | INFO     | Detected format          : GTDB
-#> 2026-09-07T09:19:01.293+00:00 | INFO     | Groups found             : 5
-#> 2026-09-07T09:19:01.293+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
-#> 2026-09-07T09:19:01.294+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
-#> 2026-09-07T09:19:01.294+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
-#> 2026-09-07T09:19:01.297+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
-#> 2026-09-07T09:19:01.297+00:00 | INFO     | Valid MRCA nodes         : 5
-#> 2026-09-07T09:19:01.298+00:00 | INFO     | Timer 'mrca_computation': 3 ms
-#> 2026-09-07T09:19:01.298+00:00 | INFO     | Step 4/7: Color generation
-#> 2026-09-07T09:19:01.305+00:00 | INFO     | Color palette            : viridis
-#> 2026-09-07T09:19:01.306+00:00 | INFO     | Step 5/7: Tree rendering
+#> 2026-09-08T07:09:29.313+00:00 | INFO     | Tips                     : 50
+#> 2026-09-08T07:09:29.314+00:00 | INFO     | Internal nodes           : 49
+#> 2026-09-08T07:09:29.314+00:00 | INFO     | Edge lengths range       : 40.1579 to 2758.4006
+#> 2026-09-08T07:09:29.315+00:00 | INFO     | Input validation passed
+#> 2026-09-08T07:09:29.316+00:00 | INFO     | Timer 'input_reading': 3 ms
+#> 2026-09-08T07:09:29.316+00:00 | INFO     | Step 2/7: Taxonomy parsing
+#> 2026-09-08T07:09:29.316+00:00 | INFO     | Using rank-based taxonomy: phylum
+#> 2026-09-08T07:09:29.325+00:00 | INFO     | Detected format          : GTDB
+#> 2026-09-08T07:09:29.325+00:00 | INFO     | Groups found             : 5
+#> 2026-09-08T07:09:29.325+00:00 | INFO     | Timer 'taxonomy_parsing': 9 ms
+#> 2026-09-08T07:09:29.326+00:00 | INFO     | Step 3/7: MRCA computation and monophyly check
+#> 2026-09-08T07:09:29.326+00:00 | INFO     | Checking monophyly and computing MRCA for each group...
+#> 2026-09-08T07:09:29.329+00:00 | INFO     | Valid groups for collapse: 5 out of 5 total groups
+#> 2026-09-08T07:09:29.329+00:00 | INFO     | Valid MRCA nodes         : 5
+#> 2026-09-08T07:09:29.330+00:00 | INFO     | Timer 'mrca_computation': 3 ms
+#> 2026-09-08T07:09:29.330+00:00 | INFO     | Step 4/7: Color generation
+#> 2026-09-08T07:09:29.337+00:00 | INFO     | Color palette            : viridis
+#> 2026-09-08T07:09:29.338+00:00 | INFO     | Step 5/7: Tree rendering
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
 #> ! # Invaild edge matrix for <phylo>. A <tbl_df> is returned.
-#> 2026-09-07T09:19:01.425+00:00 | INFO     | Collapsing 5 clades...
-#> 2026-09-07T09:19:01.454+00:00 | INFO     | Clade collapse complete
-#> 2026-09-07T09:19:01.455+00:00 | INFO     | Timer 'tree_rendering': 149 ms
-#> 2026-09-07T09:19:01.455+00:00 | INFO     | Step 6/7: Timescale integration
+#> 2026-09-08T07:09:29.455+00:00 | INFO     | Collapsing 5 clades...
+#> 2026-09-08T07:09:29.484+00:00 | INFO     | Clade collapse complete
+#> 2026-09-08T07:09:29.484+00:00 | INFO     | Timer 'tree_rendering': 146 ms
+#> 2026-09-08T07:09:29.485+00:00 | INFO     | Step 6/7: Timescale integration
 #> 
 #> ============================================================
 #>                       Pipeline Complete
 #> ============================================================
-#> 2026-09-07T09:19:01.553+00:00 | INFO     |   Tips                        : 50
-#> 2026-09-07T09:19:01.553+00:00 | INFO     |   Groups parsed               : 5
-#> 2026-09-07T09:19:01.554+00:00 | INFO     |   Groups collapsed            : 5
-#> 2026-09-07T09:19:01.554+00:00 | INFO     |   Singleton groups            : 0
-#> 2026-09-07T09:19:01.554+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
-#> 2026-09-07T09:19:01.555+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
-#> 2026-09-07T09:19:01.555+00:00 | INFO     |   Taxonomy format             : GTDB
-#> 2026-09-07T09:19:01.556+00:00 | INFO     |   Layout                      : rectangular
-#> 2026-09-07T09:19:01.556+00:00 | INFO     |   Timescale                   : disabled
-#> 2026-09-07T09:19:01.556+00:00 | INFO     | plot_timetree completed successfully
+#> 2026-09-08T07:09:29.580+00:00 | INFO     |   Tips                        : 50
+#> 2026-09-08T07:09:29.580+00:00 | INFO     |   Groups parsed               : 5
+#> 2026-09-08T07:09:29.581+00:00 | INFO     |   Groups collapsed            : 5
+#> 2026-09-08T07:09:29.581+00:00 | INFO     |   Singleton groups            : 0
+#> 2026-09-08T07:09:29.581+00:00 | INFO     |   Skipped (non-monophyletic)  : 0
+#> 2026-09-08T07:09:29.582+00:00 | INFO     |   Skipped (root/zero-tip)     : 0
+#> 2026-09-08T07:09:29.582+00:00 | INFO     |   Taxonomy format             : GTDB
+#> 2026-09-08T07:09:29.583+00:00 | INFO     |   Layout                      : rectangular
+#> 2026-09-08T07:09:29.583+00:00 | INFO     |   Timescale                   : disabled
+#> 2026-09-08T07:09:29.583+00:00 | INFO     | plot_timetree completed successfully
 print(p)
 ```
 
