@@ -1,3 +1,57 @@
+## CRAN submission comments for Rclade 1.1.4
+
+### Resubmission after CRAN incoming pre-test (1.1.3)
+
+This resubmission addresses the 2 WARNINGs and 1 NOTE reported by the
+CRAN incoming pre-test for version 1.1.3. Version bumped to 1.1.4; no
+code, tests, or behaviour were changed.
+
+- **Pre-built vignettes (2 WARNINGs)**: The package declares
+  `VignetteBuilder: knitr` in DESCRIPTION. The CRAN pre-test reported:
+  (1) "Files in the 'vignettes' directory but no files in 'inst/doc'"
+  and (2) "Directory 'inst/doc' does not exist. Package vignettes
+  without corresponding single PDF/HTML." The cause was that
+  `inst/doc/` did not exist — vignettes were only present as `.Rmd`
+  sources in `vignettes/` but were never pre-built. All three
+  vignettes (`quick_start.Rmd`, `publication_ready.Rmd`,
+  `taxonomy_formats.Rmd`) are now pre-built as self-contained HTML
+  files and placed in `inst/doc/` alongside their `.Rmd` sources (and
+  their `*_files/` figure directories). CRAN's checking infrastructure
+  will now find the pre-built vignette index without needing to
+  re-build them.
+
+- **Possibly misspelled words in DESCRIPTION (1 NOTE)**: The flagged
+  words (`Gearty`, `Paradis`, `Schliep`, `Yu`, `et`, `al`) are all
+  author surnames and the standard Latin abbreviation "et al." from
+  the bibliographic references cited in the Description field:
+  - **Yu** — surname of Guangchuang Yu, author of ggtree (Yu et al.
+    2017, doi:10.1111/2041-210X.12628)
+  - **et** / **al** — Latin abbreviation "et al." used in the same
+    reference
+  - **Gearty** — surname of William Gearty, author of deeptime
+    (Gearty 2025, doi:10.1080/20964471.2025.2537516)
+  - **Paradis** — surname of Emmanuel Paradis, co-author of ape
+    (Paradis and Schliep 2019, doi:10.1093/bioinformatics/bty633)
+  - **Schliep** — surname of Klaus Schliep, co-author of ape
+
+  These are not misspellings. This NOTE is expected for a new
+  submission that includes bibliographic references in the Description
+  field.
+
+### R CMD check results (local)
+
+`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
+
+There were 0 ERRORs and 0 WARNINGs. The NOTEs are the standard
+CRAN incoming feasibility ("New submission") and the spell-check
+false positives described above.
+
+### Downstream dependencies
+
+There are no downstream dependencies.
+
+---
+
 ## CRAN submission comments for Rclade 1.1.3
 
 ### Resubmission after CRAN review (Uwe Ligges)

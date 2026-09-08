@@ -1,5 +1,29 @@
 # Rclade News
 
+## Rclade 1.1.4 (2026-09-08)
+
+CRAN resubmission. Fixes the 2 WARNINGs and 1 NOTE reported by the
+CRAN incoming pre-test for 1.1.3:
+
+* **Pre-built vignettes**: The package has a `VignetteBuilder: knitr`
+  field in DESCRIPTION, but `inst/doc` did not exist and no pre-built
+  vignette HTML files were shipped. CRAN requires that packages with a
+  VignetteBuilder field include pre-built vignette outputs in
+  `inst/doc/`. All three vignettes (`quick_start.Rmd`,
+  `publication_ready.Rmd`, `taxonomy_formats.Rmd`) are now pre-built
+  as HTML files and placed in `inst/doc/` alongside their `.Rmd`
+  sources, so CRAN's checking infrastructure finds them without
+  needing to re-build them (which requires package dependencies not
+  available on the CRAN check machines).
+* **Possibly misspelled words in DESCRIPTION**: The flagged words
+  (`Gearty`, `Paradis`, `Schliep`, `Yu`, `et`, `al`) are author
+  surnames and the Latin abbreviation "et al." from the bibliographic
+  references cited in the Description field (Yu et al. 2017, Gearty
+  2025, Paradis and Schliep 2019). They are not misspellings. Documented
+  in `cran-comments.md`.
+
+No changes to package code, exports, or behaviour relative to 1.1.3.
+
 ## Rclade 1.1.3 (2026-09-07)
 
 CRAN resubmission. Fixes the issue raised by the CRAN reviewer
