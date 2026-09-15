@@ -4,7 +4,10 @@
 \alias{check_monophyly_logic}
 \title{Check monophyly logic with known cases}
 \usage{
-check_monophyly_logic()
+check_monophyly_logic(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. Report progress when TRUE.}
 }
 \description{
 Check monophyly logic with known cases

@@ -4,7 +4,10 @@
 \alias{check_example_tree}
 \title{Check example tree loading and structure}
 \usage{
-check_example_tree()
+check_example_tree(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. Report progress when TRUE.}
 }
 \description{
 Check example tree loading and structure

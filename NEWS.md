@@ -1,5 +1,30 @@
 # Rclade News
 
+## Rclade 1.1.5 (2026-09-15)
+
+CRAN resubmission. Addresses the three issues raised by the CRAN
+reviewer for 1.1.4:
+
+* **Single quotes in Description**: Single quotes are now reserved for
+  R package names only (`'ggtree'`, `'deeptime'`, `'ape'`). Quotes were
+  removed around acronyms and database names (GTDB, Silva, NCBI, MRCAs,
+  LUCA, LACA, LBCA), and "geoscales" is now described in words as
+  geologic time scales because it is not a package name.
+* **Reference format in Description**: The bibliographic references now
+  use the `authors (year) <doi:...>` form with the year in parentheses:
+  Yu et al. (2017) <doi:10.1111/2041-210X.12628>, Gearty (2025)
+  <doi:10.1080/20964471.2025.2537516>, and Paradis and Schliep (2019)
+  <doi:10.1093/bioinformatics/bty633>.
+* **Console output in R/selftest.R**: `run_rclade_selftest()` and its
+  internal helpers now report progress with `message()` (stderr)
+  instead of `cat()`, so all self-test output can be suppressed with
+  `suppressMessages()`. A new `verbose` argument (default TRUE) allows
+  fully silent runs. The returned exit code (0/1) and the outcome of
+  every individual check are unchanged.
+
+No changes to package behaviour, exports, or test outcomes relative
+to 1.1.4.
+
 ## Rclade 1.1.4 (2026-09-08)
 
 CRAN resubmission. Fixes the 2 WARNINGs and 1 NOTE reported by the

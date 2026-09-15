@@ -1,3 +1,13 @@
+# Rclade 1.1.5（2026-09-15，CRAN 重新提交）
+
+CRAN 重新提交。修复 CRAN 审阅人针对 1.1.4 提出的三个问题：
+
+* **Description 中的单引号**：单引号现在仅用于 R 包名（`'ggtree'`、`'deeptime'`、`'ape'`）。缩略词和数据库名称（GTDB、Silva、NCBI、MRCAs、LUCA、LACA、LBCA）不再加引号；"geoscales" 不是包名，已改用文字描述为 geologic time scales。
+* **Description 中的参考文献格式**：参考文献改为 `authors (year) <doi:...>` 形式（年份加括号）：Yu et al. (2017) <doi:10.1111/2041-210X.12628>、Gearty (2025) <doi:10.1080/20964471.2025.2537516>、Paradis and Schliep (2019) <doi:10.1093/bioinformatics/bty633>。
+* **R/selftest.R 的控制台输出**：`run_rclade_selftest()` 及其内部辅助函数改用 `message()`（stderr）输出，可用 `suppressMessages()` 抑制；新增 `verbose` 参数（默认 TRUE）可完全静默运行。返回的退出码与各项检查结果均不变。
+
+相对 1.1.4 无包行为、导出或测试结果变更。
+
 # Rclade 1.1.4（2026-09-08，CRAN 重新提交）
 
 CRAN 重新提交。修复了 CRAN incoming pre-test 针对 1.1.3 报告的 2 个 WARNING 和 1 个 NOTE：

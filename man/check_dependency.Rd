@@ -4,7 +4,10 @@
 \alias{check_dependency}
 \title{Check a single dependency}
 \usage{
-check_dependency(name, min_version, required)
+check_dependency(name, min_version, required, verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. Report progress when TRUE.}
 }
 \description{
 Check a single dependency

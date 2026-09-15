@@ -4,7 +4,10 @@
 \alias{check_taxonomy_extraction}
 \title{Check taxonomy extraction from example tree}
 \usage{
-check_taxonomy_extraction()
+check_taxonomy_extraction(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. Report progress when TRUE.}
 }
 \description{
 Check taxonomy extraction from example tree

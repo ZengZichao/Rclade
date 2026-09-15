@@ -4,7 +4,10 @@
 \alias{check_input_validation}
 \title{Check input validation functions}
 \usage{
-check_input_validation()
+check_input_validation(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. Report progress when TRUE.}
 }
 \description{
 Check input validation functions

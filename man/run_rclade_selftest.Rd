@@ -4,7 +4,13 @@
 \alias{run_rclade_selftest}
 \title{Run Rclade self-test}
 \usage{
-run_rclade_selftest()
+run_rclade_selftest(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Logical. If TRUE (default), progress and results are
+reported via \code{\link{message}} (suppressible with
+\code{\link{suppressMessages}}). If FALSE, the self-test runs silently
+and only the exit code is returned.}
 }
 \value{
 Integer. Exit code (0 = all passed, 1 = failures).

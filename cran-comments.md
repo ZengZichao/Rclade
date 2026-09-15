@@ -1,3 +1,49 @@
+## CRAN submission comments for Rclade 1.1.5
+
+### Resubmission after CRAN review (Leonore Hochhauser, 2026-09-08)
+
+This resubmission addresses the three issues raised by the reviewer for
+version 1.1.4. Version bumped to 1.1.5.
+
+- **Single quotes only for package names**: All single quotes around
+  acronyms and database names were removed from the Description. GTDB,
+  Silva, NCBI, MRCAs, LUCA, LACA, and LBCA are no longer single-quoted,
+  and "geoscales" (not a package name) is now described in words as
+  geologic time scales. Single quotes are now used only for the R
+  package names 'ggtree', 'deeptime', and 'ape'.
+
+- **Reference format**: The bibliographic references in the Description
+  now use the requested `authors (year) <doi:...>` form, with the year
+  in parentheses: Yu et al. (2017) <doi:10.1111/2041-210X.12628>,
+  Gearty (2025) <doi:10.1080/20964471.2025.2537516>, and Paradis and
+  Schliep (2019) <doi:10.1093/bioinformatics/bty633>.
+
+- **Unsuppressible console output in R/selftest.R**: All `cat()` calls
+  in `run_rclade_selftest()` and its internal helpers were replaced
+  with `message()` calls, so self-test reporting goes to stderr and can
+  be suppressed with `suppressMessages()`. A new `verbose` argument
+  (default TRUE) allows fully silent runs. The function is diagnostic:
+  the returned exit code (0/1) and the outcome of every individual
+  check are unchanged, and no other function was affected.
+
+### R CMD check results (local)
+
+`R CMD check --no-manual --as-cran` was run on macOS aarch64 (arm64)
+with R 4.5.3.
+
+There were 0 ERRORs and 0 WARNINGs. The NOTEs are: (1) the standard
+CRAN incoming feasibility check ("New submission" — this package has
+not yet been accepted); (2) "unable to verify current time" (a local
+network sandbox limitation); and (3) one macOS `.DS_Store` Finder
+artifact created inside the check directory while the check was
+running (not part of the package; confirmed absent from the tarball).
+
+### Downstream dependencies
+
+There are no downstream dependencies.
+
+---
+
 ## CRAN submission comments for Rclade 1.1.4
 
 ### Resubmission after CRAN incoming pre-test (1.1.3)

@@ -3,6 +3,20 @@
 
 # Self-check mode and dependency validation
 
+#' Report a self-test progress line
+#'
+#' All self-test reporting goes through \code{\link{message}} (stderr) so
+#' that it can be suppressed with \code{\link{suppressMessages}}; plain
+#' \code{cat()} output cannot be suppressed by the user (CRAN policy on
+#' console output).
+#'
+#' @param verbose Logical. Output only when TRUE.
+#' @param ... Passed to \code{\link{message}}.
+#' @keywords internal
+selftest_report <- function(verbose, ...) {
+  if (isTRUE(verbose)) message(...)
+}
+
 #' Run Rclade self-test
 #'
 #' Performs comprehensive self-check:
@@ -10,19 +24,23 @@
 #' 2. Example tree parsing and taxonomy extraction
 #' 3. Monophyly logic validation
 #'
+#' @param verbose Logical. If TRUE (default), progress and results are
+#'   reported via \code{\link{message}} (suppressible with
+#'   \code{\link{suppressMessages}}). If FALSE, the self-test runs silently
+#'   and only the exit code is returned.
 #' @return Integer. Exit code (0 = all passed, 1 = failures).
 #' @export
-run_rclade_selftest <- function() {
+run_rclade_selftest <- function(verbose = TRUE) {
   results <- list()
   all_passed <- TRUE
 
-  cat("\n")
-  cat("================================================================\n")
-  cat("  Rclade Self-Test\n")
-  cat("================================================================\n\n")
+  selftest_report(verbose, "\n")
+  selftest_report(verbose, "================================================================\n")
+  selftest_report(verbose, "  Rclade Self-Test\n")
+  selftest_report(verbose, "================================================================\n\n")
 
   # --- 1. Dependency checks ---
-  cat("--- Dependency Checks ---\n\n")
+  selftest_report(verbose, "--- Dependency Checks ---\n\n")
 
   deps <- list(
     list(name = "ape",        min_version = "5.0",  required = TRUE),
@@ -41,7 +59,7 @@ run_rclade_selftest <- function() {
   )
 
   for (dep in deps) {
-    result <- check_dependency(dep$name, dep$min_version, dep$required)
+    result <- check_dependency(dep$name, dep$min_version, dep$required, verbose)
     results <- c(results, list(result))
     if (!result$passed) all_passed <- FALSE
   }
@@ -61,48 +79,48 @@ run_rclade_selftest <- function() {
   )))
   if (!r_ok) all_passed <- FALSE
 
-  cat("\n")
+  selftest_report(verbose, "\n")
 
   # --- 2. Example tree parsing ---
-  cat("--- Example Tree Parsing ---\n\n")
+  selftest_report(verbose, "--- Example Tree Parsing ---\n\n")
 
-  result <- check_example_tree()
+  result <- check_example_tree(verbose)
   results <- c(results, list(result))
   if (!result$passed) all_passed <- FALSE
 
-  cat("\n")
+  selftest_report(verbose, "\n")
 
   # --- 3. Taxonomy extraction ---
-  cat("--- Taxonomy Extraction ---\n\n")
+  selftest_report(verbose, "--- Taxonomy Extraction ---\n\n")
 
-  result <- check_taxonomy_extraction()
+  result <- check_taxonomy_extraction(verbose)
   results <- c(results, list(result))
   if (!result$passed) all_passed <- FALSE
 
-  cat("\n")
+  selftest_report(verbose, "\n")
 
   # --- 4. Monophyly logic ---
-  cat("--- Monophyly Logic ---\n\n")
+  selftest_report(verbose, "--- Monophyly Logic ---\n\n")
 
-  result <- check_monophyly_logic()
+  result <- check_monophyly_logic(verbose)
   results <- c(results, list(result))
   if (!result$passed) all_passed <- FALSE
 
-  cat("\n")
+  selftest_report(verbose, "\n")
 
   # --- 5. Deep validation ---
-  cat("--- Input Validation ---\n\n")
+  selftest_report(verbose, "--- Input Validation ---\n\n")
 
-  result <- check_input_validation()
+  result <- check_input_validation(verbose)
   results <- c(results, list(result))
   if (!result$passed) all_passed <- FALSE
 
-  cat("\n")
+  selftest_report(verbose, "\n")
 
   # --- Summary ---
-  cat("================================================================\n")
-  cat("  Summary\n")
-  cat("================================================================\n\n")
+  selftest_report(verbose, "================================================================\n")
+  selftest_report(verbose, "  Summary\n")
+  selftest_report(verbose, "================================================================\n\n")
 
   n_pass <- sum(sapply(results, function(r) r$passed))
   n_fail <- sum(sapply(results, function(r) !r$passed))
@@ -111,28 +129,29 @@ run_rclade_selftest <- function() {
   for (r in results) {
     status <- if (r$passed) "[PASS]" else "[FAIL]"
     req <- if (isTRUE(r$required)) "(required)" else "(optional)"
-    cat(sprintf("  %s %s %s\n", status, r$test, req))
+    selftest_report(verbose, sprintf("  %s %s %s\n", status, r$test, req))
   }
 
-  cat(sprintf("\n  Total: %d | Passed: %d | Failed: %d\n\n", n_total, n_pass, n_fail))
+  selftest_report(verbose, sprintf("\n  Total: %d | Passed: %d | Failed: %d\n\n", n_total, n_pass, n_fail))
 
   if (all_passed) {
-    cat("  All checks passed.\n\n")
+    selftest_report(verbose, "  All checks passed.\n\n")
     return(invisible(0L))
   } else {
-    cat("  Some checks failed. See above for details.\n\n")
+    selftest_report(verbose, "  Some checks failed. See above for details.\n\n")
     return(invisible(1L))
   }
 }
 
 #' Check a single dependency
+#' @param verbose Logical. Report progress when TRUE.
 #' @keywords internal
-check_dependency <- function(name, min_version, required) {
+check_dependency <- function(name, min_version, required, verbose = TRUE) {
   installed <- requireNamespace(name, quietly = TRUE)
 
   if (!installed) {
     status <- if (required) "MISSING (required)" else "MISSING (optional)"
-    cat(sprintf("  [FAIL] %-15s %s\n", name, status))
+    selftest_report(verbose, sprintf("  [FAIL] %-15s %s\n", name, status))
     return(list(
       test = sprintf("Package '%s'", name),
       passed = !required,  # Only fail if required
@@ -151,9 +170,9 @@ check_dependency <- function(name, min_version, required) {
   }, error = function(e) TRUE)
 
   if (version_ok) {
-    cat(sprintf("  [PASS] %-15s %s (>= %s)\n", name, version, min_version))
+    selftest_report(verbose, sprintf("  [PASS] %-15s %s (>= %s)\n", name, version, min_version))
   } else {
-    cat(sprintf("  [FAIL] %-15s %s (< %s, update required)\n", name, version, min_version))
+    selftest_report(verbose, sprintf("  [FAIL] %-15s %s (< %s, update required)\n", name, version, min_version))
   }
 
   return(list(
@@ -164,13 +183,14 @@ check_dependency <- function(name, min_version, required) {
 }
 
 #' Check example tree loading and structure
+#' @param verbose Logical. Report progress when TRUE.
 #' @keywords internal
-check_example_tree <- function() {
+check_example_tree <- function(verbose = TRUE) {
   tryCatch({
     utils::data("example_tree", package = "Rclade", envir = environment())
 
     if (!exists("example_tree")) {
-      cat("  [FAIL] Example tree not found in package data\n")
+      selftest_report(verbose, "  [FAIL] Example tree not found in package data\n")
       return(list(test = "Example tree loading", passed = FALSE, required = TRUE))
     }
 
@@ -178,12 +198,12 @@ check_example_tree <- function() {
     n_nodes <- ape::Nnode(example_tree)
     is_binary <- ape::is.binary(example_tree)
 
-    cat(sprintf("  [PASS] Example tree loaded: %d tips, %d nodes\n", n_tips, n_nodes))
+    selftest_report(verbose, sprintf("  [PASS] Example tree loaded: %d tips, %d nodes\n", n_tips, n_nodes))
 
     if (!is_binary) {
-      cat("  [WARN] Example tree is not fully bifurcating\n")
+      selftest_report(verbose, "  [WARN] Example tree is not fully bifurcating\n")
     } else {
-      cat("  [PASS] Example tree is fully bifurcating\n")
+      selftest_report(verbose, "  [PASS] Example tree is fully bifurcating\n")
     }
 
     # Check edge lengths. A zero-length root edge is biologically valid (it
@@ -196,47 +216,48 @@ check_example_tree <- function() {
     non_root_len <- example_tree$edge.length[!is_root_edge]
     all_positive <- has_edges && all(non_root_len > 0, na.rm = TRUE)
     if (all_positive) {
-      cat("  [PASS] All edge lengths are positive\n")
+      selftest_report(verbose, "  [PASS] All edge lengths are positive\n")
     } else {
-      cat("  [FAIL] Some non-root edge lengths are non-positive\n")
+      selftest_report(verbose, "  [FAIL] Some non-root edge lengths are non-positive\n")
       return(list(test = "Example tree structure", passed = FALSE, required = TRUE))
     }
 
     return(list(test = "Example tree loading", passed = TRUE, required = TRUE))
   }, error = function(e) {
-    cat(sprintf("  [FAIL] Error loading example tree: %s\n", e$message))
+    selftest_report(verbose, sprintf("  [FAIL] Error loading example tree: %s\n", e$message))
     return(list(test = "Example tree loading", passed = FALSE, required = TRUE))
   })
 }
 
 #' Check taxonomy extraction from example tree
+#' @param verbose Logical. Report progress when TRUE.
 #' @keywords internal
-check_taxonomy_extraction <- function() {
+check_taxonomy_extraction <- function(verbose = TRUE) {
   tryCatch({
     utils::data("example_tree", package = "Rclade", envir = environment())
 
     # Test Format B (GTDB/semicolon) detection
     detected <- detect_taxonomy_format(example_tree$tip.label)
-    cat(sprintf("  [PASS] Format B detected: %s\n", detected))
+    selftest_report(verbose, sprintf("  [PASS] Format B detected: %s\n", detected))
 
     # Test phylum-level extraction (Format B)
     taxa_df <- parse_gtdb(example_tree$tip.label)
     phyla <- unique(na.omit(taxa_df$phylum))
-    cat(sprintf("  [PASS] Format B phyla extracted: %d (%s)\n", length(phyla),
+    selftest_report(verbose, sprintf("  [PASS] Format B phyla extracted: %d (%s)\n", length(phyla),
                 paste(head(phyla, 3), collapse = ", ")))
 
     # Test class-level extraction
     classes <- unique(na.omit(taxa_df$class))
-    cat(sprintf("  [PASS] Format B classes extracted: %d (%s)\n", length(classes),
+    selftest_report(verbose, sprintf("  [PASS] Format B classes extracted: %d (%s)\n", length(classes),
                 paste(head(classes, 3), collapse = ", ")))
 
     # Check parse rates
     na_phylum <- sum(is.na(taxa_df$phylum))
     na_class <- sum(is.na(taxa_df$class))
     if (na_phylum == 0 && na_class == 0) {
-      cat("  [PASS] Format B: all labels parsed successfully\n")
+      selftest_report(verbose, "  [PASS] Format B: all labels parsed successfully\n")
     } else {
-      cat(sprintf("  [WARN] Format B NAs: phylum=%d, class=%d\n", na_phylum, na_class))
+      selftest_report(verbose, sprintf("  [WARN] Format B NAs: phylum=%d, class=%d\n", na_phylum, na_class))
     }
 
     # Test Format A (embedded) parsing
@@ -245,19 +266,19 @@ check_taxonomy_extraction <- function() {
       "GB_GCA_002_d_D1_p_P2_c_C3"
     )
     detected_a <- detect_taxonomy_format(test_labels_a)
-    cat(sprintf("  [PASS] Format A detected: %s\n", detected_a))
+    selftest_report(verbose, sprintf("  [PASS] Format A detected: %s\n", detected_a))
 
     taxa_a <- parse_embedded(test_labels_a)
     if (!is.na(taxa_a$domain[1]) && taxa_a$domain[1] == "D1") {
-      cat("  [PASS] Format A domain extraction\n")
+      selftest_report(verbose, "  [PASS] Format A domain extraction\n")
     } else {
-      cat("  [FAIL] Format A domain extraction\n")
+      selftest_report(verbose, "  [FAIL] Format A domain extraction\n")
       return(list(test = "Taxonomy extraction", passed = FALSE, required = TRUE))
     }
     if (!is.na(taxa_a$phylum[1]) && taxa_a$phylum[1] == "P1") {
-      cat("  [PASS] Format A phylum extraction\n")
+      selftest_report(verbose, "  [PASS] Format A phylum extraction\n")
     } else {
-      cat("  [FAIL] Format A phylum extraction\n")
+      selftest_report(verbose, "  [FAIL] Format A phylum extraction\n")
       return(list(test = "Taxonomy extraction", passed = FALSE, required = TRUE))
     }
 
@@ -265,9 +286,9 @@ check_taxonomy_extraction <- function() {
     test_labels_missing <- c("GB_GCA_001_d_D1_c_C1")
     taxa_missing <- parse_embedded(test_labels_missing)
     if (is.na(taxa_missing$phylum[1])) {
-      cat("  [PASS] Format A missing level handling\n")
+      selftest_report(verbose, "  [PASS] Format A missing level handling\n")
     } else {
-      cat("  [FAIL] Format A missing level handling\n")
+      selftest_report(verbose, "  [FAIL] Format A missing level handling\n")
     }
 
     # Test Format B value validation (malformed value with __)
@@ -276,27 +297,28 @@ check_taxonomy_extraction <- function() {
       {
         taxa_malformed <- parse_semicolon_delimited(test_labels_malformed)
         if (is.na(taxa_malformed$phylum[1])) {
-          cat("  [PASS] Format B malformed value rejection\n")
+          selftest_report(verbose, "  [PASS] Format B malformed value rejection\n")
         } else {
-          cat("  [FAIL] Format B malformed value rejection\n")
+          selftest_report(verbose, "  [FAIL] Format B malformed value rejection\n")
         }
       },
       warning = function(w) {
-        cat("  [PASS] Format B malformed value warning caught\n")
+        selftest_report(verbose, "  [PASS] Format B malformed value warning caught\n")
         invokeRestart("muffleWarning")
       }
     )
 
     return(list(test = "Taxonomy extraction", passed = TRUE, required = TRUE))
   }, error = function(e) {
-    cat(sprintf("  [FAIL] Error in taxonomy extraction: %s\n", e$message))
+    selftest_report(verbose, sprintf("  [FAIL] Error in taxonomy extraction: %s\n", e$message))
     return(list(test = "Taxonomy extraction", passed = FALSE, required = TRUE))
   })
 }
 
 #' Check monophyly logic with known cases
+#' @param verbose Logical. Report progress when TRUE.
 #' @keywords internal
-check_monophyly_logic <- function() {
+check_monophyly_logic <- function(verbose = TRUE) {
   tryCatch({
     utils::data("example_tree", package = "Rclade", envir = environment())
 
@@ -308,10 +330,10 @@ check_monophyly_logic <- function() {
       result <- check_monophyly(example_tree, p, rank = "phylum",
                                  format = "GTDB", quiet = TRUE)
       if (result$is_monophyletic) {
-        cat(sprintf("  [PASS] %s: monophyletic (node %d, %d tips)\n",
+        selftest_report(verbose, sprintf("  [PASS] %s: monophyletic (node %d, %d tips)\n",
                     p, result$mrca_node, result$n_tips))
       } else {
-        cat(sprintf("  [FAIL] %s: NOT monophyletic\n", p))
+        selftest_report(verbose, sprintf("  [FAIL] %s: NOT monophyletic\n", p))
         all_mono <- FALSE
       }
     }
@@ -319,34 +341,35 @@ check_monophyly_logic <- function() {
     # Test special identifiers on the example tree
     luca <- resolve_special_identifier(example_tree, "LUCA", quiet = TRUE)
     if (!is.null(luca$node)) {
-      cat(sprintf("  [PASS] LUCA: node %d, %d descendant tips\n",
+      selftest_report(verbose, sprintf("  [PASS] LUCA: node %d, %d descendant tips\n",
                   luca$node, luca$n_tips))
     } else {
-      cat("  [WARN] LUCA: no node found\n")
+      selftest_report(verbose, "  [WARN] LUCA: no node found\n")
     }
 
     lbca <- resolve_special_identifier(example_tree, "LBCA", quiet = TRUE)
     if (!is.null(lbca$node)) {
-      cat(sprintf("  [PASS] LBCA: node %d, %d descendant tips\n",
+      selftest_report(verbose, sprintf("  [PASS] LBCA: node %d, %d descendant tips\n",
                   lbca$node, lbca$n_tips))
     } else {
-      cat("  [WARN] LBCA: no node found (single-domain tree)\n")
+      selftest_report(verbose, "  [WARN] LBCA: no node found (single-domain tree)\n")
     }
 
     return(list(test = "Monophyly logic", passed = all_mono, required = TRUE))
   }, error = function(e) {
-    cat(sprintf("  [FAIL] Error in monophyly check: %s\n", e$message))
+    selftest_report(verbose, sprintf("  [FAIL] Error in monophyly check: %s\n", e$message))
     return(list(test = "Monophyly logic", passed = FALSE, required = TRUE))
   })
 }
 
 #' Check input validation functions
+#' @param verbose Logical. Report progress when TRUE.
 #' @keywords internal
-check_input_validation <- function() {
+check_input_validation <- function(verbose = TRUE) {
   tryCatch({
     # Test Newick validation
     validate_newick_syntax("(A:1,B:1):1;", "test")
-    cat("  [PASS] Newick syntax validation\n")
+    selftest_report(verbose, "  [PASS] Newick syntax validation\n")
 
     # Test negative branch detection
     neg_caught <- tryCatch({
@@ -354,9 +377,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("Negative", e$message))
     if (neg_caught) {
-      cat("  [PASS] Negative branch length detection\n")
+      selftest_report(verbose, "  [PASS] Negative branch length detection\n")
     } else {
-      cat("  [FAIL] Negative branch length not detected\n")
+      selftest_report(verbose, "  [FAIL] Negative branch length not detected\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
@@ -366,16 +389,16 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("unmatched", e$message))
     if (bracket_caught) {
-      cat("  [PASS] Bracket balance detection\n")
+      selftest_report(verbose, "  [PASS] Bracket balance detection\n")
     } else {
-      cat("  [FAIL] Bracket imbalance not detected\n")
+      selftest_report(verbose, "  [FAIL] Bracket imbalance not detected\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
     # Test tree structure validation
     tree <- ape::read.tree(text = "(A:1,B:1):1;")
     validate_tree_deep(tree, "test")
-    cat("  [PASS] Tree structure validation\n")
+    selftest_report(verbose, "  [PASS] Tree structure validation\n")
 
     # Test self-loop detection
     loop_caught <- tryCatch({
@@ -385,9 +408,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("self-loop", e$message))
     if (loop_caught) {
-      cat("  [PASS] Self-loop detection\n")
+      selftest_report(verbose, "  [PASS] Self-loop detection\n")
     } else {
-      cat("  [FAIL] Self-loop not detected\n")
+      selftest_report(verbose, "  [FAIL] Self-loop not detected\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
@@ -396,9 +419,9 @@ check_input_validation <- function() {
     rna_ok <- detect_alphabet(c("A", "C", "G", "U")) == "RNA"
     prot_ok <- detect_alphabet(c("A", "L", "F", "G")) == "protein"
     if (dna_ok && rna_ok && prot_ok) {
-      cat("  [PASS] Alphabet detection (DNA/RNA/protein)\n")
+      selftest_report(verbose, "  [PASS] Alphabet detection (DNA/RNA/protein)\n")
     } else {
-      cat("  [FAIL] Alphabet detection\n")
+      selftest_report(verbose, "  [FAIL] Alphabet detection\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
@@ -411,13 +434,15 @@ check_input_validation <- function() {
       dup_tree <- ape::read.tree(text = "(A:1,B:1):1;")
       dup_tree$tip.label[1] <- "B"
       validate_tree_deep(dup_tree, "test")
-      NULL
+      # invisible() so capture.output(type = "message") does not visibly
+      # print the expression value to stdout.
+      invisible(NULL)
     }, type = "message")
     dup_warned <- any(grepl("duplicate", dup_msgs, ignore.case = TRUE))
     if (dup_warned) {
-      cat("  [PASS] Duplicate tip label handled (WARNING)\n")
+      selftest_report(verbose, "  [PASS] Duplicate tip label handled (WARNING)\n")
     } else {
-      cat("  [FAIL] Duplicate tip label not warned\n")
+      selftest_report(verbose, "  [FAIL] Duplicate tip label not warned\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
@@ -427,9 +452,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("bidirectional", e$message))
     if (bidi_caught) {
-      cat("  [PASS] BiDi marker detection\n")
+      selftest_report(verbose, "  [PASS] BiDi marker detection\n")
     } else {
-      cat("  [FAIL] BiDi marker not detected\n")
+      selftest_report(verbose, "  [FAIL] BiDi marker not detected\n")
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
 
@@ -438,9 +463,9 @@ check_input_validation <- function() {
     writeLines(c(">seq1", "ACGTACGT", ">seq2", "TTTTAAAA"), tmp_fasta)
     seq_result <- validate_sequence_deep(tmp_fasta, expected_alphabet = "DNA")
     if (seq_result$n_sequences == 2 && seq_result$alphabet == "DNA") {
-      cat("  [PASS] Sequence validation (FASTA, DNA)\n")
+      selftest_report(verbose, "  [PASS] Sequence validation (FASTA, DNA)\n")
     } else {
-      cat("  [FAIL] Sequence validation\n")
+      selftest_report(verbose, "  [FAIL] Sequence validation\n")
       unlink(tmp_fasta)
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
     }
@@ -453,9 +478,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("Duplicate", e$message))
     if (dup_seq_caught) {
-      cat("  [PASS] Duplicate sequence ID detection (ERROR)\n")
+      selftest_report(verbose, "  [PASS] Duplicate sequence ID detection (ERROR)\n")
     } else {
-      cat("  [FAIL] Duplicate sequence ID not detected\n")
+      selftest_report(verbose, "  [FAIL] Duplicate sequence ID not detected\n")
       unlink(tmp_fasta)
       unlink(tmp_dup)
       return(list(test = "Input validation", passed = FALSE, required = TRUE))
@@ -469,9 +494,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("PHYLIP", e$message))
     if (phylip_caught) {
-      cat("  [PASS] PHYLIP format rejection\n")
+      selftest_report(verbose, "  [PASS] PHYLIP format rejection\n")
     } else {
-      cat("  [FAIL] PHYLIP format not rejected\n")
+      selftest_report(verbose, "  [FAIL] PHYLIP format not rejected\n")
       unlink(tmp_fasta)
       unlink(tmp_dup)
       unlink(tmp_phylip)
@@ -486,9 +511,9 @@ check_input_validation <- function() {
       FALSE
     }, error = function(e) grepl("CRITICAL", e$message))
     if (empty_caught) {
-      cat("  [PASS] Empty file rejection (CRITICAL)\n")
+      selftest_report(verbose, "  [PASS] Empty file rejection (CRITICAL)\n")
     } else {
-      cat("  [FAIL] Empty file not rejected\n")
+      selftest_report(verbose, "  [FAIL] Empty file not rejected\n")
       unlink(tmp_fasta)
       unlink(tmp_dup)
       unlink(tmp_phylip)
@@ -504,7 +529,7 @@ check_input_validation <- function() {
 
     return(list(test = "Input validation", passed = TRUE, required = TRUE))
   }, error = function(e) {
-    cat(sprintf("  [FAIL] Error in validation check: %s\n", e$message))
+    selftest_report(verbose, sprintf("  [FAIL] Error in validation check: %s\n", e$message))
     return(list(test = "Input validation", passed = FALSE, required = TRUE))
   })
 }
