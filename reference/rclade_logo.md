@@ -33,7 +33,7 @@ rclade_logo()
 #>   #   #    #   #   #        #       #    #  #       #     
 #>   #    #   #    #   #####   ######  #####   ######  ######
 #> 
-#>   Version 1.1.4 | MIT License
+#>   Version 1.1.5 | MIT License
 #> 
 #>   Third-party dependencies and licenses:
 #>   --------------------------------------------------------------

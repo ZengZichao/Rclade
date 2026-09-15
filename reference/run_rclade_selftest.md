@@ -11,8 +11,17 @@ Performs comprehensive self-check:
 ## Usage
 
 ``` r
-run_rclade_selftest()
+run_rclade_selftest(verbose = TRUE)
 ```
+
+## Arguments
+
+- verbose:
+
+  Logical. If TRUE (default), progress and results are reported via
+  [`message`](https://rdrr.io/r/base/message.html) (suppressible with
+  [`suppressMessages`](https://rdrr.io/r/base/message.html)). If FALSE,
+  the self-test runs silently and only the exit code is returned.
 
 ## Value
 
