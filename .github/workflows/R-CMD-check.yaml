@@ -144,7 +144,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: github.event_name == 'push'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         with:
           # Best-effort upload: no CODECOV_TOKEN is configured, so tokenless
           # uploads may be rejected by Codecov. An upload failure must NOT
