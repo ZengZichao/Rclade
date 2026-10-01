@@ -39,7 +39,8 @@ jobs:
             any::testthat
             any::rcmdcheck
             any::remotes
-            any::svglite
+          # any::svglite removed in 2026-10 (unused by the test suite); its
+          # gdtools dependency breaks dlopen on refreshed macOS runner images.
 
       - name: Install package
         run: |
