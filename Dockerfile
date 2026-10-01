@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.5.3
+FROM rocker/r-ver:4.6.1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
