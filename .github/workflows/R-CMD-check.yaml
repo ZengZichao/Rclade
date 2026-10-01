@@ -52,11 +52,11 @@ jobs:
             any::testthat
             any::rcmdcheck
             any::remotes
-          # any::svglite was removed in 2026-10: nothing in R/, tests/ or
-          # scripts/ uses it, and its dependency gdtools (RSPM macOS binary
-          # 0.5.1) dlopens /opt/X11/lib/libXrender.1.dylib, which the refreshed
-          # macos-26 runner image no longer provides — that made every macOS
-          # job fail during "byte-compile and prepare package for lazy loading".
+            any::svglite
+          # any::svglite IS required: functional test O-003 saves an SVG via
+          # ggsave(device = "svg"), and ggplot2's svg device needs svglite.
+          # Its dependency gdtools (RSPM macOS binary) dlopens
+          # /opt/X11/lib/libXrender.1.dylib — provided by the XQuartz step above.
 
       - name: Install package (required for self-test)
         # Keep install output visible: with quiet = TRUE a non-zero exit here
@@ -120,6 +120,7 @@ jobs:
             any::testthat
             any::rcmdcheck
             any::remotes
+            any::svglite
 
       - name: Install package (verbose, for root-cause diagnosis)
         run: |

@@ -39,8 +39,8 @@ jobs:
             any::testthat
             any::rcmdcheck
             any::remotes
-          # any::svglite removed in 2026-10 (unused by the test suite); its
-          # gdtools dependency breaks dlopen on refreshed macOS runner images.
+            any::svglite
+          # Required by the O-003 SVG output test (ggsave device "svg").
 
       - name: Install package
         run: |
