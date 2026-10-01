@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & Discussions / 使用问题与讨论
+    url: https://github.com/ZengZichao/Rclade/discussions
+    about: 使用问题、想法交流请到 Discussions；确认是 bug 或功能请求再开 Issue。Usage questions and ideas go to Discussions; open an Issue only to report bugs or request features.

@@ -1,0 +1,54 @@
+name: Bug report / 缺陷报告
+description: 报告 Rclade 的异常行为。Report unexpected behavior in Rclade.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请先确认使用的是最新发布版本。填写前可先在 [Discussions](https://github.com/ZengZichao/Rclade/discussions) 搜索是否有同类问题。
+        Thanks for reporting! Please confirm you are on the latest release, and search existing issues/Discussions first.
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述 / Description
+      description: 期望行为 vs 实际行为。Expected vs. actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现代码 / Reproducible example
+      description: |
+        最小可复现代码 + 输入文件（如树文件、外部分类表），或复现命令。
+        A minimal reproducible example with the input file (tree / taxonomy table) or the exact command.
+      placeholder: |
+        library(Rclade)
+        run_rclade("tree.nwk", ...)
+      render: R
+    validations:
+      required: true
+  - type: textarea
+    id: session
+    attributes:
+      label: 会话信息 / Session info
+      description: |
+        `sessionInfo()` 的完整输出，以及 Rclade 版本 `packageVersion("Rclade")`。
+        Full output of `sessionInfo()` plus `packageVersion("Rclade")`.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志与报错 / Logs & errors
+      description: 终端完整输出或日志文件片段。Complete terminal output or log excerpts.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认 / Confirmation
+      options:
+        - label: 我已确认这是 bug 而非使用问题。This is a bug, not a usage question.
+          required: true
+        - label: 我已使用最新发布版本复现。Reproduced on the latest release.
+          required: true
