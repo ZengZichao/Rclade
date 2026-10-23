@@ -3,6 +3,9 @@
 **Automated Deep-Time Phylogenetic Tree Collapsing and Visualization**
 
 Version: 1.1.5
+[![CI](https://github.com/ZengZichao/Rclade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZengZichao/Rclade/actions/workflows/R-CMD-check.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0001--6553--970X-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0000-0001-6553-970X)
 
 Rclade provides a single-function pipeline for automated collapsing and
 visualization of large phylogenetic trees with geological timescales.
