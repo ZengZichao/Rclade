@@ -25,7 +25,8 @@ utils::globalVariables(c("x", "y", "label", "xend", "yend", "Group"))
 #' @return ggplot object
 #' @keywords internal
 annotate_clade <- function(p, tree, mrca_map, colors, show_count = TRUE,
-                           offset = 0, fontsize = 3, singleton_map = NULL) {
+                           offset = 0, fontsize = 3, hjust = 0,
+                           singleton_map = NULL) {
   if (offset < 0 || offset > 5000) {
     log_warning("clade_label_offset should be between 0 and 5000, got %s. Using default 0.",
                 offset, .module = "annotate-clade")
@@ -119,12 +120,13 @@ annotate_clade <- function(p, tree, mrca_map, colors, show_count = TRUE,
       data = label_df,
       ggplot2::aes(x = x, y = y, label = label, angle = .data$angle),
       color = label_df$color,
-      hjust = 0,
+      hjust = hjust,
       vjust = 0.5,
       size = fontsize,
       fontface = "bold",
       inherit.aes = FALSE
     )
+
   }
 
   return(p)

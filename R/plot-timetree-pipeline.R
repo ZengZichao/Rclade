@@ -265,7 +265,7 @@ pt_step4_generate_colors <- function(all_group_names, color_palette, color_mappi
 pt_step5_render_and_collapse <- function(
     tree, group_vec, mrca_map, colors, layout, angle, line_width,
     branch_length_mode, triangle_mode, space_mode, low_memory,
-    color_group_vec = NULL
+    color_group_vec = NULL, groups_label_only = FALSE
 ) {
   next_step("Tree rendering")
   timer_start("tree_rendering")
@@ -347,7 +347,8 @@ pt_step5_render_and_collapse <- function(
 
   # Batch collapse
   actual_ntips <- NULL
-  if (length(mrca_map) > 0) {
+  # groups_label_only：只给分组打标签，不把它们折叠成三角形
+  if (length(mrca_map) > 0 && !isTRUE(groups_label_only)) {
     log_info("Collapsing %d clades...", length(mrca_map))
     p <- collapse_by_groups(p, tree, mrca_map, triangle_mode, space_mode, colors,
                             layout = layout)
@@ -390,9 +391,84 @@ pt_step6_add_annotations <- function(
 ) {
   # Tip labels
   if (show_tip_labels) {
-    p <- p + ggtree::geom_tiplab(size = tip_label_size, align = FALSE)
+    if (identical(layout, "circular")) {
+      # 环形布局：ggtree(layout="fan") 的第一个末端落在 3 点钟方向、顺时针排布，
+      # 标签必须沿半径方向旋转，左半圈再翻转 180 度并右对齐，才不会出现倒字。
+      d <- p$data
+      yr <- range(d$y, na.rm = TRUE)
+      span <- if (diff(yr) > 0) diff(yr) else 1
+      deg <- -((d$y - yr[1]) / span) * 360
+      deg <- ((deg + 180) %% 360) - 180
+      flip <- abs(deg) > 90
+      d$.lab_angle <- ifelse(flip, deg + 180, deg)
+      d$.lab_hjust <- ifelse(flip, 1, 0)
+      # ggtree 的交互式文本 geom 会忽略 angle 美学、自己按极坐标旋转，
+      # 结果右半圈正常、左半圈倒字。这里直接用 ggplot2::geom_text 接管角度。
+      tip_d <- d[d$isTip, , drop = FALSE]
+      x_tip <- if (nrow(tip_d)) max(tip_d$x, na.rm = TRUE) else 0
+      p <- p + ggplot2::geom_text(
+        data = tip_d,
+        mapping = ggplot2::aes(x = x_tip, y = .data$y, label = .data$label,
+                               angle = .data$.lab_angle, hjust = .data$.lab_hjust),
+        size = tip_label_size, inherit.aes = FALSE, show.legend = FALSE)
+    } else {
+      p <- p + ggtree::geom_tiplab(size = tip_label_size, align = FALSE)
+    }
     log_debug("Tip labels added")
   }
+
+  # ---- 右侧留白 ----
+  # 末端标签与类群标签都以 hjust = 0 画在 tip 右侧（x = 0），而时标用的
+  # coord_geo 把面板右边界锁在 0、并按面板裁剪文字。所以必须让整段文字落在
+  # 面板内：先量出真实文本宽度（mm），再按"保守的最小可绘制宽度"折算成 x 轴
+  # 的数据单位比例。基准取 152mm（≈6 英寸图），更宽的画布只会更宽松。
+  x_span0 <- suppressWarnings(tryCatch(abs(compute_x_min(tree)), error = function(e) NA_real_))
+  if (!is.finite(x_span0) || x_span0 <= 0) x_span0 <- 1
+  panel_mm <- 152
+
+  # 文本宽度：优先 grid 实测；失败则按字符估算（CJK 1em，其余 0.55em）
+  text_mm <- function(txt, size) {
+    txt <- as.character(txt)
+    txt <- txt[!is.na(txt) & nzchar(txt)]
+    if (!length(txt)) return(0)
+    measured <- tryCatch({
+      gp <- grid::gpar(fontsize = size * 72.27 / 25.4)
+      max(vapply(txt, function(one) {
+        g <- grid::textGrob(one, gp = gp)
+        as.numeric(grid::convertWidth(grid::grobWidth(g), "mm", valueOnly = TRUE))
+      }, numeric(1)), na.rm = TRUE)
+    }, error = function(e) NA_real_)
+    if (is.finite(measured)) return(measured)
+    max(vapply(txt, function(one) {
+      ch <- strsplit(one, "")[[1]]
+      sum(if (grepl("[\u4e00-\u9fff]", ch)) 1.0 else 0.55) * size
+    }, numeric(1)), na.rm = TRUE)
+  }
+
+  right_pad <- 0
+  if (isTRUE(show_tip_labels)) {
+    right_pad <- max(right_pad,
+                     text_mm(p$data$label[p$data$isTip], tip_label_size) * 1.05 / panel_mm)
+  }
+  clade_hjust <- 0
+  if (isTRUE(show_clade_label)) {
+    # 实际画出来的是"组名 (n=N)"，宽度必须按完整文本估
+    clade_labs <- if (isTRUE(show_clade_count)) {
+      paste0(names(mrca_map), " (n=999)")
+    } else {
+      names(mrca_map)
+    }
+    need <- clade_label_offset / x_span0 +
+      text_mm(clade_labs, clade_label_fontsize) * 1.05 / panel_mm
+    right_pad <- max(right_pad, need)
+    # 留白只按真实文字宽度给，不做"超宽就右对齐"的兜底：
+    # 右对齐会把标签压到树上、同时在右侧留下一大块空白，比树窄一点更难接受。
+    if (need > 0.7) {
+      log_warning("Clade labels are very wide (%.0f%% of the tree span); the tree will be compressed.",
+                  need * 100, .module = "plot-timetree-pipeline/step6")
+    }
+  }
+  right_pad <- min(max(right_pad, 0), 0.75)
 
   # Timescale
   next_step("Timescale integration")
@@ -402,7 +478,8 @@ pt_step6_add_annotations <- function(
                            timescale_mode = timescale_mode,
                            timescale_position = timescale_position,
                            angle = angle,
-                           tree_start_position = tree_start_position)
+                           tree_start_position = tree_start_position,
+                           right_pad = right_pad)
     log_debug("Geological timescale added")
   } else if (!add_timescale && layout == "rectangular") {
     # pt_step5 applies revts BEFORE collapse and marks attr(p, "revts.done").
@@ -422,7 +499,8 @@ pt_step6_add_annotations <- function(
       p <- p + ggplot2::scale_x_continuous(
         name = time_info$unit_label,
         breaks = time_info$breaks,
-        labels = time_info$labels
+        labels = time_info$labels,
+        expand = ggplot2::expansion(mult = c(0.02, right_pad))
       ) + ggtree::theme_tree2()
     }
   } else if (layout == "circular") {
@@ -450,6 +528,7 @@ pt_step6_add_annotations <- function(
                         show_count = show_clade_count,
                         offset = clade_label_offset,
                         fontsize = clade_label_fontsize,
+                        hjust = clade_hjust,
                         singleton_map = singleton_map)
   }
 
@@ -589,7 +668,8 @@ pt_step7_finalize_plot <- function(
 #' @return A ggplot object with \code{rclade_info} attribute.
 #' @keywords internal
 pt_single_tree <- function(
-    tree, rank, clade, strict, groups, triangle_mode, space_mode, layout, angle,
+    tree, rank, clade, strict, groups, groups_label_only = FALSE,
+    triangle_mode, space_mode, layout, angle,
     color_palette, color_mapping, line_width, show_tip_labels, tip_label_size,
     add_timescale, timescale_levels, unit, taxonomy_format, custom_patterns,
     taxonomy_file, taxonomy_file_sep, taxonomy_file_header, taxonomy_file_priority,
@@ -698,6 +778,7 @@ pt_single_tree <- function(
 
   # Step 5: Render & collapse
   s5 <- pt_step5_render_and_collapse(
+    groups_label_only = groups_label_only,
     tree = tree, group_vec = group_vec, mrca_map = mrca_map,
     colors = colors, layout = layout, angle = angle,
     line_width = line_width, branch_length_mode = branch_length_mode,

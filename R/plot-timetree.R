@@ -294,6 +294,7 @@ plot_timetree <- function(
     clade = NULL,
     strict = FALSE,
     groups = NULL,
+    groups_label_only = FALSE,
     show_clade_label = FALSE,
     show_clade_count = TRUE,
     clade_label_offset = 50,
@@ -387,6 +388,7 @@ plot_timetree <- function(
   # (file-path reading) and are not accepted by pt_single_tree.
   args <- list(
     rank = rank, clade = clade, strict = strict, groups = groups,
+    groups_label_only = groups_label_only,
     triangle_mode = triangle_mode, space_mode = space_mode,
     layout = layout, angle = angle, color_palette = color_palette,
     color_mapping = color_mapping, line_width = line_width,

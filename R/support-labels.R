@@ -96,11 +96,47 @@ add_hpd_range <- function(p, tree, color = "firebrick") {
     !is.null(x) && length(x) >= 2 && !all(is.na(x))
   }, logical(1))
 
+  # HPD 是节点年龄的后验区间，末端（现生种）没有"年龄区间"可言。
+  # 数据文件里末端行也存在，不过滤就会在每条末端分支的末端挂一根 bar。
+  internal_only <- node_data$node > ape::Ntip(tree)
+  valid_hpd <- valid_hpd & internal_only
+
   hpd_df <- node_data[valid_hpd, c("node", hpd_col), drop = FALSE]
 
   if (nrow(hpd_df) == 0) {
     log_info("All HPD values are missing, skipping HPD display.",
              .module = "support-labels")
+    return(p)
+  }
+
+  # 环形布局：ggtree::geom_range 在极坐标下不渲染（实测整层缺失）。
+  # 这里直接按"半径区间 = 年龄区间"画径向线段，坐标由 revts 后的 -age 给出。
+  if (inherits(p$coordinates, "CoordPolar")) {
+    d <- p$data
+    idx <- match(hpd_df$node, d$node)
+    keep <- !is.na(idx)
+    if (any(keep)) {
+      rng <- lapply(hpd_df[[hpd_col]], function(v) {
+        v <- suppressWarnings(as.numeric(unlist(v)))
+        v <- v[is.finite(v)]
+        if (length(v) < 2) c(NA_real_, NA_real_) else range(v)
+      })
+      seg <- data.frame(
+        x  = -vapply(rng, function(v) v[2], numeric(1))[keep],
+        xe = -vapply(rng, function(v) v[1], numeric(1))[keep],
+        y  = d$y[idx[keep]],
+        stringsAsFactors = FALSE
+      )
+      seg <- seg[is.finite(seg$x) & is.finite(seg$xe), , drop = FALSE]
+      if (nrow(seg) > 0) {
+        p <- p + ggplot2::geom_segment(
+          data = seg,
+          mapping = ggplot2::aes(x = .data$x, xend = .data$xe, y = .data$y,
+                                 yend = .data$y),
+          color = color, linewidth = 2.2, alpha = 0.55,
+          inherit.aes = FALSE, show.legend = FALSE)
+      }
+    }
     return(p)
   }
 
