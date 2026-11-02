@@ -1,5 +1,27 @@
 # Rclade News
 
+## Rclade 1.1.6 (2026-11-02)
+
+Label placement, HPD rendering and a new option for labelling without collapsing.
+
+* **Clade and tip labels are no longer clipped.** The x range now reserves space
+  based on the measured text width (new `right_pad` argument on
+  `add_geo_timescale()`, and matching x-scale expansion). Previously a
+  right-edge clade label was cut off by the panel boundary.
+* **Circular layout: tip labels are drawn radially.** `geom_tiplab()` in ggtree
+  4.x ignores the `angle` aesthetic under polar coordinates and applies its own
+  rotation, which left the left half of the circle upside down. Labels are now
+  drawn with `ggplot2::geom_text()` using per-tip angles, flipped and
+  right-aligned on the left half.
+* **HPD bars only for internal nodes.** Node tables shipped with tips as well,
+  so extant species received an age interval they do not have.
+* **HPD bars now render in circular layouts.** `ggtree::geom_range()` produced no
+  visible layer under polar coordinates; bars are drawn as radial segments
+  instead.
+* **New `plot_timetree(groups_label_only = TRUE)`** labels the clades defined by
+  `groups` without collapsing them, keeping every terminal branch expanded.
+* `annotate_clade()` gains `hjust` so callers can right-align wide labels.
+
 ## Rclade 1.1.5 (2026-09-15)
 
 CRAN resubmission. Addresses the three issues raised by the CRAN

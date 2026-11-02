@@ -75,6 +75,10 @@
 #'   monophyletic; non-monophyletic groups will raise an error. When \code{groups}
 #'   is provided, \code{rank} is ignored (set it to \code{"none"}).
 #'   Example: \code{list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))}.
+#' @param groups_label_only Logical. If \code{TRUE}, clades defined by
+#'   \code{groups} are labelled but NOT collapsed: the member branches stay
+#'   fully expanded and only the group name is drawn next to them.
+#'   Default: \code{FALSE}.
 #' @param triangle_mode Collapse triangle visualization mode.
 #'   \code{"max"} shows the full clade range, \code{"min"} shows the minimal range,
 #'   \code{"mixed"} uses adaptive selection, \code{"none"} disables triangles.
@@ -171,7 +175,7 @@
 #' @param hpd_color Color for HPD bars. Default: \code{"firebrick"}.
 #' @param geo_events Data frame of geological events to annotate, with columns
 #'   \code{name}, \code{age_min}, \code{age_max} (Ma), \code{color}. If \code{TRUE},
-#'   default events (GOE=2400–2000 Ma, NOE=800–550 Ma) are shown. Default: \code{FALSE}.
+#'   default events (GOE=2400-2000 Ma, NOE=800-550 Ma) are shown. Default: \code{FALSE}.
 #' @param timescale_version Geological timescale version string. Currently only
 #'   \code{"ICS 2023/02"} is supported. Default: \code{"ICS 2023/02"}.
 #' @param main_title Character. Main title for the plot. Default: \code{NULL} (no title).
@@ -294,6 +298,7 @@ plot_timetree <- function(
     clade = NULL,
     strict = FALSE,
     groups = NULL,
+    groups_label_only = FALSE,
     show_clade_label = FALSE,
     show_clade_count = TRUE,
     clade_label_offset = 50,
@@ -387,6 +392,7 @@ plot_timetree <- function(
   # (file-path reading) and are not accepted by pt_single_tree.
   args <- list(
     rank = rank, clade = clade, strict = strict, groups = groups,
+    groups_label_only = groups_label_only,
     triangle_mode = triangle_mode, space_mode = space_mode,
     layout = layout, angle = angle, color_palette = color_palette,
     color_mapping = color_mapping, line_width = line_width,

@@ -19,13 +19,17 @@ utils::globalVariables(c("x", "y", "label", "xend", "yend", "Group"))
 #' @param show_count Whether to show species count
 #' @param offset Offset from the tree's right edge (tips).
 #'   Default 0 places labels right at the tip line.
+#' @param hjust Horizontal justification of the label text. \code{0} draws the
+#'   label outward from the tips, \code{1} right-aligns it (used when a label is
+#'   too wide to fit). Default: \code{0}.
 #' @param fontsize Font size for labels (default 3)
 #' @param singleton_map Optional named list mapping single-species group names
 #'   to their tip label. When provided, these tips are also labeled.
 #' @return ggplot object
 #' @keywords internal
 annotate_clade <- function(p, tree, mrca_map, colors, show_count = TRUE,
-                           offset = 0, fontsize = 3, singleton_map = NULL) {
+                           offset = 0, fontsize = 3, hjust = 0,
+                           singleton_map = NULL) {
   if (offset < 0 || offset > 5000) {
     log_warning("clade_label_offset should be between 0 and 5000, got %s. Using default 0.",
                 offset, .module = "annotate-clade")
@@ -119,12 +123,13 @@ annotate_clade <- function(p, tree, mrca_map, colors, show_count = TRUE,
       data = label_df,
       ggplot2::aes(x = x, y = y, label = label, angle = .data$angle),
       color = label_df$color,
-      hjust = 0,
+      hjust = hjust,
       vjust = 0.5,
       size = fontsize,
       fontface = "bold",
       inherit.aes = FALSE
     )
+
   }
 
   return(p)

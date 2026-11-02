@@ -53,12 +53,16 @@ compute_time_breaks <- function(x_min, x_max) {
 #' @param levels Timescale levels vector, e.g., c("eras", "eons")
 #' @param layout Layout type
 #' @param version Geological timescale version. Default: "ICS 2023/02".
+#' @param right_pad Numeric. Fraction of the time span to reserve on the right
+#'   of the panel (0 = none). Used so clade/tip labels drawn beyond the tips are
+#'   not clipped. Default: \code{0}.
 #' @return ggplot object
 #' @keywords internal
 add_geo_timescale <- function(p, tree, levels, layout, version = "ICS 2023/02",
                              actual_ntips = NULL, timescale_mode = "radial",
                              timescale_position = "right",
-                             angle = 360, tree_start_position = "right") {
+                             angle = 360, tree_start_position = "right",
+                             right_pad = 0) {
   if (layout != "rectangular" && layout != "circular") {
     log_warning("add_geo_timescale: unsupported layout '%s'; skipping geological timescale.",
                 layout, .module = "timescale/add_geo_timescale")
@@ -116,7 +120,8 @@ add_geo_timescale <- function(p, tree, levels, layout, version = "ICS 2023/02",
     # at the panel boundary AND is applied here (rather than via a later
     # coord_cartesian) so the geological coordinate system is not overwritten.
     p <- p + deeptime::coord_geo(
-      xlim = c(x_min, 0),
+      # 右侧留白：类群标签以 hjust=0 画在 tip(x=0) 右侧，面板不给空间就会被裁掉
+      xlim = c(x_min, abs(x_min) * right_pad),
       ylim = c(0, y_max),
       height = grid::unit(1.5, "line"),
       neg = TRUE, abbrv = TRUE,
@@ -227,7 +232,7 @@ add_geo_timescale <- function(p, tree, levels, layout, version = "ICS 2023/02",
         name = NULL,
         breaks = time_info$breaks,
         labels = time_info$labels,
-        expand = ggplot2::expansion(mult = c(0.05, 0)),
+        expand = ggplot2::expansion(mult = c(0.05, right_pad)),
         guide = stacked_guide
       )
     } else {
