@@ -19,6 +19,9 @@ utils::globalVariables(c("x", "y", "label", "xend", "yend", "Group"))
 #' @param show_count Whether to show species count
 #' @param offset Offset from the tree's right edge (tips).
 #'   Default 0 places labels right at the tip line.
+#' @param hjust Horizontal justification of the label text. \code{0} draws the
+#'   label outward from the tips, \code{1} right-aligns it (used when a label is
+#'   too wide to fit). Default: \code{0}.
 #' @param fontsize Font size for labels (default 3)
 #' @param singleton_map Optional named list mapping single-species group names
 #'   to their tip label. When provided, these tips are also labeled.

@@ -12,6 +12,7 @@ annotate_clade(
   show_count = TRUE,
   offset = 0,
   fontsize = 3,
+  hjust = 0,
   singleton_map = NULL
 )
 }
@@ -30,6 +31,10 @@ annotate_clade(
 Default 0 places labels right at the tip line.}
 
 \item{fontsize}{Font size for labels (default 3)}
+
+\item{hjust}{Horizontal justification of the label text. \code{0} draws the
+label outward from the tips, \code{1} right-aligns it (used when a label is
+too wide to fit). Default: \code{0}.}
 
 \item{singleton_map}{Optional named list mapping single-species group names
 to their tip label. When provided, these tips are also labeled.}

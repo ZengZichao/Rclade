@@ -37,6 +37,7 @@ plot_timetree(
   clade = NULL,
   strict = FALSE,
   groups = NULL,
+  groups_label_only = FALSE,
   show_clade_label = FALSE,
   show_clade_count = TRUE,
   clade_label_offset = 50,
@@ -209,6 +210,11 @@ monophyletic; non-monophyletic groups will raise an error. When \code{groups}
 is provided, \code{rank} is ignored (set it to \code{"none"}).
 Example: \code{list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))}.}
 
+\item{groups_label_only}{Logical. If \code{TRUE}, clades defined by
+\code{groups} are labelled but NOT collapsed: the member branches stay
+fully expanded and only the group name is drawn next to them.
+Default: \code{FALSE}.}
+
 \item{show_clade_label}{Logical. Whether to add clade labels next to collapsed
 triangles showing group name and species count. Default: \code{FALSE}.}
 
@@ -236,7 +242,7 @@ intervals. Requires node data with HPD annotations. Default: \code{FALSE}.}
 
 \item{geo_events}{Data frame of geological events to annotate, with columns
 \code{name}, \code{age_min}, \code{age_max} (Ma), \code{color}. If \code{TRUE},
-default events (GOE=2400–2000 Ma, NOE=800–550 Ma) are shown. Default: \code{FALSE}.}
+default events (GOE=2400-2000 Ma, NOE=800-550 Ma) are shown. Default: \code{FALSE}.}
 
 \item{timescale_version}{Geological timescale version string. Currently only
 \code{"ICS 2023/02"} is supported. Default: \code{"ICS 2023/02"}.}

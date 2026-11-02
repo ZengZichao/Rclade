@@ -496,12 +496,15 @@ pt_step6_add_annotations <- function(
     } else {
       x_min <- compute_x_min(tree)
       time_info <- compute_time_breaks(x_min, 0)
-      p <- p + ggplot2::scale_x_continuous(
-        name = time_info$unit_label,
-        breaks = time_info$breaks,
-        labels = time_info$labels,
-        expand = ggplot2::expansion(mult = c(0.02, right_pad))
-      ) + ggtree::theme_tree2()
+      # 只在需要留白时才覆盖 expand：否则会改掉 ggplot 默认的 5% 边距，
+      # 让"不显示任何标签"的图与历史输出产生像素级差异（vdiffr 快照会失败）。
+      x_args <- list(name = time_info$unit_label,
+                     breaks = time_info$breaks,
+                     labels = time_info$labels)
+      if (right_pad > 0) {
+        x_args$expand <- ggplot2::expansion(mult = c(0.02, right_pad))
+      }
+      p <- p + do.call(ggplot2::scale_x_continuous, x_args) + ggtree::theme_tree2()
     }
   } else if (layout == "circular") {
     p <- p + ggtree::theme_tree()

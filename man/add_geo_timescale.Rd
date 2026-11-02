@@ -14,7 +14,8 @@ add_geo_timescale(
   timescale_mode = "radial",
   timescale_position = "right",
   angle = 360,
-  tree_start_position = "right"
+  tree_start_position = "right",
+  right_pad = 0
 )
 }
 \arguments{
@@ -27,6 +28,10 @@ add_geo_timescale(
 \item{layout}{Layout type}
 
 \item{version}{Geological timescale version. Default: "ICS 2023/02".}
+
+\item{right_pad}{Numeric. Fraction of the time span to reserve on the right
+of the panel (0 = none). Used so clade/tip labels drawn beyond the tips are
+not clipped. Default: \code{0}.}
 }
 \value{
 ggplot object

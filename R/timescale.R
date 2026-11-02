@@ -53,6 +53,9 @@ compute_time_breaks <- function(x_min, x_max) {
 #' @param levels Timescale levels vector, e.g., c("eras", "eons")
 #' @param layout Layout type
 #' @param version Geological timescale version. Default: "ICS 2023/02".
+#' @param right_pad Numeric. Fraction of the time span to reserve on the right
+#'   of the panel (0 = none). Used so clade/tip labels drawn beyond the tips are
+#'   not clipped. Default: \code{0}.
 #' @return ggplot object
 #' @keywords internal
 add_geo_timescale <- function(p, tree, levels, layout, version = "ICS 2023/02",
