@@ -15,6 +15,7 @@ pt_single_tree(
   clade,
   strict,
   groups,
+  groups_label_only = FALSE,
   triangle_mode,
   space_mode,
   layout,

@@ -16,6 +16,7 @@ annotate_clade(
   show_count = TRUE,
   offset = 0,
   fontsize = 3,
+  hjust = 0,
   singleton_map = NULL
 )
 ```
@@ -50,6 +51,12 @@ annotate_clade(
 - fontsize:
 
   Font size for labels (default 3)
+
+- hjust:
+
+  Horizontal justification of the label text. `0` draws the label
+  outward from the tips, `1` right-aligns it (used when a label is too
+  wide to fit). Default: `0`.
 
 - singleton_map:
 

@@ -13,7 +13,7 @@ angled along the MRCA's angular position, extending outward."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@ angled along the MRCA's angular position, extending outward.</p>
 <span>  show_count <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  offset <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  fontsize <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  hjust <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  singleton_map <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -97,6 +98,12 @@ Default 0 places labels right at the tip line.</p></dd>
 
 <dt id="arg-fontsize">fontsize<a class="anchor" aria-label="anchor" href="#arg-fontsize"></a></dt>
 <dd><p>Font size for labels (default 3)</p></dd>
+
+
+<dt id="arg-hjust">hjust<a class="anchor" aria-label="anchor" href="#arg-hjust"></a></dt>
+<dd><p>Horizontal justification of the label text. <code>0</code> draws the
+label outward from the tips, <code>1</code> right-aligns it (used when a label is
+too wide to fit). Default: <code>0</code>.</p></dd>
 
 
 <dt id="arg-singleton-map">singleton_map<a class="anchor" aria-label="anchor" href="#arg-singleton-map"></a></dt>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">Rclade</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,8 @@
 <span>  timescale_mode <span class="op">=</span> <span class="st">"radial"</span>,</span>
 <span>  timescale_position <span class="op">=</span> <span class="st">"right"</span>,</span>
 <span>  angle <span class="op">=</span> <span class="fl">360</span>,</span>
-<span>  tree_start_position <span class="op">=</span> <span class="st">"right"</span></span>
+<span>  tree_start_position <span class="op">=</span> <span class="st">"right"</span>,</span>
+<span>  right_pad <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -81,6 +82,12 @@
 
 <dt id="arg-version">version<a class="anchor" aria-label="anchor" href="#arg-version"></a></dt>
 <dd><p>Geological timescale version. Default: "ICS 2023/02".</p></dd>
+
+
+<dt id="arg-right-pad">right_pad<a class="anchor" aria-label="anchor" href="#arg-right-pad"></a></dt>
+<dd><p>Numeric. Fraction of the time span to reserve on the right
+of the panel (0 = none). Used so clade/tip labels drawn beyond the tips are
+not clipped. Default: <code>0</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -18,7 +18,8 @@ pt_step5_render_and_collapse(
   triangle_mode,
   space_mode,
   low_memory,
-  color_group_vec = NULL
+  color_group_vec = NULL,
+  groups_label_only = FALSE
 )
 ```
 
