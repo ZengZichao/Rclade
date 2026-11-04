@@ -1,367 +1,50 @@
-## CRAN submission comments for Rclade 1.1.5
+## CRAN submission comments for Rclade 1.1.6
 
-### Resubmission after CRAN review (Leonore Hochhauser, 2026-09-08)
+### Update to 1.1.5 (2026-11-03)
 
-This resubmission addresses the three issues raised by the reviewer for
-version 1.1.4. Version bumped to 1.1.5.
+This is a regular update to the current CRAN version 1.1.5. It fixes label
+placement and HPD rendering, and adds one optional argument. No existing
+function signature was changed incompatibly, and behaviour is unchanged
+unless the new argument is used.
 
-- **Single quotes only for package names**: All single quotes around
-  acronyms and database names were removed from the Description. GTDB,
-  Silva, NCBI, MRCAs, LUCA, LACA, and LBCA are no longer single-quoted,
-  and "geoscales" (not a package name) is now described in words as
-  geologic time scales. Single quotes are now used only for the R
-  package names 'ggtree', 'deeptime', and 'ape'.
+- **Clade and tip labels are no longer clipped.** The x range now reserves
+  space based on the measured text width (new internal `right_pad` argument
+  on `add_geo_timescale()`, and a matching x-scale expansion in the plotting
+  pipeline). Previously a clade label drawn at the right edge of the panel
+  was cut off.
 
-- **Reference format**: The bibliographic references in the Description
-  now use the requested `authors (year) <doi:...>` form, with the year
-  in parentheses: Yu et al. (2017) <doi:10.1111/2041-210X.12628>,
-  Gearty (2025) <doi:10.1080/20964471.2025.2537516>, and Paradis and
-  Schliep (2019) <doi:10.1093/bioinformatics/bty633>.
+- **Circular layout: tip labels are drawn radially.** `ggtree::geom_tiplab()`
+  in ggtree 4.x ignores the `angle` aesthetic under polar coordinates and
+  applies its own rotation, which left the left half of the circle upside
+  down. Labels are now drawn with `ggplot2::geom_text()` using per-tip
+  angles, flipped and right-aligned on the left half.
 
-- **Unsuppressible console output in R/selftest.R**: All `cat()` calls
-  in `run_rclade_selftest()` and its internal helpers were replaced
-  with `message()` calls, so self-test reporting goes to stderr and can
-  be suppressed with `suppressMessages()`. A new `verbose` argument
-  (default TRUE) allows fully silent runs. The function is diagnostic:
-  the returned exit code (0/1) and the outcome of every individual
-  check are unchanged, and no other function was affected.
+- **HPD bars are drawn only for internal nodes.** Node tables shipped with
+  the examples also list tips, so extant species received an age interval
+  they do not have. Only nodes above `ape::Ntip(tree)` are now drawn.
+
+- **HPD bars now render in circular layouts.** `ggtree::geom_range()`
+  produced no visible layer under polar coordinates, so bars are drawn as
+  radial segments there.
+
+- **New argument `groups_label_only` (default `FALSE`)** in `plot_timetree()`:
+  labels the clades defined by `groups` without collapsing them, keeping
+  every terminal branch expanded.
+
+- **`annotate_clade()` gains `hjust`** so callers can right-align labels that
+  are too wide to fit to the right of the tips.
 
 ### R CMD check results (local)
 
-`R CMD check --no-manual --as-cran` was run on macOS aarch64 (arm64)
-with R 4.5.3.
+`R CMD check --as-cran --no-manual` was run on macOS aarch64 (arm64) with
+R 4.5.3.
 
-There were 0 ERRORs and 0 WARNINGs. The NOTEs are: (1) the standard
-CRAN incoming feasibility check ("New submission" — this package has
-not yet been accepted); (2) "unable to verify current time" (a local
-network sandbox limitation); and (3) one macOS `.DS_Store` Finder
-artifact created inside the check directory while the check was
-running (not part of the package; confirmed absent from the tarball).
+0 ERRORs, 0 WARNINGs, 1 NOTE:
+
+- "unable to verify current time" — this machine has no outbound access to a
+  time service; the same NOTE appears for any package checked here and does
+  not occur on CRAN's check machines.
 
 ### Downstream dependencies
 
-There are no downstream dependencies.
-
----
-
-## CRAN submission comments for Rclade 1.1.4
-
-### Resubmission after CRAN incoming pre-test (1.1.3)
-
-This resubmission addresses the 2 WARNINGs and 1 NOTE reported by the
-CRAN incoming pre-test for version 1.1.3. Version bumped to 1.1.4; no
-code, tests, or behaviour were changed.
-
-- **Pre-built vignettes (2 WARNINGs)**: The package declares
-  `VignetteBuilder: knitr` in DESCRIPTION. The CRAN pre-test reported:
-  (1) "Files in the 'vignettes' directory but no files in 'inst/doc'"
-  and (2) "Directory 'inst/doc' does not exist. Package vignettes
-  without corresponding single PDF/HTML." The cause was that
-  `inst/doc/` did not exist — vignettes were only present as `.Rmd`
-  sources in `vignettes/` but were never pre-built. All three
-  vignettes (`quick_start.Rmd`, `publication_ready.Rmd`,
-  `taxonomy_formats.Rmd`) are now pre-built as self-contained HTML
-  files and placed in `inst/doc/` alongside their `.Rmd` sources (and
-  their `*_files/` figure directories). CRAN's checking infrastructure
-  will now find the pre-built vignette index without needing to
-  re-build them.
-
-- **Possibly misspelled words in DESCRIPTION (1 NOTE)**: The flagged
-  words (`Gearty`, `Paradis`, `Schliep`, `Yu`, `et`, `al`) are all
-  author surnames and the standard Latin abbreviation "et al." from
-  the bibliographic references cited in the Description field:
-  - **Yu** — surname of Guangchuang Yu, author of ggtree (Yu et al.
-    2017, doi:10.1111/2041-210X.12628)
-  - **et** / **al** — Latin abbreviation "et al." used in the same
-    reference
-  - **Gearty** — surname of William Gearty, author of deeptime
-    (Gearty 2025, doi:10.1080/20964471.2025.2537516)
-  - **Paradis** — surname of Emmanuel Paradis, co-author of ape
-    (Paradis and Schliep 2019, doi:10.1093/bioinformatics/bty633)
-  - **Schliep** — surname of Klaus Schliep, co-author of ape
-
-  These are not misspellings. This NOTE is expected for a new
-  submission that includes bibliographic references in the Description
-  field.
-
-### R CMD check results (local)
-
-`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
-
-There were 0 ERRORs and 0 WARNINGs. The NOTEs are the standard
-CRAN incoming feasibility ("New submission") and the spell-check
-false positives described above.
-
-### Downstream dependencies
-
-There are no downstream dependencies.
-
----
-
-## CRAN submission comments for Rclade 1.1.3
-
-### Resubmission after CRAN review (Uwe Ligges)
-
-This resubmission addresses the issue raised by the CRAN reviewer
-(Uwe Ligges) for the 1.1.2 submission. The reviewer requested that
-software names in the Description field be single-quoted (e.g.,
-'ggtree'). Version bumped to 1.1.3; no code, tests, or vignettes were
-changed; only the DESCRIPTION file was modified (`.Rbuildignore` was
-also updated to exclude a development-only `.mimosa/` directory that
-was flagged in a local `R CMD check`).
-
-- **Single-quoted software names in Description**: The software names
-  `ggtree`, `deeptime`, and `ape` in the bibliographic reference
-  paragraph of the Description field were not enclosed in single
-  quotes. They have been changed to `'ggtree'`, `'deeptime'`, and
-  `'ape'`. All other software names in the Description field (e.g.,
-  `'GTDB'`, `'Silva'`, `'NCBI'`, `'deeptime'`, `'geoscales'`,
-  `'ggtree'/'deeptime'`) were already single-quoted and remain
-  unchanged. The Title field contains no software names.
-
-### R CMD check results (local)
-
-`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
-
-There were 0 ERRORs and 0 WARNINGs. The 3 NOTEs are:
-
-1. **CRAN incoming feasibility** — "New submission" NOTE, expected for
-   a first-time CRAN submission.
-2. **unable to verify current time** — local network restriction; this
-   NOTE does not occur on CRAN servers.
-3. **`.DS_Store` in check directory** — a macOS Finder artefact
-   created during the check run; the tarball contains no `.DS_Store`
-   files (verified via `tar tzf`).
-
-### CRAN incoming feasibility NOTES (win-builder pre-test)
-
-The win-builder pre-test (`incoming_pretest`) for 1.1.1 reported 2 NOTEs
-on both Debian and Windows flavors. Both have been resolved:
-
-1. **Possibly misspelled words in DESCRIPTION** — The flagged words
-   (`ggtree`, `deeptime`, `Yu`, `et`, `al`, `Gearty`, `Paradis`,
-   `Schliep`) are all R package names (`ggtree`, `deeptime`) and author
-   surnames from the methodological references cited in the Description
-   field (Yu et al. 2017, Gearty 2025, Paradis & Schliep 2019). They are
-   not misspellings. This NOTE is expected for a new submission that
-   includes bibliographic references in the Description field.
-
-2. **Non-standard files/directories found at top level** — The files
-   `LICENSE.md`, `MANIFEST.tsv`, and `REPRODUCIBILITY.md` were present
-   at the package top level. They are development/reproducibility
-   artefacts not intended for distribution. They have been added to
-   `.Rbuildignore` so they are excluded from the built tarball. (The
-   standard `LICENSE` file required by `License: MIT + file LICENSE`
-   remains at top level and is unaffected.)
-
-### Resubmission after CRAN review of 1.0.0
-
-This resubmission addresses all issues raised by the CRAN reviewer
-(Leonore Hochhauser) for the 1.0.0 submission. The fixes were applied
-on top of the current development version (1.1.0) and are released as
-1.1.1. Key changes:
-
-- **DESCRIPTION references**: Added methodological references to the
-  Description field (Yu et al. 2017, Gearty 2025, Paradis & Schliep
-  2019) with DOIs in the required format
-  (`authors (year) <doi:...>`).
-- **Missing \value tags**: Added `\value` sections to the 5 Rd files
-  flagged by CRAN: `print.rclade_options.Rd`, `run_rclade_shiny.Rd`,
-  `set_log_enabled.Rd`, `set_log_file.Rd`, `set_log_level.Rd`.
-- **Examples for unexported functions**: Removed `\examples` sections
-  from all internal (`@keywords internal`) Rd files flagged by CRAN:
-  `batch_with_interrupt`, `build_path`, `managed_tempfile`,
-  `resolve_group`, `resolve_special_identifier`,
-  `validate_taxonomy_no_cycles`, `with_graceful_interrupt`.
-- **\dontrun → \donttest**: Removed all `\dontrun{}` wrappers
-  from exported function examples. Where examples referenced
-  external files (not available on CRAN), the example code was
-  removed entirely. Where examples used bundled
-  `data(example_tree)`, they are now executable without wrappers.
-- **Console output**: Replaced `cat()` with `message()` in
-  `save_session_info()` (R/save-timetree.R) and
-  `summarize_multi_trees()` (R/validate-deep.R) so output can be
-  suppressed via `suppressMessages()`.
-- **try-error in functionTree()**: Resolved by converting `\dontrun{}`
-  examples to `\donttest{}` (the error originated from example
-  evaluation on CRAN servers).
-
-### R CMD check results (local)
-
-`R CMD check --no-manual --as-cran` was run on macOS aarch64 with R 4.5.3.
-
-### Test results
-
-- All existing tests pass (no code logic changes; only documentation
-  and example formatting changes).
-- `run_rclade_selftest()`: all checks pass.
-
-### Downstream dependencies
-
-There are no downstream dependencies.
-
----
-
-## CRAN submission comments for Rclade 1.1.0
-
-### Update from 1.0.2
-
-This update implements the fixes required by the pre-submission
-independent review. Key changes:
-
-- BREAKING (fail-safe): `unit` is now required whenever
-  `add_timescale = TRUE`. The previous silent default (unit = NULL
-  interpreted as "Ga", multiplying edge lengths by 1000) has been
-  removed; the pipeline aborts with an informative error instead.
-  Added: non-finite edge-length check and an auditable root-to-tip
-  dispersion warning.
-- Group-status accounting: `rclade_info` and `summarize_timetree()`
-  now report parsed / collapsed / singleton / skipped group counts
-  and names (non-monophyletic groups are skipped with a warning by
-  default).
-- Benchmark protocol unified: 5 replicates per configuration with an
-  identical fully-rendered measurement boundary; all benchmark
-  artifacts refreshed (archived with the GitHub release / Zenodo
-  snapshot, excluded from R builds via `.Rbuildignore`).
-- Reproducibility: REPRODUCIBILITY.md and MANIFEST.tsv added; the
-  Moody et al. 2025 700-tip timetree (CC BY 4.0, author-reformatted
-  labels) is now shipped in `inst/extdata/`.
-- Accuracy evaluation scripts now align predictions positionally with
-  cardinality assertions (fixes a merge inflation in the built-in
-  example evaluation).
-- CI described honestly: the former `min-deps` job is renamed
-  `deps-smoke` (DESCRIPTION lower bounds are not exercised by CI);
-  coverage upload remains best-effort.
-- New tests: test-unit-contract.R and test-group-accounting.R
-  (241 test blocks total, all passing).
-
-## CRAN submission comments for Rclade 1.0.2
-
-### Update from 1.0.1
-
-This is a minor update of Rclade. The key changes from 1.0.1 are:
-
-- Refreshed benchmark results re-run against the v1.0.1 code base
-  (which includes the 2026-08-16 Newick bracket-balance vectorization
-  and parsing-pipeline fixes): in-session rendering at 10,000 tips
-  improved from ~1.4 s to ~0.9 s (median); real-data timing on the GTDB
-  ar53 tree (10,122 tips, 25 phyla) is now reported (4.3–6.4 s
-  in-session and 5.6–9.3 s process-level across phylum/class/order).
-  Benchmark artifacts live in `benchmark_results/` and `scripts/`, both
-  excluded from R builds via `.Rbuildignore` and archived with the
-  GitHub release / Zenodo snapshot instead.
-- Adds reproducibility scripts `scripts/benchmark_real_timing.R`
-  (real-data in-session timing) and
-  `scripts/make_ncbi_rank_shift_example.R` (deterministic regeneration
-  of the NCBI rank-shift example); both excluded from R builds.
-- No changes to package code, exports, or behaviour relative to 1.0.1.
-
-### R CMD check results (local)
-
-`R CMD check --no-manual --as-cran Rclade_1.0.2.tar.gz` was run on
-macOS aarch64 (Apple M5) with R 4.5.3 in a micromamba-managed environment.
-
-There were 0 ERRORs and 0 WARNINGs. The only NOTE was the standard
-incoming-feasibility NOTE for a CRAN submission; the tarball contains
-no non-standard files (benchmark artifacts, backup directories, and OS
-detritus are excluded via `.Rbuildignore`).
-
-In addition, the GitHub Actions workflow (`R-CMD-check.yaml`) runs
-`R CMD check` on ubuntu-latest (R release/oldrel/devel), macos-latest
-(R release) and windows-latest (R release); all pass for the v1.0.2 tag.
-
-### Test results (unchanged from 1.0.1; no code changes)
-
-- `R CMD check` tests (testthat, summary reporter):
-  **PASS 451 / FAIL 0 / SKIP 8 (459 total)** — the 8 skips are the
-  tests marked `skip_on_cran()`, expected under `--as-cran`;
-  vdiffr visual-regression snapshots run under `NOT_CRAN=true` in CI.
-- `testthat::test_dir("tests/testthat")` (Junit count): 459 cases / 0 fail / 7 skip.
-- Functional suite: smoke 57/57 pass, full 67/67 pass.
-- `run_rclade_selftest()`: all checks pass.
-
-### ggtree version compatibility
-
-ggtree `>= 4.0.0` is declared in DESCRIPTION. Development and testing were
-conducted with ggtree 4.0.4 (tested range: ggtree 4.0.0–4.0.4,
-ggplot2 3.5.0–4.0.3). The package has not been tested with ggtree 3.x and may
-rely on behaviors specific to ggtree 4.x. A CI job (`min-deps`) smoke-tests
-the declared CRAN minimum versions (ggplot2 3.5.0, deeptime 1.0.0,
-stringr 1.5.0, ape 5.0); Bioconductor packages cannot be version-pinned and
-are exercised at the current release.
-
-### URL/BugReports field
-
-`URL` (https://github.com/zengzichao/Rclade) and `BugReports`
-(https://github.com/zengzichao/Rclade/issues) fields are set in
-DESCRIPTION. The GitHub repository is public.
-
-### Configuration files
-
-`config.example.yaml` and `manuscript_config.yaml` are shipped in `inst/extdata/` so
-they are accessible via `system.file("extdata", ..., package = "Rclade")`.
-
-### Downstream dependencies
-
-There are no downstream dependencies.
-
----
-
-## CRAN submission comments for Rclade 1.0.1 (previous submission)
-
-### Update from 1.0.0
-
-This is a minor update of Rclade. The key changes from 1.0.0 are:
-
-- Adds an `evaluation/` directory (excluded from R builds via
-  `.Rbuildignore`) containing real-data parsing-accuracy results
-  (`parsing_accuracy_real_data.csv`; complete GTDB R232 ar53 taxonomy
-  table, 10,122 labels x 7 ranks: 100% non-NA rate and 100% exact-match
-  agreement) and a reproducible verification script
-  (`verify_gtdb_parsing_accuracy.R`), supporting the parsing-accuracy
-  evaluation reported in the accompanying manuscript.
-- No changes to package code, exports, or behaviour.
-
-### R CMD check results (local)
-
-`R CMD check --no-manual --as-cran Rclade_1.0.1.tar.gz` was run on
-macOS aarch64 (Apple M5) with R 4.5.3 in a micromamba-managed environment.
-
-There were no ERRORs, WARNINGs or NOTEs.
-
-In addition, the GitHub Actions workflow (`R-CMD-check.yaml`) runs
-`R CMD check` on ubuntu-latest (R release/oldrel/devel), macos-latest
-(R release) and windows-latest (R release); all pass.
-
-### Test results (unchanged from 1.0.0; `evaluation/` adds no tests)
-
-- `R CMD check` tests (testthat, canonical summary reporter):
-  **451 pass / 0 fail / 7 skip (458 total)**.
-- `testthat::test_dir("tests/testthat")` (Junit count): 459 cases / 0 fail / 7 skip.
-- Functional suite: smoke 57/57 pass, full 67/67 pass.
-- `run_rclade_selftest()`: all checks pass.
-
-### ggtree version compatibility
-
-ggtree `>= 4.0.0` is declared in DESCRIPTION. Development and testing were
-conducted with ggtree 4.0.4 (tested range: ggtree 4.0.0–4.0.4,
-ggplot2 3.5.0–4.0.3). The package has not been tested with ggtree 3.x and may
-rely on behaviors specific to ggtree 4.x. A CI job (`min-deps`) smoke-tests
-the declared CRAN minimum versions (ggplot2 3.5.0, deeptime 1.0.0,
-stringr 1.5.0, ape 5.0); Bioconductor packages cannot be version-pinned and
-are exercised at the current release.
-
-### URL/BugReports field
-
-`URL` (https://github.com/zengzichao/Rclade) and `BugReports`
-(https://github.com/zengzichao/Rclade/issues) fields are set in
-DESCRIPTION. The GitHub repository is public.
-
-### Configuration files
-
-`config.example.yaml` and `manuscript_config.yaml` are shipped in `inst/extdata/` so
-they are accessible via `system.file("extdata", ..., package = "Rclade")`.
-
-### Downstream dependencies
-
-There are no downstream dependencies.
+There are no reverse dependencies on CRAN.
