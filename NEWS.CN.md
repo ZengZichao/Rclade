@@ -1,16 +1,27 @@
+# Rclade 1.1.6（2026-11-02）
+
+标签放置、HPD 渲染，以及新增的"只标注、不折叠"选项。
+
+* **演化支（clade）标签与末端标签不再被裁切**。x 轴范围现在按实测文本宽度预留空间（`add_geo_timescale()` 新增 `right_pad` 参数，并相应扩展 x 标度）。此前位于右缘的演化支标签会被面板边界切掉。
+* **环形布局：末端标签沿径向绘制**。ggtree 4.x 的 `geom_tiplab()` 在极坐标下会忽略 `angle` 美学参数并自行施加旋转，导致圆环左半部分上下颠倒。现在改用 `ggplot2::geom_text()` 按各末端的角度绘制，左半部分翻转并右对齐。
+* **HPD 条带仅用于内部节点**。节点表此前也包含末端，使得现存物种获得了它们并不具备的年龄区间。
+* **HPD 条带现可在环形布局中渲染**。`ggtree::geom_range()` 在极坐标下不产生可见图层；现改为以径向线段绘制条带。
+* **新增 `plot_timetree(groups_label_only = TRUE)`**。为 `groups` 指定的演化支添加标签而不折叠它们，保留全部末端分支展开。
+* `annotate_clade()` 新增 `hjust`，便于调用者将较宽的标签右对齐。
+
 # Rclade 1.1.5（2026-09-15，CRAN 重新提交）
 
 CRAN 重新提交。修复 CRAN 审阅人针对 1.1.4 提出的三个问题：
 
 * **Description 中的单引号**：单引号现在仅用于 R 包名（`'ggtree'`、`'deeptime'`、`'ape'`）。缩略词和数据库名称（GTDB、Silva、NCBI、MRCAs、LUCA、LACA、LBCA）不再加引号；"geoscales" 不是包名，已改用文字描述为 geologic time scales。
 * **Description 中的参考文献格式**：参考文献改为 `authors (year) <doi:...>` 形式（年份加括号）：Yu et al. (2017) <doi:10.1111/2041-210X.12628>、Gearty (2025) <doi:10.1080/20964471.2025.2537516>、Paradis and Schliep (2019) <doi:10.1093/bioinformatics/bty633>。
-* **R/selftest.R 的控制台输出**：`run_rclade_selftest()` 及其内部辅助函数改用 `message()`（stderr）输出，可用 `suppressMessages()` 抑制；新增 `verbose` 参数（默认 TRUE）可完全静默运行。返回的退出码与各项检查结果均不变。
+* **R/selftest.R 的控制台输出**：`run_rclade_selftest()` 及其内部辅助函数改用 `message()`（stderr）而非 `cat()` 输出，可用 `suppressMessages()` 抑制；新增 `verbose` 参数（默认 TRUE）可完全静默运行。返回的退出码与各项检查结果均不变。
 
 相对 1.1.4 无包行为、导出或测试结果变更。
 
 # Rclade 1.1.4（2026-09-08，CRAN 重新提交）
 
-CRAN 重新提交。修复了 CRAN incoming pre-test 针对 1.1.3 报告的 2 个 WARNING 和 1 个 NOTE：
+CRAN 重新提交。修复了 CRAN incoming 预检（pre-test）针对 1.1.3 报告的 2 个 WARNING 和 1 个 NOTE：
 
 * **预构建 vignette**：包在 DESCRIPTION 中声明了 `VignetteBuilder: knitr`，但 `inst/doc` 目录不存在，未附带预构建的 vignette HTML 文件。现已将三个 vignette 预构建为 HTML 文件并连同 `.Rmd` 源文件一并放入 `inst/doc/` 目录。
 * **DESCRIPTION 拼写检查**：被标记的词（`Gearty`、`Paradis`、`Schliep`、`Yu`、`et`、`al`）均为参考文献中的作者姓氏和拉丁缩写"et al."，并非拼写错误。已在 `cran-comments.md` 中说明。
@@ -29,7 +40,7 @@ CRAN 重新提交。修复了 CRAN 审阅人（Uwe Ligges）针对 1.1.2 提出�
 
 # Rclade 1.1.2（2026-09-04，CRAN 重新提交）
 
-CRAN 重新提交。修复了 win-builder incoming pre-test 针对 1.1.1 报告的两个 NOTE：
+CRAN 重新提交。修复了 win-builder incoming 预检（pre-test）针对 1.1.1 报告的两个 NOTE：
 
 * **顶层非标准文件**：`LICENSE.md`、`MANIFEST.tsv`、`REPRODUCIBILITY.md` 已通过 `.Rbuildignore` 排除（它们是开发/可复现性辅助文件，不用于分发；标准 `LICENSE` 文件保留不变）。
 * **DESCRIPTION 拼写检查**：被标记的词（`ggtree`、`deeptime`、`Yu`、`et`、`al`、`Gearty`、`Paradis`、`Schliep`）均为 R 包名和参考文献作者姓氏，并非拼写错误。已在 `cran-comments.md` 中说明。
@@ -55,32 +66,81 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 落实 2026-08-24 独立投稿前审阅报告的全部代码级修复，含一项用户可见的行为变更。完整条目见 NEWS.md，摘要：
 
-* **破坏性变更**：`add_timescale = TRUE` 时 `unit` 必须显式指定（移除了静默默认 Ga 并将枝长 ×1000 的行为）；非有限枝长报错；根到末端距离离散度过大时发出可审计警告。
-* **分组状态计数**：`rclade_info` / `summarize_timetree()` 报告解析/折叠/单例/跳过的组数与组名，修复"Collapsed groups"误标为解析总组数的问题。
+* **破坏性变更**：`add_timescale = TRUE` 时 `unit` 必须显式指定（移除了静默默认 `Ga` 并将枝长 ×1000 的行为）；非有限枝长报错并中止；根到末端距离离散度过大时发出警告。
+* **分组状态计数**：`rclade_info` / `summarize_timetree()` 报告解析/折叠/单例/跳过的组数与组名，修复"Collapsed groups"标签此前报告的是解析出的候选而非实际折叠的演化支（clade）的问题。
 * **准确率评估修复**：改为按位置对齐并加基数断言（修复 50 末端膨胀为 250 行的 merge 缺陷）。
-* **脚本可移植**：`run_process_level.sh` 从 PATH 解析 `Rscript`（可用 `RSCRIPT=` 覆盖）。
+* **脚本可移植**：`run_process_level.sh` 从 `PATH` 解析 `Rscript`（可用 `RSCRIPT=` 覆盖，而非机器特定的绝对路径）。
 * **CI 如实描述**：`deps-smoke` 不验证 DESCRIPTION 版本下限；覆盖率为监控指标而非强制质量门。
+
+# Rclade 1.0.2（2026-08-22）
+
+* **基准测试结果刷新**：所有基准测试均基于 v1.0.1 代码库重新运行（其中包含 2026-08-16 的 Newick 括号平衡向量化与解析流水线修复）。10,000 末端的会话内渲染由约 1.4 秒改善到约 0.9 秒（中位数）；新增 GTDB ar53 树（10,122 末端、25 个门）的真实数据计时：会话内 4.3 秒（3 次运行的中位数）、含 R 启动的进程级 5.6 秒。确定性准确率检查不变（GTDB/示例解析准确率 100%；直线化偏差为零）。
+* **可复现性脚本**：新增 `scripts/benchmark_real_timing.R`（真实数据会话内计时，论文表 4 的数据来源）与 `scripts/make_ncbi_rank_shift_example.R`（确定性重新生成 `ncbi_rank_shift_example.csv`，与已提交文件逐字节一致）。
+* 相对 1.0.1 无包代码变更；`DESCRIPTION` 与 `.zenodo.json` 的版本号仅为归档而提升。
+
+# Rclade 1.0.1（2026-08-21）
+
+* **评估数据**：新增 `evaluation/` 目录，收录真实数据的解析准确率结果（`parsing_accuracy_real_data.csv`；完整的 GTDB R232 ar53 分类表，10,122 个标签 × 7 个阶元：非 NA 比率 100%、精确匹配一致率 100%）以及可复现的验证脚本（`verify_gtdb_parsing_accuracy.R`），为配套论文报告的解析准确率评估提供支撑。
+* 无包代码变更。`evaluation/` 通过 `.Rbuildignore` 排除在 R 构建之外；`DESCRIPTION` 与 `.zenodo.json` 的版本号仅为归档而提升。
 
 # Rclade 1.0.0（2026-07-09，首个正式版本）
 
 ## 健壮性与渲染修复（2026-08-16，未发布）
 
-* **折叠三角对齐修复**：当树中*所有*末端都被折叠时（如一次性折叠全部门），折叠三角形与所属分支在水平方向错位。原因是 `revts()`（时间轴反转）在折叠后被重复应用了一次——所有末端折叠掉之后 `max(x)` 不再是 0 而是最浅的 MRCA，第二次应用使整棵树平移，而坐标固定的三角形多边形未随之移动；垂直方向不受影响。现在 `revts()` 只应用一次，三角形顶点重新与 MRCA 对齐。
+* **折叠三角对齐修复**：当树中*所有*末端都被折叠时（如一次性折叠全部门级演化支），折叠三角形与所属演化支在水平方向错位。原因是 `revts()`（时间轴反转）在折叠后被重复应用了一次——所有末端折叠掉之后 `max(x)` 不再是 0 而是最浅的 MRCA，第二次应用使整棵树平移，而坐标固定的三角形多边形未随之移动；垂直方向不受影响。现在 `revts()` 只应用一次，三角形顶点重新与 MRCA 对齐。
 * **超长标签防护**：超过 500 字符的 Newick 标签在解析前被截断为 400 字符 + `_RCLADE_TRUNC` 后缀（并给出警告）。原因：ape 5.8.1 的 Newick 解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃（glibc "stack smashing detected"，退出码 134）。已在 `read_tree_auto()` 与 `plot_timetree()` 文档及中英 README 中说明。
 * **对抗性输入报错信息**：节点名中检测到的控制字符与 Unicode BiDi 标记改以 `<U+XXXX>` 转义形式报告，不再原样输出，避免破坏终端显示。
-* **测试**：两个计时比值类性能测试改为校准式重复计时块（每个规模 >= 约 100 ms），替代原先亚毫秒级的单次 `system.time()` 读数（其比值纯属时钟量化噪声，在 macOS 与 CI 上均稳定报 8 倍）。
-* **CI/文档**：pkgdown 文档站恢复构建与部署（数据集条目入索引、DESCRIPTION 补站点 URL、授予写权限）；codecov 上传失败不再使 R-CMD-check 失败；中英 FAQ 中"52 个导出函数"的过时数字更正为 26。
+* **测试**：两个计时比值类性能测试改为校准式重复计时块（每个规模 >= 约 100 ms），替代原先亚毫秒级的单次 `system.time()` 读数（其 max/min 比值纯属时钟量化噪声，在 macOS 与 CI 上均稳定报 8 倍）。
+* **CI/文档**：pkgdown 文档站恢复构建与部署（数据集条目入索引、DESCRIPTION 补站点 URL、授予写权限）；codecov 上传失败（未配置 `CODECOV_TOKEN`）不再使 R-CMD-check 失败；中英 FAQ 中"52 个导出函数"的过时数字更正为 26。
 
-## 清洁再分发 (2026-08-13)
+## 清洁再分发（2026-08-13）
 
 * **清洁再分发（2026-08-13）**：移除所有内置第三方参考数据（`data-external/` 目录与 `inst/extdata/` 下 GTDB 参考文件）及依赖 GTDB 的脚本与测试（`scripts/extract_gtdb_node_taxonomy.R`、`scripts/benchmark_bac120_subsample.R`、`scripts/evaluate_parsing_real_data.R`、`scripts/benchmark_real_session.R`、`tests/testthat/external/`）；更新 README、CITATION、THIRDPARTY、cran-comments、CI 工作流与 vignettes 以移除对内置 GTDB 数据的引用；将格式特定的基准测试辅助函数重命名为格式中立名称。
 
+
+## 许可与署名合规（2026-08-04，Rclade 1.0.1）
+
+* **许可证更正**：deeptime 的许可证在 Logo、CLI 帮助与 README 中被错误标为 "MIT"，实为 GPL (>= 3)；treeio 的许可证被错误标为 "GPL-2+"，实为 Artistic-2.0。两者均已在 `R/logo.R`、`R/cli.R`、`README.CN.md` 与 `README.EN.md` 中更正。
+* **第三方声明**：新增 `inst/THIRDPARTY` 文件，集中声明所有第三方依赖、内置数据及其许可证。
+* **引用文件**：`inst/CITATION` 在 Rclade 自身引用之外，补充了 ggtree（Yu et al. 2017）、deeptime（Gearty 2025）与 GTDB（Parks et al. 2020）的推荐引用。
+* **GTDB 数据许可证**：内置的 `ar53_r232.tree` 已在 README 与 `inst/THIRDPARTY` 中明确声明为 CC BY 4.0。
+* **Vignette 参考文献**：三个 vignette 均新增 "References & Acknowledgments"（参考文献与致谢）小节，列出关键依赖与数据来源。
+* **函数文档**：`plot_timetree()` 的 Rd 新增 `\references{}` 段落，含 ggtree、deeptime 与 ape 的引用。
+* **版权头**：所有 R 源文件顶部均已带有版权与许可证声明。
+
+## 稿件审阅加固（2026-08-03，Rclade 1.0.1）
+
+落实针对 1.0.0 论文手稿的编辑/审阅意见（真实数据解析评估、统一基准测试协议）：
+
+* **格式检测（M-B3）**：GTDB 判定规则额外要求分号分隔符占多数。带登录号前缀、使用双下划线阶元分隔符的嵌入式标签（如 `GCA_xxx_d__Archaea_p__X`）此前会匹配 `[dpcofgsk]__` 模式而被误判为 GTDB，现已正确识别为 `embedded`（真实案例：700 末端的 LACA 时间树，手稿 §3.5）。
+* **嵌入式解析**：`parse_embedded()`（三种分隔符模式全部）现可容忍双下划线阶元分隔符（`_p__value`），由此类方案残留的前导下划线会从解析结果中剔除。
+* **测试**：新增 `test-straight-vdiffr.R`，为折叠后的环形/矩形渲染加入 vdiffr 视觉回归快照，以防 ggplot2/ggtree 升级造成渲染漂移（在 `NOT_CRAN=true` 时执行）。
+* **脚本**：新增 `evaluate_parsing_real_data.R`、`measure_straightness.R`、`benchmark_real_session.R`、`benchmark_bac120_subsample.R` 与 `run_process_level.sh`；`benchmark_synthetic.R` 在各规模统一不少于 3 次重复；修复 `baseline_manual_workflow.R` 中脆弱的 `regexpr()` 写法。
+
+## 第二轮整改（2026-08-01，Rclade 1.0.1）
+
+落实 `修改计划_Rclade_v1.0.0.md` 的遗留事项：
+
+* **API 表面收敛（P0-2）**：27 个基础设施函数（日志、计时器、临时文件辅助、校验器等）由导出改为内部函数（`@keywords internal`），NAMESPACE 导出数由 52 降至 26；新增 `rclade_options()` 构造器，为 `plot_timetree(opts = ...)` 提供经过校验的参数对象（路线 B1：向后兼容，显式实参优先）。
+* **论文**：补充材料新增"已检索的替代方案"对照表（中英）；§2.6.1 在 GTDB/嵌入式 0.6 之外正式确立 NCBI/Silva 的 0.3 阈值；§2.6.3 新增计算复杂度表；摘要注明 n >= 5000 时为单次运行测量；§2.7 交叉引用替代方案表；中文 §4.3 补充 O(n·k) 记号。
+* **文档**：`run_rclade_cli()` 的 Rd 以示例说明退出码约定；`run_rclade_shiny()` 的 Rd 新增并发（Concurrency）小节，警示全局状态；`test-performance.R` 文件头说明其针对灾难性回归的意图。
+* **工程**：`environment.yml` 从运行时依赖中移除 `r-devtools`；README（中英）补充 lockfile 可复现性说明；`tests/functional/` 的测试 ID 与注释全部译为英文。
+
+## 审阅后加固（2026-07-30，Rclade 1.0.1）
+
+针对 1.0.0 论文与代码库的结构化编辑式审阅已全面落实（见项目工作区中的 `主编审阅报告_Rclade_v1.0.0.md`）。用户可见的变更：
+
+* **渲染/时间轴**：x 轴范围改为自适应（`compute_x_min()` 仅当树根真正伸入冥古宇（Hadean）时才下探到 -4567 Ma）；移除了把 "Hadean" 错误注入*代*（eras）表的做法——Hadean 是*宙*（eon）而非*代*（era）；折叠之后统计可见末端时不再计入主干内部节点。
+* **CLI**：`-u/--unit` 默认值由 `Ga` 改为 `auto`（与 R API 对齐；`Ga` 仍执行 ×1000 换算）；绕过 optparse >= 1.8 的前缀冲突，该冲突曾把同级选项的默认值泄漏进 `--highlight`、`--clade` 与 `--taxonomy_file`；`--strip_annotations` 现按注释模式（support/rate/height/HPD/NHX/taxid）剥离 treedata 列。
+* **R API**：`ignore_malformed = TRUE` 在 multiPhylo 批量路径下真正生效（解析失败的树按文档所述成为 `NULL` 占位）；所有导出函数的 `delimiter_mode` 默认值统一为 `"reverse"`；格式检测的明显多数阈值（score >= 0.6）改为容忍二进制浮点误差；Newick 括号平衡校验向量化（大树显著加速）。
+* **文档/元数据**：DESCRIPTION 列出嵌入式格式；Logo 与 CLI 帮助中的第三方署名更正（ggtree >= 4.0、deeptime Gearty 2025）；`withr` 加入 Suggests；`shiny-app.R` 移除非 ASCII 字符；Shiny 不再加载远程字体；Dockerfile 改为从源码安装（不依赖打包 tarball），使用 R 4.5.3 并通过 `q(status = ...)` 传播文档化的 Unix 退出码。
+* **测试/CI**：新增可见末端计数、自适应 `x_min` 与 Shiny 应用的测试；过时的功能测试期望与既定行为对齐（重复末端标签警告、非交互式 `overwrite="ask"`、Silva 检测回退）；CI Stage B 改为 `stop_on_failure = TRUE`，并新增声明最低依赖版本的作业；`codecov.yml` 采用标准的 flags + status 结构。
 
 ## 综述
 
 首个正式版本发布。将开发版 0.2.0 系列功能整理为稳定发布，并同步更新论文手稿与项目代码：
 
-* 统一版本号为 1.0.0，体现这是第一个正式 release。
+* 统一版本号为 1.0.0，体现这是首个稳定版本（stable release）。
 * 所有示例与结果图统一改用 `FigTree_withLACA_GBM_95CI.tree.recover`（700 末端古菌时间树，源自 Moody et al. 2025, Phil. Trans. R. Soc. B 380:20240097, doi:10.1098/rstb.2024.0097；已注明出处再分发）。
 * 论文手稿补充材料完整包含《环形树折叠直线化技术文档》。
 * 清理项目代码中的垃圾文件（`.DS_Store`、`tests/testthat/_problems/`、`tests/functional/output/`、空目录等）。
@@ -105,39 +165,39 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ## 修复
 
-* **环形布局渲染方向修正（2026-07-25）**：`add_clip_off()` 中 circular 分支的 `coord_polar` 参数与 ggtree 内置不一致（`start=0, direction=1` vs ggtree 的 `start=-π/2, direction=-1`），导致环形树相对于 ggtree 原生 `layout="circular"` 产生镜像翻转。现已修正为 `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`。
-* **地质时间轴 ylim buffer 增大（2026-07-25）**：`add_geo_timescale()` 的 `y_max` buffer 从 2% 增大到 8%，`theme_timetree()` 顶部 margin 从 5pt 增大到 20pt，以避免折叠三角形顶点被裁剪。
+* **环形布局渲染方向修正（2026-07-25）**：`add_clip_off()` 中环形（circular）分支的 `coord_polar` 参数与 ggtree 原生环形布局不一致（`start=0, direction=1` vs ggtree 的 `start=-π/2, direction=-1`），导致环形树相对于 ggtree 原生 `layout="circular"` 产生镜像翻转。现已修正为 `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`。
+* **地质时间轴 ylim 缓冲区增大（2026-07-25）**：`add_geo_timescale()` 的 `y_max` 缓冲区从 2% 增大到 8%，`theme_timetree()` 顶部 margin 从 5pt 增大到 20pt，以避免折叠三角形顶点被裁切。
 * **GOE/NOE 地质事件条带未覆盖全树（2026-07-25）**：`add_geo_events()` 的条带 `ymax` 从基于 `p$data$y` 计算改为 `Inf`，确保条带覆盖到坐标系的完整纵向范围。
 
-* **折叠三角形顶部被裁剪（2026-07-23）**：
-  * 根因：`ggtree::collapse()` 生成的折叠三角形顶点（位于 MRCA 节点处）的 y 坐标超出基于末端节点计算的原始 y 轴面板范围，ggplot2 默认裁剪面板外内容导致顶部三角形尖端被截断。
+* **折叠三角形顶部被裁切（2026-07-23）**：
+  * 根因：`ggtree::collapse()` 生成的折叠三角形顶点（位于 MRCA 节点处）的 y 坐标超出基于末端计算的原始 y 轴面板范围，ggplot2 默认裁切面板外内容导致顶部三角形尖端被截断。
   * 修复：`theme_timetree()` 现返回 `list(theme, coord)`，其中 `coord = coord_cartesian(clip = "off")`，并在 `pt_step7_finalize_plot()` 中同时应用主题与坐标系统，使折叠几何图形可完整渲染超出面板边界。
-  * 兼容性变更：`theme_timetree()` 返回值由单一 ggplot2 主题对象改为 `list(theme, coord)`，直接调用者需改为 `p + th$theme + th$coord`。`plot_timetree()` 内部已适配，普通用户无需改动。
+  * 破坏性变更：`theme_timetree()` 返回值由单一 ggplot2 主题对象改为 `list(theme, coord)`，直接调用者需改为 `p + th$theme + th$coord`。`plot_timetree()` 内部已适配，普通用户无需改动。
   * 同步更新 `man/theme_timetree.Rd` 与 `tests/testthat/test-theme.R`。
 
 * **代码审查修复（2026-06-19）**：
   * **高严重度（P0）**：
-    * 修复 `compute_mrca_map` 通过名称匹配取 tip 索引的风险，改为位置匹配确保与树严格对齐
+    * 修复 `compute_mrca_map` 通过名称匹配取末端索引的风险，改为位置匹配确保与树严格对齐
     * 修复 `collapse_by_groups` 中 NA 颜色回退死代码，先判 NA 再调 `adjustcolor`
     * 修复 `validate_inputs` 的 `valid_ranks` 缺少 `kingdom`/`subspecies`/`k`/`ss`，现在从 `normalize_rank` 的 `rank_map` 派生
   * **中严重度（P1+P2）**：
-    * 统一 clade 模式大小写比较为不敏感匹配，避免 step2 精确匹配与 step3 模糊匹配的语义矛盾
-    * 为 `build_group_vec` 添加防御性检查，当 tip 不在树中时明确报错
+    * 统一演化支指定模式的大小写比较为不敏感匹配，避免 step2 精确匹配与 step3 模糊匹配的语义矛盾
+    * 为 `build_group_vec` 添加防御性检查，当末端不在树中时明确报错
     * 为 `read_file_utf8` 添加空文件/不存在文件的边界检查
     * 将 `validate_collapse_plan` 中 phangorn 缺失的 `warning` 改为 `log_warning` 提升可观测性
   * **低严重度（P2/P3）**：
     * 修复 `save_timetree` 的 `overwrite="ask"` 实现真正的交互询问（交互模式下使用 `readline`）
     * 修复 `detect_encoding` 的 UTF-8 判定，改用 `readLines(encoding="UTF-8")` 严格校验
     * 为 LUCA 在多域树（>2 domains）上添加警告，提示可能与 ROOT 重叠
-    * 为 `add_geo_timescale` 添加 sanity 检查，当树深超出地质时间范围时警告
+    * 为 `add_geo_timescale` 添加合理性检查，当树深超出地质时间范围时警告
     * 为 `parse_custom_regex` 添加捕获组保护，无捕获组时明确报错
     * 在 logger 文档中标注线程安全问题
     * 将 `convert_unit` 和 `prepare_geo_timescales` 中的 `message()` 改为 `log_info` 统一日志出口
 
 * **逻辑闭环审查修复（第二轮：26项缺陷）**：
   * **致命缺陷（F1-F3）**：修复 CLI 单树模式 `tryCatch` 语法错误；移除 `plot_timetree()` 双重文件读取；修复 `_pt_step7` 中 `color_palette` 作用域错误。
-  * **严重缺陷（S1-S7）**：修复 clade 模式重复解析和错误 rank 分组；修复 `parse_semicolon_delimited` 多字符分隔符转义；修复 unknown 格式回退 data.frame 列数不匹配；添加颜色查找安全检查（NA 时灰色降级）；统一 MRCA=root 判断逻辑；统一 duplicate tip labels 验证等级（升级为 `stop`）；修复 LUCA 单系检查恒为 TRUE 的问题。
-  * **中等缺陷（M1-M6）**：修复 `_problems` 测试用例大小写；修复 `add_geo_timescale` 双重 `revts`；清理 `detect_encoding` 死代码；修复 `read_taxonomy_file` 硬编码列名（改用 `intersect` 动态匹配）；删除 `SUPPORTED_TREE_EXTENSIONS` 重复项；改进 `convert_unit` 属性复制。
+  * **严重缺陷（S1-S7）**：修复演化支指定模式重复解析和错误阶元分组；修复 `parse_semicolon_delimited` 多字符分隔符转义；修复 unknown 格式回退 data.frame 列数不匹配；添加颜色查找安全检查（NA 时灰色降级）；统一 MRCA=root 判断逻辑；统一重复末端标签的验证级别（升级为 `stop`）；修复 LUCA 单系性检查恒为 TRUE 的问题。
+  * **中等缺陷（M1-M6）**：修复 `_problems` 测试用例大小写；修复 `add_geo_timescale` 双重 `revts`；清理 `detect_encoding` 死代码；修复 `read_taxonomy_file` 硬编码列名（改用 `intersect` 动态匹配）；删除 `SUPPORTED_TREE_EXTENSIONS` 中重复的 `nhx`；改进 `convert_unit` 属性复制。
   * **第二轮新发现（R1-R5）**：移除 `timescale.R` 中与 `coord_geo` 冲突的 `scale_x_continuous`；为用户自定义 `geo_events` 添加 `name`/`color` 默认值；移除 `add_geo_timescale` 未使用的 `actual_ntips` 参数；为 `batch_plot` 新增 `overwrite` 参数；修复批量模式返回值类型标注。
   * **遗留问题（D1-D5）**：修复嵌套中断处理器的 `temp_files` 冲突（`batch_with_interrupt` 检测到嵌套时保留外层临时文件列表）；`batch_plot` 改用 `batch_with_interrupt` 获得优雅中断处理；`revts.done` 属性从 `p$data` 移至 `p` 对象；新增 22 个 CLI 参数（`--angle`、`--line_width`、`--tip_label_size`、`--legend_position`、`--highlight`、`--geo_events`、`--timescale_levels` 等）；`phangorn` 缺失时发出 `warning` 而非静默 `message`。
 
@@ -151,9 +211,9 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
   * `--ignore_malformed` 现在也覆盖输出文件已存在等保存阶段错误。
   * `validate_custom_groups()` 现在对空自定义分组给出明确报错。
   * `validate_tree_sequence_match()` 新增 `multi_tree_mode` 参数，CLI 透传该参数，多树文件不再直接报错。
-  * 修复树-序列交叉验证失败后 `return(invisible(3L))` 位于 `tryCatch` error handler 内导致流程未终止的问题，现在交叉校验失败正确返回退出码 3。
-  * 修复 `plot_timetree()` 中 `taxonomy_levels` 未透传给 `parse_taxonomy_with_file()` 导致外部分类文件组合自定义等级失效的问题。
-  * 修复 `validate_taxonomy_no_cycles()` 对真实分类数据中相邻等级占位符同名（如 `phylum=SpSt-1190, class=SpSt-1190`）的误报，现在仅当跨等级存在真实的交叉循环时才终止。
+  * 修复树-序列交叉验证失败后 `return(invisible(3L))` 位于 `tryCatch` 的错误处理分支内导致流程未终止的问题，现在交叉校验失败正确返回退出码 3。
+  * 修复 `plot_timetree()` 中 `taxonomy_levels` 未透传给 `parse_taxonomy_with_file()` 导致外部分类文件组合自定义阶元失效的问题。
+  * 修复 `validate_taxonomy_no_cycles()` 对真实分类数据中相邻阶元占位符同名（如 `phylum=SpSt-1190, class=SpSt-1190`）的误报，现在仅当跨阶元存在真实的交叉循环时才终止。
 * **KN-004 ~ KN-010**：修复 `--skip_length_check`、`--mol_type`、`--taxonomy_source_priority`、`--taxonomy_table_sep`、`--multi_tree_mode ask`、`--taxonomy_delimiter_mode greedy/segment`、`--low_memory`、`--ignore_malformed` 等参数的透传或实现问题
 * **KN-001（部分）**：新增 `inst/bin/rclade` shell 包装脚本，可在终端使用时将 SIGINT 正确传播为退出码 130；`run_rclade_cli()` 内部已改用 `tryCatch` 捕获中断，理论上也会返回 130
 
@@ -170,7 +230,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 * **§15 错误信息 [MODULE/FUNCTION] 格式**：logger 的 `log_message()` 及所有公开日志函数（`log_info`/`log_warning`/`log_error`/`log_debug`/`log_critical`）新增可选 `.module` 参数，传入后在日志中插入 `[MODULE/FUNCTION]` 标签。关键 `stop()` 和 `log_warning`/`log_error` 调用已打上来源标签（如 `[validate-deep/check_name_safety]`、`[compute-mrca/compute_mrca_map]` 等）。
 * **文档同步**：README.CN.md / README.EN.md / man/*.Rd 全部同步更新新增功能说明。
 
-# Rclade 0.2.0 (2026-06-12)
+# Rclade 0.2.0（2026-06-12）
 
 ## 新功能
 
@@ -183,9 +243,9 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ### 增强的输入验证
 
-* **深度 Newick 语法验证**：括号平衡、负分支长度检测（CRITICAL）、空节点名、重复节点名、分号结尾检查
-* **深度树结构验证**：自环检测、多根检测、负分支长度（CRITICAL，终止）、空末端标签、重复末端标签、边矩阵一致性
-* **多树摘要**：检测到多棵树时，在报错前打印每棵树的 tip/节点数摘要
+* **深度 Newick 语法验证**：括号平衡、负枝长检测（CRITICAL）、空节点名、重复节点名、分号结尾检查
+* **深度树结构验证**：自环检测、多根检测、负枝长（CRITICAL，终止）、空末端标签、重复末端标签、边矩阵一致性
+* **多树摘要**：检测到多棵树时，在报错前打印每棵树的末端数/节点数摘要
 * **序列文件验证**：FASTA/FASTQ 格式检测、重复 ID 检查（ERROR，终止）、字母表自动检测（DNA/RNA/protein）、非法字符定位（行号）、比对长度一致性检查
 * **格式自动检测**：通过扩展名和内容检测树格式（Newick/Nexus/BEAST）和序列格式（FASTA/FASTQ）
 
@@ -194,8 +254,8 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 * **格式 A（嵌入式）**：`_d_Bacteria_p_Cyanobacteriota_...`，使用 `_X_` 分隔符
 * **格式 B（分号分隔式）**：`d__Bacteria;p__Cyanobacteriota;...`，使用 `X__` 前缀
 * **统一数据结构**：两种格式都映射到标准 `{domain, phylum, class, order, family, genus, species}`
-* **缺失值处理**：`s__`（空物种）解析为 NA 并记录 DEBUG 日志；缺失等级优雅处理
-* **可配置分类等级**：通过 `--taxonomy-levels` 支持扩展等级（kingdom `_k_`、subspecies `_ss_`）
+* **缺失值处理**：`s__`（空物种）解析为 NA 并记录 DEBUG 日志；缺失阶元优雅处理
+* **可配置阶元**：通过 `--taxonomy_levels` 支持扩展阶元（kingdom `_k_`、subspecies `_ss_`）
 
 ### 跨平台与编码鲁棒性
 
@@ -244,25 +304,25 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ### 特殊祖先节点标识符
 
-* **LUCA**：最后共同祖先（Bacteria 和 Archaea 的 MRCA）
+* **LUCA**：最后通用共同祖先（Bacteria 和 Archaea 的 MRCA）
 * **LACA**：最后古菌共同祖先
 * **LBCA**：最后细菌共同祖先
-* **单系性检查**：验证这些类群是否为单系群
+* **单系性检查**：验证这些分类群是否为单系群
 
-### 单系群验证
+### 单系性验证
 
-* **自动单系性检查**：按分类等级折叠前，先检查每组是否为单系群
+* **自动单系性检查**：按阶元折叠前，先检查每组是否为单系群
 * **非单系群跳过**：非单系群以信息性警告跳过
-* **外来 tip 识别**：警告信息包含 MRCA 子树中不属于该组的外来 tip 数量和名称
+* **外来末端识别**：警告信息包含 MRCA 演化支内不属于该组的外来末端数量和名称
 
 ## 改进
 
 * **ASCII 艺术 Logo**：启动时显示风格化 Logo（无 Unicode/emoji）
 * **更好的错误信息**：多树文件的错误信息更具信息性
 * **CLI 增强**：新增多树处理和日志级别控制命令行选项
-* **示例树改进**：示例树在所有分类等级上具有正确的单系群
+* **示例树改进**：示例树在所有阶元上具有正确的单系群
 
-## Bug 修复
+## 修复
 
 * 修复多树处理，使其正确中断并请求用户指定
 * 修复 CLI `--help`/`--version` 调用 `stop()` 终止 R 进程的问题，改为正常返回退出码
@@ -280,14 +340,14 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ---
 
-# Rclade 0.1.0 (2026-05-07)
+# Rclade 0.1.0（2026-05-07）
 
 ## 初始发布
 
 ### 核心功能
 
 * **自动分类标签解析**：支持 GTDB、Silva、NCBI、custom_rank 和 custom_regex 格式
-* **批量分支折叠**：嵌套感知的深度优先排序，自动冲突检测
+* **批量演化支折叠**：嵌套感知的深度优先排序，自动冲突检测
 * **地质时间轴集成**：通过 deeptime 包实现自适应时间刻度（Ma/Ka）
 * **智能图例布局**：根据分组数量自动调整行列
 * **色盲友好调色板**：默认 viridis，回退链（viridis -> hcl.colors -> rainbow）
@@ -296,7 +356,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 * **节点支持值显示**：兼容 BEAST2/IQ-TREE posterior/bootstrap 值
 * **HPD 区间可视化**：显示最高后验密度区间
-* **分支标注标签**：可配置偏移量和字号
+* **演化支标注标签**：可配置偏移量和字号
 * **出版级主题**：自定义 `theme_timetree()` 实现高质量输出
 * **多种布局**：矩形和环形树布局
 
@@ -319,7 +379,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ## 已知限制
 
-* NCBI 分类解析使用基于位置的等级映射，非标准谱系可能产生偏移
+* NCBI 分类解析使用基于位置的阶元映射，非标准谱系可能产生偏移
 
 ## 依赖
 

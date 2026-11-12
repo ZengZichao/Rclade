@@ -8,7 +8,7 @@ Rclade 从每个末端的**标签**读取其分类学归属，支持多种格式
 
 | 格式 | 示例标签 | 检测依据 |
 |------|----------|----------|
-| GTDB | `d__Bacteria;p__Firmicutes;c__Bacilli` | 前缀 `d__`/`p__`/... |
+| GTDB | `d__Bacteria;p__Firmicutes;c__Bacilli` | 前缀 `d__`/`p__`/... 且分号占多数 |
 | Silva | `Bacteria;Firmicutes;Bacilli` | 分号分隔阶元，无代码 |
 | NCBI | `cellular organisms; Bacteria; Firmicutes` | 具名阶元 |
 | embedded（custom_rank / Format A） | `species_d_Bacteria_p_Firmicutes` | 下划线包裹的单字母代码 `_d_`/`_p_`/... |
@@ -18,13 +18,13 @@ Rclade 从每个末端的**标签**读取其分类学归属，支持多种格式
 
 ## 基于 MRCA 的折叠
 
-“折叠”指用单个三角形替代整个分支，三角形宽度表示该分支的年龄范围。Rclade 找到共享同一分类分组的所有末端的最近共同祖先（**MRCA**），再为该分支绘制三角形。
+“折叠”指用单个三角形替代整个演化支（clade），三角形宽度表示该演化支的年龄范围。Rclade 找到共享同一分类群的所有末端的最近共同祖先（**MRCA**），再为该演化支绘制三角形。
 
 折叠有三种方式：
 
 - **按阶元** — `rank = "phylum"` 一次折叠所有门。
-- **按命名分组** — `group = list(GroupA = c("tip1","tip2"))` 折叠自定义集合（必须单系；可用 [validate_custom_groups](reference/taxonomy-parsing.md) 校验）。
-- **按特定分支** — `clade = "Cyanobacteriota"` 仅折叠该命名分支。
+- **按命名分组** — `groups = list(GroupA = c("tip1","tip2"))` 折叠自定义集合（必须单系；可用 [validate_custom_groups](reference/taxonomy-parsing.md) 校验）。
+- **按特定演化支** — `clade = "Cyanobacteriota"` 仅折叠该命名演化支。
 
 ### 单系性很重要
 
@@ -33,15 +33,15 @@ Rclade 从每个末端的**标签**读取其分类学归属，支持多种格式
 ### 三角形与空间模式
 
 - `triangle_mode`：三角形宽度画法 — `max`、`min`、`mixed`（自适应）、`none`。
-- `space_mode`：`proportional` 给大分支更多纵向空间；`equal` 给每个分支相同空间。
+- `space_mode`：`proportional` 给较大的演化支更多纵向空间；`equal` 给每个演化支相同空间。
 
 ## 地质时间轴
 
 Rclade 基于 `deeptime`（ICS 2023/02）在 x 轴添加地质时间轴。
 
-- `unit`：树枝长的时间单位 — `Ma`（百万年）或 `Ga`（十亿年）。为 `NULL` 时按数量级自动推断。
+- `unit`：枝长的时间单位 — `Ma`（百万年）或 `Ga`（十亿年）。只要 `add_timescale = TRUE` 就必须显式给出：Rclade 不会推断单位，留作 `NULL` 会直接中止。
 - `timescale_levels`：显示哪些条带 — `eras`、`eons`、`periods`。
-- `add_timescale = FALSE` 可关闭（环形布局或 cladogram 时有用）。
+- `add_timescale = FALSE` 可关闭该功能，绘制环形布局或支序图（cladogram）时有用。
 
 ## 颜色与图例
 
@@ -52,9 +52,9 @@ Rclade 基于 `deeptime`（ICS 2023/02）在 x 轴添加地质时间轴。
 
 ## 特殊标识符
 
-Rclade 理解生命的关键祖先节点：
+Rclade 理解生命的祖先节点：
 
-- `LUCA` — 最后共同祖先（细菌 + 古菌的 MRCA）
+- `LUCA` — 最后通用共同祖先（细菌 + 古菌的 MRCA）
 - `LACA` — 最后古菌共同祖先
 - `LBCA` — 最后细菌共同祖先
 

@@ -42,19 +42,19 @@ Formats are chosen by file extension: `.pdf`, `.png`, `.tiff`, `.svg`, `.eps`.
 summarize_timetree(p)
 ```
 
-This prints the number of tips, collapsed clades, taxonomy coverage, and more.
+This prints the number of tips, collapsed clades, the taxonomy format, collapse rank, palette, layout, and timescale status.
 
 ## 5. Try common variations
 
 ```r
 # Circular / fan layout
-p2 <- plot_timetree(example_tree, rank = "class", layout = "circular")
+p2 <- plot_timetree(example_tree, rank = "class", unit = "Ma", layout = "circular")
 
 # Turn off the timescale
 p3 <- plot_timetree(example_tree, rank = "phylum", add_timescale = FALSE)
 
 # Use a custom palette
-p4 <- plot_timetree(example_tree, rank = "phylum", color_palette = "Set1")
+p4 <- plot_timetree(example_tree, rank = "phylum", unit = "Ma", color_palette = "Set1")
 ```
 
 ## 6. Go further

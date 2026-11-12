@@ -1,6 +1,6 @@
 # 示例集锦
 
-常见任务的即拷即用配方。所有示例均使用内置的 `example_tree`。
+常见任务的复制即用配方。所有示例均使用内置的 `example_tree`。
 
 ## 以不同于折叠的阶元着色
 
@@ -20,8 +20,8 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   color_mapping = c("Firmicutes" = "#E41A1C",
-                                     "Proteobacteria" = "#377EB8"),
+                   color_mapping = c("P1" = "#E41A1C",
+                                     "P2" = "#377EB8"),
                    unit = "Ma")
 ```
 
@@ -36,10 +36,10 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   show_tip_label = FALSE, unit = "Ma")
+                   show_tip_labels = FALSE, unit = "Ma")
 ```
 
-## 按 cladogram 绘制（忽略枝长）
+## 按支序图（cladogram）绘制（忽略枝长）
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
@@ -59,16 +59,16 @@ detect_taxonomy_format(labels)
 validate_tree_sequence_match(example_tree, "seqs.fasta", mol_type = "DNA")
 ```
 
-## 检查分组的单系性
+## 检查分类群的单系性
 
 ```r
-check_monophyly(example_tree, group = "Firmicutes", rank = "phylum")
+check_monophyly(example_tree, group = "P1", rank = "phylum")
 ```
 
 ## 为自己的分组生成调色板
 
 ```r
-groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
+groups <- c("P1", "P2", "P3")
 generate_colors(groups, palette = "viridis")
 ```
 

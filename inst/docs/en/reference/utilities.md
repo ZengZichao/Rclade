@@ -47,6 +47,9 @@ build_path("data", "output", "tree.pdf")
 
 Detect file encoding
 
+Samples the first lines of a file and infers its text encoding, so the encoding
+can be confirmed before reading taxonomy or label files.
+
 **Usage:**
 
 ```r
@@ -76,6 +79,8 @@ detect_encoding("labels.txt")
 ## `normalize_file_newlines`
 
 Reads a file, normalizes line endings, and writes it back.
+Line endings are unified (e.g. CRLF to LF) to avoid formatting problems when
+files are read on another platform.
 
 **Usage:**
 
@@ -106,6 +111,9 @@ normalize_file_newlines("labels.txt")
 
 Create and manage temporary directory with automatic cleanup
 
+Creates a prefixed temporary directory (mode `0700`) and returns a `cleanup`
+closure that the caller is responsible for invoking.
+
 **Usage:**
 
 ```r
@@ -120,7 +128,7 @@ managed_tempdir(pattern = "rclade_")
 
 **Value:**
 
-List with path and cleanup function.
+List with `path` and `cleanup` function.
 
 **Examples:**
 
@@ -133,7 +141,8 @@ d <- managed_tempdir()
 
 ## `managed_tempfile`
 
-Creates a temporary file and registers cleanup via on.exit().
+Creates a temporary file with the given prefix and extension, and returns a
+`cleanup` closure that the caller is responsible for invoking.
 
 **Usage:**
 
@@ -151,14 +160,14 @@ managed_tempfile(pattern = "rclade_", fileext = ".tmp", tmpdir = tempdir())
 
 **Value:**
 
-List with path and cleanup function.
+List with `path` and `cleanup` function.
 
 **Examples:**
 
 ```r
 tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
 writeLines("(A:1,B:1);", tmp$path)
-# File is automatically cleaned up when function exits
+# Call tmp$cleanup() to remove the file when done
 ```
 
 
@@ -167,6 +176,8 @@ writeLines("(A:1,B:1);", tmp$path)
 ## `get_supported_extensions`
 
 Get supported file extensions
+
+Lists the file extensions Rclade can currently read, grouped by category.
 
 **Usage:**
 
@@ -190,6 +201,9 @@ get_supported_extensions()
 ## `save_session_info`
 
 Save sessionInfo() for reproducibility
+
+Writes sessionInfo() to a file, recording the R version and the loaded packages
+so that results can be reproduced and troubleshot.
 
 **Usage:**
 
@@ -219,6 +233,7 @@ save_session_info("session_info.txt")
 ## `rclade_logo`
 
 Prints a stylized ASCII art logo for Rclade to the console.
+Optionally prints the version number and the tagline.
 
 **Usage:**
 
@@ -249,4 +264,4 @@ rclade_logo()
 
 ---
 
-[中文](../../cn/reference/utilities.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/utilities.md) | [文档首页](../index.md)

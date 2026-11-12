@@ -34,7 +34,7 @@ detect_taxonomy_format(labels)
 
 **Value:**
 
-Format name: "embedded", "GTDB", "Silva", "NCBI", or "unknown"
+Format name: "embedded", "GTDB", "Silva", "NCBI", or "unknown". Detection and parsing are heuristic prefix matches, not a strict grammar; mixed or malformed label sets (e.g. semicolon-delimited labels that are neither clearly NCBI nor Silva) return `"unknown"`, in which case an explicit `format` must be supplied.
 
 **Examples:**
 
@@ -95,7 +95,7 @@ parse_taxonomy(labels, rank = "phylum", format = "GTDB")
 ## `resolve_group`
 
 Unified function that handles both regular group names and special identifiers
-(LUCA, LACA, LBCA).
+(ROOT, LUCA, LACA, LBCA).
 
 **Usage:**
 
@@ -129,12 +129,12 @@ resolve_group(
 
 A list with components:
 
-**is_monophyletic**: Logical. Whether the group is monophyletic.
-**group**: Character. The group name or identifier.
-**is_special**: Logical. Whether this is a special identifier.
-**node**: Integer or NULL. The MRCA node number.
-**n_tips**: Integer. Number of tips in the group.
-**outsiders**: Character vector. Tips in MRCA not belonging to group.
+- **is_monophyletic**: Logical. Whether the group is monophyletic.
+- **group**: Character. The group name or identifier.
+- **is_special**: Logical. Whether this is a special identifier.
+- **node**: Integer or NULL. The MRCA node number.
+- **n_tips**: Integer. Number of tips in the group.
+- **outsiders**: Character vector. Tips in MRCA not belonging to group.
 
 **Examples:**
 
@@ -185,13 +185,13 @@ resolve_special_identifier(
 
 **Value:**
 
-A list with components:
+Invisibly returns a list with components:
 
-**node**: Integer. The node number of the MRCA, or NULL if not found.
-**identifier**: Character. The identifier name.
-**description**: Character. Human-readable description.
-**n_tips**: Integer. Number of descendant tips.
-**tip_labels**: Character vector. Labels of descendant tips.
+- **node**: Integer. The node number of the MRCA, or NULL if not found.
+- **identifier**: Character. The identifier name.
+- **description**: Character. Human-readable description.
+- **n_tips**: Integer. Number of descendant tips.
+- **tip_labels**: Character vector. Labels of descendant tips.
 
 **Examples:**
 
@@ -201,6 +201,7 @@ root <- resolve_special_identifier(example_tree, "ROOT")
 luca <- resolve_special_identifier(example_tree, "LUCA")
 if (!is.null(luca$node)) {
   cat("LUCA found at node", luca$node, "\n")
+}
 ```
 
 
@@ -268,7 +269,7 @@ with an informative error.
 ```r
 data(example_tree)
 validate_custom_groups(example_tree,
-     list(Group1 = c("tip1", "tip2")))
+     list(C1 = "d__D1;p__P1;c__C1"))
 ```
 
 
@@ -360,6 +361,8 @@ Invisibly returns a list with parsing statistics.
 **Examples:**
 
 ```r
+labels <- c("d__Bacteria;p__Firmicutes",
+              "d__Archaea;p__Euryarchaeota")
 # Report quality with external file
 summarize_taxonomy_quality_with_file(labels, format = "auto",
                                       taxonomy_file = "taxonomy.tsv")
@@ -375,6 +378,12 @@ Reads taxonomy information from a two-column table file where:
 - Column 1: Tip labels (must match tree tip labels)
 - Column 2: Taxonomy strings in GTDB format
 (e.g., `d__Archaea;p__Thermoproteota;c__Korarchaeia`)
+
+Both tab-delimited and comma-delimited files are supported, and the separator
+as well as an optional header row are auto-detected. Missing ranks are indicated
+by empty values after the rank prefix (e.g., `s__` for a missing species). This
+is the file format expected by the `taxonomy_file` argument of
+`plot_timetree()`.
 
 **Usage:**
 
@@ -395,14 +404,16 @@ read_taxonomy_file(file, sep = "auto", header = FALSE, table_sep = ";")
 
 A data.frame with columns:
 
-**label**: Character. Tip labels from column 1.
-**domain**: Character. Domain (d__).
-**phylum**: Character. Phylum (p__).
-**class**: Character. Class (c__).
-**order**: Character. Order (o__).
-**family**: Character. Family (f__).
-**genus**: Character. Genus (g__).
-**species**: Character. Species (s__).
+- **label**: Character. Tip labels from column 1.
+- **kingdom**: Character. Kingdom (k__).
+- **domain**: Character. Domain (d__).
+- **phylum**: Character. Phylum (p__).
+- **class**: Character. Class (c__).
+- **order**: Character. Order (o__).
+- **family**: Character. Family (f__).
+- **genus**: Character. Genus (g__).
+- **species**: Character. Species (s__).
+- **subspecies**: Character. Subspecies (ss__).
 
 Missing ranks are `NA`.
 
@@ -426,6 +437,10 @@ Checks for cases like:
 - Row 1: d__A;p__B
 - Row 2: d__B;p__A
 where domain/phylum relationships form a cycle.
+
+Adjacent-rank pairs are checked from coarsest to finest among the columns
+`domain`, `phylum`, `class`, `order`, `family`, `genus`, `species`; other
+columns (e.g. `kingdom`, `subspecies`) are ignored.
 
 **Usage:**
 
@@ -457,4 +472,4 @@ validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
 
 ---
 
-[中文](../../cn/reference/taxonomy-parsing.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/taxonomy-parsing.md) | [文档首页](../index.md)

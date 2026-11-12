@@ -8,10 +8,10 @@ Rclade reads the taxonomic assignment of each tip from its **label**. Several fo
 
 | Format | Example label | Detected by |
 |--------|---------------|-------------|
-| GTDB | `d__Bacteria;p__Firmicutes;c__Bacilli` | prefix `d__`/`p__`/... |
+| GTDB | `d__Bacteria;p__Firmicutes;c__Bacilli` | prefix `d__`/`p__`/..., and semicolons in the majority |
 | Silva | `Bacteria;Firmicutes;Bacilli` | semicolon ranks, no codes |
 | NCBI | `cellular organisms; Bacteria; Firmicutes` | named ranks |
-| embedded (custom_rank) | `k__Bacteria;p__Firmicutes` | explicit codes |
+| embedded (custom_rank / Format A) | `species_d_Bacteria_p_Firmicutes` | single-letter codes wrapped in underscores: `_d_`/`_p_`/... |
 | custom_regex | `Domain:Bacteria\|Phylum:Firmicutes` | user regex |
 
 Detection is automatic (`taxonomy_format = "auto"`). To force a format, set `taxonomy_format` explicitly. See [detect_taxonomy_format](reference/taxonomy-parsing.md) and [parse_taxonomy](reference/taxonomy-parsing.md).
@@ -23,7 +23,7 @@ Detection is automatic (`taxonomy_format = "auto"`). To force a format, set `tax
 You can collapse in three ways:
 
 - **By rank** — `rank = "phylum"` collapses every phylum at once.
-- **By named group** — `group = list(GroupA = c("tip1","tip2"))` collapses a custom set (must be monophyletic; check with [validate_custom_groups](reference/taxonomy-parsing.md)).
+- **By named group** — `groups = list(GroupA = c("tip1","tip2"))` collapses a custom set (must be monophyletic; check with [validate_custom_groups](reference/taxonomy-parsing.md)).
 - **By specific clade** — `clade = "Cyanobacteriota"` collapses only that named clade.
 
 ### Monophyly matters
@@ -39,7 +39,7 @@ A group can only be collapsed cleanly if it is **monophyletic** (all descendants
 
 Rclade adds a geological timescale to the x-axis using `deeptime` (ICS 2023/02).
 
-- `unit`: the unit of your tree's edge lengths — `Ma` (mega-annum) or `Ga` (giga-annum). If `NULL`, Rclade auto-detects from the magnitude.
+- `unit`: the unit of your tree's edge lengths — `Ma` (mega-annum) or `Ga` (giga-annum). Required whenever `add_timescale = TRUE`: Rclade never infers the unit, so leaving it `NULL` aborts.
 - `timescale_levels`: which bands to show — `eras`, `eons`, `periods`.
 - `add_timescale = FALSE` disables it (useful for circular layouts or cladograms).
 

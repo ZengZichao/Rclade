@@ -40,6 +40,8 @@ validate_custom_groups(example_tree, groups)
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
 ```
 
+`tip_A`/`tip_B`/`tip_C` 为占位名，请换成你自己树中真实存在且构成单系群的末端标签。
+
 ## 教程 3 — 出版级环形树
 
 ```r
@@ -92,6 +94,8 @@ batch_plot(input_dir = "trees/",
 
 ## 教程 6 — 从命令行运行
 
+写一个小型 YAML 配置文件（模板见 `inst/extdata/config.example.yaml`，用 `--config` 传入），或直接传参：
+
 ```bash
 Rscript -e 'Rclade::run_rclade_cli()' -- \
   -f my_tree.nwk -r phylum -u Ma -o out.pdf
@@ -101,5 +105,5 @@ Rscript -e 'Rclade::run_rclade_cli()' -- \
 
 ## 下一步
 
-- [示例集锦](cookbook.md) 获取更多即拷即用配方。
+- [示例集锦](cookbook.md) 获取更多复制即用配方。
 - [参考手册索引](reference/index.md) 查看每个函数。

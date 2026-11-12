@@ -13,8 +13,10 @@ This module contains the following functions:
 
 ## `read_tree_auto`
 
-Intended for use as a stable library API by external workflows
-(e.g., Snakemake/Nextflow).
+Detects the tree file format from the extension and the file content
+(Newick / Nexus / BEAST XML, etc.), reads it into a `phylo` or `multiPhylo`
+object, and supports multi-tree files. Intended for use as a stable library API
+by external workflows (e.g., Snakemake/Nextflow).
 
 > **Label length guard**: Newick labels longer than 500 characters are truncated to 400 characters + a `_RCLADE_TRUNC` suffix (with a warning) before parsing, because ape's Newick parser aborts the whole R process on labels longer than ~512 characters on Linux. Truncated labels may no longer match external taxonomy files or sequence IDs exactly; shorten labels upstream if needed.
 
@@ -39,7 +41,11 @@ phylo object (or multiPhylo if multi_tree_mode = "all" or "split")
 **Examples:**
 
 ```r
+# Auto-detect format and read
 tree <- read_tree_auto("my_tree.nwk")
+
+# Read the first tree from a BEAST posterior
+tree1 <- read_tree_auto("beast.trees", multi_tree_mode = "first")
 ```
 
 
@@ -177,7 +183,7 @@ check_monophyly(
 |----------|-------------|
 | `tree` | A `phylo` object. |
 | `group` | Character. The name of the taxonomic group to check (e.g., `"P1"`, `"Mammalia"`). |
-| `rank` | Character. Taxonomic rank of the group. One of `"domain"`, `"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`, or abbreviations `"d"`, `"p"`, `"c"`, `"o"`, `"f"`, `"g"`, `"s"`. |
+| `rank` | Character. Taxonomic rank of the group. One of `"kingdom"`, `"domain"`, `"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`, `"subspecies"`, or abbreviations `"k"`, `"d"`, `"p"`, `"c"`, `"o"`, `"f"`, `"g"`, `"s"`, `"ss"`. |
 | `format` | Character. Taxonomy label format. One of `"auto"`, `"GTDB"`, `"Silva"`, `"NCBI"`, `"custom_rank"`, `"custom_regex"`. Default: `"auto"`. |
 | `custom_patterns` | Named list of regex patterns for custom format. Required when `format = "custom_regex"`. |
 | `quiet` | Logical. If `TRUE`, suppress informational messages. Default: `FALSE`. |
@@ -186,14 +192,14 @@ check_monophyly(
 
 **Value:**
 
-A list with components:
+Invisibly returns a list with components:
 
-**is_monophyletic**: Logical. Whether the group is monophyletic.
-**group**: Character. The group name.
-**n_tips**: Integer. Number of tips belonging to the group.
-**mrca_node**: Integer or NULL. The MRCA node number, or NULL if
-the group has fewer than 2 tips.
-**outsiders**: Character vector. Tips in the MRCA clade that do not
+- **is_monophyletic**: Logical. Whether the group is monophyletic.
+- **group**: Character. The group name.
+- **n_tips**: Integer. Number of tips belonging to the group.
+- **mrca_node**: Integer or NULL. The MRCA node number; NULL only when no tip
+matches the group (a group with exactly one tip returns that tip's node number).
+- **outsiders**: Character vector. Tips in the MRCA clade that do not
 belong to the group (empty if monophyletic).
 
 **Examples:**
@@ -208,6 +214,7 @@ if (result$is_monophyletic) {
   cat("P1 is monophyletic!\n")
 } else {
   cat("P1 is NOT monophyletic.\n")
+}
 ```
 
 
@@ -237,7 +244,7 @@ check_special_monophyly(
 | Argument | Description |
 |----------|-------------|
 | `tree` | A `phylo` object. |
-| `identifier` | Character. One of `"LUCA"`, `"LACA"`, `"LBCA"`. |
+| `identifier` | Character. One of `"ROOT"`, `"LUCA"`, `"LACA"`, `"LBCA"`. `ROOT` is also accepted and is always monophyletic, since it trivially contains every tip in the tree. |
 | `format` | Character. Taxonomy label format. Default: `"auto"`. |
 | `quiet` | Logical. If TRUE, suppress informational messages. Default: FALSE. |
 | `delimiter_mode` | Character. Embedded parsing strategy: `"reverse"`, `"greedy"`, or `"segment"`. Default: `"reverse"`. |
@@ -245,14 +252,14 @@ check_special_monophyly(
 
 **Value:**
 
-A list with components:
+Invisibly returns a list with components:
 
-**is_monophyletic**: Logical. Whether the group is monophyletic.
-**identifier**: Character. The identifier name.
-**node**: Integer or NULL. The MRCA node number.
-**n_tips**: Integer. Number of tips in the target domains.
-**n_outsiders**: Integer. Number of outsider tips in the MRCA clade.
-**outsider_domains**: Character vector. Domains of outsider tips.
+- **is_monophyletic**: Logical. Whether the group is monophyletic.
+- **identifier**: Character. The identifier name.
+- **node**: Integer or NULL. The MRCA node number.
+- **n_tips**: Integer. Number of tips in the target domains.
+- **n_outsiders**: Integer. Number of outsider tips in the MRCA clade.
+- **outsider_domains**: Character vector. Domains of outsider tips.
 
 **Examples:**
 
@@ -261,6 +268,7 @@ data(example_tree)
 result <- check_special_monophyly(example_tree, "LBCA")
 if (result$is_monophyletic) {
   cat("LBCA is monophyletic!\n")
+}
 ```
 
 
@@ -269,4 +277,4 @@ if (result$is_monophyletic) {
 
 ---
 
-[中文](../../cn/reference/tree-sequence.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/tree-sequence.md) | [文档首页](../index.md)

@@ -5,7 +5,7 @@
 <!-- badges: start -->
 [![R package](https://img.shields.io/badge/R-package-blue.svg)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.1.3-green.svg)]()
+[![Version](https://img.shields.io/badge/version-1.1.6-green.svg)]()
 <!-- badges: end -->
 
 > **Note:** Source code and issue tracking at https://github.com/zengzichao/Rclade.
@@ -50,10 +50,10 @@ In addition to this quick reference, Rclade ships a complete bilingual documenta
 
 ```r
 # Install the fixed release tag from GitHub (requires the remotes package)
-remotes::install_github("zengzichao/Rclade@v1.1.3")
+remotes::install_github("zengzichao/Rclade@v1.1.6")
 
 # Or install from a downloaded release tarball (GitHub Releases / Zenodo)
-install.packages("Rclade_1.1.3.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.6.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Using Conda
@@ -765,9 +765,9 @@ Checks: dependencies, tree parsing, taxonomy extraction (Format A & B), monophyl
 
 ## Dependencies
 
-**Required**: ape (>= 5.0, GPL-2+), ggtree (>= 4.0.0, Artistic-2.0), deeptime (>= 1.0, GPL-3), ggplot2 (>= 3.5.0, MIT), rlang (MIT), stringr (>= 1.5, MIT), tidytree (>= 0.4, Artistic-2.0)
+**Required**: ape (>= 5.0, GPL-2+), ggtree (>= 4.0.0, Artistic-2.0), deeptime (>= 1.0, GPL-3), ggplot2 (>= 3.5.0, MIT), rlang (MIT), stringr (>= 1.5, MIT), tidytree (>= 0.4, Artistic-2.0), viridisLite (MIT)
 
-**Optional**: treeio (Artistic-2.0, BEAST2/IQ-TREE support), phangorn (GPL-2+, nesting detection), viridisLite/RColorBrewer (color palettes), cowplot/patchwork (legend splitting), shiny (web UI), optparse (CLI), yaml (`--config` configuration file support)
+**Optional**: treeio (Artistic-2.0, BEAST2/IQ-TREE support), phangorn (GPL-2+, nesting detection), RColorBrewer (color palettes), cowplot/patchwork (legend splitting), shiny (web UI), optparse (CLI), yaml (`--config` configuration file support)
 
 For a complete list of third-party dependencies and their licenses, see [inst/THIRDPARTY](inst/THIRDPARTY).
 

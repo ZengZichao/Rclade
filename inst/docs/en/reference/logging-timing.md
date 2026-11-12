@@ -25,6 +25,8 @@ This module contains the following functions:
 
 Enable or disable logging
 
+Global switch that controls whether Rclade emits any log output at all.
+
 **Usage:**
 
 ```r
@@ -36,6 +38,10 @@ set_log_enabled(enabled)
 | Argument | Description |
 |----------|-------------|
 | `enabled` | Logical. |
+
+**Value:**
+
+No return value, called for side effects (toggles the package-level logging enabled flag).
 
 **Examples:**
 
@@ -50,6 +56,9 @@ set_log_enabled(FALSE)  # turn off all logging
 
 Set log file for dual output
 
+Log lines are written to the given file in addition to the console, which
+makes post-hoc troubleshooting easier; pass `NULL` to disable file output.
+
 **Usage:**
 
 ```r
@@ -61,6 +70,10 @@ set_log_file(filepath)
 | Argument | Description |
 |----------|-------------|
 | `filepath` | Character. Path to log file. NULL to disable. |
+
+**Value:**
+
+No return value, called for side effects (opens or closes a log file connection for dual console + file logging).
 
 **Examples:**
 
@@ -75,6 +88,9 @@ set_log_file("rclade.log")
 
 Set log level
 
+Sets the minimum output level (`DEBUG` < `INFO` < `WARNING` < `ERROR` <
+`CRITICAL`); messages below that level are suppressed.
+
 **Usage:**
 
 ```r
@@ -86,6 +102,10 @@ set_log_level(level)
 | Argument | Description |
 |----------|-------------|
 | `level` | Character. One of "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL". |
+
+**Value:**
+
+No return value, called for side effects (sets the package-level log threshold).
 
 **Examples:**
 
@@ -100,6 +120,9 @@ set_log_level("DEBUG")
 
 Log an INFO message
 
+Emits a single `INFO` message, optionally tagged with a module label, and
+supports concatenating several components.
+
 **Usage:**
 
 ```r
@@ -112,6 +135,10 @@ log_info(..., .module = NULL)
 |----------|-------------|
 | `...` | Message components (passed to sprintf if multiple). |
 | `.module` | Character. Optional module/function tag (§15). Default: NULL. |
+
+**Value:**
+
+No return value, called for side effects (the message is printed to the console and, when a log file is set, written to it).
 
 **Examples:**
 
@@ -126,6 +153,9 @@ log_info("Starting processing", .module = "main")
 
 Log a DEBUG message
 
+Emits detailed `DEBUG`-level information (visible only when the log level is
+set to `DEBUG`).
+
 **Usage:**
 
 ```r
@@ -138,6 +168,10 @@ log_debug(..., .module = NULL)
 |----------|-------------|
 | `...` | Message components (passed to sprintf if multiple). |
 | `.module` | Character. Optional module/function tag (§15). Default: NULL. |
+
+**Value:**
+
+No return value, called for side effects (the message is printed to the console and, when a log file is set, written to it).
 
 **Examples:**
 
@@ -152,6 +186,8 @@ log_debug("variable x =", 42, .module = "parse")
 
 Log a WARNING message
 
+Emits a `WARNING` message about a potential problem that is not fatal.
+
 **Usage:**
 
 ```r
@@ -164,6 +200,10 @@ log_warning(..., .module = NULL)
 |----------|-------------|
 | `...` | Message components (passed to sprintf if multiple). |
 | `.module` | Character. Optional module/function tag (§15). Default: NULL. |
+
+**Value:**
+
+No return value, called for side effects (the message is printed to the console and, when a log file is set, written to it).
 
 **Examples:**
 
@@ -178,6 +218,9 @@ log_warning("Clade not monophyletic, skipped", .module = "collapse")
 
 Log an ERROR message
 
+Emits an `ERROR` message, signalling that something went wrong (execution is
+not interrupted).
+
 **Usage:**
 
 ```r
@@ -190,6 +233,10 @@ log_error(..., .module = NULL)
 |----------|-------------|
 | `...` | Message components (passed to sprintf if multiple). |
 | `.module` | Character. Optional module/function tag (§15). Default: NULL. |
+
+**Value:**
+
+No return value, called for side effects (the message is printed to the console and, when a log file is set, written to it; execution is not interrupted).
 
 **Examples:**
 
@@ -204,6 +251,9 @@ log_error("File not found", .module = "io")
 
 Log a CRITICAL message
 
+Emits the highest-severity `CRITICAL` message, reserved for severe failures
+(logged only, execution is not interrupted).
+
 **Usage:**
 
 ```r
@@ -216,6 +266,10 @@ log_critical(..., .module = NULL)
 |----------|-------------|
 | `...` | Message components (passed to sprintf if multiple). |
 | `.module` | Character. Optional module/function tag (§15). Default: NULL. |
+
+**Value:**
+
+No return value, called for side effects (the message is printed to the console and, when a log file is set, written to it; logging a CRITICAL message does not stop execution).
 
 **Examples:**
 
@@ -230,6 +284,9 @@ log_critical("Out of memory", .module = "main")
 
 Print a formatted section header
 
+Prints a section header framed with `=`, used to separate the main stages of
+a pipeline.
+
 **Usage:**
 
 ```r
@@ -241,6 +298,10 @@ log_section(title)
 | Argument | Description |
 |----------|-------------|
 | `title` | Character. Section title. |
+
+**Value:**
+
+No return value, called for side effects (the `=` section frame is printed unless logging is disabled; it is not filtered by the log level).
 
 **Examples:**
 
@@ -255,6 +316,9 @@ log_section("Stage 1: Reading data")
 
 Print a formatted subsection header
 
+Prints a subsection header framed with `-`, used to split a section into
+further steps.
+
 **Usage:**
 
 ```r
@@ -266,6 +330,10 @@ log_subsection(title)
 | Argument | Description |
 |----------|-------------|
 | `title` | Character. Subsection title. |
+
+**Value:**
+
+No return value, called for side effects (the `-` subsection frame is printed unless logging is disabled; it is not filtered by the log level).
 
 **Examples:**
 
@@ -279,6 +347,9 @@ log_subsection("Sub-step: parsing labels")
 ## `log_progress`
 
 Log a progress indicator
+
+Emits a progress line of the form "current/total", handy for monitoring
+long-running jobs.
 
 **Usage:**
 
@@ -294,6 +365,10 @@ log_progress(current, total, item = "")
 | `total` | Integer. Total items. |
 | `item` | Character. Description of current item. |
 
+**Value:**
+
+No return value, called for side effects (an INFO progress line with a bar and percentage is emitted).
+
 **Examples:**
 
 ```r
@@ -306,6 +381,8 @@ log_progress(3, 10, item = "Processing tree file")
 ## `log_keyvalue`
 
 Log a key-value pair
+
+Emits a structured log line in the form `key: value`.
 
 **Usage:**
 
@@ -321,6 +398,10 @@ log_keyvalue(key, value, level = "INFO")
 | `value` | Any. Value to display. |
 | `level` | Character. Log level. Default: "INFO". |
 
+**Value:**
+
+No return value, called for side effects (the `key: value` line is emitted at `level`).
+
 **Examples:**
 
 ```r
@@ -334,6 +415,8 @@ log_keyvalue("Number of nodes", 1234)
 
 Print summary statistics
 
+Prints a set of named statistics in tidy, aligned form.
+
 **Usage:**
 
 ```r
@@ -345,6 +428,10 @@ log_stats(stats)
 | Argument | Description |
 |----------|-------------|
 | `stats` | Named list of statistics. |
+
+**Value:**
+
+No return value, called for side effects (one aligned INFO line per named statistic is emitted).
 
 **Examples:**
 
@@ -359,6 +446,8 @@ log_stats(list(files = 5, tips = 120))
 
 Print a formatted table
 
+Prints a `data.frame` or a named list to the log as an aligned table.
+
 **Usage:**
 
 ```r
@@ -371,6 +460,10 @@ log_table(data, title = NULL)
 |----------|-------------|
 | `data` | Named list or data.frame to display. |
 | `title` | Character. Optional table title. |
+
+**Value:**
+
+No return value, called for side effects (one INFO line per row or entry is emitted; `title` is printed through `log_subsection()`).
 
 **Examples:**
 
@@ -386,6 +479,9 @@ log_table(data.frame(a = 1:3, b = letters[1:3]),
 
 Start a timer for performance measurement
 
+Starts a performance timer under the given name; pair it with `timer_stop()`
+to measure how long a block of code takes.
+
 **Usage:**
 
 ```r
@@ -397,6 +493,10 @@ timer_start(name)
 | Argument | Description |
 |----------|-------------|
 | `name` | Character. Timer name. |
+
+**Value:**
+
+No return value, called for side effects (records the start time in package-level state).
 
 **Examples:**
 
@@ -410,6 +510,8 @@ timer_start("pipeline")
 ## `timer_stop`
 
 Stop a timer and log elapsed time
+
+Stops the named timer and logs the elapsed time.
 
 **Usage:**
 
@@ -426,7 +528,7 @@ timer_stop(name, level = "INFO")
 
 **Value:**
 
-Numeric. Elapsed seconds.
+Numeric. Elapsed seconds, returned invisibly (`NA` if the timer was not started).
 
 **Examples:**
 
@@ -440,4 +542,4 @@ timer_stop("pipeline")
 
 ---
 
-[中文](../../cn/reference/logging-timing.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/logging-timing.md) | [文档首页](../index.md)

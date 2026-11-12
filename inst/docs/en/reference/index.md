@@ -15,4 +15,4 @@ All functions and commands organized by module. Each function includes a descrip
 | [Logging & Timing](logging-timing.md) | Structured, leveled logging and timers for pipeline observability. |
 | [Utilities](utilities.md) | Cross-platform path building, encoding detection, temporary file management, and miscellaneous helpers. |
 
-[中文版](../../cn/reference/index.md) | [Documentation Home](../../index.md)
+[中文版](../../cn/reference/index.md) | [Documentation Home](../index.md)

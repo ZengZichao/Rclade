@@ -20,8 +20,8 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   color_mapping = c("Firmicutes" = "#E41A1C",
-                                     "Proteobacteria" = "#377EB8"),
+                   color_mapping = c("P1" = "#E41A1C",
+                                     "P2" = "#377EB8"),
                    unit = "Ma")
 ```
 
@@ -36,7 +36,7 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   show_tip_label = FALSE, unit = "Ma")
+                   show_tip_labels = FALSE, unit = "Ma")
 ```
 
 ## Draw as a cladogram (ignore branch lengths)
@@ -62,13 +62,13 @@ validate_tree_sequence_match(example_tree, "seqs.fasta", mol_type = "DNA")
 ## Check monophyly of a group
 
 ```r
-check_monophyly(example_tree, group = "Firmicutes", rank = "phylum")
+check_monophyly(example_tree, group = "P1", rank = "phylum")
 ```
 
 ## Generate a palette for your own groups
 
 ```r
-groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
+groups <- c("P1", "P2", "P3")
 generate_colors(groups, palette = "viridis")
 ```
 

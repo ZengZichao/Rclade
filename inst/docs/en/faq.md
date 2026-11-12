@@ -6,11 +6,11 @@ Newick (`.nwk`, `.tre`, `.treefile`), Nexus (`.nexus`, `.nex`), PhyloXML (`.xml`
 **My tip labels contain no taxonomy. Can Rclade still work?**
 Yes. Provide an external two-column taxonomy file via `taxonomy_file` (or `taxonomy_file` in `plot_timetree`). See [read_taxonomy_file](reference/taxonomy-parsing.md) and [summarize_taxonomy_quality_with_file](reference/taxonomy-parsing.md).
 
-**I got a "non-monophyletic group" warning. What does it mean?**
+**I got a "Group '…' is NOT monophyletic ... Cannot collapse." warning. What does it mean?**
 The taxonomic group you asked to collapse is not monophyletic — its members do not share a single MRCA. By default Rclade warns and skips it. Set `strict = TRUE` to abort instead. Use [check_monophyly](reference/tree-sequence.md) to investigate.
 
 **How do I change the time unit (Ma vs Ga)?**
-Set `unit = "Ma"` or `unit = "Ga"` in `plot_timetree`. If `NULL`, Rclade infers it from the edge-length magnitude.
+Set `unit = "Ma"` or `unit = "Ga"` in `plot_timetree`. Rclade never infers the unit: because `add_timescale` defaults to `TRUE`, leaving `unit = NULL` aborts, so pass `unit` explicitly or set `add_timescale = FALSE`.
 
 **Can I use a circular layout with a timescale?**
 The timescale works best with `layout = "rectangular"`. For circular layouts, set `add_timescale = FALSE`, or use `timescale_mode = "linear"` to draw a linear timescale axis.
@@ -19,7 +19,7 @@ The timescale works best with `layout = "rectangular"`. For circular layouts, se
 Use the `citation("Rclade")` command, or the `CITATION` file shipped with the package. Also see `save_session_info()` to record the exact environment.
 
 **The plot is slow / the tree is huge.**
-Use `show_tip_label = FALSE`, prefer `space_mode = "proportional"`, and consider `low_memory = TRUE`. For many trees, use [batch_plot](reference/core-visualization.md).
+Use `show_tip_labels = FALSE`, prefer `space_mode = "proportional"`, and consider `low_memory = TRUE`. For many trees, use [batch_plot](reference/core-visualization.md).
 
 **I got a "label(s) exceed 500 characters ... truncated" warning. What happened?**
 ape's Newick parser aborts the whole R process on Linux for labels longer than ~512 characters, so Rclade truncates labels over 500 characters to 400 characters + a `_RCLADE_TRUNC` suffix before parsing. If your labels must match an external taxonomy file or sequence IDs exactly, shorten them upstream.

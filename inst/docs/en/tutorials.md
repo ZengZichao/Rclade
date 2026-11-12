@@ -17,7 +17,7 @@ p <- plot_timetree(tree, rank = "phylum", unit = "Ma")
 save_timetree(p, file = "my_tree_phylum.pdf", width = 14, height = 10)
 ```
 
-If the tree has multiple trees (e.g. a BEAST `.trees` file), choose one:
+If your file contains multiple trees (e.g. a BEAST `.trees` file), choose one:
 
 ```r
 p <- plot_timetree("beast.trees", rank = "phylum",
@@ -39,6 +39,8 @@ validate_custom_groups(example_tree, groups)
 # Collapse by the custom group
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
 ```
+
+`tip_A`/`tip_B`/`tip_C` are placeholders — replace them with tip labels that really exist in your tree and form a monophyletic group.
 
 ## Tutorial 3 — Publication-ready circular tree
 
@@ -92,7 +94,7 @@ batch_plot(input_dir = "trees/",
 
 ## Tutorial 6 — Run from the command line
 
-Create a small YAML or pass arguments directly:
+Create a small YAML config file (a template ships at `inst/extdata/config.example.yaml`, passed with `--config`), or pass arguments directly:
 
 ```bash
 Rscript -e 'Rclade::run_rclade_cli()' -- \

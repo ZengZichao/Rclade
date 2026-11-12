@@ -16,6 +16,10 @@ The main entry point of Rclade. Takes a phylogenetic tree object or file path
 and produces a publication-ready visualization with automatic taxonomic collapsing,
 geological timescale integration, and smart legend layout.
 
+Concretely, Rclade parses the taxonomic labels, locates the most recent common
+ancestor (MRCA) of each group, collapses the branches at the requested rank,
+integrates the geological timescale, and arranges the legend automatically.
+
 **Usage:**
 
 ```r
@@ -52,6 +56,7 @@ plot_timetree(
   clade = NULL,
   strict = FALSE,
   groups = NULL,
+  groups_label_only = FALSE,
   show_clade_label = FALSE,
   show_clade_count = TRUE,
   clade_label_offset = 50,
@@ -78,7 +83,8 @@ plot_timetree(
   color_rank = NULL,
   timescale_mode = "radial",
   timescale_position = "right",
-  tree_start_position = "right"
+  tree_start_position = "right",
+  opts = NULL
 )
 ```
 
@@ -94,7 +100,7 @@ plot_timetree(
 | `space_mode` | Space allocation strategy for collapsed clades. `"equal"` assigns equal vertical space to each clade, `"proportional"` allocates space proportional to tip count. Default: `"proportional"`. |
 | `layout` | Tree layout. `"rectangular"` for standard rectangular layout, `"circular"` for fan/circular layout. Default: `"rectangular"`. |
 | `angle` | Fan angle in degrees for circular layout (0-360). Only used when `layout = "circular"`. Default: `360`. |
-| `color_palette` | Color palette specification. Can be:  - A palette name: `"viridis"` (default), `"rainbow"`, or any RColorBrewer palette name (e.g., `"Set1"`, `"Paired"`) - A character vector of hex color codes (recycled if shorter than needed) |
+| `color_palette` | Color palette specification. Can be:<br>- A palette name: `"viridis"` (default), `"rainbow"`, or any RColorBrewer palette name (e.g., `"Set1"`, `"Paired"`)<br>- A character vector of hex color codes (recycled if shorter than needed) |
 | `color_mapping` | Named character vector of specific color assignments. Takes highest priority over `color_palette`. Names should match group names. Example: `c("Proteobacteria" = "#E41A1C", "Firmicutes" = "#377EB8")`. |
 | `line_width` | Branch line width (passed to ggtree). Default: `1`. |
 | `show_tip_labels` | Logical. Whether to display tip labels. Default: `FALSE` (recommended for trees with >100 tips). |
@@ -118,6 +124,7 @@ plot_timetree(
 | `clade` | Character. Specific clade name to collapse (e.g., "Cyanobacteriota"). When provided, only this clade is checked for monophyly and collapsed if valid. Mutually exclusive with `rank` and `groups`. Default: `NULL`. |
 | `strict` | Logical. If `TRUE`, non-monophyletic clades cause termination with error. If `FALSE` (default), non-monophyletic clades trigger a warning and are skipped. The permissive default (`FALSE`) is intentional: in interactive exploration of large trees with potentially inaccurate taxonomy, halting on the first non-monophyletic group would prevent the user from seeing any result. Use `TRUE` in production pipelines where taxonomic integrity is critical. Default: `FALSE`. |
 | `groups` | Named list of custom tip groups for collapsing. Each element is a character vector of tip labels belonging to that group. Groups must be monophyletic; non-monophyletic groups will raise an error. When `groups` is provided, `rank` is ignored (set it to `"none"`). Example: `list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))`. |
+| `groups_label_only` | Logical. If `TRUE`, clades defined by `groups` are labelled but NOT collapsed: the member branches stay fully expanded and only the group name is drawn next to them. Default: `FALSE`. |
 | `show_clade_label` | Logical. Whether to add clade labels next to collapsed triangles showing group name and species count. Default: `FALSE`. |
 | `show_clade_count` | Logical. Whether to show species count in clade labels (e.g., "Proteobacteria (n=42)"). Only used when `show_clade_label = TRUE`. Default: `TRUE`. |
 | `clade_label_offset` | Numeric. Horizontal offset for clade labels from the right edge of the collapsed triangle in Ma units (0-5000). Default: `50`. |
@@ -130,11 +137,11 @@ plot_timetree(
 | `timescale_version` | Geological timescale version string. Currently only `"ICS 2023/02"` is supported. Default: `"ICS 2023/02"`. |
 | `main_title` | Character. Main title for the plot. Default: `NULL` (no title). |
 | `sub_title` | Character. Subtitle for the plot. Default: `NULL` (no subtitle). |
-| `highlight` | Character vector of group names to highlight with colored backgrounds. Only monophyletic groups are highlighted; non-monophyletic groups trigger a warning. Supports special identifiers: `"LUCA"` (Last Universal Common Ancestor), `"LACA"` (Last Archaeal Common Ancestor), `"LBCA"` (Last Bacterial Common Ancestor). Default: `NULL` (no highlighting). |
+| `highlight` | Character vector of group names to highlight with colored backgrounds. Only monophyletic groups are highlighted; non-monophyletic groups trigger a warning. Supports special identifiers: `"ROOT"` (root of the tree), `"LUCA"` (Last Universal Common Ancestor), `"LACA"` (Last Archaeal Common Ancestor), `"LBCA"` (Last Bacterial Common Ancestor). Default: `NULL` (no highlighting). |
 | `highlight_alpha` | Numeric. Transparency of highlight color (0-1). Default: `0.2`. |
 | `theme_fun` | Theme function or NULL. Default: `theme_timetree`. Set to NULL to use default ggplot2 theme. |
 | `output` | Optional output file path. If provided, the plot is saved immediately (backward compatibility). Default: `NULL`. |
-| `overwrite` | Character. Overwrite mode when `output` file exists: `"ask"` (default, stops with error), `"force"` (overwrite), or `"no-clobber"` (skip saving). Passed to `save_timetree()`. |
+| `overwrite` | Character. Overwrite mode when `output` file exists: `"ask"` (default; prompts interactively, and in non-interactive sessions downgrades to `"no-clobber"` — i.e. skip saving with a warning, no error), `"force"` (overwrite), or `"no-clobber"` (skip saving). Passed to `save_timetree()`. |
 | `width` | Output width in inches. Default: `14`. |
 | `height` | Output height in inches. Default: `10`. |
 | `taxonomy_levels` | Optional list for custom taxonomy rank codes and names, e.g. `list(codes = c("k", "ss"), names = c("kingdom", "subspecies"))`. `codes` are the abbreviation letters used in labels (e.g., `"k"`, `"ss"`); `names` are human-readable rank names used as column names in the result data frame. Used to extend or override default rank handling. Default: `NULL`. |
@@ -145,6 +152,7 @@ plot_timetree(
 | `timescale_mode` | Character. Timescale display mode for circular layout: `"radial"` (default) draws full-circle geological background bands; `"linear"` draws a rectangular geological timescale axis (via `deeptime::guide_geo()`) at the position specified by `timescale_position`, without background bands. Ignored for rectangular layout. |
 | `timescale_position` | Character. Clock position of the timescale axis when `timescale_mode = "linear"`. One of `"right"` (3 o'clock, default), `"top"` (12 o'clock), `"bottom"` (6 o'clock), `"left"` (9 o'clock). Should match `tree_start_position`. Ignored when `timescale_mode = "radial"` or for rectangular layout. |
 | `tree_start_position` | Character. Clock position where the tree starts expanding (the gap between the last and first tip). One of `"right"` (3 o'clock, default), `"top"` (12 o'clock), `"bottom"` (6 o'clock), `"left"` (9 o'clock). Should match `timescale_position` when `timescale_mode = "linear"`; a warning is issued if they differ. Ignored for rectangular layout. |
+| `opts` | An `rclade_options` object (see `rclade_options()`) or a plain named list of parameter defaults. When supplied, values in `opts` serve as defaults for parameters the caller did not explicitly set; explicit arguments always take precedence. This is the recommended way to reuse a consistent parameter set across multiple calls. Default: `NULL`. |
 
 **Value:**
 
@@ -164,17 +172,23 @@ p <- plot_timetree(example_tree, rank = "phylum",
                    taxonomy_format = "GTDB", add_timescale = FALSE)
 
 # With external taxonomy file
-p <- plot_timetree("my_tree.tre", rank = "phylum",
+p <- plot_timetree("my_tree.tre", rank = "phylum", unit = "Ma",
                    taxonomy_file = "taxonomy.tsv")
 
+# Without a geological timescale, using a custom palette
+p2 <- plot_timetree(example_tree, rank = "class",
+                    add_timescale = FALSE, color_palette = "Set1")
+
 # Handle multi-tree file: use first tree
-p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "first")
+p <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma",
+                   multi_tree_mode = "first")
 
 # Handle multi-tree file: analyze all trees
-plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "all")
+plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma",
+                       multi_tree_mode = "all")
 
 # Save directly
-plot_timetree(tree, rank = "phylum", output = "output.pdf")
+plot_timetree(tree, rank = "phylum", unit = "Ma", output = "output.pdf")
 ```
 
 
@@ -183,6 +197,10 @@ plot_timetree(tree, rank = "phylum", output = "output.pdf")
 ## `batch_plot`
 
 Batch plot timetrees from a directory of tree files
+
+It scans the input directory for tree files, calls `plot_timetree()` for each of
+them, and writes the plots into the output directory, with glob pattern matching
+and overwrite-mode control.
 
 **Usage:**
 
@@ -195,6 +213,7 @@ batch_plot(
   width = 14,
   height = 10,
   overwrite = "ask",
+  ignore_malformed = FALSE,
   ...
 )
 ```
@@ -210,11 +229,13 @@ batch_plot(
 | `width` | Output width in inches (default 14) |
 | `height` | Output height in inches (default 10) |
 | `overwrite` | Overwrite mode: "ask" (default), "force", or "no-clobber" |
+| `ignore_malformed` | Logical. If `TRUE`, malformed tree inputs are skipped (with a warning) instead of aborting the whole batch, aligned with the CLI's `--ignore_malformed` flag. Default: `FALSE`. |
 | `...` | Additional arguments passed to plot_timetree() |
 
 **Value:**
 
-Invisibly returns list of success/failure status
+Writes one plot file per tree into the output directory and invisibly returns
+a list of success/failure status
 
 **Examples:**
 
@@ -231,6 +252,9 @@ batch_plot(input_dir = "trees/", output_dir = "plots/",
 
 Save a timetree plot to file
 
+Saves the `ggplot` object returned by `plot_timetree()` to disk, choosing the
+graphics device from the file extension and honoring the overwrite mode.
+
 **Usage:**
 
 ```r
@@ -241,22 +265,22 @@ save_timetree(p, file, width = 14, height = 10, dpi = 300, overwrite = "ask")
 
 | Argument | Description |
 |----------|-------------|
-| `p` | ggplot object |
+| `p` | A `ggplot` object (typically returned by `plot_timetree()`) |
 | `file` | Output file path |
-| `width` | Width in inches |
-| `height` | Height in inches |
-| `dpi` | Resolution (for PNG/TIFF only) |
-| `overwrite` | Character. Overwrite mode: "ask" (default), "force", "no-clobber". |
+| `width` | Width in inches (default 14) |
+| `height` | Height in inches (default 10) |
+| `dpi` | Resolution (for PNG/TIFF only; default 300) |
+| `overwrite` | Character. Overwrite mode: "ask" (default; prompts interactively, and in non-interactive sessions downgrades to "no-clobber" — skip saving with a warning, no error), "force", "no-clobber". |
 
 **Value:**
 
-Invisibly returns the ggplot object
+Writes the plot to file and invisibly returns the `ggplot` object
 
 **Examples:**
 
 ```r
 data(example_tree)
-p <- plot_timetree(example_tree, rank = "phylum")
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 save_timetree(p, file = "tree.pdf", width = 12, height = 8)
 ```
 
@@ -266,6 +290,10 @@ save_timetree(p, file = "tree.pdf", width = 12, height = 8)
 ## `summarize_timetree`
 
 Print a summary of a Rclade timetree plot
+
+Reads the `rclade_info` attribute attached to the `plot_timetree()` result and
+prints the number of tips, collapsed clades, the taxonomy format, collapse
+rank, palette, layout, and timescale status.
 
 **Usage:**
 
@@ -281,13 +309,14 @@ summarize_timetree(p)
 
 **Value:**
 
-Invisibly returns the info list
+Prints the summary to the console and invisibly returns the internal
+`rclade_info` list
 
 **Examples:**
 
 ```r
 data(example_tree)
-p <- plot_timetree(example_tree, rank = "phylum")
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 summarize_timetree(p)
 ```
 
@@ -296,10 +325,15 @@ summarize_timetree(p)
 
 ## `theme_timetree`
 
-Based on ggtree::theme_tree2(), customized for publication quality.
+Based on ggtree::theme_tree2(), customized for publication quality (fonts,
+grid lines, margins).
 Includes `coord_cartesian(clip = "off")` to prevent collapsed clade
 triangles from being clipped at the plot panel boundary — triangle vertices
 (especially the MRCA node apex) often extend beyond the tip-based y-axis range.
+
+Note that it returns a list with `theme` and `coord` components, so it cannot be
+added to a plot as a whole with `+`; apply the two components separately
+(see the example below).
 
 **Usage:**
 
@@ -311,19 +345,19 @@ theme_timetree(base_size = 12)
 
 | Argument | Description |
 |----------|-------------|
-| `base_size` | Base font size |
+| `base_size` | Numeric. Base font size. Default: `12`. |
 
 **Value:**
 
 A `list` with components `theme` (ggplot2 theme) and
 `coord` (`coord_cartesian(clip = "off")`).  Callers should apply
-both via `p + result$theme + result$coord`.
+both via `p + r$theme + r$coord`.
 
 **Examples:**
 
 ```r
 data(example_tree)
-p <- plot_timetree(example_tree, rank = "phylum")
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 r <- theme_timetree(base_size = 14)
 print(p + r$theme + r$coord)
 ```
@@ -334,4 +368,4 @@ print(p + r$theme + r$coord)
 
 ---
 
-[中文](../../cn/reference/core-visualization.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/core-visualization.md) | [文档首页](../index.md)

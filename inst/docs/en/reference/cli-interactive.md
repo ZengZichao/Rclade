@@ -26,6 +26,10 @@ run_rclade_cli(args = commandArgs(trailingOnly = TRUE))
 |----------|-------------|
 | `args` | Character vector of command-line arguments (default: commandArgs(trailingOnly = TRUE)) |
 
+**Value:**
+
+Invisible integer exit code following standard Unix conventions: `0L` (success), `1L` (runtime error), `2L` (parameter error), `3L` (input-data error), `130L` (user interrupt / SIGINT). The caller MUST forward this value to `q(status = ...)` or `quit(status = ...)`; simply calling `run_rclade_cli()` without forwarding the return value always exits with code 0 regardless of errors.
+
 **Examples:**
 
 ```r
@@ -47,6 +51,10 @@ Provides an interactive web interface for Rclade. Requires the shiny package.
 run_rclade_shiny()
 ```
 
+**Value:**
+
+No return value, called for side effects (launches the Shiny web app, which blocks until the app is stopped).
+
 **Examples:**
 
 ```r
@@ -67,12 +75,18 @@ Performs comprehensive self-check:
 **Usage:**
 
 ```r
-run_rclade_selftest()
+run_rclade_selftest(verbose = TRUE)
 ```
+
+**Arguments:**
+
+| Argument | Description |
+|----------|-------------|
+| `verbose` | Logical. If `TRUE` (default), progress and results are reported via `message()` (suppressible with `suppressMessages()`); if `FALSE`, the self-test runs silently and only the exit code is returned. |
 
 **Value:**
 
-Integer. Exit code (0 = all passed, 1 = failures).
+Integer. Exit code (0 = all passed, 1 = failures), returned invisibly.
 
 **Examples:**
 
@@ -110,9 +124,9 @@ List of results (NULL for items not processed due to interrupt).
 **Examples:**
 
 ```r
-trees <- list(tree1, tree2, tree3)
+trees <- list(example_tree, example_tree)
 results <- batch_with_interrupt(trees, function(t, i) {
-  plot_timetree(t, rank = "phylum")
+  plot_timetree(t, rank = "phylum", add_timescale = FALSE)
 })
 ```
 
@@ -150,7 +164,7 @@ result <- with_graceful_interrupt({
     Sys.sleep(0.1)
   }
   "done"
-})
+}, total = 100)
 ```
 
 
@@ -159,4 +173,4 @@ result <- with_graceful_interrupt({
 
 ---
 
-[中文](../../cn/reference/cli-interactive.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/cli-interactive.md) | [文档首页](../index.md)

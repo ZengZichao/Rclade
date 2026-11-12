@@ -24,7 +24,7 @@ This documentation is organized as a multi-level system:
 | Cookbook | [cookbook.md](cookbook.md) |
 | FAQ | [faq.md](faq.md) |
 
-中文文档：[../cn/index.md](../cn/index.md) · Project README: [../../README.EN.md](../../README.EN.md)
+中文文档：[../cn/index.md](../cn/index.md) · Project README: [../../../README.EN.md](../../../README.EN.md)
 
 ## Module reference
 
