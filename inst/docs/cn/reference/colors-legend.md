@@ -4,14 +4,16 @@
 
 本模块包含以下函数：
 
-- [`generate_colors`](#generate_colors) — 为分类分组生成颜色映射
-- [`split_legend`](#split_legend) — 拆分图例为独立 grob 并用 patchwork 组合
+- [`generate_colors`](#generate_colors) — 为分类群生成颜色映射
+- [`split_legend`](#split_legend) — 拆分图例为独立 `grob` 并用 `patchwork` 组合
+
+> 以下函数为内部函数（未导出）：`generate_colors`、`split_legend`，须以 `Rclade:::generate_colors()` 形式调用。
 
 ## `generate_colors`
 
-**为分类分组生成颜色映射**
+**为分类群生成颜色映射**
 
-根据分组名为每个分组分配颜色，支持 viridis 等色盲友好调色板或自定义颜色，等价于 plot_timetree 内部的着色逻辑。
+根据分组名为每个分组分配颜色，支持 `viridis` 等色盲友好调色板或自定义颜色向量，等价于 `plot_timetree()` 内部的着色逻辑。
 
 **用法：**
 
@@ -24,7 +26,7 @@ generate_colors(groups, palette = "viridis", color_mapping = NULL)
 | 参数 | 说明 |
 |------|------|
 | `groups` | 分组名字符向量。 |
-| `palette` | 调色板名称（viridis / Set1 / rainbow 等）或颜色向量。 |
+| `palette` | 调色板名称（`viridis` / `Set1` / `rainbow` 等）或颜色向量。 |
 | `color_mapping` | 具名颜色向量，优先级最高。 |
 
 **返回值：**
@@ -35,7 +37,7 @@ generate_colors(groups, palette = "viridis", color_mapping = NULL)
 
 ```r
 groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 
@@ -43,7 +45,7 @@ generate_colors(groups, palette = "viridis")
 
 ## `split_legend`
 
-**拆分图例为独立 grob 并用 patchwork 组合**
+**拆分图例为独立 `grob` 并用 `patchwork` 组合**
 
 将拥挤的图例拆分为多列重新排布，再与主图组合，适用于分组很多、单图例过长的情况。
 
@@ -57,19 +59,19 @@ split_legend(p, ncol_split = 2)
 
 | 参数 | 说明 |
 |------|------|
-| `p` | ggplot 对象。 |
+| `p` | `ggplot` 对象。 |
 | `ncol_split` | 图例拆分的列数（用于重排）。 |
 
 **返回值：**
 
-返回 patchwork 组合对象。
+返回 `patchwork` 组合对象。注意：这里返回的是 `patchwork` 组合对象，**不是** `ggplot` 对象，因此调用 `split_legend()` 之后不能用 `+` 叠加 `ggplot2` 图层；布局组合请改用 `|`、`/` 这类 `patchwork` 运算符。
 
 **示例：**
 
 ```r
 data(example_tree)
-p <- plot_timetree(example_tree, rank = "phylum")
-split_legend(p, ncol_split = 2)
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
+Rclade:::split_legend(p, ncol_split = 2)
 ```
 
 
@@ -78,4 +80,4 @@ split_legend(p, ncol_split = 2)
 
 ---
 
-[英文](../../en/reference/colors-legend.md) | [文档首页](../../index.md)
+[英文](../../en/reference/colors-legend.md) | [文档首页](../index.md)

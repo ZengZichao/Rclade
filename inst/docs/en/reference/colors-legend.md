@@ -7,9 +7,15 @@ This module contains the following functions:
 - [`generate_colors`](#generate_colors) — Generate color mapping for taxonomic groups
 - [`split_legend`](#split_legend) — Extract legend as separate grob and combine with patchwork
 
+> Not exported (internal): `generate_colors`, `split_legend`. Call them as `Rclade:::generate_colors()`.
+
 ## `generate_colors`
 
 Generate color mapping for taxonomic groups
+
+Assigns a color to each group based on the group names, using a color-blind-safe
+palette such as `viridis` or a custom color vector; equivalent to the coloring
+logic used internally by `plot_timetree()`.
 
 **Usage:**
 
@@ -33,7 +39,7 @@ Named color vector (names = groups)
 
 ```r
 groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 
@@ -42,6 +48,9 @@ generate_colors(groups, palette = "viridis")
 ## `split_legend`
 
 Extract legend as separate grob and combine with patchwork
+
+Reflows a crowded legend into several columns and combines the result back with
+the main plot; useful when there are many groups and a single legend is too long.
 
 **Usage:**
 
@@ -53,7 +62,7 @@ split_legend(p, ncol_split = 2)
 
 | Argument | Description |
 |----------|-------------|
-| `p` | ggplot object |
+| `p` | `ggplot` object |
 | `ncol_split` | Number of columns for legend splitting (used for reflow) |
 
 **Value:**
@@ -66,8 +75,8 @@ Use patchwork operators like `|` and `/` for layout composition.
 
 ```r
 data(example_tree)
-p <- plot_timetree(example_tree, rank = "phylum")
-split_legend(p, ncol_split = 2)
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
+Rclade:::split_legend(p, ncol_split = 2)
 ```
 
 
@@ -76,4 +85,4 @@ split_legend(p, ncol_split = 2)
 
 ---
 
-[中文](../../cn/reference/colors-legend.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/colors-legend.md) | [Documentation Home](../index.md)

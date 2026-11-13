@@ -17,7 +17,7 @@ p <- plot_timetree(tree, rank = "phylum", unit = "Ma")
 save_timetree(p, file = "my_tree_phylum.pdf", width = 14, height = 10)
 ```
 
-If the tree has multiple trees (e.g. a BEAST `.trees` file), choose one:
+If your file contains multiple trees (e.g. a BEAST `.trees` file), choose one:
 
 ```r
 p <- plot_timetree("beast.trees", rank = "phylum",
@@ -34,11 +34,13 @@ data(example_tree)
 groups <- list(MyGroup = c("tip_A", "tip_B", "tip_C"))
 
 # Check it is monophyletic before plotting
-validate_custom_groups(example_tree, groups)
+Rclade:::validate_custom_groups(example_tree, groups)
 
 # Collapse by the custom group
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
 ```
+
+`tip_A`/`tip_B`/`tip_C` are placeholders — replace them with tip labels that really exist in your tree and form a monophyletic group.
 
 ## Tutorial 3 — Publication-ready circular tree
 
@@ -51,8 +53,8 @@ p <- plot_timetree(example_tree,
                    layout = "circular",
                    angle = 320,
                    add_timescale = FALSE,
-                   color_palette = "viridis") +
-     theme_timetree(base_size = 12)
+                   color_palette = "viridis",
+                   theme_fun = function() theme_timetree(base_size = 12))
 
 save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 ```
@@ -65,7 +67,7 @@ When tip labels lack taxonomy, provide a two-column file:
 library(Rclade)
 
 # taxonomy.tsv:  col1 = tip label, col2 = "d__...;p__...;c__..."
-df <- read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)
+read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)  # optional pre-check
 
 # Plot, prioritizing the file
 p <- plot_timetree("my_tree.nwk", rank = "phylum",
@@ -92,7 +94,7 @@ batch_plot(input_dir = "trees/",
 
 ## Tutorial 6 — Run from the command line
 
-Create a small YAML or pass arguments directly:
+Create a small YAML config file (a template ships at `inst/extdata/config.example.yaml`, passed with `--config`), or pass arguments directly:
 
 ```bash
 Rscript -e 'Rclade::run_rclade_cli()' -- \

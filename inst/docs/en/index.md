@@ -8,7 +8,7 @@ This documentation is organized as a multi-level system:
 2. **Installation** — how to install Rclade and its dependencies.
 3. **Core concepts** — taxonomy formats, MRCA collapsing, timescales, colors, and special identifiers.
 4. **Tutorials** — step-by-step workflows.
-5. **Reference** — every exported function, grouped by module, each with a usage example.
+5. **Reference** — the package's functions grouped by module, each with a usage example; internal (non-exported) helpers are flagged and must be called as `Rclade:::fn()`.
 6. **Cookbook** — copy-paste worked examples for common tasks.
 7. **FAQ** — frequently asked questions and troubleshooting.
 
@@ -24,14 +24,14 @@ This documentation is organized as a multi-level system:
 | Cookbook | [cookbook.md](cookbook.md) |
 | FAQ | [faq.md](faq.md) |
 
-中文文档：[../cn/index.md](../cn/index.md) · Project README: [../../README.EN.md](../../README.EN.md)
+Chinese docs: [../cn/index.md](../cn/index.md) · Project README: [../../../README.EN.md](../../../README.EN.md)
 
 ## Module reference
 
 - [Core Visualization](reference/core-visualization.md) — `plot_timetree`, `batch_plot`, `save_timetree`, `summarize_timetree`, `theme_timetree`
-- [Tree & Sequence I/O and Validation](reference/tree-sequence.md) — read/validate trees and sequences, check monophyly
+- [Tree & Sequence Reading and Validation](reference/tree-sequence.md) — read/validate trees and sequences, check monophyly
 - [Taxonomy Parsing](reference/taxonomy-parsing.md) — detect/parse labels, resolve groups to MRCAs, validate custom groups
-- [Colors & Legend](reference/colors-legend.md) — `generate_colors`, `split_legend`
-- [Command-line & Interactive](reference/cli-interactive.md) — CLI, Shiny, self-test, interruption handling
+- [Colors & Legend](reference/colors-legend.md) — `Rclade:::generate_colors`, `Rclade:::split_legend` (internal)
+- [Command-line & Interactive Interfaces](reference/cli-interactive.md) — CLI, Shiny, self-test, interruption handling
 - [Logging & Timing](reference/logging-timing.md) — structured logging and timers
 - [Utilities](reference/utilities.md) — paths, encoding, temp files, misc helpers

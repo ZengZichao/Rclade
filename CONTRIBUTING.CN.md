@@ -2,7 +2,7 @@
 
 > **说明：** GitHub 仓库位于 https://github.com/zengzichao/Rclade，欢迎提交 Issue 和 Pull Request。
 
-感谢您对 Rclade 的兴趣！
+感谢您有兴趣参与 Rclade 的开发！
 
 ## 报告问题
 
@@ -15,12 +15,17 @@
 
 ## 开发环境设置
 
-```r
+```bash
 # 克隆仓库
 git clone https://github.com/zengzichao/Rclade.git
+```
 
+```r
 # 安装开发依赖
 install.packages(c("devtools", "testthat", "roxygen2", "knitr", "rmarkdown"))
+
+# 安装其余运行时依赖（DESCRIPTION 的 Imports 字段）
+install.packages(c("ape", "deeptime", "ggplot2", "rlang", "stringr", "viridisLite"))
 
 # Bioconductor 依赖
 tryCatch({
@@ -47,7 +52,7 @@ devtools::document()
 
 - 遵循 [Google R Style Guide](https://google.github.io/styleguide/Rguide.html)
 - 函数名和变量名使用 `snake_case`
-- 所有导出函数使用 roxygen2 文档
+- 所有导出函数都必须使用 roxygen2 编写文档
 - 非导出函数添加 `@keywords internal`
 - 修改 roxygen 注释后，运行 `devtools::document()` 以保持 `man/` 同步
 
@@ -81,4 +86,4 @@ covr::package_coverage()
 
 ## 许可证
 
-通过贡献，您同意您的贡献将在 MIT 许可证下授权。
+提交贡献即表示您同意您的贡献将在 MIT 许可证下授权。

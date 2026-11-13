@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        感谢反馈！请先确认使用的是最新发布版本。填写前可先在 [Discussions](https://github.com/ZengZichao/Rclade/discussions) 搜索是否有同类问题。
+        感谢反馈！请先确认使用的是最新发布版本。填写前请先在已有 Issue 和 [Discussions](https://github.com/zengzichao/Rclade/discussions) 中搜索是否有同类问题。
         Thanks for reporting! Please confirm you are on the latest release, and search existing issues/Discussions first.
   - type: textarea
     id: description
@@ -23,7 +23,7 @@ body:
         A minimal reproducible example with the input file (tree / taxonomy table) or the exact command.
       placeholder: |
         library(Rclade)
-        run_rclade("tree.nwk", ...)
+        plot_timetree("tree.nwk", rank = "phylum", unit = "Ma")
       render: R
     validations:
       required: true

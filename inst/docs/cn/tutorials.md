@@ -34,11 +34,13 @@ data(example_tree)
 groups <- list(MyGroup = c("tip_A", "tip_B", "tip_C"))
 
 # 绘图前先检查是否单系
-validate_custom_groups(example_tree, groups)
+Rclade:::validate_custom_groups(example_tree, groups)
 
 # 按自定义分组折叠
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
 ```
+
+`tip_A`/`tip_B`/`tip_C` 为占位名，请换成你自己树中真实存在且构成单系群的末端标签。
 
 ## 教程 3 — 出版级环形树
 
@@ -51,8 +53,8 @@ p <- plot_timetree(example_tree,
                    layout = "circular",
                    angle = 320,
                    add_timescale = FALSE,
-                   color_palette = "viridis") +
-     theme_timetree(base_size = 12)
+                   color_palette = "viridis",
+                   theme_fun = function() theme_timetree(base_size = 12))
 
 save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 ```
@@ -65,7 +67,7 @@ save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 library(Rclade)
 
 # taxonomy.tsv: 第1列=末端标签，第2列="d__...;p__...;c__..."
-df <- read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)
+read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)  # 可选的预检
 
 # 绘图，优先使用文件
 p <- plot_timetree("my_tree.nwk", rank = "phylum",
@@ -92,6 +94,8 @@ batch_plot(input_dir = "trees/",
 
 ## 教程 6 — 从命令行运行
 
+写一个小型 YAML 配置文件（模板见 `inst/extdata/config.example.yaml`，用 `--config` 传入），或直接传参：
+
 ```bash
 Rscript -e 'Rclade::run_rclade_cli()' -- \
   -f my_tree.nwk -r phylum -u Ma -o out.pdf
@@ -101,5 +105,5 @@ Rscript -e 'Rclade::run_rclade_cli()' -- \
 
 ## 下一步
 
-- [示例集锦](cookbook.md) 获取更多即拷即用配方。
+- [示例集锦](cookbook.md) 获取更多复制即用配方。
 - [参考手册索引](reference/index.md) 查看每个函数。

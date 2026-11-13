@@ -20,7 +20,7 @@ p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 print(p)
 ```
 
-这一次调用完成了：
+上面这一次调用自动完成了以下工作：
 
 1. 从末端标签检测分类格式；
 2. 解析每个末端的门；
@@ -36,25 +36,25 @@ save_timetree(p, file = "phylum_tree.pdf", width = 12, height = 8)
 
 输出格式由文件扩展名决定：`.pdf`、`.png`、`.tiff`、`.svg`、`.eps`。
 
-## 4. 查看发生了什么
+## 4. 查看这次调用做了什么
 
 ```r
 summarize_timetree(p)
 ```
 
-打印末端数量、折叠分支数、分类覆盖率等信息。
+打印末端数量、折叠的演化支（clade）数、分类格式、折叠阶元、调色板、布局与时间轴状态等信息。
 
 ## 5. 尝试常见变体
 
 ```r
 # 环形 / 扇形布局
-p2 <- plot_timetree(example_tree, rank = "class", layout = "circular")
+p2 <- plot_timetree(example_tree, rank = "class", unit = "Ma", layout = "circular")
 
 # 关闭时间轴
 p3 <- plot_timetree(example_tree, rank = "phylum", add_timescale = FALSE)
 
 # 使用自定义调色板
-p4 <- plot_timetree(example_tree, rank = "phylum", color_palette = "Set1")
+p4 <- plot_timetree(example_tree, rank = "phylum", unit = "Ma", color_palette = "Set1")
 ```
 
 ## 6. 更进一步

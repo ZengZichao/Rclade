@@ -637,7 +637,7 @@ run_rclade_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
                 help = "Separator for taxonomy table values. [default: %default]",
                 metavar = "SEP"),
     optparse::make_option(c("--taxonomy_levels"), type = "character", default = NULL,
-                help = "Custom taxonomy level prefixes, e.g. 'k:_k_,ss:_ss_'.",
+                help = "Custom taxonomy levels as 'code:rank_name', e.g. 'k:kingdom,ss:subspecies'.",
                 metavar = "LEVELS"),
 
     # Sequence options
@@ -899,7 +899,7 @@ run_rclade_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
   # Parse taxonomy_levels if provided
   taxonomy_levels <- NULL
   if (!is.null(opt$taxonomy_levels)) {
-    # Parse format: "k:_k_,ss:_ss_"
+    # Parse format: "code:rank_name", e.g. "k:kingdom,ss:subspecies"
     pairs <- strsplit(opt$taxonomy_levels, ",")[[1]]
     codes <- sub(":.*$", "", pairs)
     prefixes <- sub("^[^:]+:", "", pairs)

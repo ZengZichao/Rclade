@@ -1,6 +1,13 @@
 # 示例集锦
 
-常见任务的即拷即用配方。所有示例均使用内置的 `example_tree`。
+常见任务的复制即用配方。所有示例均使用内置的 `example_tree`。
+
+本包不会自动加载数据集，使用前请先执行一次：
+
+```r
+library(Rclade)
+data(example_tree)
+```
 
 ## 以不同于折叠的阶元着色
 
@@ -20,8 +27,8 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   color_mapping = c("Firmicutes" = "#E41A1C",
-                                     "Proteobacteria" = "#377EB8"),
+                   color_mapping = c("P1" = "#E41A1C",
+                                     "P2" = "#377EB8"),
                    unit = "Ma")
 ```
 
@@ -36,15 +43,17 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   show_tip_label = FALSE, unit = "Ma")
+                   show_tip_labels = FALSE, unit = "Ma")
 ```
 
-## 按 cladogram 绘制（忽略枝长）
+## 按支序图（cladogram）绘制（忽略枝长）
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   ignore_branch_length = TRUE, unit = "Ma")
+                   ignore_branch_length = TRUE, add_timescale = FALSE)
 ```
+
+`ignore_branch_length = TRUE` 会强制将 `add_timescale` 置为 `FALSE`（并记录一条警告），因此支序图无需指定 `unit`。
 
 ## 绘图前检测标签格式
 
@@ -59,17 +68,17 @@ detect_taxonomy_format(labels)
 validate_tree_sequence_match(example_tree, "seqs.fasta", mol_type = "DNA")
 ```
 
-## 检查分组的单系性
+## 检查分类群的单系性
 
 ```r
-check_monophyly(example_tree, group = "Firmicutes", rank = "phylum")
+check_monophyly(example_tree, group = "P1", rank = "phylum")
 ```
 
 ## 为自己的分组生成调色板
 
 ```r
-groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
-generate_colors(groups, palette = "viridis")
+groups <- c("P1", "P2", "P3")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 ## 为某次运行开启详细日志
@@ -83,9 +92,9 @@ p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 ## 为流程阶段计时
 
 ```r
-timer_start("collapse")
+Rclade:::timer_start("collapse")
 p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
-timer_stop("collapse")
+Rclade:::timer_stop("collapse")
 ```
 
 ## 保存可复现的会话记录

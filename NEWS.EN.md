@@ -1,3 +1,25 @@
+# Rclade 1.1.6 (2026-11-02)
+
+Label placement, HPD rendering and a new option for labelling without collapsing.
+
+* **Clade and tip labels are no longer clipped.** The x range now reserves space
+  based on the measured text width (new `right_pad` argument on
+  `add_geo_timescale()`, and matching x-scale expansion). Previously a
+  right-edge clade label was cut off by the panel boundary.
+* **Circular layout: tip labels are drawn radially.** `geom_tiplab()` in ggtree
+  4.x ignores the `angle` aesthetic under polar coordinates and applies its own
+  rotation, which left the left half of the circle upside down. Labels are now
+  drawn with `ggplot2::geom_text()` using per-tip angles, flipped and
+  right-aligned on the left half.
+* **HPD bars only for internal nodes.** Node tables shipped with tips as well,
+  so extant species received an age interval they do not have.
+* **HPD bars now render in circular layouts.** `ggtree::geom_range()` produced no
+  visible layer under polar coordinates; bars are drawn as radial segments
+  instead.
+* **New `plot_timetree(groups_label_only = TRUE)`** labels the clades defined by
+  `groups` without collapsing them, keeping every terminal branch expanded.
+* `annotate_clade()` gains `hjust` so callers can right-align wide labels.
+
 # Rclade 1.1.5 (2026-09-15, CRAN Resubmission)
 
 CRAN resubmission. Addresses the three issues raised by the CRAN
@@ -63,9 +85,11 @@ incoming pre-test for 1.1.1:
   `REPRODUCIBILITY.md` are now excluded from the built tarball via
   `.Rbuildignore` (development/reproducibility artefacts, not for
   distribution; the standard `LICENSE` file remains).
-* **Possibly misspelled words in DESCRIPTION**: the flagged words are
-  R package names and author surnames from cited references, not
-  misspellings. Documented in `cran-comments.md`.
+* **Possibly misspelled words in DESCRIPTION**: the flagged words
+  (`ggtree`, `deeptime`, `Yu`, `et`, `al`, `Gearty`, `Paradis`, `Schliep`)
+  are R package names and author surnames from the methodological
+  references cited in the Description field; they are not misspellings.
+  Documented in `cran-comments.md`.
 
 No changes to package code, exports, or behaviour relative to 1.1.1.
 
@@ -87,34 +111,168 @@ CRAN resubmission addressing all reviewer issues from the 1.0.0 review.
 # Rclade 1.1.0 (2026-08-26, Revision Release)
 
 Fixes required by the pre-submission independent review (2026-08-24).
-Contains one user-visible behavior change. See NEWS.md for the full
-bilingual entry; summary:
+Contains one user-visible behavior change. See NEWS.md for the full entry
+(and NEWS.CN.md for the Chinese edition); summary:
 
-* BREAKING: `unit` is now required when `add_timescale = TRUE` (the
+* **BREAKING**: `unit` is now required when `add_timescale = TRUE` (the
   silent `Ga` default that multiplied edge lengths by 1000 is removed);
   non-finite edge lengths abort; root-to-tip dispersion warns.
-* Group-status accounting: `rclade_info` / `summarize_timetree()` report
-  parsed / collapsed / singleton / skipped group counts and names.
-* Accuracy evaluation scripts align positionally with cardinality
+* **Group-status accounting**: `rclade_info` / `summarize_timetree()` report
+  parsed / collapsed / singleton / skipped group counts and names, fixing
+  the previous "Collapsed groups" label that reported parsed candidates
+  instead of the clades actually collapsed.
+* **Accuracy evaluation**: scripts align positionally with cardinality
   assertions (fixes the 50-tip -> 250-row merge inflation).
-* `run_process_level.sh` is portable (`RSCRIPT=` override).
-* CI described honestly: `deps-smoke` does not verify DESCRIPTION lower
+* **Portable scripts**: `run_process_level.sh` resolves `Rscript` from `PATH`
+  (override with `RSCRIPT=`) instead of a machine-specific absolute path.
+* **Honest CI description**: `deps-smoke` does not verify DESCRIPTION lower
   bounds; coverage is a monitoring metric, not an enforced gate.
+
+# Rclade 1.0.2 (2026-08-22)
+
+* **Refreshed benchmark results**: all benchmarks were re-run against the
+  v1.0.1 code base (which includes the 2026-08-16 Newick bracket-balance
+  vectorization and parsing-pipeline fixes). In-session rendering at
+  10,000 tips improved from ~1.4 s to ~0.9 s (median); real-data timing on
+  the GTDB ar53 tree (10,122 tips, 25 phyla) is now reported:
+  4.3 s in-session (median of 3) and 5.6 s process-level including R
+  startup. Deterministic accuracy checks are unchanged (100% GTDB/example
+  parsing accuracy; zero straight-edge deviation).
+* **Reproducibility scripts**: adds `scripts/benchmark_real_timing.R`
+  (real-data in-session timing, manuscript Table 4 source) and
+  `scripts/make_ncbi_rank_shift_example.R` (deterministic regeneration of
+  `ncbi_rank_shift_example.csv`, byte-identical to the committed file).
+* No changes to package code relative to 1.0.1; DESCRIPTION and
+  `.zenodo.json` versions bumped for archival.
+
+# Rclade 1.0.1 (2026-08-21)
+
+* **Evaluation data**: adds the `evaluation/` directory with real-data
+  parsing-accuracy results (`parsing_accuracy_real_data.csv`; complete GTDB
+  R232 ar53 taxonomy table, 10,122 labels x 7 ranks: 100% non-NA rate and
+  100% exact-match agreement) and a reproducible verification script
+  (`verify_gtdb_parsing_accuracy.R`), supporting the parsing-accuracy
+  evaluation reported in the accompanying manuscript.
+* No changes to package code. `evaluation/` is excluded from R builds via
+  `.Rbuildignore`; DESCRIPTION and `.zenodo.json` versions bumped for
+  archival.
 
 # Rclade 1.0.0 (2026-07-09, First Stable Release)
 
-## Robustness and rendering fixes (2026-08-16, unreleased)
+## Robustness and rendering fixes (2026-08-16, released in Rclade 1.0.1)
 
 * **Collapse-triangle alignment**: collapse triangles were horizontally offset from their clades when *every* tip was collapsed (e.g. all phyla at once). `revts()` was applied a second time after collapse; with all tips collapsed away, `max(x)` is the shallowest MRCA instead of 0, shifting the whole tree while the fixed-coordinate triangle polygons stayed behind. Vertical positions were unaffected. `revts()` is now applied exactly once; triangle apexes align with their MRCA again.
 * **Long-label guard**: Newick labels longer than 500 characters are truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before parsing, because ape 5.8.1's Newick parser aborts the whole R process (glibc "stack smashing detected", exit 134) on labels longer than ~512 characters on Linux. Documented in `read_tree_auto()` and `plot_timetree()`; notes added to README (EN/CN).
 * **Adversarial-input messages**: control characters and Unicode BiDi markers in node names are reported as `<U+XXXX>` escapes instead of raw characters, so error messages cannot corrupt terminal output.
-* **Tests**: timing-ratio performance tests now measure calibrated blocks of repeats (>= ~100 ms per size) instead of single sub-millisecond `system.time()` reads (constant 8x noise failure).
-* **CI/docs**: pkgdown site now builds and deploys (dataset topics indexed, site URL in DESCRIPTION, write permission granted); codecov upload failures no longer fail R-CMD-check; FAQ "52 exported functions" corrected to 26.
+* **Tests**: timing-ratio performance tests now measure calibrated blocks of repeats (>= ~100 ms per size) instead of single sub-millisecond `system.time()` reads, which made the max/min ratio pure clock-quantization noise (constant 8x failure on macOS and CI alike).
+* **CI/docs**: pkgdown site now builds and deploys (dataset topics indexed, site URL in DESCRIPTION, write permission granted); codecov upload failures no longer fail R-CMD-check (no token configured); the bilingual FAQ claim of "52 exported functions" corrected to 26.
+* **`theme_timetree()` now returns a list**: the return value changed from a single ggplot2 theme object to `list(theme, coord)` where `coord` carries `clip = "off"` (breaking change for direct callers: use `p + th$theme`, then `add_clip_off(p, layout)` for clipping control). The rendering pipeline no longer adds the returned coord unconditionally — `add_clip_off()` applies `coord_polar(...)` (circular) or `coord_cartesian(clip = "off")` (rectangular) only when no timescale coordinate is present, preventing the coordinate from overwriting the polar / deeptime geo coordinate systems (T05).
 
 ## Clean redistribution (2026-08-13)
 
-* **Clean redistribution (2026-08-13)**: removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
+* Removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
 
+## License and attribution compliance (2026-08-04, Rclade 1.0.1)
+
+* **License corrections**: the deeptime license was incorrectly listed as
+  "MIT" in the logo, CLI help, and README files; it is actually GPL (>= 3).
+  The treeio license was incorrectly listed as "GPL-2+"; it is actually
+  Artistic-2.0. Both have been corrected in `R/logo.R`, `R/cli.R`,
+  `README.CN.md`, and `README.EN.md`.
+* **Third-party notices**: a new `inst/THIRDPARTY` file now provides a
+  centralized declaration of all third-party dependencies, bundled data, and
+  their licenses.
+* **Citation file**: `inst/CITATION` now includes recommended citations for
+  ggtree (Yu et al. 2017), deeptime (Gearty 2025), and GTDB (Parks et al.
+  2020) alongside the Rclade citation.
+* **GTDB data license**: the bundled `ar53_r232.tree` is now explicitly
+  declared as CC BY 4.0 in README files and `inst/THIRDPARTY`.
+* **Vignette references**: all three vignettes now include a "References &
+  Acknowledgments" section listing key dependencies and data sources.
+* **Function documentation**: `plot_timetree()` Rd now includes a
+  `\references{}` section with ggtree, deeptime, and ape citations.
+* **Copyright headers**: all R source files now carry a copyright and license
+  notice at the top of each file.
+
+## Manuscript-review hardening (2026-08-03, Rclade 1.0.1)
+
+Addresses the editor/reviewer pass over the 1.0.0 manuscript (real-data
+parsing evaluation, unified benchmark protocol):
+
+* **Format detection (M-B3)**: the GTDB detection rule now additionally
+  requires a semicolon-delimiter majority. Accession-prefixed embedded labels
+  with double-underscore rank separators (e.g. `GCA_xxx_d__Archaea_p__X`)
+  previously matched the `[dpcofgsk]__` pattern and were misclassified as
+  GTDB; they are now correctly detected as `embedded` (real-world case:
+  700-tip LACA timetree, §3.5 of the manuscript).
+* **Embedded parsing**: `parse_embedded()` (all three delimiter modes) now
+  tolerates double-underscore rank separators (`_p__value`), and leading
+  underscores left over from such schemes are trimmed from parsed values.
+* **Tests**: new `test-straight-vdiffr.R` adds vdiffr visual-regression
+  snapshots of collapsed circular/rectangular renderings to guard against
+  rendering drift across ggplot2/ggtree updates (executed when NOT_CRAN=true).
+* **Scripts**: adds `evaluate_parsing_real_data.R`, `measure_straightness.R`,
+  `benchmark_real_session.R`, `benchmark_bac120_subsample.R`, and
+  `run_process_level.sh`; `benchmark_synthetic.R` unified to >=3 replicates
+  at every scale; fixes a fragile `regexpr()` construct in
+  `baseline_manual_workflow.R`.
+
+## Remediation round 2 (2026-08-01, Rclade 1.0.1)
+
+Addresses the remaining items from the Rclade v1.0.0 revision plan:
+
+* **API surface convergence (P0-2)**: 27 infrastructure functions (logging,
+  timers, temp-file helpers, validators, etc.) moved from exported to internal
+  (`@keywords internal`); NAMESPACE reduced from 52 to 26 exports. New
+  `rclade_options()` constructor provides a validated parameter object for
+  `plot_timetree(opts = ...)` (route B1: backward-compatible, explicit args
+  take precedence).
+* **Manuscript**: supplementary "Searched alternatives" table added (CN/EN);
+  §2.6.1 formalizes NCBI/Silva 0.3 threshold alongside GTDB/embedded 0.6;
+  §2.6.3 computational-complexity table added; abstract notes single-run
+  measurements at n >= 5000; §2.7 cross-references the searched-alternatives
+  table; Chinese §4.3 adds O(n·k) notation.
+* **Docs**: `run_rclade_cli()` Rd documents exit-code contract with examples;
+  `run_rclade_shiny()` Rd adds a Concurrency section warning about global
+  state; `test-performance.R` header clarifies catastrophic-regression intent.
+* **Engineering**: `environment.yml` removes `r-devtools` from runtime deps;
+  README (CN/EN) adds lockfile reproducibility guidance; `tests/functional/`
+  test IDs and comments fully translated to English.
+
+## Post-review hardening (2026-07-30, Rclade 1.0.1)
+
+A structured editor-style review of the 1.0.0 manuscript and codebase was
+fully addressed (see the Rclade v1.0.0 editor review report in the project workspace).
+User-visible changes:
+
+* **Rendering/time axis**: the x-axis range is now adaptive (`compute_x_min()`
+  floors at -4567 Ma only when the tree root actually reaches into the
+  Hadean); the erroneous injection of "Hadean" into the *eras* table
+  (a Hadean is an eon, not an era) was removed; displayed-leaves counting
+  after collapse no longer includes backbone internal nodes.
+* **CLI**: `-u/--unit` default changed from `Ga` to `auto` (aligned with the
+  R API; `Ga` still converts x1000); work around an optparse >= 1.8
+  prefix-collision that leaked sibling defaults into `--highlight`,
+  `--clade` and `--taxonomy_file`; `--strip_annotations` now drops treedata
+  columns by annotation pattern (support/rate/height/HPD/NHX/taxid).
+* **R API**: `ignore_malformed = TRUE` is now honoured in the multiPhylo
+  batch path (failed trees become NULL placeholders, as documented);
+  `delimiter_mode` defaults unified to `"reverse"` across all exported
+  functions; format-detection clear-majority threshold (score >= 0.6) made
+  tolerant to binary floating-point error; Newick bracket-balance
+  validation vectorized (large-tree speedup).
+* **Docs/metadata**: DESCRIPTION lists the embedded format; third-party
+  attribution in the logo/CLI help corrected (ggtree >= 4.0, deeptime
+  Gearty 2025); withr added to Suggests; non-ASCII characters removed from
+  `shiny-app.R`; Shiny no longer loads remote fonts; the Dockerfile installs
+  from source (no bundled tarball), uses R 4.5.3 and propagates the
+  documented Unix exit codes via `q(status = ...)`.
+* **Tests/CI**: new tests for displayed-leaves counting, adaptive x_min and
+  the Shiny app; stale functional-test expectations aligned with intentional
+  behaviour (duplicate-tip warning, non-interactive overwrite="ask",
+  Silva detection fallback); CI Stage B now uses `stop_on_failure = TRUE`
+  and a declared-minimum-dependencies job was added; codecov.yml uses the
+  standard flags + status schema.
 
 ## Overview
 
@@ -146,8 +304,8 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 ## Bug Fixes
 
 * **Circular layout rendering direction corrected (2026-07-25)**: The `coord_polar` parameters in `add_clip_off()` for the circular branch (`start=0, direction=1`) did not match ggtree's native circular layout (`start=-π/2, direction=-1`), causing circular trees to be mirror-flipped relative to `ggtree(layout="circular")`. Now fixed to `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`.
-* **Geological timescale ylim buffer increased (2026-07-25)**: `add_geo_timescale()` y_max buffer increased from 2% to 8%, and `theme_timetree()` top margin increased from 5pt to 20pt, preventing collapsed-triangle vertices from being clipped.
-* **GOE/NOE event bands not covering full tree (2026-07-25)**: `add_geo_events()` band `ymax` changed from a computed `y_max` to `Inf`, ensuring bands extend to the full vertical extent of the coordinate system.
+* **Geological timescale ylim buffer increased (2026-07-25)**: `add_geo_timescale()` y_max buffer increased from 2% to 8% (that 8% buffer was later reduced back to 1%: rectangular layouts now use a 1% `y_max` buffer and circular label offset 1.5%, see `R/timescale.R`), and `theme_timetree()` top margin increased from 5pt to 20pt, preventing collapsed-triangle vertices from being clipped.
+* **GOE/NOE event bands not covering full tree (2026-07-25)**: `add_geo_events()` band `ymax` changed from a value computed from `p$data$y` to `Inf`, ensuring bands extend to the full vertical extent of the coordinate system.
 
 * **Collapsed triangle top clipped (2026-07-23)**:
   * Root cause: `ggtree::collapse()` triangle vertices (at the MRCA node) exceeded the original tip-based y-axis panel range, and ggplot2's default panel clipping truncated the top triangle apex.
@@ -186,7 +344,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
   * Graceful interrupt handling removed `invokeRestart("abort")` in favor of `tryCatch(..., interrupt = ...)` returning partial results; added `on.exit(.interrupt_env$active <- FALSE)` so the state machine is reset on any exit path.
   * `taxonomy_levels` is now propagated through highlighting, monophyly checks, special identifier resolution, and `resolve_group()`; `parse_taxonomy_with_file()` and `summarize_taxonomy_quality_with_file()` use `get_taxonomy_levels()` to determine the rank list dynamically.
   * `resolve_group()` gained `delimiter_mode`, `custom_patterns`, and `taxonomy_levels` arguments, matching the behavior of `check_monophyly()` / `highlight_clades()`.
-  * `clade_label_offset` default unified to `50` (Ma), consistent with the internal default in `annotate_clade()`.
+  * `clade_label_offset` default unified to `50` (Ma), consistent between `plot_timetree()` (`R/plot-timetree.R`) and the CLI `--clade_label_offset` (`R/cli.R`); `annotate_clade()`'s own `offset` parameter defaults to `0` and receives `50` from the caller.
   * CLI parameter parse failures now return exit code `2L` instead of `0L`.
   * `--ignore_malformed` now also covers save-stage errors such as existing output files.
   * `validate_custom_groups()` now rejects empty custom groups with a clear error.
@@ -202,7 +360,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 Aligned with the "Development Requirements - General" spec document; backfilled the following missing capabilities:
 
 * **§7 Multi-tree split mode**: `--multi_tree_mode split` behaves like `all` (returns multiPhylo) but semantically signals per-tree output splitting for downstream pipelines (Snakemake/Nextflow).
-* **§8.1 Configuration file support**: Added `--config` option for YAML config files supplying defaults. Precedence: explicit CLI flags > config file > built-in defaults. A `config.example.yaml` template is shipped with the package. `yaml` added to DESCRIPTION Suggests.
+* **§8.1 Configuration file support**: Added `--config` option for YAML config files supplying defaults. Precedence: explicit CLI flags > config file > built-in defaults. A `config.example.yaml` template is shipped with the package, covering most configurable options. `yaml` added to DESCRIPTION Suggests.
 * **§8.2 Library-mode API**: Exported `parse_taxonomy()` and `read_tree_auto()` as stable library-mode APIs for external workflows (Snakemake/Nextflow) to call directly without going through `plot_timetree()`.
 * **§9.1.1 Annotation stripping**: Added `--strip_annotations` option and `strip_tree_annotations()` helper to drop bootstrap/NHX node annotations before rendering, reducing output size. Both batch and single-tree paths are wired up.
 * **§10.1 Temp-file permissions**: `managed_tempfile()` now `Sys.chmod(mode = "0600")` immediately after creation; `managed_tempdir()` now `Sys.chmod(mode = "0700")`, meeting HPC shared-environment security requirements.
@@ -235,7 +393,7 @@ Aligned with the "Development Requirements - General" spec document; backfilled 
 * **Format B (semicolon-delimited)**: `d__Bacteria;p__Cyanobacteriota;...` with `X__` prefixes
 * **Unified data structure**: Both formats map to standard `{domain, phylum, class, order, family, genus, species}`
 * **Missing value handling**: `s__` (empty species) parsed as NA with DEBUG logging; missing levels handled gracefully
-* **Configurable taxonomy levels**: Supports extended ranks (kingdom `_k_`, subspecies `_ss_`) via `--taxonomy-levels`
+* **Configurable taxonomy levels**: Supports extended ranks (kingdom `_k_`, subspecies `_ss_`) via `--taxonomy_levels`
 
 ### Cross-platform and Encoding Robustness
 
@@ -255,8 +413,8 @@ Aligned with the "Development Requirements - General" spec document; backfilled 
 
 ### Adversarial Input Protection
 
-* **Malicious symbol injection**: Detects control characters (\\x00-\\x1f) and Unicode BiDi markers (\\u202E etc.) in node names, rejects with ERROR
-* **Zero-width character detection**: Warns about zero-width spaces (\\u200B) and similar invisible characters
+* **Malicious symbol injection**: Detects control characters (`\x00-\x1f`) and Unicode BiDi markers (`\u202E` etc.) in node names, rejects with ERROR
+* **Zero-width character detection**: Warns about zero-width spaces (`\u200B`) and similar invisible characters
 * **Circular dependency detection**: Identifies cycles in taxonomy tables (e.g., d__A;p__B with d__B;p__A)
 * **Empty file rejection**: CRITICAL error and termination for 0-byte tree/sequence files
 
@@ -305,6 +463,12 @@ Aligned with the "Development Requirements - General" spec document; backfilled 
 ## Bug Fixes
 
 * Fixed multi-tree handling to properly interrupt and request user specification
+* Fixed the CLI `--help`/`--version` handlers calling `stop()` and terminating the R process; they now return an exit code normally
+* Suppressed the `Invalid edge matrix` warnings emitted by `tidytree::as_tibble()`
+
+## Newly Exported Functions
+
+* `detect_taxonomy_format()`: detects taxonomy label formats (GTDB/Silva/NCBI/embedded); now exported so it can be called directly
 
 ## Dependencies
 

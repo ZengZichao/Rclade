@@ -13,7 +13,11 @@ This module contains the following functions:
 - [`save_session_info`](#save_session_info) — Save sessionInfo() for reproducibility
 - [`rclade_logo`](#rclade_logo) — Display Rclade ASCII art logo
 
+> Not exported (internal): `build_path`, `detect_encoding`, `normalize_file_newlines`, `managed_tempdir`, `managed_tempfile`. Call them as `Rclade:::build_path()`.
+
 ## `build_path`
+
+Build file path safely (cross-platform)
 
 Wrapper around file.path() to ensure consistent path construction.
 Never use paste() or sprintf() for path construction.
@@ -37,7 +41,7 @@ Character. Constructed path.
 **Examples:**
 
 ```r
-build_path("data", "output", "tree.pdf")
+Rclade:::build_path("data", "output", "tree.pdf")
 ```
 
 
@@ -46,6 +50,9 @@ build_path("data", "output", "tree.pdf")
 ## `detect_encoding`
 
 Detect file encoding
+
+Samples the first lines of a file and infers its text encoding, so the encoding
+can be confirmed before reading taxonomy or label files.
 
 **Usage:**
 
@@ -67,7 +74,7 @@ Character. Detected encoding name.
 **Examples:**
 
 ```r
-detect_encoding("labels.txt")
+Rclade:::detect_encoding("labels.txt")
 ```
 
 
@@ -75,7 +82,11 @@ detect_encoding("labels.txt")
 
 ## `normalize_file_newlines`
 
+Normalize line endings in a file
+
 Reads a file, normalizes line endings, and writes it back.
+Line endings are unified (e.g. CRLF to LF) to avoid formatting problems when
+files are read on another platform.
 
 **Usage:**
 
@@ -96,7 +107,7 @@ Invisibly returns the filepath.
 **Examples:**
 
 ```r
-normalize_file_newlines("labels.txt")
+Rclade:::normalize_file_newlines("labels.txt")
 ```
 
 
@@ -105,6 +116,9 @@ normalize_file_newlines("labels.txt")
 ## `managed_tempdir`
 
 Create and manage temporary directory with automatic cleanup
+
+Creates a prefixed temporary directory (mode `0700`) and returns a `cleanup`
+closure that the caller is responsible for invoking.
 
 **Usage:**
 
@@ -120,12 +134,12 @@ managed_tempdir(pattern = "rclade_")
 
 **Value:**
 
-List with path and cleanup function.
+List with `path` and `cleanup` function.
 
 **Examples:**
 
 ```r
-d <- managed_tempdir()
+d <- Rclade:::managed_tempdir()
 ```
 
 
@@ -133,7 +147,10 @@ d <- managed_tempdir()
 
 ## `managed_tempfile`
 
-Creates a temporary file and registers cleanup via on.exit().
+Create and manage temporary file with automatic cleanup
+
+Creates a temporary file with the given prefix and extension, and returns a
+`cleanup` closure that the caller is responsible for invoking.
 
 **Usage:**
 
@@ -151,14 +168,14 @@ managed_tempfile(pattern = "rclade_", fileext = ".tmp", tmpdir = tempdir())
 
 **Value:**
 
-List with path and cleanup function.
+List with `path` and `cleanup` function.
 
 **Examples:**
 
 ```r
-tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
+tmp <- Rclade:::managed_tempfile(pattern = "tree_", fileext = ".nwk")
 writeLines("(A:1,B:1);", tmp$path)
-# File is automatically cleaned up when function exits
+# Call tmp$cleanup() to remove the file when done
 ```
 
 
@@ -167,6 +184,8 @@ writeLines("(A:1,B:1);", tmp$path)
 ## `get_supported_extensions`
 
 Get supported file extensions
+
+Lists the file extensions Rclade can currently read, grouped by category.
 
 **Usage:**
 
@@ -190,6 +209,9 @@ get_supported_extensions()
 ## `save_session_info`
 
 Save sessionInfo() for reproducibility
+
+Writes sessionInfo() to a file, recording the R version and the loaded packages
+so that results can be reproduced and troubleshot.
 
 **Usage:**
 
@@ -218,7 +240,10 @@ save_session_info("session_info.txt")
 
 ## `rclade_logo`
 
+Display Rclade ASCII art logo
+
 Prints a stylized ASCII art logo for Rclade to the console.
+Optionally prints the version number and the tagline.
 
 **Usage:**
 
@@ -249,4 +274,4 @@ rclade_logo()
 
 ---
 
-[中文](../../cn/reference/utilities.md) | [文档首页](../../index.md)
+[中文](../../cn/reference/utilities.md) | [Documentation Home](../index.md)
