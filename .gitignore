@@ -52,3 +52,9 @@ Thumbs.db
 benchmark_results.bak-*/
 evaluation.bak-*/
 Rplots.pdf
+
+# === agent/tool session state (not part of the package) ===
+.mimosa/
+
+# === local-only helper scripts ===
+scripts/submit_cran.R
