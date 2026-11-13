@@ -2,8 +2,8 @@
 
 **Automated Deep-Time Phylogenetic Tree Collapsing and Visualization**
 
-Version: 1.1.5
-[![CI](https://github.com/ZengZichao/Rclade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZengZichao/Rclade/actions/workflows/R-CMD-check.yaml)
+Version: 1.1.6
+[![CI](https://github.com/zengzichao/Rclade/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/zengzichao/Rclade/actions/workflows/R-CMD-check.yaml)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://zengzichao.github.io/Rclade/LICENSE)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0001--6553--970X-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0000-0001-6553-970X)
@@ -26,14 +26,14 @@ From the fixed GitHub release tag (requires the `remotes` package):
 
 ``` r
 
-remotes::install_github("zengzichao/Rclade@v1.1.5")
+remotes::install_github("zengzichao/Rclade@v1.1.6")
 ```
 
 Or from a downloaded release tarball (GitHub Releases / Zenodo archive):
 
 ``` r
 
-install.packages("Rclade_1.1.5.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.6.tar.gz", repos = NULL, type = "source")
 ```
 
 ## Quick start

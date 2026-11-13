@@ -7,11 +7,12 @@
 package](https://img.shields.io/badge/R-package-blue.svg)](https://www.r-project.org/)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.1.3-green.svg)](https://zengzichao.github.io/Rclade/)
+[![Version](https://img.shields.io/badge/version-1.1.6-green.svg)](https://zengzichao.github.io/Rclade/)
 
-> **Note:** Source code and issue tracking at
-> <https://github.com/zengzichao/Rclade>. Install from the source
-> tarball as shown below, or clone the GitHub repository.
+> **Note:** Source code at <https://github.com/zengzichao/Rclade>;
+> please file issues at <https://github.com/zengzichao/Rclade/issues>.
+> Install from the source tarball as shown below, or clone the GitHub
+> repository.
 
 Rclade provides a single-function pipeline for automated collapsing and
 visualization of large phylogenetic trees with geological timescales. It
@@ -30,11 +31,11 @@ documentation set (per-function reference, tutorials, cookbook, and FAQ)
 in `inst/docs/`:
 
 - 中文文档总览：[inst/docs/cn/index.md](https://zengzichao.github.io/Rclade/inst/docs/cn/index.md)
-- English
-  documentation：[inst/docs/en/index.md](https://zengzichao.github.io/Rclade/inst/docs/en/index.md)
+- English documentation:
+  [inst/docs/en/index.md](https://zengzichao.github.io/Rclade/inst/docs/en/index.md)
 - 函数参考（中文）：[inst/docs/cn/reference/index.md](https://zengzichao.github.io/Rclade/inst/docs/cn/reference/index.md)
-- Function reference
-  (EN)：[inst/docs/en/reference/index.md](https://zengzichao.github.io/Rclade/inst/docs/en/reference/index.md)
+- Function reference (EN):
+  [inst/docs/en/reference/index.md](https://zengzichao.github.io/Rclade/inst/docs/en/reference/index.md)
 
 ## Features
 
@@ -83,10 +84,10 @@ in `inst/docs/`:
 ``` r
 
 # Install the fixed release tag from GitHub (requires the remotes package)
-remotes::install_github("zengzichao/Rclade@v1.1.3")
+remotes::install_github("zengzichao/Rclade@v1.1.6")
 
 # Or install from a downloaded release tarball (GitHub Releases / Zenodo)
-install.packages("Rclade_1.1.3.tar.gz", repos = NULL, type = "source")
+install.packages("Rclade_1.1.6.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Using Conda
@@ -121,7 +122,7 @@ docker run -v $(pwd):/data rclade -f tree.tre -r phylum -o output.pdf
 
 ``` bash
 # Run self-test
-Rclade --check
+rclade --check
 ```
 
 ## Pipeline Overview
@@ -172,7 +173,7 @@ p <- plot_timetree(example_tree, rank = "phylum",
                    add_timescale = FALSE)
 
 # Collapse a specific clade
-p <- plot_timetree(example_tree, clade = "Cyanobacteria",
+p <- plot_timetree(example_tree, clade = "P1",
                    taxonomy_format = "GTDB",
                    add_timescale = FALSE)
 
@@ -185,7 +186,7 @@ p <- plot_timetree(example_tree, rank = "phylum",
 save_timetree(p, "output.pdf", width = 14, height = 10)
 
 # One-line pipeline
-plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
+plot_timetree(example_tree, rank = "phylum", unit = "Ma", output = "output.pdf")
 ```
 
 ## Supported Taxonomy Formats
@@ -196,7 +197,7 @@ plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
 | **Embedded** (Format A) | `_d_`, `_p_`, `_c_`, … | `GB_GCA_001_d_Bacteria_p_Proteobacteria_c_Gammaproteobacteria` |
 | **Silva** | Semicolon-delimited, no prefix | `Bacteria;Proteobacteria;Gammaproteobacteria` |
 | **NCBI** | Starts with `cellular organisms`, `root`, … | `cellular organisms;Bacteria;Proteobacteria` |
-| **Custom regex** | User-provided patterns | `list(domain = "Domain:([^|]+)")` |
+| **Custom regex** | User-provided patterns | `list(domain = "Domain:([^\|]+)")` |
 
 ## Key Functions
 
@@ -256,12 +257,12 @@ Collapse a specific clade by name (checks monophyly first):
 
 ``` r
 
-# Collapse only Cyanobacteria (if monophyletic)
-p <- plot_timetree(example_tree, clade = "Cyanobacteria",
+# Collapse only phylum P1 (if monophyletic)
+p <- plot_timetree(example_tree, clade = "P1", unit = "Ma",
                    taxonomy_format = "GTDB")
 
 # Strict mode: terminate if not monophyletic
-p <- plot_timetree(example_tree, clade = "Proteobacteria",
+p <- plot_timetree(example_tree, clade = "P2", unit = "Ma",
                    strict = TRUE, taxonomy_format = "GTDB")
 ```
 
@@ -269,10 +270,10 @@ CLI usage:
 
 ``` bash
 # Collapse specific clade
-Rclade -f tree.tre --clade Cyanobacteria -o output.pdf
+rclade -f tree.tre --clade Cyanobacteria -u Ma -o output.pdf
 
 # Strict mode
-Rclade -f tree.tre --clade Proteobacteria --strict -o output.pdf
+rclade -f tree.tre --clade Proteobacteria --strict -u Ma -o output.pdf
 ```
 
 ### Using the wrapper script for standard exit codes
@@ -282,7 +283,7 @@ The package includes a shell wrapper at `inst/bin/rclade`:
 ``` bash
 # Add inst/bin/rclade to PATH or use the full path
 export PATH="/path/to/Rclade/inst/bin:$PATH"
-rclade -f tree.tre -r phylum -o output.pdf
+rclade -f tree.tre -r phylum -u Ma -o output.pdf
 ```
 
 Compared to `Rscript -e "Rclade::run_rclade_cli(...)"`, the wrapper: -
@@ -314,17 +315,17 @@ result <- check_special_monophyly(example_tree, "LBCA")
 ``` r
 
 # Use first tree
-p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "first")
+p <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "first")
 
 # Use randomly selected tree
-p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "random")
+p <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "random")
 
 # Analyze all trees (returns list of plots)
-plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "all")
+plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "all")
 
 # split mode: same as "all" (returns multiPhylo), but signals per-tree output
 # splitting to the CLI (numeric suffixes on output files)
-plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "split")
+plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "split")
 ```
 
 ## External Taxonomy File
@@ -335,10 +336,10 @@ plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "split"
 taxa <- read_taxonomy_file("taxonomy.tsv")
 
 # Use external file for collapsing
-p <- plot_timetree(tree, rank = "phylum", taxonomy_file = "taxonomy.tsv")
+p <- plot_timetree(tree, rank = "phylum", unit = "Ma", taxonomy_file = "taxonomy.tsv")
 
 # With custom separator
-p <- plot_timetree(tree, rank = "phylum",
+p <- plot_timetree(tree, rank = "phylum", unit = "Ma",
                    taxonomy_file = "taxonomy.csv",
                    taxonomy_file_sep = ",")
 ```
@@ -355,7 +356,7 @@ validate_tree_sequence_match("beast.trees", "sequences.fasta",
                              multi_tree_mode = "first")
 
 # In plot_timetree (via CLI)
-# Rclade -f tree.tre --sequence_file seqs.fasta -r phylum
+# rclade -f tree.tre --sequence_file seqs.fasta -r phylum
 ```
 
 ## CLI Reference
@@ -364,111 +365,111 @@ validate_tree_sequence_match("beast.trees", "sequences.fasta",
 
 ``` bash
 # Show help (all parameters, defaults, examples)
-Rclade --help
+rclade --help
 
 # Show version with dependency versions
-Rclade --version
+rclade --version
 
 # Run self-test
-Rclade --check
+rclade --check
 
 # Basic usage with phylum-level collapsing
-Rclade -f tree.tre -r phylum -o output.pdf
+rclade -f tree.tre -r phylum -u Ma -o output.pdf
 
 # With GTDB format and Ma time units
-Rclade -f tree.tre -r phylum --taxonomy_format GTDB -u Ma -o output.pdf
+rclade -f tree.tre -r phylum --taxonomy_format GTDB -u Ma -o output.pdf
 
 # Collapse specific clade
-Rclade -f tree.tre --clade Cyanobacteria -o output.pdf
+rclade -f tree.tre --clade Cyanobacteria -u Ma -o output.pdf
 ```
 
 ### Taxonomy Options
 
 ``` bash
 # External taxonomy file
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv -o output.pdf
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv -u Ma -o output.pdf
 
 # Taxonomy file with header row and comma separator
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.csv --taxonomy_file_header --taxonomy_file_sep comma
+rclade -f tree.tre -r phylum --taxonomy_file taxa.csv --taxonomy_file_header --taxonomy_file_sep comma -u Ma
 
 # Embedded format parsing strategy (reverse/greedy/segment)
-Rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_delimiter_mode reverse
+rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_delimiter_mode reverse -u Ma
 
 # Table taxonomy takes priority over embedded
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_source_priority table
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_source_priority table -u Ma
 
-# Custom taxonomy levels (kingdom, subspecies): code:prefix format
-# Here k uses _k_ as the embedded delimiter and ss uses _ss_
-Rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_levels "k:_k_,ss:_ss_"
+# Custom taxonomy levels (kingdom, subspecies): code:rank_name format
+# The embedded delimiter _k_ is derived from the code k; the field after the colon names the rank
+rclade -f tree.tre -r kingdom --taxonomy_format custom_rank --taxonomy_levels "k:kingdom,ss:subspecies" -u Ma
 
 # Custom taxonomy table separator (separator inside taxonomy strings)
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_table_sep "|"
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_table_sep "|" -u Ma
 ```
 
 ### Multi-tree Options
 
 ``` bash
 # Use first tree
-Rclade -f beast.trees --multi_tree_mode first -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode first -r phylum -u Ma -o output.pdf
 
 # Use last tree
-Rclade -f beast.trees --multi_tree_mode last -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode last -r phylum -u Ma -o output.pdf
 
 # Use randomly selected tree
-Rclade -f beast.trees --multi_tree_mode random -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode random -r phylum -u Ma -o output.pdf
 
 # Use specific tree by index
-Rclade -f beast.trees --tree_index 42 -r phylum -o output.pdf
+rclade -f beast.trees --tree_index 42 -r phylum -u Ma -o output.pdf
 
 # Analyze all trees (output gets numeric suffixes)
-Rclade -f beast.trees --multi_tree_mode all -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode all -r phylum -u Ma -o output.pdf
 # Generates: output_1.pdf, output_2.pdf, ...
 
 # split mode: same as "all" but semantically signals per-tree output for
 # downstream pipeline dispatch
-Rclade -f beast.trees --multi_tree_mode split -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode split -r phylum -u Ma -o output.pdf
 ```
 
 ### Sequence Validation
 
 ``` bash
 # Cross-validate tree tips with sequence IDs
-Rclade -f tree.tre --sequence_file seqs.fasta -r phylum -o output.pdf
+rclade -f tree.tre --sequence_file seqs.fasta -r phylum -u Ma -o output.pdf
 
 # Skip cross-validation
-Rclade -f tree.tre --sequence_file seqs.fasta --no_cross_check -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --no_cross_check -r phylum -u Ma
 
 # Specify molecule type (DNA/RNA/protein/auto)
-Rclade -f tree.tre --sequence_file seqs.fasta --mol_type DNA -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --mol_type DNA -r phylum -u Ma
 
 # Skip alignment length check
-Rclade -f tree.tre --sequence_file seqs.fasta --skip_length_check -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --skip_length_check -r phylum -u Ma
 ```
 
 ### Output Control
 
 ``` bash
 # Force overwrite existing output
-Rclade -f tree.tre -r phylum -o output.pdf --force
+rclade -f tree.tre -r phylum -u Ma -o output.pdf --force
 
 # Skip if output exists (no overwrite)
-Rclade -f tree.tre -r phylum -o output.pdf --no_clobber
+rclade -f tree.tre -r phylum -u Ma -o output.pdf --no_clobber
 
 # Skip malformed inputs instead of terminating
-Rclade -f tree.tre -r phylum --ignore_malformed -o output.pdf
+rclade -f tree.tre -r phylum --ignore_malformed -u Ma -o output.pdf
 
 # Low-memory mode for large trees
-Rclade -f tree.tre -r phylum --low_memory -o output.pdf
+rclade -f tree.tre -r phylum --low_memory -u Ma -o output.pdf
 
 # Strip node annotations (bootstrap/NHX) to reduce output size
-Rclade -f tree.nhx -r phylum --strip_annotations -o output.pdf
+rclade -f tree.nhx -r phylum --strip_annotations -u Ma -o output.pdf
 ```
 
 ### Configuration File Support
 
 Rclade supports YAML configuration files for supplying defaults.
 Precedence: **explicit CLI flags \> config file \> built-in defaults**.
-The package ships a `config.example.yaml` template listing all
+The package ships a `config.example.yaml` template covering most
 configurable options; access it with:
 
 ``` r
@@ -478,10 +479,10 @@ system.file("extdata", "config.example.yaml", package = "Rclade")
 
 ``` bash
 # Use a config file
-Rclade --config config.yaml -f tree.tre -o output.pdf
+rclade --config config.yaml -f tree.tre -u Ma -o output.pdf
 
 # CLI flags override the config file (here rank takes precedence)
-Rclade --config config.yaml -f tree.tre -r genus -o output.pdf
+rclade --config config.yaml -f tree.tre -r genus -u Ma -o output.pdf
 ```
 
 Example config (see `inst/extdata/config.example.yaml` for the full
@@ -500,20 +501,20 @@ log_level: INFO
 > Note: optparse cannot distinguish “user explicitly passed the default
 > value” from “user did not pass the flag”. If you explicitly pass a
 > value equal to the built-in default, the config value will still take
-> effect. To force a setting over the config file, pass it explicitly on
-> the CLI.
+> effect. To make a setting take precedence over the config file, pass a
+> value that differs from the built-in default.
 
 ### Logging Options
 
 ``` bash
 # Debug logging
-Rclade -f tree.tre -r phylum --log_level DEBUG -o output.pdf
+rclade -f tree.tre -r phylum --log_level DEBUG -u Ma -o output.pdf
 
 # Log to file
-Rclade -f tree.tre -r phylum --log_file analysis.log -o output.pdf
+rclade -f tree.tre -r phylum --log_file analysis.log -u Ma -o output.pdf
 
 # Combined
-Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pdf
+rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -u Ma -o output.pdf
 ```
 
 ### Complete CLI Options
@@ -537,16 +538,20 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `--taxonomy_delimiter_mode` | STR | reverse | Embedded parsing strategy: reverse/greedy/segment |
 | `--taxonomy_source_priority` | STR | table | Source priority: `embedded`/`table` |
 | `--taxonomy_table_sep` | STR | ; | Table value separator (rank separator within taxonomy strings) |
-| `--taxonomy_levels` | STR | \- | Custom rank mapping, format `code:prefix`, e.g. `k:_k_,ss:_ss_` |
+| `--taxonomy_levels` | STR | \- | Custom rank mapping, format `code:rank_name`, e.g. `k:kingdom,ss:subspecies` |
 | `-t, --triangle_mode` | MODE | mixed | Triangle: max/min/mixed/none |
 | `-s, --space_mode` | MODE | proportional | Space: equal/proportional |
 | `-l, --layout` | STR | rectangular | Layout: rectangular/circular |
 | `-u, --unit` | STR | auto | Unit: auto/Ga/Ma (auto = leave tree units untouched; Ga converts x1000) |
 | `--angle` | NUM | 360 | Fan angle for circular layout (10-360 degrees) |
+| `--timescale_mode` | MODE | radial | Circular-layout timescale: `radial` (geological bands around the fan) / `linear` (straight timescale axis) |
+| `--timescale_position` | POS | right | Clock position of the linear timescale axis: `right`/`left`/`top`/`bottom` (circular layout only) |
+| `--tree_start_position` | POS | right | Clock position where the tree starts (gap between last and first tip): `right`/`left`/`top`/`bottom` (circular layout only) |
 | `--line_width` | NUM | 1 | Branch line width |
 | `--ignore_branch_length` | FLAG | FALSE | Cladogram mode (ignore branch lengths) |
 | `--color_palette` | STR | viridis | Palette name or hex colors |
 | `--color_mapping` | STR | \- | Color mapping: `Group:#FF0000` |
+| `--color_rank` | RANK | \- | Rank used to COLOR branches, independent of `--rank` (which controls collapsing), e.g. `phylum` |
 | `--show_tip_labels` | FLAG | FALSE | Show tip labels |
 | `--tip_label_size` | NUM | 2 | Tip label font size |
 | `--show_clade_label` | FLAG | FALSE | Show clade labels |
@@ -593,6 +598,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `clade` | character | NULL | Specific clade name to collapse |
 | `strict` | logical | FALSE | Terminate if clade not monophyletic |
 | `groups` | list | NULL | Custom tip groups for collapsing |
+| `groups_label_only` | logical | FALSE | Label the `groups` clades without collapsing them into triangles |
 | `triangle_mode` | character | “mixed” | Triangle mode: max/min/mixed/none |
 | `space_mode` | character | “proportional” | Space allocation: equal/proportional |
 | `layout` | character | “rectangular” | Layout: rectangular/circular |
@@ -645,6 +651,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `timescale_mode` | character | “radial” | Timescale mode for circular layout: radial / linear (3 o’clock) |
 | `timescale_position` | character | “right” | Timescale start orientation for circular layout |
 | `tree_start_position` | character | “right” | Tree drawing start orientation for circular layout |
+| `opts` | list | NULL | [`rclade_options()`](https://zengzichao.github.io/Rclade/reference/rclade_options.md) object or a named list of parameter defaults; explicitly passed arguments always take precedence |
 
 ## Input/Output Formats
 
@@ -654,7 +661,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
   following `ape` convention
 - **Edge lengths**: Must be non-negative (CRITICAL error if negative
   values detected)
-- **Tip labels**: Must be unique (ERROR if duplicates found)
+- **Tip labels**: Must be unique (WARNING if duplicates found)
 - **Label length**: Newick labels longer than 500 characters are
   truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before
   parsing, because ape’s parser aborts the whole R process on labels
@@ -749,11 +756,11 @@ missing)
 
 | Error | Cause | Solution |
 |----|----|----|
-| `Input file (-f) is required` | No input file specified | Add `-f <tree_file>` |
+| `Input file (-f/--file) is required.` | No input file specified | Add `-f <tree_file>` |
 | `Input file does not exist` | File path incorrect | Check file path and permissions |
 | `CRITICAL: Empty file` | 0-byte input file | Check if file was properly transferred |
 | `CRITICAL: Negative branch lengths` | Tree has negative edges | Remove or fix negative branches |
-| `ERROR: Duplicate tip labels` | Same label appears twice | Make tip labels unique |
+| `WARNING: ... contains N duplicate tip label(s)` | Same label appears twice | Make tip labels unique; duplicates only warn, they do not abort |
 | `ERROR: Control characters detected` | Malicious characters in labels | Clean labels of control/BiDi chars (affected names are shown as `<U+XXXX>` escapes) |
 | `WARNING: ... label(s) exceed 500 characters ... truncated` | ape’s Newick parser crashes on labels \> ~512 chars | Rclade truncated them to 400 chars + `_RCLADE_TRUNC`; shorten labels upstream if exact matching is needed |
 | `Circular dependency detected` | Taxonomy has cycles (e.g., d\_\_A;p\_\_B and d\_\_B;p\_\_A) | Fix taxonomy file |
@@ -767,13 +774,13 @@ missing)
 
 ### Performance Tips
 
-| Tips          | Recommendation                            |
-|---------------|-------------------------------------------|
-| \>5,000 tips  | Use `--show_tip_labels` sparingly         |
-| \>10,000 tips | Consider `--low_memory` mode              |
-| \>50,000 tips | Expect high memory usage (\>4GB)          |
-| Large trees   | Use PDF output (faster than PNG)          |
-| Many groups   | Use `--no_timescale` to disable timescale |
+| Number of tips | Recommendation                            |
+|----------------|-------------------------------------------|
+| \>5,000 tips   | Use `--show_tip_labels` sparingly         |
+| \>10,000 tips  | Consider `--low_memory` mode              |
+| \>50,000 tips  | Expect high memory usage (\>4GB)          |
+| Large trees    | Use PDF output (faster than PNG)          |
+| Many groups    | Use `--no_timescale` to disable timescale |
 
 ## Real-time Logging
 
@@ -786,7 +793,7 @@ set_log_level("DEBUG")
 set_log_file("analysis.log")
 
 # Run analysis
-p <- plot_timetree(example_tree, rank = "phylum")
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 ```
 
 Log format (ISO 8601 with milliseconds):
@@ -807,7 +814,7 @@ easier to locate problems:
 
 ``` r
 
-log_warning("Skipped %d non-monophyletic group(s)", n,
+log_warning("Skipped %d non-monophyletic group(s)", 3L,
             .module = "compute-mrca/compute_mrca_map")
 # Output: ... | WARNING  | [compute-mrca/compute_mrca_map] | Skipped 3 non-monophyletic group(s)
 ```
@@ -822,7 +829,7 @@ run_rclade_selftest()
 
 ``` bash
 # Run self-test from CLI
-Rclade --check
+rclade --check
 ```
 
 Checks: dependencies, tree parsing, taxonomy extraction (Format A & B),
@@ -830,22 +837,23 @@ monophyly logic, input validation, adversarial inputs.
 
 ## Performance
 
-| Tips    | Groups | Time  | Status                        |
-|---------|--------|-------|-------------------------------|
-| 50      | 10     | 0.5s  | Pass                          |
-| 500     | 50     | 0.3s  | Pass (benchmark)              |
-| 1,000   | 100    | 1.9s  | Pass                          |
-| 5,000   | 200    | 38.7s | Slow                          |
-| 10,000+ | \-     | \-    | Warning: high memory expected |
+| Number of tips | Groups | Time  | Status                        |
+|----------------|--------|-------|-------------------------------|
+| 50             | 10     | 0.5s  | Pass                          |
+| 500            | 50     | 0.3s  | Pass (benchmark)              |
+| 1,000          | 100    | 1.9s  | Pass                          |
+| 5,000          | 200    | 38.7s | Slow                          |
+| 10,000+        | \-     | \-    | Warning: high memory expected |
 
 ## Dependencies
 
 **Required**: ape (\>= 5.0, GPL-2+), ggtree (\>= 4.0.0, Artistic-2.0),
 deeptime (\>= 1.0, GPL-3), ggplot2 (\>= 3.5.0, MIT), rlang (MIT),
-stringr (\>= 1.5, MIT), tidytree (\>= 0.4, Artistic-2.0)
+stringr (\>= 1.5, MIT), tidytree (\>= 0.4, Artistic-2.0), viridisLite
+(MIT)
 
 **Optional**: treeio (Artistic-2.0, BEAST2/IQ-TREE support), phangorn
-(GPL-2+, nesting detection), viridisLite/RColorBrewer (color palettes),
+(GPL-2+, nesting detection), RColorBrewer (color palettes),
 cowplot/patchwork (legend splitting), shiny (web UI), optparse (CLI),
 yaml (`--config` configuration file support)
 

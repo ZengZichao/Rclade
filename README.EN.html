@@ -35,16 +35,16 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Rclade</h1>
-      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/v1.1.6/README.EN.md" class="external-link"><code>README.EN.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/main/README.EN.md" class="external-link"><code>README.EN.md</code></a></small>
     </div>
 
 <div id="rclade" class="section level1">
 
 <p><a href="README.EN.html">English</a> | <a href="README.CN.html">中文</a></p>
 <!-- badges: start -->
-<p><a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-package-blue.svg" alt="R package"></a> <a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href=""><img src="https://img.shields.io/badge/version-1.1.3-green.svg" alt="Version"></a> <!-- badges: end --></p>
+<p><a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-package-blue.svg" alt="R package"></a> <a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a> <a href=""><img src="https://img.shields.io/badge/version-1.1.6-green.svg" alt="Version"></a> <!-- badges: end --></p>
 <blockquote>
-<p><strong>Note:</strong> Source code and issue tracking at <a href="https://github.com/zengzichao/Rclade" class="external-link uri">https://github.com/zengzichao/Rclade</a>. Install from the source tarball as shown below, or clone the GitHub repository.</p>
+<p><strong>Note:</strong> Source code at <a href="https://github.com/zengzichao/Rclade" class="external-link uri">https://github.com/zengzichao/Rclade</a>; please file issues at <a href="https://github.com/zengzichao/Rclade/issues" class="external-link uri">https://github.com/zengzichao/Rclade/issues</a>. Install from the source tarball as shown below, or clone the GitHub repository.</p>
 </blockquote>
 <p>Rclade provides a single-function pipeline for automated collapsing and visualization of large phylogenetic trees with geological timescales. It is designed for <strong>deep-time phylogenomics</strong> and <strong>microbial evolution studies</strong>, enabling researchers to visualize taxonomic relationships across geological time scales (Ga/Ma) with automatic clade collapsing based on GTDB, Silva, or NCBI taxonomy.</p>
 <div class="section level2">
@@ -53,11 +53,11 @@
 <p>In addition to this quick reference, Rclade ships a complete bilingual documentation set (per-function reference, tutorials, cookbook, and FAQ) in <code>inst/docs/</code>:</p>
 <ul><li>中文文档总览：<a href="inst/docs/cn/index.html">inst/docs/cn/index.md</a>
 </li>
-<li>English documentation：<a href="inst/docs/en/index.html">inst/docs/en/index.md</a>
+<li>English documentation: <a href="inst/docs/en/index.html">inst/docs/en/index.md</a>
 </li>
 <li>函数参考（中文）：<a href="inst/docs/cn/reference/index.html">inst/docs/cn/reference/index.md</a>
 </li>
-<li>Function reference (EN)：<a href="inst/docs/en/reference/index.html">inst/docs/en/reference/index.md</a>
+<li>Function reference (EN): <a href="inst/docs/en/reference/index.html">inst/docs/en/reference/index.md</a>
 </li>
 </ul></div>
 <div class="section level2">
@@ -103,10 +103,10 @@
 <h3 id="from-source">From source<a class="anchor" aria-label="anchor" href="#from-source"></a></h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install the fixed release tag from GitHub (requires the remotes package)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.3"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.6"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Or install from a downloaded release tarball (GitHub Releases / Zenodo)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.3.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.6.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="using-conda">Using Conda<a class="anchor" aria-label="anchor" href="#using-conda"></a></h3>
@@ -130,7 +130,7 @@
 <div class="section level3">
 <h3 id="verify-installation">Verify Installation<a class="anchor" aria-label="anchor" href="#verify-installation"></a></h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Run self-test</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -180,7 +180,7 @@
 <span>                   add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Collapse a specific clade</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Cyanobacteria"</span>,</span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P1"</span>,</span>
 <span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span>,</span>
 <span>                   add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -193,7 +193,7 @@
 <span><span class="fu"><a href="reference/save_timetree.html">save_timetree</a></span><span class="op">(</span><span class="va">p</span>, <span class="st">"output.pdf"</span>, width <span class="op">=</span> <span class="fl">14</span>, height <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># One-line pipeline</span></span>
-<span><span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, output <span class="op">=</span> <span class="st">"output.pdf"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, output <span class="op">=</span> <span class="st">"output.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="supported-taxonomy-formats">Supported Taxonomy Formats<a class="anchor" aria-label="anchor" href="#supported-taxonomy-formats"></a></h2>
@@ -217,7 +217,7 @@
 <td><code>cellular organisms;Bacteria;Proteobacteria</code></td>
 </tr><tr><td><strong>Custom regex</strong></td>
 <td>User-provided patterns</td>
-<td><code>list(domain = "Domain:([^|]+)")</code></td>
+<td><code>list(domain = "Domain:([^\|]+)")</code></td>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="key-functions">Key Functions<a class="anchor" aria-label="anchor" href="#key-functions"></a></h2>
@@ -325,25 +325,25 @@
 <h2 id="clade-specific-collapsing">Clade-specific Collapsing<a class="anchor" aria-label="anchor" href="#clade-specific-collapsing"></a></h2>
 <p>Collapse a specific clade by name (checks monophyly first):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Collapse only Cyanobacteria (if monophyletic)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Cyanobacteria"</span>,</span>
+<code class="sourceCode R"><span><span class="co"># Collapse only phylum P1 (if monophyletic)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P1"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Strict mode: terminate if not monophyletic</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Proteobacteria"</span>,</span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P2"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   strict <span class="op">=</span> <span class="cn">TRUE</span>, taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span><span class="op">)</span></span></code></pre></div>
 <p>CLI usage:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Collapse specific clade</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-o</span> output.pdf</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># Strict mode</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Proteobacteria <span class="at">--strict</span> <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Proteobacteria <span class="at">--strict</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 <div class="section level3">
 <h3 id="using-the-wrapper-script-for-standard-exit-codes">Using the wrapper script for standard exit codes<a class="anchor" aria-label="anchor" href="#using-the-wrapper-script-for-standard-exit-codes"></a></h3>
 <p>The package includes a shell wrapper at <code>inst/bin/rclade</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Add inst/bin/rclade to PATH or use the full path</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/path/to/Rclade/inst/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 <p>Compared to <code>Rscript -e "Rclade::run_rclade_cli(...)"</code>, the wrapper: - Correctly propagates exit codes 0/1/2/3 - Returns the standard Unix exit code <strong>130</strong> on Ctrl+C (SIGINT) interruption - Uses the same CLI arguments</p>
 </div>
 </div>
@@ -376,17 +376,17 @@
 <h2 id="multi-tree-file-handling">Multi-tree File Handling<a class="anchor" aria-label="anchor" href="#multi-tree-file-handling"></a></h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use first tree</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Use randomly selected tree</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"random"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"random"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Analyze all trees (returns list of plots)</span></span>
-<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># split mode: same as "all" (returns multiPhylo), but signals per-tree output</span></span>
 <span><span class="co"># splitting to the CLI (numeric suffixes on output files)</span></span>
-<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"split"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"split"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="external-taxonomy-file">External Taxonomy File<a class="anchor" aria-label="anchor" href="#external-taxonomy-file"></a></h2>
@@ -395,10 +395,10 @@
 <span><span class="va">taxa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_taxonomy_file.html">read_taxonomy_file</a></span><span class="op">(</span><span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Use external file for collapsing</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># With custom separator</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>,</span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.csv"</span>,</span>
 <span>                   taxonomy_file_sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -413,114 +413,114 @@
 <span>                             multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># In plot_timetree (via CLI)</span></span>
-<span><span class="co"># Rclade -f tree.tre --sequence_file seqs.fasta -r phylum</span></span></code></pre></div>
+<span><span class="co"># rclade -f tree.tre --sequence_file seqs.fasta -r phylum</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cli-reference">CLI Reference<a class="anchor" aria-label="anchor" href="#cli-reference"></a></h2>
 <div class="section level3">
 <h3 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a></h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Show help (all parameters, defaults, examples)</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--help</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--help</span></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># Show version with dependency versions</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--version</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--version</span></span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co"># Run self-test</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a></span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co"># Basic usage with phylum-level collapsing</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
 <span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co"># With GTDB format and Ma time units</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> GTDB <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> GTDB <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a></span>
 <span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co"># Collapse specific clade</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="taxonomy-options">Taxonomy Options<a class="anchor" aria-label="anchor" href="#taxonomy-options"></a></h3>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># External taxonomy file</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">-o</span> output.pdf</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co"># Taxonomy file with header row and comma separator</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.csv <span class="at">--taxonomy_file_header</span> <span class="at">--taxonomy_file_sep</span> comma</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.csv <span class="at">--taxonomy_file_header</span> <span class="at">--taxonomy_file_sep</span> comma <span class="at">-u</span> Ma</span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co"># Embedded format parsing strategy (reverse/greedy/segment)</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_delimiter_mode</span> reverse</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_delimiter_mode</span> reverse <span class="at">-u</span> Ma</span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co"># Table taxonomy takes priority over embedded</span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_source_priority</span> table</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_source_priority</span> table <span class="at">-u</span> Ma</span>
 <span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co"># Custom taxonomy levels (kingdom, subspecies): code:prefix format</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co"># Here k uses _k_ as the embedded delimiter and ss uses _ss_</span></span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_levels</span> <span class="st">"k:_k_,ss:_ss_"</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co"># Custom taxonomy levels (kingdom, subspecies): code:rank_name format</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co"># The embedded delimiter _k_ is derived from the code k; the field after the colon names the rank</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> kingdom <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_levels</span> <span class="st">"k:kingdom,ss:subspecies"</span> <span class="at">-u</span> Ma</span>
 <span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a></span>
 <span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co"># Custom taxonomy table separator (separator inside taxonomy strings)</span></span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_table_sep</span> <span class="st">"|"</span></span></code></pre></div>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_table_sep</span> <span class="st">"|"</span> <span class="at">-u</span> Ma</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multi-tree-options">Multi-tree Options<a class="anchor" aria-label="anchor" href="#multi-tree-options"></a></h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Use first tree</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> first <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> first <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co"># Use last tree</span></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> last <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> last <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co"># Use randomly selected tree</span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> random <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> random <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co"># Use specific tree by index</span></span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--tree_index</span> 42 <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--tree_index</span> 42 <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a></span>
 <span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co"># Analyze all trees (output gets numeric suffixes)</span></span>
-<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> all <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> all <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co"># Generates: output_1.pdf, output_2.pdf, ...</span></span>
 <span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
 <span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co"># split mode: same as "all" but semantically signals per-tree output for</span></span>
 <span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co"># downstream pipeline dispatch</span></span>
-<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> split <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> split <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sequence-validation">Sequence Validation<a class="anchor" aria-label="anchor" href="#sequence-validation"></a></h3>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># Cross-validate tree tips with sequence IDs</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># Skip cross-validation</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--no_cross_check</span> <span class="at">-r</span> phylum</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--no_cross_check</span> <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co"># Specify molecule type (DNA/RNA/protein/auto)</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--mol_type</span> DNA <span class="at">-r</span> phylum</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--mol_type</span> DNA <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a></span>
 <span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co"># Skip alignment length check</span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--skip_length_check</span> <span class="at">-r</span> phylum</span></code></pre></div>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--skip_length_check</span> <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="output-control">Output Control<a class="anchor" aria-label="anchor" href="#output-control"></a></h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># Force overwrite existing output</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf <span class="at">--force</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf <span class="at">--force</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># Skip if output exists (no overwrite)</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf <span class="at">--no_clobber</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf <span class="at">--no_clobber</span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co"># Skip malformed inputs instead of terminating</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--ignore_malformed</span> <span class="at">-o</span> output.pdf</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--ignore_malformed</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a></span>
 <span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co"># Low-memory mode for large trees</span></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--low_memory</span> <span class="at">-o</span> output.pdf</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--low_memory</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a></span>
 <span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co"># Strip node annotations (bootstrap/NHX) to reduce output size</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.nhx <span class="at">-r</span> phylum <span class="at">--strip_annotations</span> <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.nhx <span class="at">-r</span> phylum <span class="at">--strip_annotations</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="configuration-file-support">Configuration File Support<a class="anchor" aria-label="anchor" href="#configuration-file-support"></a></h3>
-<p>Rclade supports YAML configuration files for supplying defaults. Precedence: <strong>explicit CLI flags &gt; config file &gt; built-in defaults</strong>. The package ships a <code>config.example.yaml</code> template listing all configurable options; access it with:</p>
+<p>Rclade supports YAML configuration files for supplying defaults. Precedence: <strong>explicit CLI flags &gt; config file &gt; built-in defaults</strong>. The package ships a <code>config.example.yaml</code> template covering most configurable options; access it with:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"config.example.yaml"</span>, package <span class="op">=</span> <span class="st">"Rclade"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># Use a config file</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-o</span> output.pdf</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co"># CLI flags override the config file (here rank takes precedence)</span></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-r</span> genus <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-r</span> genus <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 <p>Example config (see <code>inst/extdata/config.example.yaml</code> for the full template):</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Any CLI long-flag name can be used as a key</span></span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">rank</span><span class="kw">:</span><span class="at"> phylum</span></span>
@@ -530,19 +530,19 @@
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="fu">strip_annotations</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="fu">log_level</span><span class="kw">:</span><span class="at"> INFO</span></span></code></pre></div>
 <blockquote>
-<p>Note: optparse cannot distinguish “user explicitly passed the default value” from “user did not pass the flag”. If you explicitly pass a value equal to the built-in default, the config value will still take effect. To force a setting over the config file, pass it explicitly on the CLI.</p>
+<p>Note: optparse cannot distinguish “user explicitly passed the default value” from “user did not pass the flag”. If you explicitly pass a value equal to the built-in default, the config value will still take effect. To make a setting take precedence over the config file, pass a value that differs from the built-in default.</p>
 </blockquote>
 </div>
 <div class="section level3">
 <h3 id="logging-options">Logging Options<a class="anchor" aria-label="anchor" href="#logging-options"></a></h3>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># Debug logging</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">-o</span> output.pdf</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co"># Log to file</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_file</span> analysis.log <span class="at">-o</span> output.pdf</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_file</span> analysis.log <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
 <span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co"># Combined</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">--log_file</span> debug.log <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">--log_file</span> debug.log <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="complete-cli-options">Complete CLI Options<a class="anchor" aria-label="anchor" href="#complete-cli-options"></a></h3>
@@ -622,7 +622,7 @@
 </tr><tr><td><code>--taxonomy_levels</code></td>
 <td>STR</td>
 <td>-</td>
-<td>Custom rank mapping, format <code>code:prefix</code>, e.g. <code>k:_k_,ss:_ss_</code>
+<td>Custom rank mapping, format <code>code:rank_name</code>, e.g. <code>k:kingdom,ss:subspecies</code>
 </td>
 </tr><tr><td><code>-t, --triangle_mode</code></td>
 <td>MODE</td>
@@ -644,6 +644,18 @@
 <td>NUM</td>
 <td>360</td>
 <td>Fan angle for circular layout (10-360 degrees)</td>
+</tr><tr><td><code>--timescale_mode</code></td>
+<td>MODE</td>
+<td>radial</td>
+<td>Circular-layout timescale: <code>radial</code> (geological bands around the fan) / <code>linear</code> (straight timescale axis)</td>
+</tr><tr><td><code>--timescale_position</code></td>
+<td>POS</td>
+<td>right</td>
+<td>Clock position of the linear timescale axis: <code>right</code>/<code>left</code>/<code>top</code>/<code>bottom</code> (circular layout only)</td>
+</tr><tr><td><code>--tree_start_position</code></td>
+<td>POS</td>
+<td>right</td>
+<td>Clock position where the tree starts (gap between last and first tip): <code>right</code>/<code>left</code>/<code>top</code>/<code>bottom</code> (circular layout only)</td>
 </tr><tr><td><code>--line_width</code></td>
 <td>NUM</td>
 <td>1</td>
@@ -660,6 +672,11 @@
 <td>STR</td>
 <td>-</td>
 <td>Color mapping: <code>Group:#FF0000</code>
+</td>
+</tr><tr><td><code>--color_rank</code></td>
+<td>RANK</td>
+<td>-</td>
+<td>Rank used to COLOR branches, independent of <code>--rank</code> (which controls collapsing), e.g. <code>phylum</code>
 </td>
 </tr><tr><td><code>--show_tip_labels</code></td>
 <td>FLAG</td>
@@ -834,6 +851,10 @@
 <td>list</td>
 <td>NULL</td>
 <td>Custom tip groups for collapsing</td>
+</tr><tr><td><code>groups_label_only</code></td>
+<td>logical</td>
+<td>FALSE</td>
+<td>Label the <code>groups</code> clades without collapsing them into triangles</td>
 </tr><tr><td><code>triangle_mode</code></td>
 <td>character</td>
 <td>“mixed”</td>
@@ -1043,6 +1064,11 @@
 <td>character</td>
 <td>“right”</td>
 <td>Tree drawing start orientation for circular layout</td>
+</tr><tr><td><code>opts</code></td>
+<td>list</td>
+<td>NULL</td>
+<td>
+<code><a href="reference/rclade_options.html">rclade_options()</a></code> object or a named list of parameter defaults; explicitly passed arguments always take precedence</td>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="inputoutput-formats">Input/Output Formats<a class="anchor" aria-label="anchor" href="#inputoutput-formats"></a></h2>
@@ -1053,7 +1079,7 @@
 <li>
 <strong>Edge lengths</strong>: Must be non-negative (CRITICAL error if negative values detected)</li>
 <li>
-<strong>Tip labels</strong>: Must be unique (ERROR if duplicates found)</li>
+<strong>Tip labels</strong>: Must be unique (WARNING if duplicates found)</li>
 <li>
 <strong>Label length</strong>: Newick labels longer than 500 characters are truncated to 400 characters + <code>_RCLADE_TRUNC</code> (with a warning) before parsing, because ape’s parser aborts the whole R process on labels longer than ~512 characters on Linux. Shorten labels upstream if they must match external files exactly</li>
 <li>
@@ -1200,7 +1226,7 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <table class="table"><colgroup><col width="29%"><col width="29%"><col width="41%"></colgroup><thead><tr><th>Error</th>
 <th>Cause</th>
 <th>Solution</th>
-</tr></thead><tbody><tr><td><code>Input file (-f) is required</code></td>
+</tr></thead><tbody><tr><td><code>Input file (-f/--file) is required.</code></td>
 <td>No input file specified</td>
 <td>Add <code>-f &lt;tree_file&gt;</code>
 </td>
@@ -1213,9 +1239,9 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </tr><tr><td><code>CRITICAL: Negative branch lengths</code></td>
 <td>Tree has negative edges</td>
 <td>Remove or fix negative branches</td>
-</tr><tr><td><code>ERROR: Duplicate tip labels</code></td>
+</tr><tr><td><code>WARNING: ... contains N duplicate tip label(s)</code></td>
 <td>Same label appears twice</td>
-<td>Make tip labels unique</td>
+<td>Make tip labels unique; duplicates only warn, they do not abort</td>
 </tr><tr><td><code>ERROR: Control characters detected</code></td>
 <td>Malicious characters in labels</td>
 <td>Clean labels of control/BiDi chars (affected names are shown as <code>&lt;U+XXXX&gt;</code> escapes)</td>
@@ -1251,7 +1277,7 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </tr></tbody></table></div>
 <div class="section level3">
 <h3 id="performance-tips">Performance Tips<a class="anchor" aria-label="anchor" href="#performance-tips"></a></h3>
-<table class="table"><thead><tr><th>Tips</th>
+<table class="table"><thead><tr><th>Number of tips</th>
 <th>Recommendation</th>
 </tr></thead><tbody><tr><td>&gt;5,000 tips</td>
 <td>Use <code>--show_tip_labels</code> sparingly</td>
@@ -1275,14 +1301,14 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <span><span class="fu"><a href="reference/set_log_file.html">set_log_file</a></span><span class="op">(</span><span class="st">"analysis.log"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Run analysis</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span><span class="op">)</span></span></code></pre></div>
 <p>Log format (ISO 8601 with milliseconds):</p>
 <pre><code>2026-06-13T15:30:45.123 | INFO     | Step 1/7: Input validation and reading
 2026-06-13T15:30:45.125 | INFO     | Reading tree file: example.tre
 2026-06-13T15:30:45.130 | DEBUG    | Memory: 45.2 MB used (approx)</code></pre>
 <p>Logging functions (<code><a href="reference/log_info.html">log_info()</a></code> / <code><a href="reference/log_warning.html">log_warning()</a></code> / <code><a href="reference/log_error.html">log_error()</a></code>, etc.) accept an optional <code>.module</code> argument that inserts a <code>[MODULE/FUNCTION]</code> source tag into warning/error messages, making it easier to locate problems:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/log_warning.html">log_warning</a></span><span class="op">(</span><span class="st">"Skipped %d non-monophyletic group(s)"</span>, <span class="va">n</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/log_warning.html">log_warning</a></span><span class="op">(</span><span class="st">"Skipped %d non-monophyletic group(s)"</span>, <span class="fl">3L</span>,</span>
 <span>            .module <span class="op">=</span> <span class="st">"compute-mrca/compute_mrca_map"</span><span class="op">)</span></span>
 <span><span class="co"># Output: ... | WARNING  | [compute-mrca/compute_mrca_map] | Skipped 3 non-monophyletic group(s)</span></span></code></pre></div>
 </div>
@@ -1292,12 +1318,12 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <code class="sourceCode R"><span><span class="co"># Run self-test from R</span></span>
 <span><span class="fu"><a href="reference/run_rclade_selftest.html">run_rclade_selftest</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co"># Run self-test from CLI</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span></code></pre></div>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span></code></pre></div>
 <p>Checks: dependencies, tree parsing, taxonomy extraction (Format A &amp; B), monophyly logic, input validation, adversarial inputs.</p>
 </div>
 <div class="section level2">
 <h2 id="performance">Performance<a class="anchor" aria-label="anchor" href="#performance"></a></h2>
-<table class="table"><thead><tr><th>Tips</th>
+<table class="table"><thead><tr><th>Number of tips</th>
 <th>Groups</th>
 <th>Time</th>
 <th>Status</th>
@@ -1324,8 +1350,8 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a></h2>
-<p><strong>Required</strong>: ape (&gt;= 5.0, GPL-2+), ggtree (&gt;= 4.0.0, Artistic-2.0), deeptime (&gt;= 1.0, GPL-3), ggplot2 (&gt;= 3.5.0, MIT), rlang (MIT), stringr (&gt;= 1.5, MIT), tidytree (&gt;= 0.4, Artistic-2.0)</p>
-<p><strong>Optional</strong>: treeio (Artistic-2.0, BEAST2/IQ-TREE support), phangorn (GPL-2+, nesting detection), viridisLite/RColorBrewer (color palettes), cowplot/patchwork (legend splitting), shiny (web UI), optparse (CLI), yaml (<code>--config</code> configuration file support)</p>
+<p><strong>Required</strong>: ape (&gt;= 5.0, GPL-2+), ggtree (&gt;= 4.0.0, Artistic-2.0), deeptime (&gt;= 1.0, GPL-3), ggplot2 (&gt;= 3.5.0, MIT), rlang (MIT), stringr (&gt;= 1.5, MIT), tidytree (&gt;= 0.4, Artistic-2.0), viridisLite (MIT)</p>
+<p><strong>Optional</strong>: treeio (Artistic-2.0, BEAST2/IQ-TREE support), phangorn (GPL-2+, nesting detection), RColorBrewer (color palettes), cowplot/patchwork (legend splitting), shiny (web UI), optparse (CLI), yaml (<code>--config</code> configuration file support)</p>
 <p>For a complete list of third-party dependencies and their licenses, see <a href="inst/THIRDPARTY">inst/THIRDPARTY</a>.</p>
 </div>
 <div class="section level2">

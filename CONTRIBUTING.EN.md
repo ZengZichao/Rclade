@@ -16,12 +16,18 @@ expected vs. actual behavior
 
 ## Development Setup
 
-``` r
+``` bash
 # Clone the repository
 git clone https://github.com/zengzichao/Rclade.git
+```
+
+``` r
 
 # Install development dependencies
 install.packages(c("devtools", "testthat", "roxygen2", "knitr", "rmarkdown"))
+
+# Install the remaining CRAN runtime dependencies (DESCRIPTION Imports)
+install.packages(c("ape", "deeptime", "ggplot2", "rlang", "stringr", "viridisLite"))
 
 # Bioconductor dependencies
 tryCatch({

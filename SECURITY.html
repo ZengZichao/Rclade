@@ -35,7 +35,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Security Policy / 安全策略</h1>
-      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/v1.1.6/.github/SECURITY.md" class="external-link"><code>.github/SECURITY.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/main/.github/SECURITY.md" class="external-link"><code>.github/SECURITY.md</code></a></small>
     </div>
 
 <div id="security-policy--安全策略" class="section level1">
@@ -43,20 +43,20 @@
 <div class="section level2">
 <h2 id="reporting-a-vulnerability--报告漏洞">Reporting a Vulnerability / 报告漏洞<a class="anchor" aria-label="anchor" href="#reporting-a-vulnerability--%E6%8A%A5%E5%91%8A%E6%BC%8F%E6%B4%9E"></a></h2>
 <p>请通过 GitHub 的私密渠道报告安全问题：进入本仓库 <strong>Security 标签页 → Security advisories → Report a vulnerability</strong>，不要在公开 Issue 中披露漏洞细节。</p>
-<p>Please report security vulnerabilities privately via GitHub’s <strong>Security tab → Security advisories → Report a vulnerability</strong>. Do not open public issues with exploit details.</p>
+<p>Please report security vulnerabilities privately via GitHub’s <strong>Security tab → Security advisories → Report a vulnerability</strong>. Do not disclose vulnerability details in public issues.</p>
 <p>报告时请尽量附上：Rclade 版本（<code>packageVersion("Rclade")</code>）、操作系统与 R 版本、复现步骤或最小复现文件。</p>
 <p>When reporting, please include: the Rclade version (<code>packageVersion("Rclade")</code>), OS and R version, and reproduction steps or a minimal reproducible input.</p>
 </div>
 <div class="section level2">
 <h2 id="supported-versions--支持版本">Supported Versions / 支持版本<a class="anchor" aria-label="anchor" href="#supported-versions--%E6%94%AF%E6%8C%81%E7%89%88%E6%9C%AC"></a></h2>
-<table class="table"><thead><tr><th>Version</th>
-<th>Supported</th>
-</tr></thead><tbody><tr><td>latest release</td>
+<table class="table"><thead><tr><th>版本 Version</th>
+<th>支持 Supported</th>
+</tr></thead><tbody><tr><td>最新发布版本 latest release</td>
 <td><span class="emoji" data-emoji="white_check_mark">✅</span></td>
-</tr><tr><td>older releases</td>
+</tr><tr><td>旧版本 older releases</td>
 <td><span class="emoji" data-emoji="x">❌</span></td>
 </tr></tbody></table><p>只对最新发布版本提供安全修复；旧版本请升级后复测。CRAN 上的发布版本以 CRAN 页面为准。</p>
-<p>Security fixes target the latest release only. Please upgrade and re-test before reporting on older versions.</p>
+<p>Security fixes target the latest release only. Please upgrade and re-test before reporting on older versions. The CRAN page is authoritative for released versions.</p>
 </div>
 <div class="section level2">
 <h2 id="scope--关注范围">Scope / 关注范围<a class="anchor" aria-label="anchor" href="#scope--%E5%85%B3%E6%B3%A8%E8%8C%83%E5%9B%B4"></a></h2>
@@ -64,8 +64,11 @@
 <ul><li>文件解析与外部文件读取路径（Newick/NEXUS 树文件、外部分类表）</li>
 <li>CLI 包装脚本（<code>inst/bin/rclade</code>）与 Shiny 界面的输入处理</li>
 <li>依赖供应链（CRAN / Bioconductor 传递依赖）</li>
-</ul><p>Rclade processes user-provided phylogenetic trees and taxonomy data locally. Focus areas: file parsing and external-file reading paths (Newick/NEXUS trees, external taxonomy tables), input handling in the CLI wrapper (<code>inst/bin/rclade</code>) and the Shiny app, and the dependency supply chain (CRAN / Bioconductor transitive dependencies).</p>
-</div>
+</ul><p>Rclade processes user-provided phylogenetic trees and taxonomy data locally. Focus areas:</p>
+<ul><li>File parsing and external-file reading paths (Newick/NEXUS tree files, external taxonomy tables)</li>
+<li>Input handling in the CLI wrapper (<code>inst/bin/rclade</code>) and the Shiny app</li>
+<li>The dependency supply chain (CRAN / Bioconductor transitive dependencies)</li>
+</ul></div>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

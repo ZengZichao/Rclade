@@ -35,18 +35,18 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Rclade</h1>
-      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/v1.1.6/README.CN.md" class="external-link"><code>README.CN.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/zengzichao/Rclade/blob/main/README.CN.md" class="external-link"><code>README.CN.md</code></a></small>
     </div>
 
 <div id="rclade" class="section level1">
 
 <p><a href="README.EN.html">English</a> | <a href="README.CN.html">中文</a></p>
 <!-- badges: start -->
-<p><a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-%E5%8C%85-blue.svg" alt="R package"></a> <a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg" alt="License: MIT"></a> <a href=""><img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.3-green.svg" alt="Version"></a> <!-- badges: end --></p>
+<p><a href="https://www.r-project.org/" class="external-link"><img src="https://img.shields.io/badge/R-%E5%8C%85-blue.svg" alt="R 包"></a> <a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg" alt="许可证: MIT"></a> <a href=""><img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.6-green.svg" alt="版本"></a> <!-- badges: end --></p>
 <blockquote>
-<p><strong>说明：</strong> GitHub 仓库位于 <a href="https://github.com/zengzichao/Rclade%EF%BC%8C%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%E8%AF%B7%E6%8F%90%E4%BA%A4%E8%87%B3" class="external-link uri">https://github.com/zengzichao/Rclade，问题反馈请提交至</a> <a href="https://github.com/zengzichao/Rclade/issues" class="external-link uri">https://github.com/zengzichao/Rclade/issues</a>。</p>
+<p><strong>说明：</strong> GitHub 仓库位于 <a href="https://github.com/zengzichao/Rclade%EF%BC%8C%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%E8%AF%B7%E6%8F%90%E4%BA%A4%E8%87%B3" class="external-link uri">https://github.com/zengzichao/Rclade，问题反馈请提交至</a> <a href="https://github.com/zengzichao/Rclade/issues" class="external-link uri">https://github.com/zengzichao/Rclade/issues</a>。 请按下方所示从源码 tarball 安装，也可克隆 GitHub 仓库。</p>
 </blockquote>
-<p>Rclade 提供单函数调用的系统发育树自动折叠与地质时间轴可视化流水线。专为<strong>深时系统发育组学</strong>和<strong>微生物进化研究</strong>设计，支持在地质时间尺度（Ga/Ma）上可视化分类学关系，基于 GTDB、Silva 或 NCBI 分类系统自动折叠分支。</p>
+<p>Rclade 提供单函数调用的大型系统发育树自动折叠与地质时间轴可视化流水线。专为<strong>深时系统发育组学</strong>和<strong>微生物进化研究</strong>设计，支持在地质时间轴（Ga/Ma）上可视化分类学关系，基于 GTDB、Silva 或 NCBI 分类系统自动折叠演化支（clade）。</p>
 <div class="section level2">
 <h2 id="详细文档">详细文档<a class="anchor" aria-label="anchor" href="#%E8%AF%A6%E7%BB%86%E6%96%87%E6%A1%A3"></a></h2>
 <p>在线 pkgdown 文档站（函数参考、文章、更新日志）由 <code>main</code> 分支自动构建：<a href="https://zengzichao.github.io/Rclade" class="uri">https://zengzichao.github.io/Rclade</a>。</p>
@@ -63,13 +63,13 @@
 <div class="section level2">
 <h2 id="功能特性">功能特性<a class="anchor" aria-label="anchor" href="#%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"></a></h2>
 <ul><li>
-<strong>自动分类标签解析</strong>：启发式检测 GTDB、Silva、NCBI 及自定义格式</li>
+<strong>自动分类标签解析</strong>：基于前缀匹配启发式检测 GTDB、Silva、NCBI 及自定义标签格式</li>
 <li>
-<strong>双格式分类学</strong>：格式A（嵌入式 <code>_d_Bacteria_...</code>）反向匹配，格式B（分号式 <code>d__Bacteria;...</code>）值验证</li>
+<strong>双格式分类学</strong>：格式 A（嵌入式 <code>_d_Bacteria_...</code>）反向匹配，格式 B（分号式 <code>d__Bacteria;...</code>）值验证</li>
 <li>
-<strong>批量分支折叠</strong>：嵌套感知的深度优先排序，自动冲突检测</li>
+<strong>批量演化支折叠</strong>：嵌套感知的深度优先排序，自动冲突检测</li>
 <li>
-<strong>指定类群折叠</strong>：<code>--clade</code> 选项，先检查单系性再折叠</li>
+<strong>指定演化支折叠</strong>：<code>--clade</code> 选项，先检查单系性再折叠</li>
 <li>
 <strong>地质时间轴集成</strong>：通过 deeptime 实现自适应时间刻度（Ma/Ka），支持 ICS 2023/02 年代地层表</li>
 <li>
@@ -81,7 +81,7 @@
 <li>
 <strong>外部分类学文件支持</strong>：从外部文件读取分类学信息，检测循环依赖</li>
 <li>
-<strong>树-序列交叉验证</strong>：自动匹配末端标签与序列ID</li>
+<strong>树-序列交叉验证</strong>：自动匹配末端标签与序列 ID</li>
 <li>
 <strong>实时日志系统</strong>：ISO 8601 毫秒时间戳、步骤跟踪、日志文件输出</li>
 <li>
@@ -93,7 +93,7 @@
 <li>
 <strong>对抗性输入防护</strong>：控制字符/BiDi 标记检测，空文件拒绝</li>
 <li>
-<strong>自检模式</strong>：<code>--check</code> 验证依赖、解析、单系群逻辑</li>
+<strong>自检模式</strong>：<code>--check</code> 验证依赖、解析、单系性逻辑</li>
 <li>
 <strong>多种使用方式</strong>：R API、命令行（<code><a href="reference/run_rclade_cli.html">run_rclade_cli()</a></code> / <code>inst/bin/rclade</code> 包装脚本）、Shiny Web 应用（<code><a href="reference/run_rclade_shiny.html">run_rclade_shiny()</a></code>）</li>
 </ul></div>
@@ -103,10 +103,10 @@
 <h3 id="从源码安装">从源码安装<a class="anchor" aria-label="anchor" href="#%E4%BB%8E%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"></a></h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 从 GitHub 固定版本标签安装（需 remotes 包）</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.3"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"zengzichao/Rclade@v1.1.6"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 或从下载的发布包安装（GitHub Releases / Zenodo）</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.3.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"Rclade_1.1.6.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="使用-conda">使用 Conda<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8-conda"></a></h3>
@@ -130,7 +130,7 @@
 <div class="section level3">
 <h3 id="验证安装">验证安装<a class="anchor" aria-label="anchor" href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85"></a></h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># 运行自检</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -139,7 +139,7 @@
     │
     ▼
 ┌─────────────────┐
-│  读取与验证      │  ← 格式检测、括号平衡、负分支检查、单位换算
+│  读取与验证      │  ← 格式检测、括号平衡、负枝长检查、单位换算
 └────────┬────────┘
          ▼
 ┌─────────────────┐
@@ -159,7 +159,7 @@
 └────────┬────────┘
          ▼
 ┌─────────────────┐
-│  时间轴与注释    │  ← deeptime 时间轴 + 支持值/HPD/分支标签/高亮
+│  时间轴与标注    │  ← deeptime 时间轴 + 支持值/HPD/演化支标签/高亮
 └────────┬────────┘
          ▼
 ┌─────────────────┐
@@ -171,7 +171,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zengzichao/Rclade" class="external-link">Rclade</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 加载内置示例树（50 个叶节点，GTDB 标签）</span></span>
+<span><span class="co"># 加载内置示例树（50 个末端，GTDB 标签）</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_tree</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 按门级折叠可视化</span></span>
@@ -179,8 +179,8 @@
 <span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span>,</span>
 <span>                   add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 折叠指定类群（先检查单系性）</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Cyanobacteria"</span>,</span>
+<span><span class="co"># 折叠指定演化支</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P1"</span>,</span>
 <span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span>,</span>
 <span>                   add_timescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -193,7 +193,7 @@
 <span><span class="fu"><a href="reference/save_timetree.html">save_timetree</a></span><span class="op">(</span><span class="va">p</span>, <span class="st">"output.pdf"</span>, width <span class="op">=</span> <span class="fl">14</span>, height <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 一行流水线</span></span>
-<span><span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, output <span class="op">=</span> <span class="st">"output.pdf"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, output <span class="op">=</span> <span class="st">"output.pdf"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="支持的分类标签格式">支持的分类标签格式<a class="anchor" aria-label="anchor" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%88%86%E7%B1%BB%E6%A0%87%E7%AD%BE%E6%A0%BC%E5%BC%8F"></a></h2>
@@ -201,13 +201,13 @@
 <th>检测规则</th>
 <th>示例</th>
 </tr></thead><tbody><tr><td>
-<strong>GTDB</strong>（格式B）</td>
-<td>前缀 <code>d__</code>、<code>p__</code>、<code>c__</code>、…</td>
+<strong>GTDB</strong>（格式 B）</td>
+<td>前缀 <code>d__</code>、<code>p__</code>、<code>c__</code> 等</td>
 <td><code>d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria</code></td>
 </tr><tr><td>
-<strong>嵌入式</strong>（格式A）</td>
+<strong>嵌入式</strong>（格式 A）</td>
 <td>
-<code>_d_</code>、<code>_p_</code>、<code>_c_</code>、…</td>
+<code>_d_</code>、<code>_p_</code>、<code>_c_</code> 等</td>
 <td><code>GB_GCA_001_d_Bacteria_p_Proteobacteria_c_Gammaproteobacteria</code></td>
 </tr><tr><td><strong>Silva</strong></td>
 <td>分号分隔，无前缀</td>
@@ -217,7 +217,7 @@
 <td><code>cellular organisms;Bacteria;Proteobacteria</code></td>
 </tr><tr><td><strong>自定义正则</strong></td>
 <td>用户提供的正则表达式</td>
-<td><code>list(domain = "Domain:([^|]+)")</code></td>
+<td><code>list(domain = "Domain:([^\|]+)")</code></td>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="核心函数">核心函数<a class="anchor" aria-label="anchor" href="#%E6%A0%B8%E5%BF%83%E5%87%BD%E6%95%B0"></a></h2>
@@ -238,7 +238,7 @@
 </tr><tr><td><code><a href="reference/summarize_taxonomy_quality_with_file.html">summarize_taxonomy_quality_with_file()</a></code></td>
 <td>使用外部文件报告解析质量</td>
 </tr><tr><td><code><a href="reference/check_monophyly.html">check_monophyly()</a></code></td>
-<td>检查分组是否为单系群</td>
+<td>检查分类群是否为单系群</td>
 </tr><tr><td><code><a href="reference/check_special_monophyly.html">check_special_monophyly()</a></code></td>
 <td>检查 LUCA/LACA/LBCA 是否为单系群</td>
 </tr><tr><td><code><a href="reference/detect_taxonomy_format.html">detect_taxonomy_format()</a></code></td>
@@ -256,7 +256,7 @@
 </tr><tr><td><code><a href="reference/validate_sequence_file.html">validate_sequence_file()</a></code></td>
 <td>验证序列文件格式</td>
 </tr><tr><td><code><a href="reference/validate_tree_sequence_match.html">validate_tree_sequence_match()</a></code></td>
-<td>交叉验证树末端与序列ID</td>
+<td>交叉验证树末端与序列 ID</td>
 </tr><tr><td><code><a href="reference/theme_timetree.html">theme_timetree()</a></code></td>
 <td>出版级 ggplot2 主题</td>
 </tr><tr><td><code><a href="reference/run_rclade_selftest.html">run_rclade_selftest()</a></code></td>
@@ -266,7 +266,7 @@
 </tr><tr><td><code><a href="reference/save_session_info.html">save_session_info()</a></code></td>
 <td>导出 sessionInfo 以保证可重复性</td>
 </tr><tr><td><code><a href="reference/set_log_level.html">set_log_level()</a></code></td>
-<td>设置日志级别</td>
+<td>设置日志级别（DEBUG/INFO/WARNING/ERROR/CRITICAL）</td>
 </tr><tr><td><code><a href="reference/set_log_file.html">set_log_file()</a></code></td>
 <td>启用日志文件输出</td>
 </tr><tr><td><code><a href="reference/set_log_enabled.html">set_log_enabled()</a></code></td>
@@ -277,7 +277,7 @@
 <td>列出支持的文件扩展名</td>
 </tr></tbody></table><div class="section level3">
 <h3 id="内部工具函数">内部工具函数<a class="anchor" aria-label="anchor" href="#%E5%86%85%E9%83%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0"></a></h3>
-<p>以下基础设施辅助函数是<strong>内部函数</strong>（未导出），自 API 表面收敛后需通过 <code>Rclade:::</code> 访问：</p>
+<p>以下基础设施辅助函数是<strong>内部函数</strong>（未导出），自 API 表面收敛后，如有需要可通过 <code>Rclade:::</code> 访问：</p>
 <table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr><th>函数</th>
 <th>说明</th>
 </tr></thead><tbody><tr><td><code><a href="reference/batch_with_interrupt.html">batch_with_interrupt()</a></code></td>
@@ -307,7 +307,7 @@
 </tr><tr><td>
 <code><a href="reference/resolve_special_identifier.html">resolve_special_identifier()</a></code> / <code><a href="reference/resolve_group.html">resolve_group()</a></code>
 </td>
-<td>特殊标识符 / 分组解析器</td>
+<td>特殊标识符 / 分类群解析器</td>
 </tr><tr><td>
 <code><a href="reference/validate_custom_groups.html">validate_custom_groups()</a></code> / <code><a href="reference/validate_taxonomy_no_cycles.html">validate_taxonomy_no_cycles()</a></code>
 </td>
@@ -321,29 +321,29 @@
 </tr></tbody></table></div>
 </div>
 <div class="section level2">
-<h2 id="指定类群折叠">指定类群折叠<a class="anchor" aria-label="anchor" href="#%E6%8C%87%E5%AE%9A%E7%B1%BB%E7%BE%A4%E6%8A%98%E5%8F%A0"></a></h2>
-<p>按名称折叠特定类群（先检查单系性）：</p>
+<h2 id="指定演化支折叠">指定演化支折叠<a class="anchor" aria-label="anchor" href="#%E6%8C%87%E5%AE%9A%E6%BC%94%E5%8C%96%E6%94%AF%E6%8A%98%E5%8F%A0"></a></h2>
+<p>按名称折叠特定演化支（先检查单系性）：</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 折叠 Cyanobacteria（如果是单系群）</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Cyanobacteria"</span>,</span>
+<code class="sourceCode R"><span><span class="co"># 仅折叠门级演化支 P1（如果是单系群）</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P1"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 严格模式：非单系群时终止</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"Proteobacteria"</span>,</span>
+<span><span class="co"># 严格模式：演化支非单系时终止</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, clade <span class="op">=</span> <span class="st">"P2"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   strict <span class="op">=</span> <span class="cn">TRUE</span>, taxonomy_format <span class="op">=</span> <span class="st">"GTDB"</span><span class="op">)</span></span></code></pre></div>
 <p>命令行使用：</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># 折叠指定类群</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-o</span> output.pdf</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># 折叠指定演化支</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># 严格模式</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Proteobacteria <span class="at">--strict</span> <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Proteobacteria <span class="at">--strict</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 <div class="section level3">
 <h3 id="使用包装脚本获得标准退出码">使用包装脚本获得标准退出码<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8C%85%E8%A3%85%E8%84%9A%E6%9C%AC%E8%8E%B7%E5%BE%97%E6%A0%87%E5%87%86%E9%80%80%E5%87%BA%E7%A0%81"></a></h3>
-<p>包内提供了 <code>inst/bin/rclade</code> 包装脚本，可在终端直接使用：</p>
+<p>包内提供了 shell 包装脚本 <code>inst/bin/rclade</code>：</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># 将 inst/bin/rclade 加入 PATH，或使用完整路径</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/path/to/Rclade/inst/bin:</span><span class="va">$PATH</span><span class="st">"</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span></code></pre></div>
-<p>相比 <code>Rscript -e "Rclade::run_rclade_cli(...)"</code>，包装脚本： - 正确传递退出码 0/1/2/3 - 在 Ctrl+C 中断时返回标准 Unix 退出码 <strong>130</strong> - 用法与直接调用 CLI 完全一致</p>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
+<p>相比 <code>Rscript -e "Rclade::run_rclade_cli(...)"</code>，包装脚本： - 正确传递退出码 0/1/2/3 - 在 Ctrl+C（SIGINT）中断时返回标准 Unix 退出码 <strong>130</strong> - CLI 参数与直接调用相同</p>
 </div>
 </div>
 <div class="section level2">
@@ -355,7 +355,7 @@
 <td>树的根节点</td>
 <td>所有末端</td>
 </tr><tr><td><strong>LUCA</strong></td>
-<td>最后共同祖先</td>
+<td>最后通用共同祖先</td>
 <td>所有细菌和古菌的 MRCA</td>
 </tr><tr><td><strong>LACA</strong></td>
 <td>最后古菌共同祖先</td>
@@ -375,16 +375,16 @@
 <h2 id="多树文件处理">多树文件处理<a class="anchor" aria-label="anchor" href="#%E5%A4%9A%E6%A0%91%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"></a></h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 使用第一个树</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 随机选择一个树</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"random"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"random"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 分别分析所有树（返回绘图列表）</span></span>
-<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># split 模式：同 all 返回所有树，CLI 会为每棵树生成带数字后缀的输出</span></span>
-<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"split"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># split 模式：同 all（返回 multiPhylo），表示按树拆分输出，CLI 会为每棵树生成带数字后缀的文件</span></span>
+<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, multi_tree_mode <span class="op">=</span> <span class="st">"split"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="外部分类学文件">外部分类学文件<a class="anchor" aria-label="anchor" href="#%E5%A4%96%E9%83%A8%E5%88%86%E7%B1%BB%E5%AD%A6%E6%96%87%E4%BB%B6"></a></h2>
@@ -393,132 +393,132 @@
 <span><span class="va">taxa</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_taxonomy_file.html">read_taxonomy_file</a></span><span class="op">(</span><span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 使用外部文件进行折叠</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>, taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.tsv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 使用自定义分隔符</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>,</span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span>,</span>
 <span>                   taxonomy_file <span class="op">=</span> <span class="st">"taxonomy.csv"</span>,</span>
 <span>                   taxonomy_file_sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="树-序列交叉验证">树-序列交叉验证<a class="anchor" aria-label="anchor" href="#%E6%A0%91-%E5%BA%8F%E5%88%97%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"></a></h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 验证树末端与序列ID匹配</span></span>
+<code class="sourceCode R"><span><span class="co"># 验证树末端与序列 ID 匹配</span></span>
 <span><span class="fu"><a href="reference/validate_tree_sequence_match.html">validate_tree_sequence_match</a></span><span class="op">(</span><span class="st">"tree.nwk"</span>, <span class="st">"sequences.fasta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 多树文件时指定处理方式（默认 "error"，多树文件会报错）</span></span>
+<span><span class="co"># 多树文件时指定处理方式（默认 "error"）</span></span>
 <span><span class="fu"><a href="reference/validate_tree_sequence_match.html">validate_tree_sequence_match</a></span><span class="op">(</span><span class="st">"beast.trees"</span>, <span class="st">"sequences.fasta"</span>,</span>
 <span>                             multi_tree_mode <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 通过 CLI 使用</span></span>
-<span><span class="co"># Rclade -f tree.tre --sequence_file seqs.fasta -r phylum</span></span></code></pre></div>
+<span><span class="co"># 在 plot_timetree() 中（通过 CLI）</span></span>
+<span><span class="co"># rclade -f tree.tre --sequence_file seqs.fasta -r phylum</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="命令行参考">命令行参考<a class="anchor" aria-label="anchor" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E8%80%83"></a></h2>
 <div class="section level3">
 <h3 id="基本用法">基本用法<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"></a></h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># 显示帮助（所有参数、默认值、示例）</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--help</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--help</span></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># 显示版本及依赖版本</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--version</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--version</span></span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co"># 运行自检</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a></span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co"># 基本用法：门级折叠</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
 <span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co"># 使用 GTDB 格式和 Ma 时间单位</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> GTDB <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> GTDB <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co"># 折叠指定类群</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co"># 折叠指定演化支</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--clade</span> Cyanobacteria <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="分类学选项">分类学选项<a class="anchor" aria-label="anchor" href="#%E5%88%86%E7%B1%BB%E5%AD%A6%E9%80%89%E9%A1%B9"></a></h3>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># 外部分类学文件</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">-o</span> output.pdf</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co"># 带标题行和逗号分隔符的分类学文件</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.csv <span class="at">--taxonomy_file_header</span> <span class="at">--taxonomy_file_sep</span> comma</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.csv <span class="at">--taxonomy_file_header</span> <span class="at">--taxonomy_file_sep</span> comma <span class="at">-u</span> Ma</span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co"># 嵌入式格式解析策略（reverse/greedy/segment）</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_delimiter_mode</span> reverse</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_delimiter_mode</span> reverse <span class="at">-u</span> Ma</span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
 <span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co"># 表格分类学优先于嵌入式</span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_source_priority</span> table</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_source_priority</span> table <span class="at">-u</span> Ma</span>
 <span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co"># 自定义分类级别（界、亚种）：code:prefix 格式</span></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co"># 这里 k 使用 _k_ 作为嵌入式分隔符，ss 使用 _ss_</span></span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_levels</span> <span class="st">"k:_k_,ss:_ss_"</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co"># 自定义分类阶元（界、亚种）：code:阶元名 格式</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co"># 嵌入式分隔符 _k_ 由代码 k 推导，冒号之后的字段是该阶元的名称</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> kingdom <span class="at">--taxonomy_format</span> custom_rank <span class="at">--taxonomy_levels</span> <span class="st">"k:kingdom,ss:subspecies"</span> <span class="at">-u</span> Ma</span>
 <span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a></span>
 <span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co"># 自定义分类表分隔符（taxonomy 字符串内部的分隔符）</span></span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_table_sep</span> <span class="st">"|"</span></span></code></pre></div>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--taxonomy_file</span> taxa.tsv <span class="at">--taxonomy_table_sep</span> <span class="st">"|"</span> <span class="at">-u</span> Ma</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="多树选项">多树选项<a class="anchor" aria-label="anchor" href="#%E5%A4%9A%E6%A0%91%E9%80%89%E9%A1%B9"></a></h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># 使用第一个树</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> first <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> first <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co"># 使用最后一个树</span></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> last <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> last <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a></span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co"># 随机选择一个树</span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> random <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> random <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co"># 使用指定索引的树</span></span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--tree_index</span> 42 <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--tree_index</span> 42 <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a></span>
 <span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co"># 分别分析所有树（输出文件自动添加数字后缀）</span></span>
-<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> all <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> all <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co"># 生成：output_1.pdf, output_2.pdf, ...</span></span>
 <span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
 <span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co"># split 模式：同 all，但语义上明确表示按树拆分输出（用于流水线下游分派）</span></span>
-<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> split <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> beast.trees <span class="at">--multi_tree_mode</span> split <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="序列验证">序列验证<a class="anchor" aria-label="anchor" href="#%E5%BA%8F%E5%88%97%E9%AA%8C%E8%AF%81"></a></h3>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># 交叉验证树末端与序列 ID</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># 跳过交叉验证</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--no_cross_check</span> <span class="at">-r</span> phylum</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--no_cross_check</span> <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co"># 指定分子类型（DNA/RNA/protein/auto）</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--mol_type</span> DNA <span class="at">-r</span> phylum</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--mol_type</span> DNA <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a></span>
 <span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co"># 跳过比对长度检查</span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--skip_length_check</span> <span class="at">-r</span> phylum</span></code></pre></div>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">--sequence_file</span> seqs.fasta <span class="at">--skip_length_check</span> <span class="at">-r</span> phylum <span class="at">-u</span> Ma</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="输出控制">输出控制<a class="anchor" aria-label="anchor" href="#%E8%BE%93%E5%87%BA%E6%8E%A7%E5%88%B6"></a></h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># 强制覆盖已有输出</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf <span class="at">--force</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf <span class="at">--force</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># 跳过已有输出（不覆盖）</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-o</span> output.pdf <span class="at">--no_clobber</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf <span class="at">--no_clobber</span></span>
 <span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co"># 跳过畸形输入而非终止</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--ignore_malformed</span> <span class="at">-o</span> output.pdf</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--ignore_malformed</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a></span>
 <span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co"># 低内存模式（适用于大型树）</span></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--low_memory</span> <span class="at">-o</span> output.pdf</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--low_memory</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a></span>
 <span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co"># 剥离节点注释（bootstrap/NHX），减小输出体积</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.nhx <span class="at">-r</span> phylum <span class="at">--strip_annotations</span> <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.nhx <span class="at">-r</span> phylum <span class="at">--strip_annotations</span> <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="配置文件支持">配置文件支持<a class="anchor" aria-label="anchor" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%94%AF%E6%8C%81"></a></h3>
-<p>Rclade 支持通过 YAML 配置文件提供默认值。优先级：<strong>CLI 显式参数 &gt; 配置文件 &gt; 内置默认值</strong>。包内附带 <code>config.example.yaml</code> 模板，列出全部可配置项；可通过以下方式获取：</p>
+<p>Rclade 支持通过 YAML 配置文件提供默认值。优先级：<strong>CLI 显式参数 &gt; 配置文件 &gt; 内置默认值</strong>。包内附带 <code>config.example.yaml</code> 模板，覆盖大部分可配置项；可通过以下方式获取：</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"config.example.yaml"</span>, package <span class="op">=</span> <span class="st">"Rclade"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># 使用配置文件</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-o</span> output.pdf</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co"># CLI 参数覆盖配置文件（此处 rank 优先于配置文件中的 rank）</span></span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-r</span> genus <span class="at">-o</span> output.pdf</span></code></pre></div>
-<p>配置文件示例（详见 <code>inst/extdata/config.example.yaml</code>）：</p>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--config</span> config.yaml <span class="at">-f</span> tree.tre <span class="at">-r</span> genus <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
+<p>配置文件示例（完整模板见 <code>inst/extdata/config.example.yaml</code>）：</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># 任何 CLI 长选项名均可作为键</span></span>
 <span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">rank</span><span class="kw">:</span><span class="at"> phylum</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="fu">taxonomy_format</span><span class="kw">:</span><span class="at"> GTDB</span></span>
@@ -527,19 +527,19 @@
 <span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="fu">strip_annotations</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="fu">log_level</span><span class="kw">:</span><span class="at"> INFO</span></span></code></pre></div>
 <blockquote>
-<p>注：optparse 无法区分”用户显式传入默认值”和”用户未传入该参数”。若用户显式传入与默认值相同的值，配置文件中的值仍会生效。如需强制覆盖配置文件，请在 CLI 上显式传入该参数。</p>
+<p>注：optparse 无法区分”用户显式传入默认值”和”用户未传入该参数”。若用户显式传入与默认值相同的值，配置文件中的值仍会生效。若要让某个参数优先于配置文件生效，请在 CLI 上显式传入一个与内置默认值不同的值。</p>
 </blockquote>
 </div>
 <div class="section level3">
 <h3 id="日志选项">日志选项<a class="anchor" aria-label="anchor" href="#%E6%97%A5%E5%BF%97%E9%80%89%E9%A1%B9"></a></h3>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># 调试日志</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">-o</span> output.pdf</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co"># 日志输出到文件</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_file</span> analysis.log <span class="at">-o</span> output.pdf</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_file</span> analysis.log <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
 <span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co"># 组合使用</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">--log_file</span> debug.log <span class="at">-o</span> output.pdf</span></code></pre></div>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">-f</span> tree.tre <span class="at">-r</span> phylum <span class="at">--log_level</span> DEBUG <span class="at">--log_file</span> debug.log <span class="at">-u</span> Ma <span class="at">-o</span> output.pdf</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="完整-cli-选项表">完整 CLI 选项表<a class="anchor" aria-label="anchor" href="#%E5%AE%8C%E6%95%B4-cli-%E9%80%89%E9%A1%B9%E8%A1%A8"></a></h3>
@@ -566,15 +566,15 @@
 </tr><tr><td><code>-r, --rank</code></td>
 <td>RANK</td>
 <td>none</td>
-<td>折叠等级</td>
+<td>折叠阶元</td>
 </tr><tr><td><code>--clade</code></td>
 <td>NAME</td>
 <td>-</td>
-<td>指定要折叠的类群</td>
+<td>指定要折叠的演化支</td>
 </tr><tr><td><code>--strict</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
-<td>非单系群时终止</td>
+<td>演化支非单系时终止</td>
 </tr><tr><td><code>--tree_index</code></td>
 <td>INT</td>
 <td>-</td>
@@ -619,7 +619,7 @@
 </tr><tr><td><code>--taxonomy_levels</code></td>
 <td>STR</td>
 <td>-</td>
-<td>自定义等级映射，格式 <code>code:prefix</code>，如 <code>k:_k_,ss:_ss_</code>
+<td>自定义阶元映射，格式 <code>code:阶元名</code>，如 <code>k:kingdom,ss:subspecies</code>
 </td>
 </tr><tr><td><code>-t, --triangle_mode</code></td>
 <td>MODE</td>
@@ -640,7 +640,19 @@
 </tr><tr><td><code>--angle</code></td>
 <td>NUM</td>
 <td>360</td>
-<td>环形布局角度（10-360度）</td>
+<td>环形布局角度（10-360 度）</td>
+</tr><tr><td><code>--timescale_mode</code></td>
+<td>MODE</td>
+<td>radial</td>
+<td>环形布局时间轴模式：<code>radial</code>（地质年代条带环绕扇形）/ <code>linear</code>（直线时间轴）</td>
+</tr><tr><td><code>--timescale_position</code></td>
+<td>POS</td>
+<td>right</td>
+<td>直线时间轴的钟表方位：<code>right</code>/<code>left</code>/<code>top</code>/<code>bottom</code>（仅环形布局）</td>
+</tr><tr><td><code>--tree_start_position</code></td>
+<td>POS</td>
+<td>right</td>
+<td>树开始展开的钟表方位（首末端之间的缺口）：<code>right</code>/<code>left</code>/<code>top</code>/<code>bottom</code>（仅环形布局）</td>
 </tr><tr><td><code>--line_width</code></td>
 <td>NUM</td>
 <td>1</td>
@@ -648,7 +660,7 @@
 </tr><tr><td><code>--ignore_branch_length</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
-<td>支序图模式（忽略分支长度）</td>
+<td>支序图（cladogram）模式（忽略枝长）</td>
 </tr><tr><td><code>--color_palette</code></td>
 <td>STR</td>
 <td>viridis</td>
@@ -657,6 +669,11 @@
 <td>STR</td>
 <td>-</td>
 <td>颜色映射：<code>Group:#FF0000</code>
+</td>
+</tr><tr><td><code>--color_rank</code></td>
+<td>RANK</td>
+<td>-</td>
+<td>用于给分支着色的阶元，独立于控制折叠的 <code>--rank</code>，如 <code>phylum</code>
 </td>
 </tr><tr><td><code>--show_tip_labels</code></td>
 <td>FLAG</td>
@@ -669,19 +686,19 @@
 </tr><tr><td><code>--show_clade_label</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
-<td>显示分支标签</td>
+<td>显示演化支标签</td>
 </tr><tr><td><code>--no_clade_count</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
-<td>隐藏分支标签中的物种计数</td>
+<td>隐藏演化支标签中的物种计数</td>
 </tr><tr><td><code>--clade_label_offset</code></td>
 <td>NUM</td>
 <td>50</td>
-<td>分支标签偏移量</td>
+<td>演化支标签偏移量</td>
 </tr><tr><td><code>--clade_label_fontsize</code></td>
 <td>NUM</td>
 <td>3</td>
-<td>分支标签字号</td>
+<td>演化支标签字号</td>
 </tr><tr><td><code>--show_support</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
@@ -725,7 +742,7 @@
 </tr><tr><td><code>--highlight</code></td>
 <td>STR</td>
 <td>-</td>
-<td>高亮类群（逗号分隔）</td>
+<td>高亮演化支（逗号分隔）</td>
 </tr><tr><td><code>--highlight_alpha</code></td>
 <td>NUM</td>
 <td>0.2</td>
@@ -769,7 +786,7 @@
 </tr><tr><td><code>--low_memory</code></td>
 <td>FLAG</td>
 <td>FALSE</td>
-<td>低内存模式（触发 GC 等最佳努力优化）</td>
+<td>低内存模式（尽力减少内存占用）</td>
 </tr><tr><td><code>--log_level</code></td>
 <td>STR</td>
 <td>INFO</td>
@@ -818,19 +835,23 @@
 </tr><tr><td><code>rank</code></td>
 <td>character</td>
 <td>“none”</td>
-<td>折叠等级：none/kingdom/domain/phylum/class/order/family/genus/species/subspecies（支持缩写 k/d/p/c/o/f/g/s/ss）</td>
+<td>折叠阶元：none/kingdom/domain/phylum/class/order/family/genus/species/subspecies（支持缩写 k/d/p/c/o/f/g/s/ss）</td>
 </tr><tr><td><code>clade</code></td>
 <td>character</td>
 <td>NULL</td>
-<td>指定要折叠的类群名称</td>
+<td>指定要折叠的演化支名称</td>
 </tr><tr><td><code>strict</code></td>
 <td>logical</td>
 <td>FALSE</td>
-<td>非单系群时终止</td>
+<td>演化支非单系时终止</td>
 </tr><tr><td><code>groups</code></td>
 <td>list</td>
 <td>NULL</td>
 <td>自定义末端分组</td>
+</tr><tr><td><code>groups_label_only</code></td>
+<td>logical</td>
+<td>FALSE</td>
+<td>只为 <code>groups</code> 分组添加标签，不折叠成三角形</td>
 </tr><tr><td><code>triangle_mode</code></td>
 <td>character</td>
 <td>“mixed”</td>
@@ -874,7 +895,7 @@
 </tr><tr><td><code>timescale_levels</code></td>
 <td>character</td>
 <td>c(“eras”,“eons”)</td>
-<td>显示的时间尺度级别</td>
+<td>显示的时间轴级别</td>
 </tr><tr><td><code>unit</code></td>
 <td>character</td>
 <td>NULL</td>
@@ -918,7 +939,7 @@
 </tr><tr><td><code>taxonomy_levels</code></td>
 <td>list</td>
 <td>NULL</td>
-<td>自定义等级配置，如 <code>list(codes = c("k", "ss"), names = c("kingdom", "subspecies"))</code>
+<td>自定义阶元配置，如 <code>list(codes = c("k", "ss"), names = c("kingdom", "subspecies"))</code>
 </td>
 </tr><tr><td><code>legend_position</code></td>
 <td>character</td>
@@ -931,7 +952,7 @@
 </tr><tr><td><code>show_clade_label</code></td>
 <td>logical</td>
 <td>FALSE</td>
-<td>显示分支标签</td>
+<td>显示演化支标签</td>
 </tr><tr><td><code>show_clade_count</code></td>
 <td>logical</td>
 <td>TRUE</td>
@@ -939,11 +960,11 @@
 </tr><tr><td><code>clade_label_offset</code></td>
 <td>numeric</td>
 <td>50</td>
-<td>分支标签水平偏移量（Ma）</td>
+<td>演化支标签水平偏移量（Ma）</td>
 </tr><tr><td><code>clade_label_fontsize</code></td>
 <td>numeric</td>
 <td>3</td>
-<td>分支标签字号</td>
+<td>演化支标签字号</td>
 </tr><tr><td><code>show_support</code></td>
 <td>logical</td>
 <td>FALSE</td>
@@ -967,7 +988,7 @@
 </tr><tr><td><code>timescale_version</code></td>
 <td>character</td>
 <td>“ICS 2023/02”</td>
-<td>地质时间表版本</td>
+<td>地质时间轴版本</td>
 </tr><tr><td><code>main_title</code></td>
 <td>character</td>
 <td>NULL</td>
@@ -1015,7 +1036,7 @@
 </tr><tr><td><code>low_memory</code></td>
 <td>logical</td>
 <td>FALSE</td>
-<td>低内存模式（触发 GC 等最佳努力优化）</td>
+<td>低内存模式（步骤间触发 GC 等尽力优化）</td>
 </tr><tr><td><code>ignore_malformed</code></td>
 <td>logical</td>
 <td>FALSE</td>
@@ -1023,11 +1044,11 @@
 </tr><tr><td><code>ignore_branch_length</code></td>
 <td>logical</td>
 <td>FALSE</td>
-<td>cladogram 模式（忽略分支长度）</td>
+<td>支序图（cladogram）模式（忽略枝长）</td>
 </tr><tr><td><code>color_rank</code></td>
 <td>character</td>
 <td>NULL</td>
-<td>分支着色的分类学等级（独立于折叠 <code>rank</code>；为 NULL 时按折叠分组着色）</td>
+<td>分支着色的分类学阶元（独立于折叠 <code>rank</code>；为 NULL 时按折叠分组着色）</td>
 </tr><tr><td><code>timescale_mode</code></td>
 <td>character</td>
 <td>“radial”</td>
@@ -1040,6 +1061,11 @@
 <td>character</td>
 <td>“right”</td>
 <td>环形布局树绘制起始方位</td>
+</tr><tr><td><code>opts</code></td>
+<td>list</td>
+<td>NULL</td>
+<td>
+<code><a href="reference/rclade_options.html">rclade_options()</a></code> 对象或含参数默认值的命名列表；显式传入的参数始终优先</td>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="输入输出格式">输入/输出格式<a class="anchor" aria-label="anchor" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"></a></h2>
@@ -1048,13 +1074,13 @@
 <ul><li>
 <strong>节点编号</strong>：内部节点从 1 开始编号（根节点 = Ntip + 1），遵循 <code>ape</code> 惯例</li>
 <li>
-<strong>分支长度</strong>：必须为非负值（负值将触发 CRITICAL 错误）</li>
+<strong>枝长</strong>：必须为非负值（负值将触发 CRITICAL 错误）</li>
 <li>
-<strong>末端标签</strong>：必须唯一（重复将触发 ERROR）</li>
+<strong>末端标签</strong>：必须唯一（重复将触发 WARNING）</li>
 <li>
 <strong>标签长度</strong>：超过 500 字符的 Newick 标签在解析前会被截断为 400 字符 + <code>_RCLADE_TRUNC</code> 后缀（并给出警告），因为 ape 的解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃；若标签需与外部文件精确匹配，请提前缩短标签</li>
 <li>
-<strong>坐标系</strong>：系统发育树使用分支长度坐标（时间，单位 Ma/Ga），非序列坐标</li>
+<strong>坐标系</strong>：系统发育树使用枝长坐标（时间，单位 Ma/Ga），非序列坐标</li>
 <li>
 <strong>标准合规</strong>：Newick 格式遵循 <a href="https://evolution.genetics.washington.edu/phylip/newicktree.html" class="external-link">Newick 标准</a>，Nexus 遵循 <a href="https://doi.org/10.1093/sysbio/46.4.590" class="external-link">NEXUS 标准</a>
 </li>
@@ -1115,7 +1141,7 @@ tip2    d__Bacteria;p__Firmicutes;c__Bacilli
 # 逗号分隔（CSV）
 tip1,d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria
 tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
-<p>缺失等级用空前缀表示：<code>s__</code>（物种缺失）</p>
+<p>缺失阶元以前缀后的空值表示：<code>s__</code>（物种缺失）</p>
 </div>
 <div class="section level3">
 <h3 id="输出格式">输出格式<a class="anchor" aria-label="anchor" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"></a></h3>
@@ -1160,7 +1186,7 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <td>NCBI 生物分类学</td>
 <td><a href="https://www.ncbi.nlm.nih.gov/taxonomy" class="external-link">NCBI Taxonomy</a></td>
 </tr><tr><td><strong>ICS 年代地层表</strong></td>
-<td>地质时间尺度</td>
+<td>地质时间轴</td>
 <td><a href="https://stratigraphy.org/chart" class="external-link">ICS 2023/02</a></td>
 </tr><tr><td><strong>ISO 8601</strong></td>
 <td>日期/时间格式</td>
@@ -1191,11 +1217,13 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </blockquote>
 </div>
 <div class="section level2">
-<h2 id="常见错误及解决方法">常见错误及解决方法<a class="anchor" aria-label="anchor" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"></a></h2>
+<h2 id="故障排查">故障排查<a class="anchor" aria-label="anchor" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"></a></h2>
+<div class="section level3">
+<h3 id="常见错误及解决方法">常见错误及解决方法<a class="anchor" aria-label="anchor" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"></a></h3>
 <table class="table"><colgroup><col width="27%"><col width="27%"><col width="45%"></colgroup><thead><tr><th>错误</th>
 <th>原因</th>
 <th>解决方案</th>
-</tr></thead><tbody><tr><td><code>Input file (-f) is required</code></td>
+</tr></thead><tbody><tr><td><code>Input file (-f/--file) is required.</code></td>
 <td>未指定输入文件</td>
 <td>添加 <code>-f &lt;tree_file&gt;</code>
 </td>
@@ -1206,29 +1234,29 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <td>输入文件为 0 字节</td>
 <td>检查文件是否正确传输</td>
 </tr><tr><td><code>CRITICAL: Negative branch lengths</code></td>
-<td>树有负分支长度</td>
-<td>移除或修复负分支</td>
-</tr><tr><td><code>ERROR: Duplicate tip labels</code></td>
+<td>树有负枝长</td>
+<td>移除或修复负枝长</td>
+</tr><tr><td><code>WARNING: ... contains N duplicate tip label(s)</code></td>
 <td>同一标签出现两次</td>
-<td>使末端标签唯一</td>
+<td>使末端标签唯一；重复标签仅告警，不会中断运行</td>
 </tr><tr><td><code>ERROR: Control characters detected</code></td>
 <td>标签中有恶意字符</td>
 <td>清理控制字符/BiDi 字符（涉及的标签以 <code>&lt;U+XXXX&gt;</code> 转义形式显示）</td>
-</tr><tr><td><code>WARNING: ... 个标签超过 500 字符 ... 截断</code></td>
+</tr><tr><td><code>WARNING: ... label(s) exceed 500 characters ... truncated</code></td>
 <td>ape 的 Newick 解析器遇到超过约 512 字符的标签会崩溃</td>
 <td>Rclade 已将其截断为 400 字符 + <code>_RCLADE_TRUNC</code>；若需精确匹配请提前缩短标签</td>
 </tr><tr><td><code>Circular dependency detected</code></td>
 <td>分类学有循环（如 d__A;p__B 和 d__B;p__A）</td>
 <td>修复分类学文件</td>
 </tr><tr><td><code>Clade 'X' not found</code></td>
-<td>类群名不在分类学中</td>
+<td>演化支名不在分类学中</td>
 <td>检查拼写和格式</td>
 </tr><tr><td><code>Group 'X' is NOT monophyletic</code></td>
-<td>类群分散在树中</td>
-<td>使用 <code>--clade --strict</code> 或 <code>--rank</code>
+<td>分类群分散在树中</td>
+<td>使用 <code>--clade</code> 配合 <code>--strict</code>，或使用 <code>--rank</code>
 </td>
 </tr><tr><td><code>Multiple trees detected</code></td>
-<td>文件有多个树</td>
+<td>文件包含多于 1 棵树</td>
 <td>使用 <code>--multi_tree_mode</code> 或 <code>--tree_index</code>
 </td>
 </tr><tr><td><code>PHYLIP format not supported</code></td>
@@ -1244,8 +1272,8 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <td>文件已存在</td>
 <td>使用 <code>--force</code> 覆盖或 <code>--no_clobber</code> 跳过</td>
 </tr></tbody></table></div>
-<div class="section level2">
-<h2 id="性能优化建议">性能优化建议<a class="anchor" aria-label="anchor" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"></a></h2>
+<div class="section level3">
+<h3 id="性能优化建议">性能优化建议<a class="anchor" aria-label="anchor" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"></a></h3>
 <table class="table"><thead><tr><th>末端数</th>
 <th>建议</th>
 </tr></thead><tbody><tr><td>&gt;5,000</td>
@@ -1260,6 +1288,7 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </tr><tr><td>多分组</td>
 <td>使用 <code>--no_timescale</code> 禁用时间轴</td>
 </tr></tbody></table></div>
+</div>
 <div class="section level2">
 <h2 id="实时日志系统">实时日志系统<a class="anchor" aria-label="anchor" href="#%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F"></a></h2>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -1270,14 +1299,14 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <span><span class="fu"><a href="reference/set_log_file.html">set_log_file</a></span><span class="op">(</span><span class="st">"analysis.log"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 运行分析</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_timetree.html">plot_timetree</a></span><span class="op">(</span><span class="va">example_tree</span>, rank <span class="op">=</span> <span class="st">"phylum"</span>, unit <span class="op">=</span> <span class="st">"Ma"</span><span class="op">)</span></span></code></pre></div>
 <p>日志格式（ISO 8601 毫秒精度）：</p>
 <pre><code>2026-06-13T15:30:45.123 | INFO     | Step 1/7: Input validation and reading
 2026-06-13T15:30:45.125 | INFO     | Reading tree file: example.tre
 2026-06-13T15:30:45.130 | DEBUG    | Memory: 45.2 MB used (approx)</code></pre>
 <p>日志函数（<code><a href="reference/log_info.html">log_info()</a></code> / <code><a href="reference/log_warning.html">log_warning()</a></code> / <code><a href="reference/log_error.html">log_error()</a></code> 等）支持可选的 <code>.module</code> 参数，用于在错误/警告消息中插入 <code>[MODULE/FUNCTION]</code> 来源标签，便于定位问题：</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/log_warning.html">log_warning</a></span><span class="op">(</span><span class="st">"Skipped %d non-monophyletic group(s)"</span>, <span class="va">n</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/log_warning.html">log_warning</a></span><span class="op">(</span><span class="st">"Skipped %d non-monophyletic group(s)"</span>, <span class="fl">3L</span>,</span>
 <span>            .module <span class="op">=</span> <span class="st">"compute-mrca/compute_mrca_map"</span><span class="op">)</span></span>
 <span><span class="co"># 输出：... | WARNING  | [compute-mrca/compute_mrca_map] | Skipped 3 non-monophyletic group(s)</span></span></code></pre></div>
 </div>
@@ -1287,13 +1316,13 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 <code class="sourceCode R"><span><span class="co"># 从 R 运行自检</span></span>
 <span><span class="fu"><a href="reference/run_rclade_selftest.html">run_rclade_selftest</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co"># 从 CLI 运行自检</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="ex">Rclade</span> <span class="at">--check</span></span></code></pre></div>
-<p>检查内容：依赖库、树解析、分类学提取（格式A和B）、单系群逻辑、输入验证、对抗性输入。</p>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="ex">rclade</span> <span class="at">--check</span></span></code></pre></div>
+<p>检查内容：依赖库、树解析、分类学提取（格式 A 和 B）、单系性逻辑、输入验证、对抗性输入。</p>
 </div>
 <div class="section level2">
 <h2 id="性能基准">性能基准<a class="anchor" aria-label="anchor" href="#%E6%80%A7%E8%83%BD%E5%9F%BA%E5%87%86"></a></h2>
-<table class="table"><thead><tr><th>叶节点数</th>
-<th>分类群数</th>
+<table class="table"><thead><tr><th>末端数</th>
+<th>分组数</th>
 <th>耗时</th>
 <th>状态</th>
 </tr></thead><tbody><tr><td>50</td>
@@ -1319,8 +1348,8 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli</code></pre>
 </tr></tbody></table></div>
 <div class="section level2">
 <h2 id="依赖">依赖<a class="anchor" aria-label="anchor" href="#%E4%BE%9D%E8%B5%96"></a></h2>
-<p><strong>必需</strong>：ape (&gt;= 5.0, GPL-2+)、ggtree (&gt;= 4.0.0, Artistic-2.0)、deeptime (&gt;= 1.0, GPL-3)、ggplot2 (&gt;= 3.5.0, MIT)、rlang (MIT)、stringr (&gt;= 1.5, MIT)、tidytree (&gt;= 0.4, Artistic-2.0)</p>
-<p><strong>可选</strong>：treeio（Artistic-2.0，BEAST2/IQ-TREE 支持）、phangorn（GPL-2+，嵌套检测）、viridisLite/RColorBrewer（调色板）、cowplot/patchwork（图例分离）、shiny（Web UI）、optparse（CLI）、yaml（<code>--config</code> 配置文件支持）</p>
+<p><strong>必需</strong>：ape (&gt;= 5.0, GPL-2+)、ggtree (&gt;= 4.0.0, Artistic-2.0)、deeptime (&gt;= 1.0, GPL-3)、ggplot2 (&gt;= 3.5.0, MIT)、rlang (MIT)、stringr (&gt;= 1.5, MIT)、tidytree (&gt;= 0.4, Artistic-2.0)、viridisLite (MIT)</p>
+<p><strong>可选</strong>：treeio（Artistic-2.0，BEAST2/IQ-TREE 支持）、phangorn（GPL-2+，嵌套检测）、RColorBrewer（调色板）、cowplot/patchwork（图例分离）、shiny（Web UI）、optparse（CLI）、yaml（<code>--config</code> 配置文件支持）</p>
 <p>完整的第三方依赖及许可证声明见 <a href="inst/THIRDPARTY">inst/THIRDPARTY</a>。</p>
 </div>
 <div class="section level2">
@@ -1361,7 +1390,7 @@ Issue 追踪：<a href="https://github.com/zengzichao/Rclade/issues" class="exte
 <div class="section level3">
 <h3 id="内置数据许可证">内置数据许可证<a class="anchor" aria-label="anchor" href="#%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E8%AE%B8%E5%8F%AF%E8%AF%81"></a></h3>
 <ul><li>
-<strong>ICS 地质年代数据</strong>（<code>R/sysdata.rda</code>）：基于 <a href="https://stratigraphy.org/chart" class="external-link">ICS 国际年代地层表 2023/02</a>，地质边界年龄为事实数据。</li>
+<strong>ICS 地质时间轴数据</strong>（<code>R/sysdata.rda</code>）：基于 <a href="https://stratigraphy.org/chart" class="external-link">ICS 国际年代地层表 2023/02</a>，地质边界年龄为事实数据。</li>
 </ul></div>
 </div>
 </div>

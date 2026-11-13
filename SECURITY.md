@@ -7,8 +7,8 @@ Security advisories → Report a vulnerability**，不要在公开 Issue
 中披露漏洞细节。
 
 Please report security vulnerabilities privately via GitHub’s **Security
-tab → Security advisories → Report a vulnerability**. Do not open public
-issues with exploit details.
+tab → Security advisories → Report a vulnerability**. Do not disclose
+vulnerability details in public issues.
 
 报告时请尽量附上：Rclade 版本（`packageVersion("Rclade")`）、操作系统与
 R 版本、复现步骤或最小复现文件。
@@ -19,16 +19,17 @@ or a minimal reproducible input.
 
 ## Supported Versions / 支持版本
 
-| Version        | Supported |
-|----------------|-----------|
-| latest release | ✅        |
-| older releases | ❌        |
+| 版本 Version                | 支持 Supported |
+|-----------------------------|----------------|
+| 最新发布版本 latest release | ✅             |
+| 旧版本 older releases       | ❌             |
 
 只对最新发布版本提供安全修复；旧版本请升级后复测。CRAN 上的发布版本以
 CRAN 页面为准。
 
 Security fixes target the latest release only. Please upgrade and
-re-test before reporting on older versions.
+re-test before reporting on older versions. The CRAN page is
+authoritative for released versions.
 
 ## Scope / 关注范围
 
@@ -39,7 +40,11 @@ Rclade 在本地处理用户提供的系统发育树与分类数据，重点关�
 - 依赖供应链（CRAN / Bioconductor 传递依赖）
 
 Rclade processes user-provided phylogenetic trees and taxonomy data
-locally. Focus areas: file parsing and external-file reading paths
-(Newick/NEXUS trees, external taxonomy tables), input handling in the
-CLI wrapper (`inst/bin/rclade`) and the Shiny app, and the dependency
-supply chain (CRAN / Bioconductor transitive dependencies).
+locally. Focus areas:
+
+- File parsing and external-file reading paths (Newick/NEXUS tree files,
+  external taxonomy tables)
+- Input handling in the CLI wrapper (`inst/bin/rclade`) and the Shiny
+  app
+- The dependency supply chain (CRAN / Bioconductor transitive
+  dependencies)
