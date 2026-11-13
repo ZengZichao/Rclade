@@ -72,8 +72,9 @@
 #'   integrity is critical. Default: \code{FALSE}.
 #' @param groups Named list of custom tip groups for collapsing. Each element
 #'   is a character vector of tip labels belonging to that group. Groups must be
-#'   monophyletic; non-monophyletic groups will raise an error. When \code{groups}
-#'   is provided, \code{rank} is ignored (set it to \code{"none"}).
+#'   monophyletic; non-monophyletic groups will raise an error. Supplying
+#'   \code{groups} together with a \code{rank} other than \code{"none"} is an
+#'   error, so leave \code{rank} at its default.
 #'   Example: \code{list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))}.
 #' @param groups_label_only Logical. If \code{TRUE}, clades defined by
 #'   \code{groups} are labelled but NOT collapsed: the member branches stay
@@ -105,7 +106,8 @@
 #'   Default: \code{FALSE} (recommended for trees with >100 tips).
 #' @param tip_label_size Numeric. Tip label font size. Default: \code{2}.
 #' @param add_timescale Logical. Whether to add a geological timescale to the x-axis.
-#'   Requires rectangular layout and valid edge lengths. Default: \code{TRUE}.
+#'   Supported by both the rectangular and the circular layout, and
+#'   requires valid edge lengths. Default: \code{TRUE}.
 #' @param timescale_levels Character vector of timescale levels to display.
 #'   Options: \code{"eras"}, \code{"eons"}, \code{"periods"}.
 #'   Default: \code{c("eras", "eons")}.

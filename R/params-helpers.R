@@ -20,7 +20,7 @@ utils::globalVariables(c("p", "layout"))
 #' Parse raw UI / CLI strings into structured plot parameters
 #'
 #' This is the ONLY place that converts raw UI strings (comma-separated
-#' highlight lists, "A:#FF0000,B:#00FF00" color mappings, "k:_k_,ss:_ss_"
+#' highlight lists, "A:#FF0000,B:#00FF00" color mappings, "k:kingdom,ss:subspecies"
 #' taxonomy level specs, "auto"/"tab"/"comma" separators) into the
 #' structured R objects expected by \code{plot_timetree()}.
 #'
@@ -31,7 +31,7 @@ utils::globalVariables(c("p", "layout"))
 #' @param color_mapping Character string "GroupA:#FF0000,GroupB:#00FF00", or an
 #'   already-structured named vector/list. A single bare hex ("#FF0000") is
 #'   returned as a length-1 color vector (M-E2 / L-D7). \code{NULL} -> \code{NULL}.
-#' @param taxonomy_levels Character string "k:_k_,ss:_ss_", or a pre-built
+#' @param taxonomy_levels Character string "k:kingdom,ss:subspecies", or a pre-built
 #'   \code{list(codes=, names=)}. \code{NULL} -> \code{NULL}.
 #' @param highlight Character string "LUCA, LACA", or a character vector.
 #'   \code{NULL} -> \code{NULL}.

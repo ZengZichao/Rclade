@@ -13,12 +13,13 @@
 - [`save_session_info`](#save_session_info) — 保存 `sessionInfo` 以保证可复现
 - [`rclade_logo`](#rclade_logo) — 显示 Rclade ASCII 艺术徽标
 
+> 以下函数为内部函数（未导出）：`build_path`、`detect_encoding`、`normalize_file_newlines`、`managed_tempdir`、`managed_tempfile`，须以 `Rclade:::build_path()` 形式调用。
+
 ## `build_path`
 
 **安全地拼接文件路径（跨平台）**
 
-`file.path()` 的薄封装，跨平台地拼接路径组件，避免手动拼接分隔符出错。
-构造路径时不要用 `paste()` 或 `sprintf()`。
+`file.path()` 的薄封装，跨平台地拼接路径组件，避免手动拼接分隔符出错。构造路径时不要用 `paste()` 或 `sprintf()`。
 
 **用法：**
 
@@ -39,7 +40,7 @@ build_path(...)
 **示例：**
 
 ```r
-build_path("data", "output", "tree.pdf")
+Rclade:::build_path("data", "output", "tree.pdf")
 ```
 
 
@@ -71,7 +72,7 @@ detect_encoding(filepath, n_lines = 10)
 **示例：**
 
 ```r
-detect_encoding("labels.txt")
+Rclade:::detect_encoding("labels.txt")
 ```
 
 
@@ -102,7 +103,7 @@ normalize_file_newlines(filepath)
 **示例：**
 
 ```r
-normalize_file_newlines("labels.txt")
+Rclade:::normalize_file_newlines("labels.txt")
 ```
 
 
@@ -133,7 +134,7 @@ managed_tempdir(pattern = "rclade_")
 **示例：**
 
 ```r
-d <- managed_tempdir()
+d <- Rclade:::managed_tempdir()
 ```
 
 
@@ -166,7 +167,7 @@ managed_tempfile(pattern = "rclade_", fileext = ".tmp", tmpdir = tempdir())
 **示例：**
 
 ```r
-tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
+tmp <- Rclade:::managed_tempfile(pattern = "tree_", fileext = ".nwk")
 writeLines("(A:1,B:1);", tmp$path)
 # 用毕请调用 tmp$cleanup() 删除该文件
 ```

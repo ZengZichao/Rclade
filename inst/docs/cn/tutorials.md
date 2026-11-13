@@ -34,7 +34,7 @@ data(example_tree)
 groups <- list(MyGroup = c("tip_A", "tip_B", "tip_C"))
 
 # 绘图前先检查是否单系
-validate_custom_groups(example_tree, groups)
+Rclade:::validate_custom_groups(example_tree, groups)
 
 # 按自定义分组折叠
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
@@ -53,8 +53,8 @@ p <- plot_timetree(example_tree,
                    layout = "circular",
                    angle = 320,
                    add_timescale = FALSE,
-                   color_palette = "viridis") +
-     theme_timetree(base_size = 12)
+                   color_palette = "viridis",
+                   theme_fun = function() theme_timetree(base_size = 12))
 
 save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 ```
@@ -67,7 +67,7 @@ save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 library(Rclade)
 
 # taxonomy.tsv: 第1列=末端标签，第2列="d__...;p__...;c__..."
-df <- read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)
+read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)  # 可选的预检
 
 # 绘图，优先使用文件
 p <- plot_timetree("my_tree.nwk", rank = "phylum",

@@ -21,6 +21,8 @@
 - [`timer_start`](#timer_start) — 启动用于性能测量的计时器
 - [`timer_stop`](#timer_stop) — 停止计时器并记录耗时
 
+> 以下函数为内部函数（未导出）：`log_info`、`log_debug`、`log_warning`、`log_error`、`log_critical`、`log_section`、`log_subsection`、`log_progress`、`log_keyvalue`、`log_stats`、`log_table`、`timer_start`、`timer_stop`，须以 `Rclade:::log_info()` 形式调用。
+
 ## `set_log_enabled`
 
 **启用或禁用日志**
@@ -72,7 +74,7 @@ set_log_file(filepath)
 
 **返回值：**
 
-无返回值，仅为副作用调用（打开或关闭日志文件连接，实现控制台 + 文件双通道日志）。
+无返回值，仅为副作用调用（打开或关闭日志文件连接，实现控制台 + 文件双输出日志）。
 
 **示例：**
 
@@ -140,7 +142,7 @@ log_info(..., .module = NULL)
 **示例：**
 
 ```r
-log_info("Starting processing", .module = "main")
+Rclade:::log_info("Starting processing", .module = "main")
 ```
 
 
@@ -172,7 +174,7 @@ log_debug(..., .module = NULL)
 **示例：**
 
 ```r
-log_debug("variable x =", 42, .module = "parse")
+Rclade:::log_debug("variable x =", 42, .module = "parse")
 ```
 
 
@@ -204,7 +206,7 @@ log_warning(..., .module = NULL)
 **示例：**
 
 ```r
-log_warning("Clade not monophyletic, skipped", .module = "collapse")
+Rclade:::log_warning("Clade not monophyletic, skipped", .module = "collapse")
 ```
 
 
@@ -236,7 +238,7 @@ log_error(..., .module = NULL)
 **示例：**
 
 ```r
-log_error("File not found", .module = "io")
+Rclade:::log_error("File not found", .module = "io")
 ```
 
 
@@ -268,7 +270,7 @@ log_critical(..., .module = NULL)
 **示例：**
 
 ```r
-log_critical("Out of memory", .module = "main")
+Rclade:::log_critical("Out of memory", .module = "main")
 ```
 
 
@@ -299,7 +301,7 @@ log_section(title)
 **示例：**
 
 ```r
-log_section("Stage 1: Reading data")
+Rclade:::log_section("Stage 1: Reading data")
 ```
 
 
@@ -330,7 +332,7 @@ log_subsection(title)
 **示例：**
 
 ```r
-log_subsection("Sub-step: parsing labels")
+Rclade:::log_subsection("Sub-step: parsing labels")
 ```
 
 
@@ -363,7 +365,7 @@ log_progress(current, total, item = "")
 **示例：**
 
 ```r
-log_progress(3, 10, item = "Processing tree file")
+Rclade:::log_progress(3, 10, item = "Processing tree file")
 ```
 
 
@@ -396,7 +398,7 @@ log_keyvalue(key, value, level = "INFO")
 **示例：**
 
 ```r
-log_keyvalue("Number of nodes", 1234)
+Rclade:::log_keyvalue("Number of nodes", 1234)
 ```
 
 
@@ -427,7 +429,7 @@ log_stats(stats)
 **示例：**
 
 ```r
-log_stats(list(files = 5, tips = 120))
+Rclade:::log_stats(list(files = 5, tips = 120))
 ```
 
 
@@ -459,7 +461,7 @@ log_table(data, title = NULL)
 **示例：**
 
 ```r
-log_table(data.frame(a = 1:3, b = letters[1:3]),
+Rclade:::log_table(data.frame(a = 1:3, b = letters[1:3]),
          title = "Statistics")
 ```
 
@@ -491,7 +493,7 @@ timer_start(name)
 **示例：**
 
 ```r
-timer_start("pipeline")
+Rclade:::timer_start("pipeline")
 ```
 
 
@@ -501,7 +503,7 @@ timer_start("pipeline")
 
 **停止计时器并记录耗时**
 
-停止指定计时器，记录并输出经过的时间。
+停止指定计时器，记录并输出耗时。
 
 **用法：**
 
@@ -518,12 +520,12 @@ timer_stop(name, level = "INFO")
 
 **返回值：**
 
-数值型。不可见地返回经过的秒数（若计时器未启动则返回 `NA`）。
+数值型。不可见地返回耗时秒数（若计时器未启动则返回 `NA`）。
 
 **示例：**
 
 ```r
-timer_stop("pipeline")
+Rclade:::timer_stop("pipeline")
 ```
 
 

@@ -7,8 +7,10 @@
 - [`run_rclade_cli`](#run_rclade_cli) — 从命令行运行 Rclade
 - [`run_rclade_shiny`](#run_rclade_shiny) — 启动 Rclade Shiny 交互应用
 - [`run_rclade_selftest`](#run_rclade_selftest) — 运行 Rclade 自检
-- [`batch_with_interrupt`](#batch_with_interrupt) — 带中断处理的批量执行
+- [`batch_with_interrupt`](#batch_with_interrupt) — 带中断处理与进度追踪的批量执行
 - [`with_graceful_interrupt`](#with_graceful_interrupt) — 带优雅中断处理的表达式执行
+
+> 以下函数为内部函数（未导出）：`batch_with_interrupt`、`with_graceful_interrupt`，须以 `Rclade:::batch_with_interrupt()` 形式调用。
 
 ## `run_rclade_cli`
 
@@ -30,7 +32,7 @@ run_rclade_cli(args = commandArgs(trailingOnly = TRUE))
 
 **返回值：**
 
-不可见地返回遵循标准 Unix 约定的整数退出码：`0L`（成功）、`1L`（运行错误）、`2L`（参数错误）、`3L`（输入数据错误）、`130L`（用户中断 / SIGINT）。调用方**必须**把该值转发给 `q(status = ...)` 或 `quit(status = ...)`，否则进程无论是否出错都恒以退出码 `0` 结束。
+不可见地返回遵循标准 Unix 约定的整数退出码：`0L`（成功）、`1L`（自检存在未通过项，仅 `--check` 路径返回）、`2L`（参数错误）、`3L`（输入数据错误）、`130L`（用户中断 / SIGINT）。运行期错误不会被转换为返回值，而是以 R 错误重新抛出（由 `Rscript` 以状态码 1 退出）。调用方**必须**把该值转发给 `q(status = ...)` 或 `quit(status = ...)`，否则进程无论是否出错都恒以退出码 `0` 结束。
 
 **示例：**
 
@@ -77,6 +79,7 @@ run_rclade_shiny()
 1. 必需依赖包的可用性与版本
 1. 示例树解析与分类提取
 1. 单系性逻辑校验
+1. 输入深度校验（畸形树与序列的处理）
 
 **用法：**
 
@@ -105,7 +108,7 @@ run_rclade_selftest()
 
 ## `batch_with_interrupt`
 
-**带中断处理的批量执行**
+**带中断处理与进度追踪的批量执行**
 
 对列表/向量逐项执行给定函数，带进度追踪，并能在用户中断（如 Ctrl+C）时优雅退出；被中断时会报告中止前已完成多少项。
 
@@ -130,8 +133,9 @@ batch_with_interrupt(items, fun, label_fun = NULL)
 **示例：**
 
 ```r
+data(example_tree)
 trees <- list(example_tree, example_tree)
-results <- batch_with_interrupt(trees, function(t, i) {
+results <- Rclade:::batch_with_interrupt(trees, function(t, i) {
   plot_timetree(t, rank = "phylum", add_timescale = FALSE)
 })
 ```
@@ -165,7 +169,7 @@ with_graceful_interrupt(expr, total = 0)
 **示例：**
 
 ```r
-result <- with_graceful_interrupt({
+result <- Rclade:::with_graceful_interrupt({
   for (i in 1:100) {
     Sys.sleep(0.1)
   }

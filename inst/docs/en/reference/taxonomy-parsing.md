@@ -15,7 +15,11 @@ This module contains the following functions:
 - [`read_taxonomy_file`](#read_taxonomy_file) — Read taxonomy information from a table file
 - [`validate_taxonomy_no_cycles`](#validate_taxonomy_no_cycles) — Detect circular dependencies in taxonomy table
 
+> Not exported (internal): `resolve_group`, `resolve_special_identifier`, `build_group_vec`, `validate_custom_groups`, `validate_taxonomy_no_cycles`. Call them as `Rclade:::resolve_group()`.
+
 ## `detect_taxonomy_format`
+
+Detect taxonomy format from tip labels
 
 Detects Format A (embedded: `_d_Bacteria_p_...`) or
 Format B (semicolon-delimited: `d__Bacteria;p__...`).
@@ -34,7 +38,7 @@ detect_taxonomy_format(labels)
 
 **Value:**
 
-Format name: "embedded", "GTDB", "Silva", "NCBI", or "unknown". Detection and parsing are heuristic prefix matches, not a strict grammar; mixed or malformed label sets (e.g. semicolon-delimited labels that are neither clearly NCBI nor Silva) return `"unknown"`, in which case an explicit `format` must be supplied.
+Format name: "embedded", "GTDB", "Silva", "NCBI", or "unknown". Detection samples at most the first 100 labels and is a content-based heuristic, not a strict grammar: GTDB matches the unanchored pattern `[dpcofgsk]__` and additionally requires that more than half of the sampled labels contain a semicolon, "embedded" matches `_[dpcofgsk]_`, and only the NCBI/Silva tie-break uses anchored prefix lists. GTDB and "embedded" are accepted only on a clear majority (score > 0.5, i.e. at least 0.6); mixed or malformed label sets (e.g. semicolon-delimited labels that are neither clearly NCBI nor Silva) return `"unknown"`, in which case an explicit `format` must be supplied.
 
 **Examples:**
 
@@ -48,6 +52,8 @@ detect_taxonomy_format(labels)
 ---
 
 ## `parse_taxonomy`
+
+Unified taxonomy parsing entry point
 
 Parses taxonomic information from tip labels using the specified format and
 returns a data.frame of group assignments. Intended for use as a stable
@@ -74,7 +80,7 @@ parse_taxonomy(
 | `rank` | Taxonomic rank (abbreviation or full name) |
 | `format` | Format: "auto", "embedded", "GTDB", "Silva", "NCBI", "custom_rank", "custom_regex" |
 | `custom_patterns` | Custom regex patterns (required when format = "custom_regex") |
-| `taxonomy_levels` | Custom taxonomy level configuration (list with codes and names) |
+| `taxonomy_levels` | Custom taxonomy level configuration (list with codes and names). Default: `NULL`. |
 | `delimiter_mode` | Character. Embedded parsing strategy: "reverse", "greedy", "segment". |
 
 **Value:**
@@ -93,6 +99,8 @@ parse_taxonomy(labels, rank = "phylum", format = "GTDB")
 ---
 
 ## `resolve_group`
+
+Resolve group name or special identifier to MRCA node
 
 Unified function that handles both regular group names and special identifiers
 (ROOT, LUCA, LACA, LBCA).
@@ -134,7 +142,7 @@ A list with components:
 - **is_special**: Logical. Whether this is a special identifier.
 - **node**: Integer or NULL. The MRCA node number.
 - **n_tips**: Integer. Number of tips in the group.
-- **outsiders**: Character vector. Tips in MRCA not belonging to group.
+- **outsiders**: Character vector. Tips in MRCA not belonging to group. For a special identifier (`ROOT`/`LUCA`/`LACA`/`LBCA`) this is instead a single summary string `"N tip(s) from <domains>"`, not tip labels.
 
 **Examples:**
 
@@ -142,16 +150,18 @@ A list with components:
 data(example_tree)
 
 # Regular group
-result1 <- resolve_group(example_tree, "P1", rank = "phylum")
+result1 <- Rclade:::resolve_group(example_tree, "P1", rank = "phylum")
 
 # Special identifier
-result2 <- resolve_group(example_tree, "LUCA")
+result2 <- Rclade:::resolve_group(example_tree, "LUCA")
 ```
 
 
 ---
 
 ## `resolve_special_identifier`
+
+Resolve special ancestral node identifiers
 
 Handles special identifiers for key ancestral nodes in the tree of life:
 
@@ -197,8 +207,8 @@ Invisibly returns a list with components:
 
 ```r
 data(example_tree)
-root <- resolve_special_identifier(example_tree, "ROOT")
-luca <- resolve_special_identifier(example_tree, "LUCA")
+root <- Rclade:::resolve_special_identifier(example_tree, "ROOT")
+luca <- Rclade:::resolve_special_identifier(example_tree, "LUCA")
 if (!is.null(luca$node)) {
   cat("LUCA found at node", luca$node, "\n")
 }
@@ -208,6 +218,8 @@ if (!is.null(luca$node)) {
 ---
 
 ## `build_group_vec`
+
+Build a group vector from custom groups
 
 Converts a named list of tip vectors into the named-vector format used
 by `compute_mrca_map()`.
@@ -235,7 +247,7 @@ Named character vector: names = tip labels, values = group names,
 ```r
 tips <- c("A", "B", "C", "D")
 groups <- list(g1 = c("A", "B"), g2 = c("C", "D"))
-build_group_vec(groups, tips)
+Rclade:::build_group_vec(groups, tips)
 ```
 
 
@@ -243,8 +255,9 @@ build_group_vec(groups, tips)
 
 ## `validate_custom_groups`
 
-Checks that every group is monophyletic and that tips do not overlap
-between groups.
+Validate user-defined custom groups for tree collapsing
+
+Checks that every group is monophyletic and that tips do not overlap between groups. Any violation raises an error; `plot_timetree()` calls this function unconditionally when `groups` is supplied (independent of `strict`).
 
 **Usage:**
 
@@ -268,7 +281,7 @@ with an informative error.
 
 ```r
 data(example_tree)
-validate_custom_groups(example_tree,
+Rclade:::validate_custom_groups(example_tree,
      list(C1 = "d__D1;p__P1;c__C1"))
 ```
 
@@ -276,6 +289,8 @@ validate_custom_groups(example_tree,
 ---
 
 ## `summarize_taxonomy_quality`
+
+Report taxonomy label parsing quality
 
 Provides a detailed report on how well taxonomic labels can be parsed,
 including per-rank parse rates and failed labels.
@@ -299,7 +314,7 @@ summarize_taxonomy_quality(
 | `labels` | Character vector of tip labels |
 | `format` | Format: "auto", "embedded", "GTDB", "Silva", "NCBI", "custom_rank", "custom_regex" |
 | `custom_patterns` | Custom regex patterns (for "custom_regex" format) |
-| `taxonomy_levels` | Custom taxonomy level configuration |
+| `taxonomy_levels` | Custom taxonomy level configuration (list with codes and names). Default: `NULL`. |
 | `delimiter_mode` | Character. Embedded parsing strategy: "reverse", "greedy", "segment". |
 
 **Value:**
@@ -319,8 +334,9 @@ summarize_taxonomy_quality(labels, format = "GTDB")
 
 ## `summarize_taxonomy_quality_with_file`
 
-Extended version of `summarize_taxonomy_quality()` that can use an
-external taxonomy file.
+Summarize taxonomy quality with external file support
+
+Extended version of `summarize_taxonomy_quality()` that can use an external taxonomy file: by default (`file_priority = TRUE`) file entries overwrite label-parsed ranks; with `file_priority = FALSE` they only fill ranks that parsing left as `NA`.
 
 **Usage:**
 
@@ -344,7 +360,7 @@ summarize_taxonomy_quality_with_file(
 | Argument | Description |
 |----------|-------------|
 | `labels` | Character vector of tip labels. |
-| `format` | Format: "auto", "GTDB", "Silva", "NCBI", "custom_rank", "custom_regex". |
+| `format` | Format: "auto", "embedded", "GTDB", "Silva", "NCBI", "custom_rank", "custom_regex". |
 | `custom_patterns` | Custom regex patterns (for "custom_regex" format). |
 | `taxonomy_file` | Character. Path to external taxonomy file. Default: `NULL`. |
 | `file_sep` | Character. Column separator for taxonomy file. Default: `"auto"`. |
@@ -373,17 +389,21 @@ summarize_taxonomy_quality_with_file(labels, format = "auto",
 
 ## `read_taxonomy_file`
 
+Read taxonomy information from a table file
+
 Reads taxonomy information from a two-column table file where:
 
 - Column 1: Tip labels (must match tree tip labels)
 - Column 2: Taxonomy strings in GTDB format
 (e.g., `d__Archaea;p__Thermoproteota;c__Korarchaeia`)
 
-Both tab-delimited and comma-delimited files are supported, and the separator
-as well as an optional header row are auto-detected. Missing ranks are indicated
-by empty values after the rank prefix (e.g., `s__` for a missing species). This
-is the file format expected by the `taxonomy_file` argument of
-`plot_timetree()`.
+Both tab-delimited and comma-delimited files are supported, and the column
+separator is auto-detected, but a header row is not: with the default
+`header = FALSE` the first line is read as data, so pass `header = TRUE`
+(or `taxonomy_file_header = TRUE` / `--taxonomy_file_header`) when the file
+has one. Missing ranks are indicated by empty values after the rank prefix
+(e.g., `s__` for a missing species). This is the file format expected by the
+`taxonomy_file` argument of `plot_timetree()`.
 
 **Usage:**
 
@@ -432,6 +452,8 @@ taxa <- read_taxonomy_file("taxonomy.csv", sep = ",", header = TRUE)
 
 ## `validate_taxonomy_no_cycles`
 
+Detect circular dependencies in taxonomy table
+
 Checks for cases like:
 
 - Row 1: d__A;p__B
@@ -457,13 +479,13 @@ validate_taxonomy_no_cycles(taxa_df, filepath = "<taxonomy>")
 
 **Value:**
 
-Invisibly returns TRUE if no cycles. Stops on detection.
+Invisibly returns `TRUE` when no cycles are found. On detection it aborts (class `Rclade_validate_error`) with the source file, the offending adjacent rank pair, and up to 3 cycle descriptions such as `phylum<->class (phylum=Bacteria, class=Firmicutes)`.
 
 **Examples:**
 
 ```r
 taxa <- read_taxonomy_file("taxonomy.tsv")
-validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
+Rclade:::validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
 ```
 
 
@@ -472,4 +494,4 @@ validate_taxonomy_no_cycles(taxa, "taxonomy.tsv")
 
 ---
 
-[中文](../../cn/reference/taxonomy-parsing.md) | [文档首页](../index.md)
+[中文](../../cn/reference/taxonomy-parsing.md) | [Documentation Home](../index.md)

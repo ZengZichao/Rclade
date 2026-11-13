@@ -134,7 +134,7 @@ Hochhauser) for the 1.0.0 submission have been addressed:
 ## Rclade 1.1.0 (2026-08-26)
 
 Revision release implementing the fixes required by the pre-submission
-independent review ("Rclade-审稿意见", 2026-08-24). Contains one
+independent review (2026-08-24). Contains one
 user-visible behavior change.
 
 * **BREAKING / fail-safe unit contract (issue 1)**: `plot_timetree()` now
@@ -285,7 +285,7 @@ parsing evaluation, unified benchmark protocol):
 
 ## Remediation round 2 (2026-08-01, Rclade 1.0.1)
 
-Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
+Addresses the remaining items from the Rclade v1.0.0 revision plan:
 
 * **API surface convergence (P0-2)**: 27 infrastructure functions (logging,
   timers, temp-file helpers, validators, etc.) moved from exported to internal
@@ -308,7 +308,7 @@ Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
 ## Post-review hardening (2026-07-30, Rclade 1.0.1)
 
 A structured editor-style review of the 1.0.0 manuscript and codebase was
-fully addressed (see `主编审阅报告_Rclade_v1.0.0.md` in the project workspace).
+fully addressed (see the Rclade v1.0.0 editor review report in the project workspace).
 User-visible changes:
 
 * **Rendering/time axis**: the x-axis range is now adaptive (`compute_x_min()`

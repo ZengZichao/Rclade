@@ -2,6 +2,13 @@
 
 常见任务的复制即用配方。所有示例均使用内置的 `example_tree`。
 
+本包不会自动加载数据集，使用前请先执行一次：
+
+```r
+library(Rclade)
+data(example_tree)
+```
+
 ## 以不同于折叠的阶元着色
 
 ```r
@@ -43,8 +50,10 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   ignore_branch_length = TRUE, unit = "Ma")
+                   ignore_branch_length = TRUE, add_timescale = FALSE)
 ```
+
+`ignore_branch_length = TRUE` 会强制将 `add_timescale` 置为 `FALSE`（并记录一条警告），因此支序图无需指定 `unit`。
 
 ## 绘图前检测标签格式
 
@@ -69,7 +78,7 @@ check_monophyly(example_tree, group = "P1", rank = "phylum")
 
 ```r
 groups <- c("P1", "P2", "P3")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 ## 为某次运行开启详细日志
@@ -83,9 +92,9 @@ p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 ## 为流程阶段计时
 
 ```r
-timer_start("collapse")
+Rclade:::timer_start("collapse")
 p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
-timer_stop("collapse")
+Rclade:::timer_stop("collapse")
 ```
 
 ## 保存可复现的会话记录

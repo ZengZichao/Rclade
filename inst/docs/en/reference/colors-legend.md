@@ -7,6 +7,8 @@ This module contains the following functions:
 - [`generate_colors`](#generate_colors) — Generate color mapping for taxonomic groups
 - [`split_legend`](#split_legend) — Extract legend as separate grob and combine with patchwork
 
+> Not exported (internal): `generate_colors`, `split_legend`. Call them as `Rclade:::generate_colors()`.
+
 ## `generate_colors`
 
 Generate color mapping for taxonomic groups
@@ -37,7 +39,7 @@ Named color vector (names = groups)
 
 ```r
 groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 
@@ -74,7 +76,7 @@ Use patchwork operators like `|` and `/` for layout composition.
 ```r
 data(example_tree)
 p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
-split_legend(p, ncol_split = 2)
+Rclade:::split_legend(p, ncol_split = 2)
 ```
 
 
@@ -83,4 +85,4 @@ split_legend(p, ncol_split = 2)
 
 ---
 
-[中文](../../cn/reference/colors-legend.md) | [文档首页](../index.md)
+[中文](../../cn/reference/colors-legend.md) | [Documentation Home](../index.md)

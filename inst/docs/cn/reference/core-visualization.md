@@ -90,7 +90,7 @@ plot_timetree(
 |------|------|
 | `tree` | `phylo` 或 `treedata` 对象，或指向 Newick（.nwk、.tre、.treefile）或 Nexus（.nexus、.nex）文件的路径字符串。 |
 | `tree_index` | 整数。多树对象（如 BEAST 后验样本）中要使用的树索引；仅当 `tree` 为文件路径时生效。默认：`NULL`（改用 `multi_tree_mode` 决定）。 |
-| `multi_tree_mode` | 字符。如何处理文件中的多棵树。可选项：`"error"`（默认，报错并提示用户指定）、`"ask"`（交互式询问，非交互会话回退为 `"error"`）、`"first"`、`"last"`、`"random"`、`"all"`（批量模式，返回图对象列表）、`"split"`（同样返回全部树，但 CLI 会按序号为每棵树写出独立输出文件）。 |
+| `multi_tree_mode` | 字符。如何处理文件中的多棵树。可选项：`"error"`（默认，报错并提示用户指定）、`"ask"`（交互式询问，非交互会话回退为 `"error"`）、`"first"`、`"last"`、`"random"`、`"all"` 与 `"split"` 走同一代码路径（均返回全部树/图对象列表）；在命令行下二者都会为每棵树写出带序号的独立输出文件，`"split"` 仅用于表明这一意图。 |
 | `rank` | 字符。按哪个分类阶元折叠，可选：`"none"`、`"kingdom"`、`"domain"`、`"phylum"`、`"class"`、`"order"`、`"family"`、`"genus"`、`"species"`、`"subspecies"`，或缩写 `"k"`、`"d"`、`"p"`、`"c"`、`"o"`、`"f"`、`"g"`、`"s"`、`"ss"`。默认：`"none"`。与 `groups` 互斥。 |
 | `triangle_mode` | 折叠三角形的可视化模式。`"max"` 显示演化支（clade）的完整范围，`"min"` 显示最小范围，`"mixed"` 采用自适应选择，`"none"` 不绘制三角形。默认：`"mixed"`。 |
 | `space_mode` | 折叠演化支的空间分配策略。`"equal"` 为每个演化支分配等高的纵向空间，`"proportional"` 按末端数目按比例分配空间。默认：`"proportional"`。 |
@@ -101,7 +101,7 @@ plot_timetree(
 | `line_width` | 数值。分支线宽（传给 ggtree）。默认：`1`。 |
 | `show_tip_labels` | 逻辑值。是否显示末端标签。默认：`FALSE`（末端数超过 100 的树建议关闭）。 |
 | `tip_label_size` | 数值。末端标签字号。默认：`2`。 |
-| `add_timescale` | 逻辑值。是否在 x 轴添加地质时间轴。需要矩形布局与有效枝长。默认：`TRUE`。 |
+| `add_timescale` | 逻辑值。是否在 x 轴添加地质时间轴。矩形布局与环形布局均支持，需要有有效枝长。默认：`TRUE`。 |
 | `timescale_levels` | 字符向量。要显示的地质时间轴层级，可选 `"eras"`、`"eons"`、`"periods"`。默认：`c("eras", "eons")`。 |
 | `unit` | 输入树的枝长的时间单位：`"Ga"`（十亿年）或 `"Ma"`（百万年）。**当 `add_timescale = TRUE` 时必须显式指定**：若 `unit` 为 `NULL`，流水线会中止，因为 Rclade 不推断枝长单位，也不验证输入树是否为经过时间校准的时间树（chronogram）。取 `"Ga"` 时枝长自动换算为 Ma（乘以 1000）。`NULL` 保持树的原生单位不变，仅在与 `add_timescale = FALSE` 配合时有效。Rclade 仅展示用户提供的时间校准，从不推断分化时间。默认：`NULL`。 |
 | `taxonomy_format` | 字符。分类标签格式。`"auto"` 通过前缀匹配启发式自动探测格式。手动可选项：`"GTDB"`、`"Silva"`、`"NCBI"`、`"custom_rank"`、`"custom_regex"`。默认：`"auto"`。 |
@@ -119,7 +119,7 @@ plot_timetree(
 | `legend_title` | 字符。自定义图例标题。为 `NULL` 时自动使用阶元名称（如 "Phylum"、"Class"）。默认：`NULL`。 |
 | `clade` | 字符。要折叠的特定演化支名称（如 `"Cyanobacteriota"`）。提供后仅检查该演化支的单系性（monophyly），并在有效时折叠它。与 `rank`、`groups` 互斥。默认：`NULL`。 |
 | `strict` | 逻辑值。为 `TRUE` 时，非单系演化支会报错终止；为 `FALSE` 时，非单系演化支仅触发告警并被跳过。默认：`FALSE`。采用宽容默认值是有意为之：在交互探索末端众多、分类信息可能不准的大树时，遇到首个非单系群就中止会让用户看不到任何结果；在要求分类完整性的生产流水线中应使用 `TRUE`。 |
-| `groups` | 具名列表，指定用于折叠的自定义末端分组。每个元素是一个字符向量，给出属于该分组的末端标签。各分组必须构成单系群，非单系分组会报错。提供 `groups` 时，`rank` 会被忽略（应将其设为 `"none"`）。示例：`list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))`。 |
+| `groups` | 具名列表，指定用于折叠的自定义末端分组。每个元素是一个字符向量，给出属于该分组的末端标签。各分组必须构成单系群，非单系分组会报错。若提供 `groups`，则 `rank` 须保持默认的 `"none"`；同时指定其他 `rank` 会报错。示例：`list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))`。 |
 | `groups_label_only` | 逻辑值。为 `TRUE` 时，`groups` 定义的演化支只加标注而不折叠：成员分支保持完全展开，仅在旁边画出分组名称。默认：`FALSE`。 |
 | `show_clade_label` | 逻辑值。是否在折叠三角形旁添加演化支标签，显示分组名称与物种数目。默认：`FALSE`。 |
 | `show_clade_count` | 逻辑值。是否在演化支标签中显示物种数目（如 "Proteobacteria (n=42)"）。仅当 `show_clade_label = TRUE` 时生效。默认：`TRUE`。 |
@@ -152,8 +152,7 @@ plot_timetree(
 
 **返回值：**
 
-返回一个 `ggplot` 对象，其 `rclade_info` 属性包含元数据（末端数、分组数、分类格式等）。
-可继续用 `+` 叠加图层做进一步定制。
+返回一个 `ggplot` 对象，其 `rclade_info` 属性包含元数据（末端数、分组数、分类格式等）。可继续用 `+` 叠加图层做进一步定制。
 
 **示例：**
 
@@ -183,7 +182,7 @@ plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma",
                        multi_tree_mode = "all")
 
 # 直接保存结果
-plot_timetree(tree, rank = "phylum", unit = "Ma", output = "output.pdf")
+plot_timetree(example_tree, rank = "phylum", unit = "Ma", output = "output.pdf")
 ```
 
 

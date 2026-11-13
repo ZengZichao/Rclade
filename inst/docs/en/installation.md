@@ -30,7 +30,9 @@ conda activate rclade
 
 `environment.yml` does not include Rclade itself, so once the environment is activated you still need to install Rclade as described under "Install from CRAN" or "Install the development version" above.
 
-> **Reproducibility note**: `environment.yml` specifies minimum version bounds.
+> **Reproducibility note**: `environment.yml` specifies minimum version bounds for
+> most entries; a few (`r-viridislite`, `r-rcolorbrewer`, `r-filelock`, `r-yaml`,
+> `r-svglite`) are left unpinned.
 > For fully reproducible environments, export an explicit spec after creation:
 >
 > ```bash
@@ -44,7 +46,7 @@ conda activate rclade
 
 Rclade imports: `ape`, `ggtree`, `deeptime`, `ggplot2`, `rlang`, `stringr`, `tidytree`, `viridisLite`.
 
-Suggested packages (needed for some features): `treeio`, `phangorn`, `RColorBrewer`, `cowplot`, `patchwork`, `shiny`, `optparse`, `yaml`, `testthat`, `knitr`, `rmarkdown`. Additionally, `vdiffr`, `covr`, `filelock`, `withr` are suggested for the test suite.
+Suggested packages (needed for some features): `treeio`, `phangorn`, `RColorBrewer`, `cowplot`, `patchwork`, `shiny`, `optparse`, `yaml`, `testthat`, `knitr`, `rmarkdown`. Additionally, `vdiffr`, `covr`, `filelock`, `withr` are suggested for the test suite. `svglite` is not a declared dependency; it is listed (unpinned) in `environment.yml` for SVG output.
 
 Install suggested packages if you plan to use the Shiny app, CLI, or run tests:
 

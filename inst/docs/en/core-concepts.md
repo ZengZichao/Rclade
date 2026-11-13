@@ -9,8 +9,8 @@ Rclade reads the taxonomic assignment of each tip from its **label**. Several fo
 | Format | Example label | Detected by |
 |--------|---------------|-------------|
 | GTDB | `d__Bacteria;p__Firmicutes;c__Bacilli` | prefix `d__`/`p__`/..., and semicolons in the majority |
-| Silva | `Bacteria;Firmicutes;Bacilli` | semicolon ranks, no codes |
-| NCBI | `cellular organisms; Bacteria; Firmicutes` | named ranks |
+| Silva | `Bacteria;Firmicutes;Bacilli` | semicolon ranks with no codes, led by `Bacteria`/`Archaea`/`Eukaryota` |
+| NCBI | `cellular organisms; Bacteria; Firmicutes` | semicolon ranks led by an NCBI root token (`cellular organisms`, `root`, …) |
 | embedded (custom_rank / Format A) | `species_d_Bacteria_p_Firmicutes` | single-letter codes wrapped in underscores: `_d_`/`_p_`/... |
 | custom_regex | `Domain:Bacteria\|Phylum:Firmicutes` | user regex |
 
@@ -28,7 +28,7 @@ You can collapse in three ways:
 
 ### Monophyly matters
 
-A group can only be collapsed cleanly if it is **monophyletic** (all descendants share one MRCA). Non-monophyletic groups trigger a warning and are skipped by default (`strict = FALSE`); set `strict = TRUE` to abort instead. Check with [check_monophyly](reference/tree-sequence.md).
+A group can only be collapsed cleanly if it is **monophyletic** (all descendants share one MRCA). Groups collapsed by `rank` or `clade` trigger a warning and are skipped by default (`strict = FALSE`); set `strict = TRUE` to abort instead. Custom `groups` are validated up front, where a non-monophyletic group always aborts. Check with [check_monophyly](reference/tree-sequence.md).
 
 ### Triangle and space modes
 
@@ -41,14 +41,14 @@ Rclade adds a geological timescale to the x-axis using `deeptime` (ICS 2023/02).
 
 - `unit`: the unit of your tree's edge lengths — `Ma` (mega-annum) or `Ga` (giga-annum). Required whenever `add_timescale = TRUE`: Rclade never infers the unit, so leaving it `NULL` aborts.
 - `timescale_levels`: which bands to show — `eras`, `eons`, `periods`.
-- `add_timescale = FALSE` disables it (useful for circular layouts or cladograms).
+- `add_timescale = FALSE` disables it. Circular layouts do support a timescale (`timescale_mode = "radial"` by default), so disable it only when you want a plain fan, e.g. for cladograms.
 
 ## Colors and legend
 
 - `color_palette`: `viridis` (default, color-blind safe), any RColorBrewer name, `rainbow`, or a color vector.
 - `color_mapping`: a named vector for exact control, e.g. `c("Proteobacteria" = "#E41A1C")`.
 - `color_rank`: color by a rank different from the one you collapse on.
-- Legend position and rows/columns are auto-computed; override with `legend_position`, `legend_nrow`, `legend_ncol`. For very large legends, see [split_legend](reference/colors-legend.md).
+- Legend rows/columns are auto-computed from the number of groups (position defaults to `"bottom"`); override with `legend_position`, `legend_nrow`, `legend_ncol`. For very large legends, see [split_legend](reference/colors-legend.md).
 
 ## Special identifiers
 
@@ -62,7 +62,7 @@ Use them with `highlight = "LUCA"` or [resolve_special_identifier](reference/tax
 
 ## External taxonomy file
 
-When labels are incomplete or missing taxonomy, supply a two-column file (`tip_label`, `taxonomy_string`) via `taxonomy_file`. See [read_taxonomy_file](reference/taxonomy-parsing.md) and [summarize_taxonomy_quality_with_file](reference/taxonomy-parsing.md).
+When labels are incomplete or missing taxonomy, supply a two-column file (column 1 = tip labels, column 2 = GTDB-format taxonomy string) via `taxonomy_file`. See [read_taxonomy_file](reference/taxonomy-parsing.md) and [summarize_taxonomy_quality_with_file](reference/taxonomy-parsing.md).
 
 ## Next
 

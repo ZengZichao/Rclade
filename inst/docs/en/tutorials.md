@@ -34,7 +34,7 @@ data(example_tree)
 groups <- list(MyGroup = c("tip_A", "tip_B", "tip_C"))
 
 # Check it is monophyletic before plotting
-validate_custom_groups(example_tree, groups)
+Rclade:::validate_custom_groups(example_tree, groups)
 
 # Collapse by the custom group
 p <- plot_timetree(example_tree, groups = groups, unit = "Ma")
@@ -53,8 +53,8 @@ p <- plot_timetree(example_tree,
                    layout = "circular",
                    angle = 320,
                    add_timescale = FALSE,
-                   color_palette = "viridis") +
-     theme_timetree(base_size = 12)
+                   color_palette = "viridis",
+                   theme_fun = function() theme_timetree(base_size = 12))
 
 save_timetree(p, file = "circular.pdf", width = 10, height = 10, dpi = 300)
 ```
@@ -67,7 +67,7 @@ When tip labels lack taxonomy, provide a two-column file:
 library(Rclade)
 
 # taxonomy.tsv:  col1 = tip label, col2 = "d__...;p__...;c__..."
-df <- read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)
+read_taxonomy_file("taxonomy.tsv", sep = "\t", header = FALSE)  # optional pre-check
 
 # Plot, prioritizing the file
 p <- plot_timetree("my_tree.nwk", rank = "phylum",

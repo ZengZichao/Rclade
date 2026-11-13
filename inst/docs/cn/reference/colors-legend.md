@@ -7,6 +7,8 @@
 - [`generate_colors`](#generate_colors) — 为分类群生成颜色映射
 - [`split_legend`](#split_legend) — 拆分图例为独立 `grob` 并用 `patchwork` 组合
 
+> 以下函数为内部函数（未导出）：`generate_colors`、`split_legend`，须以 `Rclade:::generate_colors()` 形式调用。
+
 ## `generate_colors`
 
 **为分类群生成颜色映射**
@@ -35,7 +37,7 @@ generate_colors(groups, palette = "viridis", color_mapping = NULL)
 
 ```r
 groups <- c("Firmicutes", "Proteobacteria", "Bacteroidetes")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 
@@ -62,16 +64,14 @@ split_legend(p, ncol_split = 2)
 
 **返回值：**
 
-返回 `patchwork` 组合对象。注意：这里返回的是 `patchwork` 组合对象，**不是** `ggplot` 对象，
-因此调用 `split_legend()` 之后不能用 `+` 叠加 `ggplot2` 图层；
-布局组合请改用 `|`、`/` 这类 `patchwork` 运算符。
+返回 `patchwork` 组合对象。注意：这里返回的是 `patchwork` 组合对象，**不是** `ggplot` 对象，因此调用 `split_legend()` 之后不能用 `+` 叠加 `ggplot2` 图层；布局组合请改用 `|`、`/` 这类 `patchwork` 运算符。
 
 **示例：**
 
 ```r
 data(example_tree)
 p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
-split_legend(p, ncol_split = 2)
+Rclade:::split_legend(p, ncol_split = 2)
 ```
 
 

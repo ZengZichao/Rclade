@@ -12,6 +12,8 @@ This module contains the following functions:
 
 ## `plot_timetree`
 
+Plot a phylogenetic tree with geological timescale and taxonomic collapsing
+
 The main entry point of Rclade. Takes a phylogenetic tree object or file path
 and produces a publication-ready visualization with automatic taxonomic collapsing,
 geological timescale integration, and smart legend layout.
@@ -94,7 +96,7 @@ plot_timetree(
 |----------|-------------|
 | `tree` | A `phylo` or `treedata` object, or a file path string pointing to a Newick (.nwk, .tre, .treefile) or Nexus (.nexus, .nex) file. |
 | `tree_index` | Integer. Index of tree to use from multiPhylo objects (e.g., BEAST posterior). Only used when `tree` is a file path. Default: NULL (uses multi_tree_mode). |
-| `multi_tree_mode` | Character. How to handle multiple trees in a file. Options: `"error"` (default), `"ask"`, `"first"`, `"last"`, `"random"`, `"all"`, `"split"`. When `"error"`, stops with an informative message asking the user to specify. `"ask"` prompts interactively (falls back to `"error"` when non-interactive). `"all"` returns a list of plots (batch mode); `"split"` also returns all trees, and the CLI writes per-tree outputs with numeric suffixes. |
+| `multi_tree_mode` | Character. How to handle multiple trees in a file. Options: `"error"` (default), `"ask"`, `"first"`, `"last"`, `"random"`, `"all"`, `"split"`. When `"error"`, stops with an informative message asking the user to specify. `"ask"` prompts interactively (falls back to `"error"` when non-interactive). `"all"` and `"split"` follow the same code path (both return all trees / a list of plots); on the CLI both write one numbered output file per tree, and `"split"` only signals that intent. |
 | `rank` | Taxonomic rank to collapse at. One of: `"none"`, `"kingdom"`, `"domain"`, `"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`, `"subspecies"`, or abbreviations `"k"`, `"d"`, `"p"`, `"c"`, `"o"`, `"f"`, `"g"`, `"s"`, `"ss"`. Default: `"none"`. Mutually exclusive with `groups`. |
 | `triangle_mode` | Collapse triangle visualization mode. `"max"` shows the full clade range, `"min"` shows the minimal range, `"mixed"` uses adaptive selection, `"none"` disables triangles. Default: `"mixed"`. |
 | `space_mode` | Space allocation strategy for collapsed clades. `"equal"` assigns equal vertical space to each clade, `"proportional"` allocates space proportional to tip count. Default: `"proportional"`. |
@@ -105,7 +107,7 @@ plot_timetree(
 | `line_width` | Branch line width (passed to ggtree). Default: `1`. |
 | `show_tip_labels` | Logical. Whether to display tip labels. Default: `FALSE` (recommended for trees with >100 tips). |
 | `tip_label_size` | Numeric. Tip label font size. Default: `2`. |
-| `add_timescale` | Logical. Whether to add a geological timescale to the x-axis. Requires rectangular layout and valid edge lengths. Default: `TRUE`. |
+| `add_timescale` | Logical. Whether to add a geological timescale to the x-axis. Supported by both the rectangular and the circular layout, and requires valid edge lengths. Default: `TRUE`. |
 | `timescale_levels` | Character vector of timescale levels to display. Options: `"eras"`, `"eons"`, `"periods"`. Default: `c("eras", "eons")`. |
 | `unit` | Time unit of input tree edge lengths: `"Ga"` (giga-annum) or `"Ma"` (mega-annum). **Required whenever `add_timescale = TRUE`**: the pipeline aborts if `unit` is `NULL`, because Rclade does not infer branch-length units and does not verify that the input tree is a time-calibrated chronogram. If `"Ga"`, edge lengths are converted to Ma (multiplied by 1000). `NULL` (default) leaves the tree's native units untouched and is only valid with `add_timescale = FALSE`. Rclade displays the user-supplied time calibration only; it never estimates divergence times. Default: `NULL`. |
 | `taxonomy_format` | Taxonomy label format. `"auto"` enables automatic detection via prefix-matching heuristic. Manual options: `"GTDB"`, `"Silva"`, `"NCBI"`, `"custom_rank"`, `"custom_regex"`. Default: `"auto"`. |
@@ -123,7 +125,7 @@ plot_timetree(
 | `legend_title` | Character. Custom legend title. If `NULL`, the rank name (e.g., "Phylum", "Class") is used automatically. Default: `NULL`. |
 | `clade` | Character. Specific clade name to collapse (e.g., "Cyanobacteriota"). When provided, only this clade is checked for monophyly and collapsed if valid. Mutually exclusive with `rank` and `groups`. Default: `NULL`. |
 | `strict` | Logical. If `TRUE`, non-monophyletic clades cause termination with error. If `FALSE` (default), non-monophyletic clades trigger a warning and are skipped. The permissive default (`FALSE`) is intentional: in interactive exploration of large trees with potentially inaccurate taxonomy, halting on the first non-monophyletic group would prevent the user from seeing any result. Use `TRUE` in production pipelines where taxonomic integrity is critical. Default: `FALSE`. |
-| `groups` | Named list of custom tip groups for collapsing. Each element is a character vector of tip labels belonging to that group. Groups must be monophyletic; non-monophyletic groups will raise an error. When `groups` is provided, `rank` is ignored (set it to `"none"`). Example: `list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))`. |
+| `groups` | Named list of custom tip groups for collapsing. Each element is a character vector of tip labels belonging to that group. Groups must be monophyletic; non-monophyletic groups will raise an error. Supplying `groups` together with a `rank` other than `"none"` raises an error, so leave `rank` at its default. Example: `list("Group_A" = c("tip1", "tip2"), "Group_B" = c("tip3"))`. |
 | `groups_label_only` | Logical. If `TRUE`, clades defined by `groups` are labelled but NOT collapsed: the member branches stay fully expanded and only the group name is drawn next to them. Default: `FALSE`. |
 | `show_clade_label` | Logical. Whether to add clade labels next to collapsed triangles showing group name and species count. Default: `FALSE`. |
 | `show_clade_count` | Logical. Whether to show species count in clade labels (e.g., "Proteobacteria (n=42)"). Only used when `show_clade_label = TRUE`. Default: `TRUE`. |
@@ -188,7 +190,7 @@ plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma",
                        multi_tree_mode = "all")
 
 # Save directly
-plot_timetree(tree, rank = "phylum", unit = "Ma", output = "output.pdf")
+plot_timetree(example_tree, rank = "phylum", unit = "Ma", output = "output.pdf")
 ```
 
 
@@ -325,6 +327,8 @@ summarize_timetree(p)
 
 ## `theme_timetree`
 
+Publication-ready theme for timetree plots
+
 Based on ggtree::theme_tree2(), customized for publication quality (fonts,
 grid lines, margins).
 Includes `coord_cartesian(clip = "off")` to prevent collapsed clade
@@ -368,4 +372,4 @@ print(p + r$theme + r$coord)
 
 ---
 
-[中文](../../cn/reference/core-visualization.md) | [文档首页](../index.md)
+[中文](../../cn/reference/core-visualization.md) | [Documentation Home](../index.md)

@@ -21,6 +21,8 @@ This module contains the following functions:
 - [`timer_start`](#timer_start) — Start a timer for performance measurement
 - [`timer_stop`](#timer_stop) — Stop a timer and log elapsed time
 
+> Not exported (internal): `log_info`, `log_debug`, `log_warning`, `log_error`, `log_critical`, `log_section`, `log_subsection`, `log_progress`, `log_keyvalue`, `log_stats`, `log_table`, `timer_start`, `timer_stop`. Call them as `Rclade:::log_info()`.
+
 ## `set_log_enabled`
 
 Enable or disable logging
@@ -143,7 +145,7 @@ No return value, called for side effects (the message is printed to the console 
 **Examples:**
 
 ```r
-log_info("Starting processing", .module = "main")
+Rclade:::log_info("Starting processing", .module = "main")
 ```
 
 
@@ -176,7 +178,7 @@ No return value, called for side effects (the message is printed to the console 
 **Examples:**
 
 ```r
-log_debug("variable x =", 42, .module = "parse")
+Rclade:::log_debug("variable x =", 42, .module = "parse")
 ```
 
 
@@ -208,7 +210,7 @@ No return value, called for side effects (the message is printed to the console 
 **Examples:**
 
 ```r
-log_warning("Clade not monophyletic, skipped", .module = "collapse")
+Rclade:::log_warning("Clade not monophyletic, skipped", .module = "collapse")
 ```
 
 
@@ -241,7 +243,7 @@ No return value, called for side effects (the message is printed to the console 
 **Examples:**
 
 ```r
-log_error("File not found", .module = "io")
+Rclade:::log_error("File not found", .module = "io")
 ```
 
 
@@ -274,7 +276,7 @@ No return value, called for side effects (the message is printed to the console 
 **Examples:**
 
 ```r
-log_critical("Out of memory", .module = "main")
+Rclade:::log_critical("Out of memory", .module = "main")
 ```
 
 
@@ -306,7 +308,7 @@ No return value, called for side effects (the `=` section frame is printed unles
 **Examples:**
 
 ```r
-log_section("Stage 1: Reading data")
+Rclade:::log_section("Stage 1: Reading data")
 ```
 
 
@@ -338,7 +340,7 @@ No return value, called for side effects (the `-` subsection frame is printed un
 **Examples:**
 
 ```r
-log_subsection("Sub-step: parsing labels")
+Rclade:::log_subsection("Sub-step: parsing labels")
 ```
 
 
@@ -372,7 +374,7 @@ No return value, called for side effects (an INFO progress line with a bar and p
 **Examples:**
 
 ```r
-log_progress(3, 10, item = "Processing tree file")
+Rclade:::log_progress(3, 10, item = "Processing tree file")
 ```
 
 
@@ -405,7 +407,7 @@ No return value, called for side effects (the `key: value` line is emitted at `l
 **Examples:**
 
 ```r
-log_keyvalue("Number of nodes", 1234)
+Rclade:::log_keyvalue("Number of nodes", 1234)
 ```
 
 
@@ -436,7 +438,7 @@ No return value, called for side effects (one aligned INFO line per named statis
 **Examples:**
 
 ```r
-log_stats(list(files = 5, tips = 120))
+Rclade:::log_stats(list(files = 5, tips = 120))
 ```
 
 
@@ -468,7 +470,7 @@ No return value, called for side effects (one INFO line per row or entry is emit
 **Examples:**
 
 ```r
-log_table(data.frame(a = 1:3, b = letters[1:3]),
+Rclade:::log_table(data.frame(a = 1:3, b = letters[1:3]),
          title = "Statistics")
 ```
 
@@ -501,7 +503,7 @@ No return value, called for side effects (records the start time in package-leve
 **Examples:**
 
 ```r
-timer_start("pipeline")
+Rclade:::timer_start("pipeline")
 ```
 
 
@@ -533,7 +535,7 @@ Numeric. Elapsed seconds, returned invisibly (`NA` if the timer was not started)
 **Examples:**
 
 ```r
-timer_stop("pipeline")
+Rclade:::timer_stop("pipeline")
 ```
 
 
@@ -542,4 +544,4 @@ timer_stop("pipeline")
 
 ---
 
-[中文](../../cn/reference/logging-timing.md) | [文档首页](../index.md)
+[中文](../../cn/reference/logging-timing.md) | [Documentation Home](../index.md)

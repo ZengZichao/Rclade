@@ -30,7 +30,7 @@ conda activate rclade
 
 `environment.yml` 不含 Rclade 本身，环境激活后仍需按上文“从 CRAN 安装”或“安装开发版”小节的步骤安装。
 
-> **可重复性说明**：`environment.yml` 指定最低版本下界。若需完全可重复的环境，创建后导出显式规格：
+> **可复现性说明**：`environment.yml` 为多数条目指定最低版本下界（`r-viridislite`、`r-rcolorbrewer`、`r-filelock`、`r-yaml`、`r-svglite` 未固定版本）。若需完全可复现的环境，创建后导出显式规格：
 >
 > ```bash
 > conda list --explicit > conda-lockfile.txt
@@ -43,7 +43,7 @@ conda activate rclade
 
 Rclade 依赖：`ape`、`ggtree`、`deeptime`、`ggplot2`、`rlang`、`stringr`、`tidytree`、`viridisLite`。
 
-建议安装（部分功能需要）：`treeio`、`phangorn`、`RColorBrewer`、`cowplot`、`patchwork`、`shiny`、`optparse`、`yaml`、`testthat`、`knitr`、`rmarkdown`。此外，测试套件还会用到 `vdiffr`、`covr`、`filelock`、`withr`。
+建议安装（部分功能需要）：`treeio`、`phangorn`、`RColorBrewer`、`cowplot`、`patchwork`、`shiny`、`optparse`、`yaml`、`testthat`、`knitr`、`rmarkdown`。此外，测试套件还会用到 `vdiffr`、`covr`、`filelock`、`withr`。`svglite` 并非声明的依赖，仅在 `environment.yml` 中列出（未固定版本）以支持 SVG 输出。
 
 若计划使用 Shiny 应用、命令行或运行测试，请安装：
 

@@ -32,9 +32,7 @@ CRAN 重新提交。修复了 CRAN incoming 预检（pre-test）针对 1.1.3 报
 
 CRAN 重新提交。修复了 CRAN 审阅人（Uwe Ligges）针对 1.1.2 提出的问题：
 
-* **Description 中软件名称加单引号**：Description 参考文献段落中的
-  `ggtree`、`deeptime`、`ape` 未用单引号括起来，现已改为 `'ggtree'`、
-  `'deeptime'`、`'ape'`。同时通过 `.Rbuildignore` 排除了 `.mimosa/` 开发目录。
+* **Description 中软件名称加单引号**：Description 参考文献段落中的 `ggtree`、`deeptime`、`ape` 未用单引号括起来，现已改为 `'ggtree'`、`'deeptime'`、`'ape'`。同时通过 `.Rbuildignore` 排除了 `.mimosa/` 开发目录。
 
 相对 1.1.2 无包代码、导出或行为变更。
 
@@ -52,14 +50,10 @@ CRAN 重新提交。修复了 win-builder incoming 预检（pre-test）针对 1.
 CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 * 在 DESCRIPTION 文件中添加了方法学参考文献（含 DOI）。
-* 为 5 个 Rd 文件添加了 `\value` 标签（`print.rclade_options`、
-  `run_rclade_shiny`、`set_log_enabled`、`set_log_file`、`set_log_level`）。
+* 为 5 个 Rd 文件添加了 `\value` 标签（`print.rclade_options`、`run_rclade_shiny`、`set_log_enabled`、`set_log_file`、`set_log_level`）。
 * 删除了未导出函数（`@keywords internal`）Rd 文件中的示例。
-* 删除了导出函数示例中的所有 `\dontrun{}` 包装。引用外部文件的
-  示例代码被完全移除；使用内置 `data(example_tree)` 的示例现在
-  可直接运行。
-* 将 `save_session_info()` 和 `summarize_multi_trees()` 中的
-  `cat()` 替换为 `message()`，使输出可通过 `suppressMessages()` 抑制。
+* 删除了导出函数示例中的所有 `\dontrun{}` 包装。引用外部文件的示例代码被完全移除；使用内置 `data(example_tree)` 的示例现在可直接运行。
+* 将 `save_session_info()` 和 `summarize_multi_trees()` 中的 `cat()` 替换为 `message()`，使输出可通过 `suppressMessages()` 抑制。
 * 通过转换示例格式解决了 `try-error in functionTree()` 问题。
 
 # Rclade 1.1.0（2026-08-26，修订版本）
@@ -67,7 +61,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 落实 2026-08-24 独立投稿前审阅报告的全部代码级修复，含一项用户可见的行为变更。完整条目见 NEWS.md，摘要：
 
 * **破坏性变更**：`add_timescale = TRUE` 时 `unit` 必须显式指定（移除了静默默认 `Ga` 并将枝长 ×1000 的行为）；非有限枝长报错并中止；根到末端距离离散度过大时发出警告。
-* **分组状态计数**：`rclade_info` / `summarize_timetree()` 报告解析/折叠/单例/跳过的组数与组名，修复"Collapsed groups"标签此前报告的是解析出的候选而非实际折叠的演化支（clade）的问题。
+* **分组状态计数**：`rclade_info` / `summarize_timetree()` 报告解析/折叠/单例/跳过的组数与组名，修复"Collapsed groups"标签此前报告的是解析出的候选而非实际折叠的演化支的问题。
 * **准确率评估修复**：改为按位置对齐并加基数断言（修复 50 末端膨胀为 250 行的 merge 缺陷）。
 * **脚本可移植**：`run_process_level.sh` 从 `PATH` 解析 `Rscript`（可用 `RSCRIPT=` 覆盖，而非机器特定的绝对路径）。
 * **CI 如实描述**：`deps-smoke` 不验证 DESCRIPTION 版本下限；覆盖率为监控指标而非强制质量门。
@@ -85,18 +79,18 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 # Rclade 1.0.0（2026-07-09，首个正式版本）
 
-## 健壮性与渲染修复（2026-08-16，未发布）
+## 健壮性与渲染修复（2026-08-16，随 Rclade 1.0.1 发布）
 
 * **折叠三角对齐修复**：当树中*所有*末端都被折叠时（如一次性折叠全部门级演化支），折叠三角形与所属演化支在水平方向错位。原因是 `revts()`（时间轴反转）在折叠后被重复应用了一次——所有末端折叠掉之后 `max(x)` 不再是 0 而是最浅的 MRCA，第二次应用使整棵树平移，而坐标固定的三角形多边形未随之移动；垂直方向不受影响。现在 `revts()` 只应用一次，三角形顶点重新与 MRCA 对齐。
 * **超长标签防护**：超过 500 字符的 Newick 标签在解析前被截断为 400 字符 + `_RCLADE_TRUNC` 后缀（并给出警告）。原因：ape 5.8.1 的 Newick 解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃（glibc "stack smashing detected"，退出码 134）。已在 `read_tree_auto()` 与 `plot_timetree()` 文档及中英 README 中说明。
 * **对抗性输入报错信息**：节点名中检测到的控制字符与 Unicode BiDi 标记改以 `<U+XXXX>` 转义形式报告，不再原样输出，避免破坏终端显示。
 * **测试**：两个计时比值类性能测试改为校准式重复计时块（每个规模 >= 约 100 ms），替代原先亚毫秒级的单次 `system.time()` 读数（其 max/min 比值纯属时钟量化噪声，在 macOS 与 CI 上均稳定报 8 倍）。
 * **CI/文档**：pkgdown 文档站恢复构建与部署（数据集条目入索引、DESCRIPTION 补站点 URL、授予写权限）；codecov 上传失败（未配置 `CODECOV_TOKEN`）不再使 R-CMD-check 失败；中英 FAQ 中"52 个导出函数"的过时数字更正为 26。
+* **`theme_timetree()` 现返回一个列表**：返回值由单一 ggplot2 主题对象改为 `list(theme, coord)`，其中 `coord` 携带 `clip = "off"`（对直接调用者为破坏性变更：应改用 `p + th$theme`，再通过 `add_clip_off(p, layout)` 控制裁切）。渲染流水线不再无条件添加返回的 coord——`add_clip_off()` 仅在尚未设置时标坐标系时施加 `coord_polar(...)`（环形）或 `coord_cartesian(clip = "off")`（矩形），以免该坐标系覆盖极坐标 / deeptime 地质年代坐标系（T05）。
 
 ## 清洁再分发（2026-08-13）
 
-* **清洁再分发（2026-08-13）**：移除所有内置第三方参考数据（`data-external/` 目录与 `inst/extdata/` 下 GTDB 参考文件）及依赖 GTDB 的脚本与测试（`scripts/extract_gtdb_node_taxonomy.R`、`scripts/benchmark_bac120_subsample.R`、`scripts/evaluate_parsing_real_data.R`、`scripts/benchmark_real_session.R`、`tests/testthat/external/`）；更新 README、CITATION、THIRDPARTY、cran-comments、CI 工作流与 vignettes 以移除对内置 GTDB 数据的引用；将格式特定的基准测试辅助函数重命名为格式中立名称。
-
+* 移除所有内置第三方参考数据（`data-external/` 目录与 `inst/extdata/` 下 GTDB 参考文件）及依赖 GTDB 的脚本与测试（`scripts/extract_gtdb_node_taxonomy.R`、`scripts/benchmark_bac120_subsample.R`、`scripts/evaluate_parsing_real_data.R`、`scripts/benchmark_real_session.R`、`tests/testthat/external/`）；更新 README、CITATION、THIRDPARTY、cran-comments、CI 工作流与 vignettes 以移除对内置 GTDB 数据的引用；将格式特定的基准测试辅助函数重命名为格式中立名称。
 
 ## 许可与署名合规（2026-08-04，Rclade 1.0.1）
 
@@ -165,8 +159,8 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ## 修复
 
-* **环形布局渲染方向修正（2026-07-25）**：`add_clip_off()` 中环形（circular）分支的 `coord_polar` 参数与 ggtree 原生环形布局不一致（`start=0, direction=1` vs ggtree 的 `start=-π/2, direction=-1`），导致环形树相对于 ggtree 原生 `layout="circular"` 产生镜像翻转。现已修正为 `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`。
-* **地质时间轴 ylim 缓冲区增大（2026-07-25）**：`add_geo_timescale()` 的 `y_max` 缓冲区从 2% 增大到 8%，`theme_timetree()` 顶部 margin 从 5pt 增大到 20pt，以避免折叠三角形顶点被裁切。
+* **环形布局渲染方向修正（2026-07-25）**：`add_clip_off()` 中环形布局（circular）代码路径的 `coord_polar` 参数与 ggtree 原生环形布局不一致（`start=0, direction=1` vs ggtree 的 `start=-π/2, direction=-1`），导致环形树相对于 ggtree 原生 `layout="circular"` 产生镜像翻转。现已修正为 `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`。
+* **地质时间轴 ylim 缓冲区增大（2026-07-25）**：`add_geo_timescale()` 的 `y_max` 缓冲区从 2% 增大到 8%（该 8% 缓冲区在后续版本中回调为 1%：矩形布局现使用 1% 的 `y_max` 缓冲、环形标签偏移 1.5%，见 `R/timescale.R`），`theme_timetree()` 顶部 margin 从 5pt 增大到 20pt，以避免折叠三角形顶点被裁切。
 * **GOE/NOE 地质事件条带未覆盖全树（2026-07-25）**：`add_geo_events()` 的条带 `ymax` 从基于 `p$data$y` 计算改为 `Inf`，确保条带覆盖到坐标系的完整纵向范围。
 
 * **折叠三角形顶部被裁切（2026-07-23）**：
@@ -194,7 +188,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
     * 在 logger 文档中标注线程安全问题
     * 将 `convert_unit` 和 `prepare_geo_timescales` 中的 `message()` 改为 `log_info` 统一日志出口
 
-* **逻辑闭环审查修复（第二轮：26项缺陷）**：
+* **逻辑闭环审查修复（第二轮：26 项缺陷）**：
   * **致命缺陷（F1-F3）**：修复 CLI 单树模式 `tryCatch` 语法错误；移除 `plot_timetree()` 双重文件读取；修复 `_pt_step7` 中 `color_palette` 作用域错误。
   * **严重缺陷（S1-S7）**：修复演化支指定模式重复解析和错误阶元分组；修复 `parse_semicolon_delimited` 多字符分隔符转义；修复 unknown 格式回退 data.frame 列数不匹配；添加颜色查找安全检查（NA 时灰色降级）；统一 MRCA=root 判断逻辑；统一重复末端标签的验证级别（升级为 `stop`）；修复 LUCA 单系性检查恒为 TRUE 的问题。
   * **中等缺陷（M1-M6）**：修复 `_problems` 测试用例大小写；修复 `add_geo_timescale` 双重 `revts`；清理 `detect_encoding` 死代码；修复 `read_taxonomy_file` 硬编码列名（改用 `intersect` 动态匹配）；删除 `SUPPORTED_TREE_EXTENSIONS` 中重复的 `nhx`；改进 `convert_unit` 属性复制。
@@ -206,7 +200,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
   * 优雅中断处理移除 `invokeRestart("abort")`，改用 `tryCatch(..., interrupt = ...)` 返回部分结果；新增 `on.exit(.interrupt_env$active <- FALSE)` 保证任何退出路径都重置状态机。
   * `taxonomy_levels` 参数现在完整透传至高亮、单系性检查、特殊祖先节点解析及 `resolve_group()`；`parse_taxonomy_with_file()` 与 `summarize_taxonomy_quality_with_file()` 使用 `get_taxonomy_levels()` 动态决定 rank 列表。
   * `resolve_group()` 新增 `delimiter_mode`、`custom_patterns`、`taxonomy_levels` 参数，保证与 `check_monophyly()` / `highlight_clades()` 行为一致。
-  * `clade_label_offset` 默认值统一为 `50`（Ma），文档与 `annotate_clade()` 内部默认值保持一致。
+  * `clade_label_offset` 默认值统一为 `50`（Ma），与 `plot_timetree()`（`R/plot-timetree.R`）和 CLI `--clade_label_offset`（`R/cli.R`）保持一致；`annotate_clade()` 自身的 `offset` 形参默认为 `0`，由上层调用者显式传入 `50`。
   * CLI 参数解析失败时返回退出码 `2L` 而非 `0L`。
   * `--ignore_malformed` 现在也覆盖输出文件已存在等保存阶段错误。
   * `validate_custom_groups()` 现在对空自定义分组给出明确报错。
@@ -222,7 +216,7 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 依据《开发要求-通用》规范文档，补齐以下缺失能力：
 
 * **§7 多树处理 split 模式**：`--multi_tree_mode split` 与 `all` 行为一致（返回 multiPhylo），但语义上明确表示按树拆分输出，供 Snakemake/Nextflow 等下游流水线分派。
-* **§8.1 配置文件支持**：新增 `--config` 选项，支持 YAML 配置文件提供默认值。优先级为 CLI 显式参数 > 配置文件 > 内置默认值。包内附带 `config.example.yaml` 模板，列出全部可配置项。`DESCRIPTION` 的 Suggests 新增 `yaml`。
+* **§8.1 配置文件支持**：新增 `--config` 选项，支持 YAML 配置文件提供默认值。优先级为 CLI 显式参数 > 配置文件 > 内置默认值。包内附带 `config.example.yaml` 模板，覆盖大部分可配置项。`DESCRIPTION` 的 Suggests 新增 `yaml`。
 * **§8.2 库模式 API**：导出 `parse_taxonomy()` 和 `read_tree_auto()` 作为稳定库模式 API，供 Snakemake/Nextflow 等外部工作流直接调用，无需通过 `plot_timetree()` 入口。
 * **§9.1.1 注释剥离**：新增 `--strip_annotations` 选项及 `strip_tree_annotations()` 辅助函数，可在渲染前剥离 bootstrap/NHX 节点注释以减小输出体积。批处理与单树路径均已接入。
 * **§10.1 临时文件权限**：`managed_tempfile()` 创建后立即 `Sys.chmod(mode = "0600")`，`managed_tempdir()` 创建后立即 `Sys.chmod(mode = "0700")`，满足 HPC 共享环境下的安全要求。
@@ -275,8 +269,8 @@ CRAN 重新提交，修复了 1.0.0 版本审阅中的全部问题。
 
 ### 对抗性输入防护
 
-* **恶意符号注入**：检测节点名中的控制字符（\\x00-\\x1f）和 Unicode BiDi 标记（\\u202E 等），以 ERROR 拒绝
-* **零宽字符检测**：警告零宽空格（\\u200B）等不可见字符
+* **恶意符号注入**：检测节点名中的控制字符（`\x00-\x1f`）和 Unicode BiDi 标记（`\u202E` 等），以 ERROR 拒绝
+* **零宽字符检测**：警告零宽空格（`\u200B`）等不可见字符
 * **循环依赖检测**：识别分类表中的循环（例如 d__A;p__B 与 d__B;p__A）
 * **空文件拒绝**：0 字节树/序列文件触发 CRITICAL 错误并终止
 

@@ -10,7 +10,11 @@ This module contains the following functions:
 - [`batch_with_interrupt`](#batch_with_interrupt) — Execute batch operation with interrupt handling and progress
 - [`with_graceful_interrupt`](#with_graceful_interrupt) — Execute expression with graceful interrupt handling
 
+> Not exported (internal): `batch_with_interrupt`, `with_graceful_interrupt`. Call them as `Rclade:::batch_with_interrupt()`.
+
 ## `run_rclade_cli`
+
+Run Rclade from the command line
 
 Provides a command-line interface for Rclade. Requires the optparse package.
 
@@ -28,7 +32,7 @@ run_rclade_cli(args = commandArgs(trailingOnly = TRUE))
 
 **Value:**
 
-Invisible integer exit code following standard Unix conventions: `0L` (success), `1L` (runtime error), `2L` (parameter error), `3L` (input-data error), `130L` (user interrupt / SIGINT). The caller MUST forward this value to `q(status = ...)` or `quit(status = ...)`; simply calling `run_rclade_cli()` without forwarding the return value always exits with code 0 regardless of errors.
+Invisible integer exit code following standard Unix conventions: `0L` (success), `1L` (self-test failures, returned only by the `--check` path), `2L` (parameter error), `3L` (input-data error), `130L` (user interrupt / SIGINT). Runtime errors are not converted into a return value: they are re-raised as R errors, which make `Rscript` exit with status 1. The caller MUST forward this value to `q(status = ...)` or `quit(status = ...)`; simply calling `run_rclade_cli()` without forwarding the return value always exits with code 0 regardless of errors.
 
 **Examples:**
 
@@ -42,6 +46,8 @@ run_rclade_cli(c("--help"))
 ---
 
 ## `run_rclade_shiny`
+
+Launch Rclade Shiny app
 
 Provides an interactive web interface for Rclade. Requires the shiny package.
 
@@ -66,11 +72,14 @@ run_rclade_shiny()
 
 ## `run_rclade_selftest`
 
+Run Rclade self-test
+
 Performs comprehensive self-check:
 
 1. Required package availability and versions
 1. Example tree parsing and taxonomy extraction
 1. Monophyly logic validation
+1. Deep input-validation checks (malformed trees and sequences)
 
 **Usage:**
 
@@ -99,6 +108,8 @@ run_rclade_selftest()
 
 ## `batch_with_interrupt`
 
+Execute batch operation with interrupt handling and progress
+
 Processes a list of items with progress tracking and graceful
 interrupt handling. If interrupted, reports how many items were
 completed before stopping.
@@ -124,8 +135,9 @@ List of results (NULL for items not processed due to interrupt).
 **Examples:**
 
 ```r
+data(example_tree)
 trees <- list(example_tree, example_tree)
-results <- batch_with_interrupt(trees, function(t, i) {
+results <- Rclade:::batch_with_interrupt(trees, function(t, i) {
   plot_timetree(t, rank = "phylum", add_timescale = FALSE)
 })
 ```
@@ -134,6 +146,8 @@ results <- batch_with_interrupt(trees, function(t, i) {
 ---
 
 ## `with_graceful_interrupt`
+
+Execute expression with graceful interrupt handling
 
 Wraps an expression so that SIGINT (Ctrl+C) is caught gracefully:
 progress is reported, resources are cleaned up, and the function
@@ -159,7 +173,7 @@ Result of expr, or NULL if interrupted.
 **Examples:**
 
 ```r
-result <- with_graceful_interrupt({
+result <- Rclade:::with_graceful_interrupt({
   for (i in 1:100) {
     Sys.sleep(0.1)
   }
@@ -173,4 +187,4 @@ result <- with_graceful_interrupt({
 
 ---
 
-[中文](../../cn/reference/cli-interactive.md) | [文档首页](../index.md)
+[中文](../../cn/reference/cli-interactive.md) | [Documentation Home](../index.md)

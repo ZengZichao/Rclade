@@ -2,6 +2,14 @@
 
 Copy-paste recipes for common tasks. All examples use the bundled `example_tree`.
 
+The package does not lazy-load its datasets, so run this once before the
+recipes below:
+
+```r
+library(Rclade)
+data(example_tree)
+```
+
 ## Color by a rank different from the collapse rank
 
 ```r
@@ -43,8 +51,10 @@ p <- plot_timetree(example_tree, rank = "phylum",
 
 ```r
 p <- plot_timetree(example_tree, rank = "phylum",
-                   ignore_branch_length = TRUE, unit = "Ma")
+                   ignore_branch_length = TRUE, add_timescale = FALSE)
 ```
+
+`ignore_branch_length = TRUE` forces `add_timescale = FALSE` (with a warning), so a cladogram needs no `unit`.
 
 ## Detect label format before plotting
 
@@ -69,7 +79,7 @@ check_monophyly(example_tree, group = "P1", rank = "phylum")
 
 ```r
 groups <- c("P1", "P2", "P3")
-generate_colors(groups, palette = "viridis")
+Rclade:::generate_colors(groups, palette = "viridis")
 ```
 
 ## Enable detailed logging for a run
@@ -83,9 +93,9 @@ p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 ## Time a pipeline stage
 
 ```r
-timer_start("collapse")
+Rclade:::timer_start("collapse")
 p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
-timer_stop("collapse")
+Rclade:::timer_stop("collapse")
 ```
 
 ## Save a reproducible session record

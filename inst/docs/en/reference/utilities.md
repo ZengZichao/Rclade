@@ -13,7 +13,11 @@ This module contains the following functions:
 - [`save_session_info`](#save_session_info) — Save sessionInfo() for reproducibility
 - [`rclade_logo`](#rclade_logo) — Display Rclade ASCII art logo
 
+> Not exported (internal): `build_path`, `detect_encoding`, `normalize_file_newlines`, `managed_tempdir`, `managed_tempfile`. Call them as `Rclade:::build_path()`.
+
 ## `build_path`
+
+Build file path safely (cross-platform)
 
 Wrapper around file.path() to ensure consistent path construction.
 Never use paste() or sprintf() for path construction.
@@ -37,7 +41,7 @@ Character. Constructed path.
 **Examples:**
 
 ```r
-build_path("data", "output", "tree.pdf")
+Rclade:::build_path("data", "output", "tree.pdf")
 ```
 
 
@@ -70,13 +74,15 @@ Character. Detected encoding name.
 **Examples:**
 
 ```r
-detect_encoding("labels.txt")
+Rclade:::detect_encoding("labels.txt")
 ```
 
 
 ---
 
 ## `normalize_file_newlines`
+
+Normalize line endings in a file
 
 Reads a file, normalizes line endings, and writes it back.
 Line endings are unified (e.g. CRLF to LF) to avoid formatting problems when
@@ -101,7 +107,7 @@ Invisibly returns the filepath.
 **Examples:**
 
 ```r
-normalize_file_newlines("labels.txt")
+Rclade:::normalize_file_newlines("labels.txt")
 ```
 
 
@@ -133,13 +139,15 @@ List with `path` and `cleanup` function.
 **Examples:**
 
 ```r
-d <- managed_tempdir()
+d <- Rclade:::managed_tempdir()
 ```
 
 
 ---
 
 ## `managed_tempfile`
+
+Create and manage temporary file with automatic cleanup
 
 Creates a temporary file with the given prefix and extension, and returns a
 `cleanup` closure that the caller is responsible for invoking.
@@ -165,7 +173,7 @@ List with `path` and `cleanup` function.
 **Examples:**
 
 ```r
-tmp <- managed_tempfile(pattern = "tree_", fileext = ".nwk")
+tmp <- Rclade:::managed_tempfile(pattern = "tree_", fileext = ".nwk")
 writeLines("(A:1,B:1);", tmp$path)
 # Call tmp$cleanup() to remove the file when done
 ```
@@ -232,6 +240,8 @@ save_session_info("session_info.txt")
 
 ## `rclade_logo`
 
+Display Rclade ASCII art logo
+
 Prints a stylized ASCII art logo for Rclade to the console.
 Optionally prints the version number and the tagline.
 
@@ -264,4 +274,4 @@ rclade_logo()
 
 ---
 
-[中文](../../cn/reference/utilities.md) | [文档首页](../index.md)
+[中文](../../cn/reference/utilities.md) | [Documentation Home](../index.md)

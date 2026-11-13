@@ -1,4 +1,4 @@
-# Tree & Sequence I/O and Validation
+# Tree & Sequence Reading and Validation
 
 Read tree files, validate sequence files, and check monophyly.
 
@@ -12,6 +12,8 @@ This module contains the following functions:
 - [`check_special_monophyly`](#check_special_monophyly) — Check if a special identifier corresponds to a monophyletic group
 
 ## `read_tree_auto`
+
+Read tree from file with automatic format detection
 
 Detects the tree file format from the extension and the file content
 (Newick / Nexus / BEAST XML, etc.), reads it into a `phylo` or `multiPhylo`
@@ -30,7 +32,7 @@ read_tree_auto(filepath, tree_index = NULL, multi_tree_mode = "error")
 
 | Argument | Description |
 |----------|-------------|
-| `filepath` | Path to tree file (.tre, .nwk, .newick, .nexus, .nex, .treefile, .xml) |
+| `filepath` | Path to tree file (.tre, .tree, .nwk, .newick, .nexus, .nex, .treefile, .nhx, .xml, .beast); other extensions fall back to content sniffing (`#NEXUS`, `<beast`/`<phylogeny`, else Newick) |
 | `tree_index` | Integer. Index of tree to use from multiPhylo objects (e.g., BEAST posterior). Default: NULL (will use multi_tree_mode to determine behavior). |
 | `multi_tree_mode` | Character. How to handle multiple trees in a file. Options:  - `"error"` (default): Stop with error and ask user to specify - `"ask"`: Interactively prompt the user to choose a tree or handling mode. Falls back to `"error"` in non-interactive sessions. - `"first"`: Use the first tree - `"last"`: Use the last tree - `"random"`: Use a randomly selected tree - `"all"`: Return all trees (as multiPhylo) - `"split"`: Return all trees (as multiPhylo); callers write per-tree outputs with numeric suffixes (e.g. `output_1.pdf`) |
 
@@ -54,6 +56,9 @@ tree1 <- read_tree_auto("beast.trees", multi_tree_mode = "first")
 ## `validate_sequence_file`
 
 Validate sequence file format
+
+Detects whether a sequence file is FASTA or FASTQ and returns the detected format
+string.
 
 **Usage:**
 
@@ -81,6 +86,8 @@ format <- validate_sequence_file("sequences.fasta")
 ---
 
 ## `validate_sequence_deep`
+
+Deep validation of sequence files
 
 Validates FASTA/FASTQ files: format detection, duplicate IDs,
 alphabet detection, and alignment length consistency.
@@ -117,6 +124,8 @@ result <- validate_sequence_deep("sequences.fasta", expected_alphabet = "DNA")
 ---
 
 ## `validate_tree_sequence_match`
+
+Cross-validate tree tip labels against sequence IDs
 
 Checks that all tree tips have corresponding sequences and vice versa.
 
@@ -159,6 +168,8 @@ result <- validate_tree_sequence_match("tree.nwk", "sequences.fasta")
 
 ## `check_monophyly`
 
+Check if a taxonomic group is monophyletic
+
 Tests whether all tips belonging to a specified taxonomic group form a
 monophyletic clade in the tree.
 
@@ -184,7 +195,7 @@ check_monophyly(
 | `tree` | A `phylo` object. |
 | `group` | Character. The name of the taxonomic group to check (e.g., `"P1"`, `"Mammalia"`). |
 | `rank` | Character. Taxonomic rank of the group. One of `"kingdom"`, `"domain"`, `"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`, `"subspecies"`, or abbreviations `"k"`, `"d"`, `"p"`, `"c"`, `"o"`, `"f"`, `"g"`, `"s"`, `"ss"`. |
-| `format` | Character. Taxonomy label format. One of `"auto"`, `"GTDB"`, `"Silva"`, `"NCBI"`, `"custom_rank"`, `"custom_regex"`. Default: `"auto"`. |
+| `format` | Character. Taxonomy label format. One of `"auto"`, `"embedded"`, `"GTDB"`, `"Silva"`, `"NCBI"`, `"custom_rank"`, `"custom_regex"`. Default: `"auto"`. |
 | `custom_patterns` | Named list of regex patterns for custom format. Required when `format = "custom_regex"`. |
 | `quiet` | Logical. If `TRUE`, suppress informational messages. Default: `FALSE`. |
 | `delimiter_mode` | Character. Embedded (Format A) parsing strategy: `"reverse"` (right-to-left, default), `"greedy"` (left-to-right), or `"segment"` (delimiter-to-delimiter extraction). |
@@ -221,6 +232,8 @@ if (result$is_monophyletic) {
 ---
 
 ## `check_special_monophyly`
+
+Check if a special identifier corresponds to a monophyletic group
 
 Tests whether the MRCA of the specified domains (identified by LUCA/LACA/LBCA)
 contains only tips from those domains (i.e., is monophyletic with respect to
@@ -277,4 +290,4 @@ if (result$is_monophyletic) {
 
 ---
 
-[中文](../../cn/reference/tree-sequence.md) | [文档首页](../index.md)
+[中文](../../cn/reference/tree-sequence.md) | [Documentation Home](../index.md)

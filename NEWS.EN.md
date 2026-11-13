@@ -111,21 +111,21 @@ CRAN resubmission addressing all reviewer issues from the 1.0.0 review.
 # Rclade 1.1.0 (2026-08-26, Revision Release)
 
 Fixes required by the pre-submission independent review (2026-08-24).
-Contains one user-visible behavior change. See NEWS.md for the full
-bilingual entry; summary:
+Contains one user-visible behavior change. See NEWS.md for the full entry
+(and NEWS.CN.md for the Chinese edition); summary:
 
-* BREAKING: `unit` is now required when `add_timescale = TRUE` (the
+* **BREAKING**: `unit` is now required when `add_timescale = TRUE` (the
   silent `Ga` default that multiplied edge lengths by 1000 is removed);
   non-finite edge lengths abort; root-to-tip dispersion warns.
-* Group-status accounting: `rclade_info` / `summarize_timetree()` report
+* **Group-status accounting**: `rclade_info` / `summarize_timetree()` report
   parsed / collapsed / singleton / skipped group counts and names, fixing
   the previous "Collapsed groups" label that reported parsed candidates
   instead of the clades actually collapsed.
-* Accuracy evaluation scripts align positionally with cardinality
+* **Accuracy evaluation**: scripts align positionally with cardinality
   assertions (fixes the 50-tip -> 250-row merge inflation).
-* `run_process_level.sh` is portable: it resolves `Rscript` from `PATH`
+* **Portable scripts**: `run_process_level.sh` resolves `Rscript` from `PATH`
   (override with `RSCRIPT=`) instead of a machine-specific absolute path.
-* CI described honestly: `deps-smoke` does not verify DESCRIPTION lower
+* **Honest CI description**: `deps-smoke` does not verify DESCRIPTION lower
   bounds; coverage is a monitoring metric, not an enforced gate.
 
 # Rclade 1.0.2 (2026-08-22)
@@ -159,18 +159,18 @@ bilingual entry; summary:
 
 # Rclade 1.0.0 (2026-07-09, First Stable Release)
 
-## Robustness and rendering fixes (2026-08-16, unreleased)
+## Robustness and rendering fixes (2026-08-16, released in Rclade 1.0.1)
 
 * **Collapse-triangle alignment**: collapse triangles were horizontally offset from their clades when *every* tip was collapsed (e.g. all phyla at once). `revts()` was applied a second time after collapse; with all tips collapsed away, `max(x)` is the shallowest MRCA instead of 0, shifting the whole tree while the fixed-coordinate triangle polygons stayed behind. Vertical positions were unaffected. `revts()` is now applied exactly once; triangle apexes align with their MRCA again.
 * **Long-label guard**: Newick labels longer than 500 characters are truncated to 400 characters + `_RCLADE_TRUNC` (with a warning) before parsing, because ape 5.8.1's Newick parser aborts the whole R process (glibc "stack smashing detected", exit 134) on labels longer than ~512 characters on Linux. Documented in `read_tree_auto()` and `plot_timetree()`; notes added to README (EN/CN).
 * **Adversarial-input messages**: control characters and Unicode BiDi markers in node names are reported as `<U+XXXX>` escapes instead of raw characters, so error messages cannot corrupt terminal output.
 * **Tests**: timing-ratio performance tests now measure calibrated blocks of repeats (>= ~100 ms per size) instead of single sub-millisecond `system.time()` reads, which made the max/min ratio pure clock-quantization noise (constant 8x failure on macOS and CI alike).
 * **CI/docs**: pkgdown site now builds and deploys (dataset topics indexed, site URL in DESCRIPTION, write permission granted); codecov upload failures no longer fail R-CMD-check (no token configured); the bilingual FAQ claim of "52 exported functions" corrected to 26.
+* **`theme_timetree()` now returns a list**: the return value changed from a single ggplot2 theme object to `list(theme, coord)` where `coord` carries `clip = "off"` (breaking change for direct callers: use `p + th$theme`, then `add_clip_off(p, layout)` for clipping control). The rendering pipeline no longer adds the returned coord unconditionally — `add_clip_off()` applies `coord_polar(...)` (circular) or `coord_cartesian(clip = "off")` (rectangular) only when no timescale coordinate is present, preventing the coordinate from overwriting the polar / deeptime geo coordinate systems (T05).
 
 ## Clean redistribution (2026-08-13)
 
-* **Clean redistribution (2026-08-13)**: removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
-
+* Removed all bundled third-party reference data (`data-external/` and GTDB reference files under `inst/extdata/`) and GTDB-dependent scripts/tests (`scripts/extract_gtdb_node_taxonomy.R`, `scripts/benchmark_bac120_subsample.R`, `scripts/evaluate_parsing_real_data.R`, `scripts/benchmark_real_session.R`, `tests/testthat/external/`); updated README, CITATION, THIRDPARTY, cran-comments, CI workflow, and vignettes to drop bundled GTDB references; renamed format-specific benchmark helpers to format-neutral names.
 
 ## License and attribution compliance (2026-08-04, Rclade 1.0.1)
 
@@ -219,7 +219,7 @@ parsing evaluation, unified benchmark protocol):
 
 ## Remediation round 2 (2026-08-01, Rclade 1.0.1)
 
-Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
+Addresses the remaining items from the Rclade v1.0.0 revision plan:
 
 * **API surface convergence (P0-2)**: 27 infrastructure functions (logging,
   timers, temp-file helpers, validators, etc.) moved from exported to internal
@@ -242,7 +242,7 @@ Addresses remaining items from `修改计划_Rclade_v1.0.0.md`:
 ## Post-review hardening (2026-07-30, Rclade 1.0.1)
 
 A structured editor-style review of the 1.0.0 manuscript and codebase was
-fully addressed (see `主编审阅报告_Rclade_v1.0.0.md` in the project workspace).
+fully addressed (see the Rclade v1.0.0 editor review report in the project workspace).
 User-visible changes:
 
 * **Rendering/time axis**: the x-axis range is now adaptive (`compute_x_min()`
@@ -304,7 +304,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 ## Bug Fixes
 
 * **Circular layout rendering direction corrected (2026-07-25)**: The `coord_polar` parameters in `add_clip_off()` for the circular branch (`start=0, direction=1`) did not match ggtree's native circular layout (`start=-π/2, direction=-1`), causing circular trees to be mirror-flipped relative to `ggtree(layout="circular")`. Now fixed to `coord_polar(theta="y", start=-pi/2, direction=-1, clip="off")`.
-* **Geological timescale ylim buffer increased (2026-07-25)**: `add_geo_timescale()` y_max buffer increased from 2% to 8%, and `theme_timetree()` top margin increased from 5pt to 20pt, preventing collapsed-triangle vertices from being clipped.
+* **Geological timescale ylim buffer increased (2026-07-25)**: `add_geo_timescale()` y_max buffer increased from 2% to 8% (that 8% buffer was later reduced back to 1%: rectangular layouts now use a 1% `y_max` buffer and circular label offset 1.5%, see `R/timescale.R`), and `theme_timetree()` top margin increased from 5pt to 20pt, preventing collapsed-triangle vertices from being clipped.
 * **GOE/NOE event bands not covering full tree (2026-07-25)**: `add_geo_events()` band `ymax` changed from a value computed from `p$data$y` to `Inf`, ensuring bands extend to the full vertical extent of the coordinate system.
 
 * **Collapsed triangle top clipped (2026-07-23)**:
@@ -344,7 +344,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
   * Graceful interrupt handling removed `invokeRestart("abort")` in favor of `tryCatch(..., interrupt = ...)` returning partial results; added `on.exit(.interrupt_env$active <- FALSE)` so the state machine is reset on any exit path.
   * `taxonomy_levels` is now propagated through highlighting, monophyly checks, special identifier resolution, and `resolve_group()`; `parse_taxonomy_with_file()` and `summarize_taxonomy_quality_with_file()` use `get_taxonomy_levels()` to determine the rank list dynamically.
   * `resolve_group()` gained `delimiter_mode`, `custom_patterns`, and `taxonomy_levels` arguments, matching the behavior of `check_monophyly()` / `highlight_clades()`.
-  * `clade_label_offset` default unified to `50` (Ma), consistent with the internal default in `annotate_clade()`.
+  * `clade_label_offset` default unified to `50` (Ma), consistent between `plot_timetree()` (`R/plot-timetree.R`) and the CLI `--clade_label_offset` (`R/cli.R`); `annotate_clade()`'s own `offset` parameter defaults to `0` and receives `50` from the caller.
   * CLI parameter parse failures now return exit code `2L` instead of `0L`.
   * `--ignore_malformed` now also covers save-stage errors such as existing output files.
   * `validate_custom_groups()` now rejects empty custom groups with a clear error.
@@ -360,7 +360,7 @@ First stable release. Consolidates the 0.2.0 development series into a formal re
 Aligned with the "Development Requirements - General" spec document; backfilled the following missing capabilities:
 
 * **§7 Multi-tree split mode**: `--multi_tree_mode split` behaves like `all` (returns multiPhylo) but semantically signals per-tree output splitting for downstream pipelines (Snakemake/Nextflow).
-* **§8.1 Configuration file support**: Added `--config` option for YAML config files supplying defaults. Precedence: explicit CLI flags > config file > built-in defaults. A `config.example.yaml` template is shipped with the package, listing all configurable options. `yaml` added to DESCRIPTION Suggests.
+* **§8.1 Configuration file support**: Added `--config` option for YAML config files supplying defaults. Precedence: explicit CLI flags > config file > built-in defaults. A `config.example.yaml` template is shipped with the package, covering most configurable options. `yaml` added to DESCRIPTION Suggests.
 * **§8.2 Library-mode API**: Exported `parse_taxonomy()` and `read_tree_auto()` as stable library-mode APIs for external workflows (Snakemake/Nextflow) to call directly without going through `plot_timetree()`.
 * **§9.1.1 Annotation stripping**: Added `--strip_annotations` option and `strip_tree_annotations()` helper to drop bootstrap/NHX node annotations before rendering, reducing output size. Both batch and single-tree paths are wired up.
 * **§10.1 Temp-file permissions**: `managed_tempfile()` now `Sys.chmod(mode = "0600")` immediately after creation; `managed_tempdir()` now `Sys.chmod(mode = "0700")`, meeting HPC shared-environment security requirements.
@@ -413,8 +413,8 @@ Aligned with the "Development Requirements - General" spec document; backfilled 
 
 ### Adversarial Input Protection
 
-* **Malicious symbol injection**: Detects control characters (\\x00-\\x1f) and Unicode BiDi markers (\\u202E etc.) in node names, rejects with ERROR
-* **Zero-width character detection**: Warns about zero-width spaces (\\u200B) and similar invisible characters
+* **Malicious symbol injection**: Detects control characters (`\x00-\x1f`) and Unicode BiDi markers (`\u202E` etc.) in node names, rejects with ERROR
+* **Zero-width character detection**: Warns about zero-width spaces (`\u200B`) and similar invisible characters
 * **Circular dependency detection**: Identifies cycles in taxonomy tables (e.g., d__A;p__B with d__B;p__A)
 * **Empty file rejection**: CRITICAL error and termination for 0-byte tree/sequence files
 

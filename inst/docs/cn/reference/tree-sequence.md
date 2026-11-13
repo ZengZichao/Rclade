@@ -1,4 +1,4 @@
-# 树与序列读/写及校验
+# 树与序列读取与校验
 
 读取树文件、校验序列文件，并检验单系性。
 
@@ -29,7 +29,7 @@ read_tree_auto(filepath, tree_index = NULL, multi_tree_mode = "error")
 
 | 参数 | 说明 |
 |------|------|
-| `filepath` | 树文件路径（.tre / .nwk / .newick / .nexus / .nex / .treefile / .xml）。 |
+| `filepath` | 树文件路径（.tre / .tree / .nwk / .newick / .nexus / .nex / .treefile / .nhx / .xml / .beast）；其他扩展名按内容识别（`#NEXUS`、`<beast`/`<phylogeny`，否则按 Newick 解析）。 |
 | `tree_index` | 整数，多树对象（如 BEAST 后验）中要使用的树索引。默认 `NULL`（此时由 `multi_tree_mode` 决定行为）。 |
 | `multi_tree_mode` | 字符值，文件中含多棵树时的处理方式，共七种：`"error"`（默认）——报错停止并要求用户指定；`"ask"`——交互式询问用户选择某棵树或某种处理方式，在非交互会话中回退为 `"error"`；`"first"`——使用第一棵树；`"last"`——使用最后一棵树；`"random"`——使用随机抽取的一棵树；`"all"`——返回全部树（`multiPhylo`）；`"split"`——返回全部树（`multiPhylo`），由调用方为每棵树写出带数字后缀的独立输出（如 `output_1.pdf`）。 |
 
@@ -189,7 +189,7 @@ check_monophyly(
 | `tree` | `phylo` 对象。 |
 | `group` | 字符值，待检查的分类群名（如 `"P1"`、`"Mammalia"`）。 |
 | `rank` | 字符值，分组所属的分类阶元：`"kingdom"` / `"domain"` / `"phylum"` / `"class"` / `"order"` / `"family"` / `"genus"` / `"species"` / `"subspecies"`，或缩写 `"k"` / `"d"` / `"p"` / `"c"` / `"o"` / `"f"` / `"g"` / `"s"` / `"ss"`。 |
-| `format` | 字符值，分类学标签格式：`"auto"` / `"GTDB"` / `"Silva"` / `"NCBI"` / `"custom_rank"` / `"custom_regex"`。默认 `"auto"`。 |
+| `format` | 字符值，分类学标签格式：`"auto"` / `"embedded"` / `"GTDB"` / `"Silva"` / `"NCBI"` / `"custom_rank"` / `"custom_regex"`。默认 `"auto"`。 |
 | `custom_patterns` | `custom_regex` 格式所需的具名正则列表，当 `format = "custom_regex"` 时必选。 |
 | `quiet` | 逻辑值，为 `TRUE` 时静默消息，默认 `FALSE`。 |
 | `delimiter_mode` | 字符值，嵌入（Format A）标签解析策略：`"reverse"`（自右向左，默认）、`"greedy"`（自左向右）或 `"segment"`（逐段提取，即按分隔符之间截取）。 |

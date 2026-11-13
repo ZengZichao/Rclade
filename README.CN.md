@@ -3,9 +3,9 @@
 [English](README.EN.md) | [中文](README.CN.md)
 
 <!-- badges: start -->
-[![R package](https://img.shields.io/badge/R-%E5%8C%85-blue.svg)](https://www.r-project.org/)
-[![License: MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.6-green.svg)]()
+[![R 包](https://img.shields.io/badge/R-%E5%8C%85-blue.svg)](https://www.r-project.org/)
+[![许可证: MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![版本](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-1.1.6-green.svg)]()
 <!-- badges: end -->
 
 > **说明：** GitHub 仓库位于 https://github.com/zengzichao/Rclade，问题反馈请提交至 https://github.com/zengzichao/Rclade/issues。
@@ -26,8 +26,8 @@ Rclade 提供单函数调用的大型系统发育树自动折叠与地质时间�
 
 ## 功能特性
 
-- **自动分类标签解析**：启发式检测 GTDB、Silva、NCBI 及自定义格式
-- **双格式分类学**：格式A（嵌入式 `_d_Bacteria_...`）反向匹配，格式B（分号式 `d__Bacteria;...`）值验证
+- **自动分类标签解析**：基于前缀匹配启发式检测 GTDB、Silva、NCBI 及自定义标签格式
+- **双格式分类学**：格式 A（嵌入式 `_d_Bacteria_...`）反向匹配，格式 B（分号式 `d__Bacteria;...`）值验证
 - **批量演化支折叠**：嵌套感知的深度优先排序，自动冲突检测
 - **指定演化支折叠**：`--clade` 选项，先检查单系性再折叠
 - **地质时间轴集成**：通过 deeptime 实现自适应时间刻度（Ma/Ka），支持 ICS 2023/02 年代地层表
@@ -35,7 +35,7 @@ Rclade 提供单函数调用的大型系统发育树自动折叠与地质时间�
 - **出版级输出**：色盲友好调色板（默认 viridis），支持 PDF/PNG/SVG/TIFF/EPS 高分辨率输出
 - **特殊祖先节点标识符**：ROOT、LUCA、LACA、LBCA 用于高亮关键节点
 - **外部分类学文件支持**：从外部文件读取分类学信息，检测循环依赖
-- **树-序列交叉验证**：自动匹配末端标签与序列ID
+- **树-序列交叉验证**：自动匹配末端标签与序列 ID
 - **实时日志系统**：ISO 8601 毫秒时间戳、步骤跟踪、日志文件输出
 - **全面的输入验证**：深度树/序列验证，PHYLIP/Stockholm 格式拒绝
 - **跨平台鲁棒性**：UTF-8 编码、BOM 处理、换行符归一化
@@ -85,7 +85,7 @@ docker run -v $(pwd):/data rclade -f tree.tre -r phylum -o output.pdf
 
 ```bash
 # 运行自检
-Rclade --check
+rclade --check
 ```
 
 ## 流程概览
@@ -137,7 +137,7 @@ p <- plot_timetree(example_tree, rank = "phylum",
                    add_timescale = FALSE)
 
 # 折叠指定演化支
-p <- plot_timetree(example_tree, clade = "Cyanobacteria",
+p <- plot_timetree(example_tree, clade = "P1",
                    taxonomy_format = "GTDB",
                    add_timescale = FALSE)
 
@@ -150,18 +150,18 @@ p <- plot_timetree(example_tree, rank = "phylum",
 save_timetree(p, "output.pdf", width = 14, height = 10)
 
 # 一行流水线
-plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
+plot_timetree(example_tree, rank = "phylum", unit = "Ma", output = "output.pdf")
 ```
 
 ## 支持的分类标签格式
 
 | 格式 | 检测规则 | 示例 |
 |------|----------|------|
-| **GTDB**（格式B） | 前缀 `d__`、`p__`、`c__`、... | `d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria` |
-| **嵌入式**（格式A） | `_d_`、`_p_`、`_c_`、... | `GB_GCA_001_d_Bacteria_p_Proteobacteria_c_Gammaproteobacteria` |
+| **GTDB**（格式 B） | 前缀 `d__`、`p__`、`c__` 等 | `d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria` |
+| **嵌入式**（格式 A） | `_d_`、`_p_`、`_c_` 等 | `GB_GCA_001_d_Bacteria_p_Proteobacteria_c_Gammaproteobacteria` |
 | **Silva** | 分号分隔，无前缀 | `Bacteria;Proteobacteria;Gammaproteobacteria` |
 | **NCBI** | 以 `cellular organisms`、`root` 等开头 | `cellular organisms;Bacteria;Proteobacteria` |
-| **自定义正则** | 用户提供的正则表达式 | `list(domain = "Domain:([^|]+)")` |
+| **自定义正则** | 用户提供的正则表达式 | `list(domain = "Domain:([^\|]+)")` |
 
 ## 核心函数
 
@@ -182,7 +182,7 @@ plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
 | `read_taxonomy_file()` | 从外部文件读取分类学信息 |
 | `validate_sequence_deep()` | 深度序列文件验证 |
 | `validate_sequence_file()` | 验证序列文件格式 |
-| `validate_tree_sequence_match()` | 交叉验证树末端与序列ID |
+| `validate_tree_sequence_match()` | 交叉验证树末端与序列 ID |
 | `theme_timetree()` | 出版级 ggplot2 主题 |
 | `run_rclade_selftest()` | 运行全面自检 |
 | `run_rclade_shiny()` | 启动交互式 Shiny Web 应用 |
@@ -218,22 +218,22 @@ plot_timetree(example_tree, rank = "phylum", output = "output.pdf")
 按名称折叠特定演化支（先检查单系性）：
 
 ```r
-# 仅折叠 Cyanobacteria（如果是单系群）
-p <- plot_timetree(example_tree, clade = "Cyanobacteria",
+# 仅折叠门级演化支 P1（如果是单系群）
+p <- plot_timetree(example_tree, clade = "P1", unit = "Ma",
                    taxonomy_format = "GTDB")
 
 # 严格模式：演化支非单系时终止
-p <- plot_timetree(example_tree, clade = "Proteobacteria",
+p <- plot_timetree(example_tree, clade = "P2", unit = "Ma",
                    strict = TRUE, taxonomy_format = "GTDB")
 ```
 
 命令行使用：
 ```bash
 # 折叠指定演化支
-Rclade -f tree.tre --clade Cyanobacteria -o output.pdf
+rclade -f tree.tre --clade Cyanobacteria -u Ma -o output.pdf
 
 # 严格模式
-Rclade -f tree.tre --clade Proteobacteria --strict -o output.pdf
+rclade -f tree.tre --clade Proteobacteria --strict -u Ma -o output.pdf
 ```
 
 ### 使用包装脚本获得标准退出码
@@ -243,7 +243,7 @@ Rclade -f tree.tre --clade Proteobacteria --strict -o output.pdf
 ```bash
 # 将 inst/bin/rclade 加入 PATH，或使用完整路径
 export PATH="/path/to/Rclade/inst/bin:$PATH"
-rclade -f tree.tre -r phylum -o output.pdf
+rclade -f tree.tre -r phylum -u Ma -o output.pdf
 ```
 
 相比 `Rscript -e "Rclade::run_rclade_cli(...)"`，包装脚本：
@@ -273,16 +273,16 @@ result <- check_special_monophyly(example_tree, "LBCA")
 
 ```r
 # 使用第一个树
-p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "first")
+p <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "first")
 
 # 随机选择一个树
-p <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "random")
+p <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "random")
 
 # 分别分析所有树（返回绘图列表）
-plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "all")
+plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "all")
 
 # split 模式：同 all（返回 multiPhylo），表示按树拆分输出，CLI 会为每棵树生成带数字后缀的文件
-plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "split")
+plots <- plot_timetree("beast.trees", rank = "phylum", unit = "Ma", multi_tree_mode = "split")
 ```
 
 ## 外部分类学文件
@@ -292,10 +292,10 @@ plots <- plot_timetree("beast.trees", rank = "phylum", multi_tree_mode = "split"
 taxa <- read_taxonomy_file("taxonomy.tsv")
 
 # 使用外部文件进行折叠
-p <- plot_timetree(tree, rank = "phylum", taxonomy_file = "taxonomy.tsv")
+p <- plot_timetree(tree, rank = "phylum", unit = "Ma", taxonomy_file = "taxonomy.tsv")
 
 # 使用自定义分隔符
-p <- plot_timetree(tree, rank = "phylum",
+p <- plot_timetree(tree, rank = "phylum", unit = "Ma",
                    taxonomy_file = "taxonomy.csv",
                    taxonomy_file_sep = ",")
 ```
@@ -303,7 +303,7 @@ p <- plot_timetree(tree, rank = "phylum",
 ## 树-序列交叉验证
 
 ```r
-# 验证树末端与序列ID匹配
+# 验证树末端与序列 ID 匹配
 validate_tree_sequence_match("tree.nwk", "sequences.fasta")
 
 # 多树文件时指定处理方式（默认 "error"）
@@ -311,7 +311,7 @@ validate_tree_sequence_match("beast.trees", "sequences.fasta",
                              multi_tree_mode = "first")
 
 # 在 plot_timetree() 中（通过 CLI）
-# Rclade -f tree.tre --sequence_file seqs.fasta -r phylum
+# rclade -f tree.tre --sequence_file seqs.fasta -r phylum
 ```
 
 ## 命令行参考
@@ -320,108 +320,108 @@ validate_tree_sequence_match("beast.trees", "sequences.fasta",
 
 ```bash
 # 显示帮助（所有参数、默认值、示例）
-Rclade --help
+rclade --help
 
 # 显示版本及依赖版本
-Rclade --version
+rclade --version
 
 # 运行自检
-Rclade --check
+rclade --check
 
 # 基本用法：门级折叠
-Rclade -f tree.tre -r phylum -o output.pdf
+rclade -f tree.tre -r phylum -u Ma -o output.pdf
 
 # 使用 GTDB 格式和 Ma 时间单位
-Rclade -f tree.tre -r phylum --taxonomy_format GTDB -u Ma -o output.pdf
+rclade -f tree.tre -r phylum --taxonomy_format GTDB -u Ma -o output.pdf
 
 # 折叠指定演化支
-Rclade -f tree.tre --clade Cyanobacteria -o output.pdf
+rclade -f tree.tre --clade Cyanobacteria -u Ma -o output.pdf
 ```
 
 ### 分类学选项
 
 ```bash
 # 外部分类学文件
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv -o output.pdf
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv -u Ma -o output.pdf
 
 # 带标题行和逗号分隔符的分类学文件
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.csv --taxonomy_file_header --taxonomy_file_sep comma
+rclade -f tree.tre -r phylum --taxonomy_file taxa.csv --taxonomy_file_header --taxonomy_file_sep comma -u Ma
 
 # 嵌入式格式解析策略（reverse/greedy/segment）
-Rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_delimiter_mode reverse
+rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_delimiter_mode reverse -u Ma
 
 # 表格分类学优先于嵌入式
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_source_priority table
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_source_priority table -u Ma
 
-# 自定义分类阶元（界、亚种）：code:prefix 格式
-# 这里 k 使用 _k_ 作为嵌入式分隔符，ss 使用 _ss_
-Rclade -f tree.tre -r phylum --taxonomy_format custom_rank --taxonomy_levels "k:_k_,ss:_ss_"
+# 自定义分类阶元（界、亚种）：code:阶元名 格式
+# 嵌入式分隔符 _k_ 由代码 k 推导，冒号之后的字段是该阶元的名称
+rclade -f tree.tre -r kingdom --taxonomy_format custom_rank --taxonomy_levels "k:kingdom,ss:subspecies" -u Ma
 
 # 自定义分类表分隔符（taxonomy 字符串内部的分隔符）
-Rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_table_sep "|"
+rclade -f tree.tre -r phylum --taxonomy_file taxa.tsv --taxonomy_table_sep "|" -u Ma
 ```
 
 ### 多树选项
 
 ```bash
 # 使用第一个树
-Rclade -f beast.trees --multi_tree_mode first -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode first -r phylum -u Ma -o output.pdf
 
 # 使用最后一个树
-Rclade -f beast.trees --multi_tree_mode last -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode last -r phylum -u Ma -o output.pdf
 
 # 随机选择一个树
-Rclade -f beast.trees --multi_tree_mode random -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode random -r phylum -u Ma -o output.pdf
 
 # 使用指定索引的树
-Rclade -f beast.trees --tree_index 42 -r phylum -o output.pdf
+rclade -f beast.trees --tree_index 42 -r phylum -u Ma -o output.pdf
 
 # 分别分析所有树（输出文件自动添加数字后缀）
-Rclade -f beast.trees --multi_tree_mode all -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode all -r phylum -u Ma -o output.pdf
 # 生成：output_1.pdf, output_2.pdf, ...
 
 # split 模式：同 all，但语义上明确表示按树拆分输出（用于流水线下游分派）
-Rclade -f beast.trees --multi_tree_mode split -r phylum -o output.pdf
+rclade -f beast.trees --multi_tree_mode split -r phylum -u Ma -o output.pdf
 ```
 
 ### 序列验证
 
 ```bash
 # 交叉验证树末端与序列 ID
-Rclade -f tree.tre --sequence_file seqs.fasta -r phylum -o output.pdf
+rclade -f tree.tre --sequence_file seqs.fasta -r phylum -u Ma -o output.pdf
 
 # 跳过交叉验证
-Rclade -f tree.tre --sequence_file seqs.fasta --no_cross_check -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --no_cross_check -r phylum -u Ma
 
 # 指定分子类型（DNA/RNA/protein/auto）
-Rclade -f tree.tre --sequence_file seqs.fasta --mol_type DNA -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --mol_type DNA -r phylum -u Ma
 
 # 跳过比对长度检查
-Rclade -f tree.tre --sequence_file seqs.fasta --skip_length_check -r phylum
+rclade -f tree.tre --sequence_file seqs.fasta --skip_length_check -r phylum -u Ma
 ```
 
 ### 输出控制
 
 ```bash
 # 强制覆盖已有输出
-Rclade -f tree.tre -r phylum -o output.pdf --force
+rclade -f tree.tre -r phylum -u Ma -o output.pdf --force
 
 # 跳过已有输出（不覆盖）
-Rclade -f tree.tre -r phylum -o output.pdf --no_clobber
+rclade -f tree.tre -r phylum -u Ma -o output.pdf --no_clobber
 
 # 跳过畸形输入而非终止
-Rclade -f tree.tre -r phylum --ignore_malformed -o output.pdf
+rclade -f tree.tre -r phylum --ignore_malformed -u Ma -o output.pdf
 
 # 低内存模式（适用于大型树）
-Rclade -f tree.tre -r phylum --low_memory -o output.pdf
+rclade -f tree.tre -r phylum --low_memory -u Ma -o output.pdf
 
 # 剥离节点注释（bootstrap/NHX），减小输出体积
-Rclade -f tree.nhx -r phylum --strip_annotations -o output.pdf
+rclade -f tree.nhx -r phylum --strip_annotations -u Ma -o output.pdf
 ```
 
 ### 配置文件支持
 
-Rclade 支持通过 YAML 配置文件提供默认值。优先级：**CLI 显式参数 > 配置文件 > 内置默认值**。包内附带 `config.example.yaml` 模板，列出全部可配置项；可通过以下方式获取：
+Rclade 支持通过 YAML 配置文件提供默认值。优先级：**CLI 显式参数 > 配置文件 > 内置默认值**。包内附带 `config.example.yaml` 模板，覆盖大部分可配置项；可通过以下方式获取：
 
 ```r
 system.file("extdata", "config.example.yaml", package = "Rclade")
@@ -429,10 +429,10 @@ system.file("extdata", "config.example.yaml", package = "Rclade")
 
 ```bash
 # 使用配置文件
-Rclade --config config.yaml -f tree.tre -o output.pdf
+rclade --config config.yaml -f tree.tre -u Ma -o output.pdf
 
 # CLI 参数覆盖配置文件（此处 rank 优先于配置文件中的 rank）
-Rclade --config config.yaml -f tree.tre -r genus -o output.pdf
+rclade --config config.yaml -f tree.tre -r genus -u Ma -o output.pdf
 ```
 
 配置文件示例（完整模板见 `inst/extdata/config.example.yaml`）：
@@ -447,19 +447,19 @@ strip_annotations: false
 log_level: INFO
 ```
 
-> 注：optparse 无法区分"用户显式传入默认值"和"用户未传入该参数"。若用户显式传入与默认值相同的值，配置文件中的值仍会生效。如需强制覆盖配置文件，请在 CLI 上显式传入该参数。
+> 注：optparse 无法区分"用户显式传入默认值"和"用户未传入该参数"。若用户显式传入与默认值相同的值，配置文件中的值仍会生效。若要让某个参数优先于配置文件生效，请在 CLI 上显式传入一个与内置默认值不同的值。
 
 ### 日志选项
 
 ```bash
 # 调试日志
-Rclade -f tree.tre -r phylum --log_level DEBUG -o output.pdf
+rclade -f tree.tre -r phylum --log_level DEBUG -u Ma -o output.pdf
 
 # 日志输出到文件
-Rclade -f tree.tre -r phylum --log_file analysis.log -o output.pdf
+rclade -f tree.tre -r phylum --log_file analysis.log -u Ma -o output.pdf
 
 # 组合使用
-Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pdf
+rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -u Ma -o output.pdf
 ```
 
 ### 完整 CLI 选项表
@@ -483,16 +483,20 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `--taxonomy_delimiter_mode` | STR | reverse | 嵌入式解析策略：reverse/greedy/segment |
 | `--taxonomy_source_priority` | STR | table | 来源优先级：`embedded`/`table` |
 | `--taxonomy_table_sep` | STR | ; | 表格值分隔符（taxonomy 字符串内部分隔符） |
-| `--taxonomy_levels` | STR | - | 自定义阶元映射，格式 `code:prefix`，如 `k:_k_,ss:_ss_` |
+| `--taxonomy_levels` | STR | - | 自定义阶元映射，格式 `code:阶元名`，如 `k:kingdom,ss:subspecies` |
 | `-t, --triangle_mode` | MODE | mixed | 三角形：max/min/mixed/none |
 | `-s, --space_mode` | MODE | proportional | 空间：equal/proportional |
 | `-l, --layout` | STR | rectangular | 布局：rectangular/circular |
 | `-u, --unit` | STR | auto | 单位：auto/Ga/Ma（auto = 保持树原生单位；Ga 会 ×1000 转换） |
-| `--angle` | NUM | 360 | 环形布局角度（10-360度） |
+| `--angle` | NUM | 360 | 环形布局角度（10-360 度） |
+| `--timescale_mode` | MODE | radial | 环形布局时间轴模式：`radial`（地质年代条带环绕扇形）/ `linear`（直线时间轴） |
+| `--timescale_position` | POS | right | 直线时间轴的钟表方位：`right`/`left`/`top`/`bottom`（仅环形布局） |
+| `--tree_start_position` | POS | right | 树开始展开的钟表方位（首末端之间的缺口）：`right`/`left`/`top`/`bottom`（仅环形布局） |
 | `--line_width` | NUM | 1 | 分支线宽度 |
 | `--ignore_branch_length` | FLAG | FALSE | 支序图（cladogram）模式（忽略枝长） |
 | `--color_palette` | STR | viridis | 调色板或十六进制颜色 |
 | `--color_mapping` | STR | - | 颜色映射：`Group:#FF0000` |
+| `--color_rank` | RANK | - | 用于给分支着色的阶元，独立于控制折叠的 `--rank`，如 `phylum` |
 | `--show_tip_labels` | FLAG | FALSE | 显示末端标签 |
 | `--tip_label_size` | NUM | 2 | 末端标签字号 |
 | `--show_clade_label` | FLAG | FALSE | 显示演化支标签 |
@@ -539,6 +543,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `clade` | character | NULL | 指定要折叠的演化支名称 |
 | `strict` | logical | FALSE | 演化支非单系时终止 |
 | `groups` | list | NULL | 自定义末端分组 |
+| `groups_label_only` | logical | FALSE | 只为 `groups` 分组添加标签，不折叠成三角形 |
 | `triangle_mode` | character | "mixed" | 三角形模式：max/min/mixed/none |
 | `space_mode` | character | "proportional" | 空间分配：equal/proportional |
 | `layout` | character | "rectangular" | 布局：rectangular/circular |
@@ -591,6 +596,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 | `timescale_mode` | character | "radial" | 环形布局时间轴模式：radial（径向）/ linear（线性，3 点钟方向） |
 | `timescale_position` | character | "right" | 环形布局时间轴起始方位 |
 | `tree_start_position` | character | "right" | 环形布局树绘制起始方位 |
+| `opts` | list | NULL | `rclade_options()` 对象或含参数默认值的命名列表；显式传入的参数始终优先 |
 
 ## 输入/输出格式
 
@@ -598,7 +604,7 @@ Rclade -f tree.tre -r phylum --log_level DEBUG --log_file debug.log -o output.pd
 
 - **节点编号**：内部节点从 1 开始编号（根节点 = Ntip + 1），遵循 `ape` 惯例
 - **枝长**：必须为非负值（负值将触发 CRITICAL 错误）
-- **末端标签**：必须唯一（重复将触发 ERROR）
+- **末端标签**：必须唯一（重复将触发 WARNING）
 - **标签长度**：超过 500 字符的 Newick 标签在解析前会被截断为 400 字符 + `_RCLADE_TRUNC` 后缀（并给出警告），因为 ape 的解析器在 Linux 上遇到超过约 512 字符的标签会使整个 R 进程崩溃；若标签需与外部文件精确匹配，请提前缩短标签
 - **坐标系**：系统发育树使用枝长坐标（时间，单位 Ma/Ga），非序列坐标
 - **标准合规**：Newick 格式遵循 [Newick 标准](https://evolution.genetics.washington.edu/phylip/newicktree.html)，Nexus 遵循 [NEXUS 标准](https://doi.org/10.1093/sysbio/46.4.590)
@@ -640,7 +646,7 @@ tip1,d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria
 tip2,d__Bacteria;p__Firmicutes;c__Bacilli
 ```
 
-缺失阶元用空前缀表示：`s__`（物种缺失）
+缺失阶元以前缀后的空值表示：`s__`（物种缺失）
 
 ### 输出格式
 
@@ -682,11 +688,11 @@ tip2,d__Bacteria;p__Firmicutes;c__Bacilli
 
 | 错误 | 原因 | 解决方案 |
 |------|------|----------|
-| `Input file (-f) is required` | 未指定输入文件 | 添加 `-f <tree_file>` |
+| `Input file (-f/--file) is required.` | 未指定输入文件 | 添加 `-f <tree_file>` |
 | `Input file does not exist` | 文件路径错误 | 检查文件路径和权限 |
 | `CRITICAL: Empty file` | 输入文件为 0 字节 | 检查文件是否正确传输 |
 | `CRITICAL: Negative branch lengths` | 树有负枝长 | 移除或修复负枝长 |
-| `ERROR: Duplicate tip labels` | 同一标签出现两次 | 使末端标签唯一 |
+| `WARNING: ... contains N duplicate tip label(s)` | 同一标签出现两次 | 使末端标签唯一；重复标签仅告警，不会中断运行 |
 | `ERROR: Control characters detected` | 标签中有恶意字符 | 清理控制字符/BiDi 字符（涉及的标签以 `<U+XXXX>` 转义形式显示） |
 | `WARNING: ... label(s) exceed 500 characters ... truncated` | ape 的 Newick 解析器遇到超过约 512 字符的标签会崩溃 | Rclade 已将其截断为 400 字符 + `_RCLADE_TRUNC`；若需精确匹配请提前缩短标签 |
 | `Circular dependency detected` | 分类学有循环（如 d__A;p__B 和 d__B;p__A） | 修复分类学文件 |
@@ -718,7 +724,7 @@ set_log_level("DEBUG")
 set_log_file("analysis.log")
 
 # 运行分析
-p <- plot_timetree(example_tree, rank = "phylum")
+p <- plot_timetree(example_tree, rank = "phylum", unit = "Ma")
 ```
 
 日志格式（ISO 8601 毫秒精度）：
@@ -731,7 +737,7 @@ p <- plot_timetree(example_tree, rank = "phylum")
 日志函数（`log_info()` / `log_warning()` / `log_error()` 等）支持可选的 `.module` 参数，用于在错误/警告消息中插入 `[MODULE/FUNCTION]` 来源标签，便于定位问题：
 
 ```r
-log_warning("Skipped %d non-monophyletic group(s)", n,
+log_warning("Skipped %d non-monophyletic group(s)", 3L,
             .module = "compute-mrca/compute_mrca_map")
 # 输出：... | WARNING  | [compute-mrca/compute_mrca_map] | Skipped 3 non-monophyletic group(s)
 ```
@@ -745,10 +751,10 @@ run_rclade_selftest()
 
 ```bash
 # 从 CLI 运行自检
-Rclade --check
+rclade --check
 ```
 
-检查内容：依赖库、树解析、分类学提取（格式A和B）、单系性逻辑、输入验证、对抗性输入。
+检查内容：依赖库、树解析、分类学提取（格式 A 和 B）、单系性逻辑、输入验证、对抗性输入。
 
 ## 性能基准
 
