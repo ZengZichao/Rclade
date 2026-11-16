@@ -58,3 +58,9 @@ Rplots.pdf
 
 # === local-only helper scripts ===
 scripts/submit_cran.R
+
+# === local R toolchain config (not part of the package) ===
+.Rmakevars-local
+
+# === non-script-generated benchmark artifact ===
+benchmark_results/sessionInfo.rds
